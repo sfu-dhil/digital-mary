@@ -1,5 +1,4 @@
 doctrine_migrations:
-    migrations_paths:
-        'DoctrineMigrations': 'src/migrations'
+    dir_name: 'src/Migrations'
     organize_migrations: BY_YEAR_AND_MONTH
     namespace: DoctrineMigrations
