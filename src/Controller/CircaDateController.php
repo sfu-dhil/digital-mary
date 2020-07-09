@@ -1,42 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use App\Entity\CircaDate;
 use App\Form\CircaDateType;
 use App\Repository\CircaDateRepository;
-
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/circa_date")
  * @IsGranted("ROLE_USER")
  */
-class CircaDateController extends AbstractController implements PaginatorAwareInterface
-{
+class CircaDateController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
      * @Route("/", name="circa_date_index", methods={"GET"})
-     * @param Request $request
-     * @param CircaDateRepository $circaDateRepository
      *
      * @Template()
-     *
-     * @return array
      */
-    public function index(Request $request, CircaDateRepository $circaDateRepository) : array
-    {
+    public function index(Request $request, CircaDateRepository $circaDateRepository) : array {
         $query = $circaDateRepository->indexQuery();
         $pageSize = $this->getParameter('page_size');
         $page = $request->query->getint('page', 1);
@@ -57,7 +56,7 @@ class CircaDateController extends AbstractController implements PaginatorAwareIn
         $q = $request->query->get('q');
         if ($q) {
             $query = $circaDateRepository->searchQuery($q);
-            $circaDates = $this->paginator->paginate($query, $request->query->getInt('page', 1), $this->getParameter('page_size'), array('wrap-queries'=>true));
+            $circaDates = $this->paginator->paginate($query, $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
         } else {
             $circaDates = [];
         }
@@ -82,7 +81,7 @@ class CircaDateController extends AbstractController implements PaginatorAwareIn
         foreach ($circaDateRepository->typeaheadSearch($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
-                'text' => (string)$result,
+                'text' => (string) $result,
             ];
         }
 
@@ -93,7 +92,6 @@ class CircaDateController extends AbstractController implements PaginatorAwareIn
      * @Route("/new", name="circa_date_new", methods={"GET","POST"})
      * @Template()
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @param Request $request
      *
      * @return array|RedirectResponse
      */
@@ -121,7 +119,6 @@ class CircaDateController extends AbstractController implements PaginatorAwareIn
      * @Route("/new_popup", name="circa_date_new_popup", methods={"GET","POST"})
      * @Template()
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @param Request $request
      *
      * @return array|RedirectResponse
      */
@@ -132,7 +129,6 @@ class CircaDateController extends AbstractController implements PaginatorAwareIn
     /**
      * @Route("/{id}", name="circa_date_show", methods={"GET"})
      * @Template()
-     * @param CircaDate $circaDate
      *
      * @return array
      */
@@ -145,8 +141,6 @@ class CircaDateController extends AbstractController implements PaginatorAwareIn
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
      * @Route("/{id}/edit", name="circa_date_edit", methods={"GET","POST"})
-     * @param Request $request
-     * @param CircaDate $circaDate
      *
      * @Template()
      *
@@ -165,15 +159,13 @@ class CircaDateController extends AbstractController implements PaginatorAwareIn
 
         return [
             'circa_date' => $circaDate,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ];
     }
 
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
      * @Route("/{id}", name="circa_date_delete", methods={"DELETE"})
-     * @param Request $request
-     * @param CircaDate $circaDate
      *
      * @return RedirectResponse
      */

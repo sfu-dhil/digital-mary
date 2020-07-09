@@ -16,6 +16,9 @@ parameters:
     dhil.piwik_siteid: ~
     dhil.piwik_domain: ~
 
+    # pagination
+    page_size: 25
+
 services:
     # default configuration for services in *this* file
     _defaults:

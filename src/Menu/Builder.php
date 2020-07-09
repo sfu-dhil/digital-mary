@@ -77,7 +77,34 @@ class Builder implements ContainerAwareInterface {
         $browse->setLinkAttribute('data-toggle', 'dropdown');
         $browse->setChildrenAttribute('class', 'dropdown-menu');
         $browse->addChild('Items', [
-            'uri' => '#',
+            'route' => 'item_index',
+        ]);
+        $browse->addChild('Items', [
+            'route' => 'item_index',
+        ]);
+        $browse->addChild('Categories', [
+            'route' => 'category_index',
+        ]);
+        $browse->addChild('Civilizations', [
+            'route' => 'civilization_index',
+        ]);
+        $browse->addChild('Epigraphies', [
+            'route' => 'epigraphy_index',
+        ]);
+        $browse->addChild('Images', [
+            'route' => 'image_index',
+        ]);
+        $browse->addChild('Locations', [
+            'route' => 'location_index',
+        ]);
+        $browse->addChild('Materials', [
+            'route' => 'material_index',
+        ]);
+        $browse->addChild('Subject', [
+            'route' => 'subject_index',
+        ]);
+        $browse->addChild('Techniques', [
+            'route' => 'technique_index',
         ]);
 
         if ($this->hasRole('ROLE_CONTENT_ADMIN')) {
@@ -88,8 +115,8 @@ class Builder implements ContainerAwareInterface {
                 'role' => 'separator',
                 'class' => 'divider',
             ]);
-            $browse->addChild('Roles', [
-                'uri' => '#',
+            $browse->addChild('Dates', [
+                'route' => 'circa_date_index',
             ]);
         }
 

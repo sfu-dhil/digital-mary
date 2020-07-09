@@ -1,42 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Epigraphy;
 use App\Form\EpigraphyType;
 use App\Repository\EpigraphyRepository;
-
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/epigraphy")
  * @IsGranted("ROLE_USER")
  */
-class EpigraphyController extends AbstractController implements PaginatorAwareInterface
-{
+class EpigraphyController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
      * @Route("/", name="epigraphy_index", methods={"GET"})
-     * @param Request $request
-     * @param EpigraphyRepository $epigraphyRepository
      *
      * @Template()
-     *
-     * @return array
      */
-    public function index(Request $request, EpigraphyRepository $epigraphyRepository) : array
-    {
+    public function index(Request $request, EpigraphyRepository $epigraphyRepository) : array {
         $query = $epigraphyRepository->indexQuery();
         $pageSize = $this->getParameter('page_size');
         $page = $request->query->getint('page', 1);
@@ -57,7 +56,7 @@ class EpigraphyController extends AbstractController implements PaginatorAwareIn
         $q = $request->query->get('q');
         if ($q) {
             $query = $epigraphyRepository->searchQuery($q);
-            $epigraphies = $this->paginator->paginate($query, $request->query->getInt('page', 1), $this->getParameter('page_size'), array('wrap-queries'=>true));
+            $epigraphies = $this->paginator->paginate($query, $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
         } else {
             $epigraphies = [];
         }
@@ -82,7 +81,7 @@ class EpigraphyController extends AbstractController implements PaginatorAwareIn
         foreach ($epigraphyRepository->typeaheadSearch($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
-                'text' => (string)$result,
+                'text' => (string) $result,
             ];
         }
 
@@ -93,7 +92,6 @@ class EpigraphyController extends AbstractController implements PaginatorAwareIn
      * @Route("/new", name="epigraphy_new", methods={"GET","POST"})
      * @Template()
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @param Request $request
      *
      * @return array|RedirectResponse
      */
@@ -121,7 +119,6 @@ class EpigraphyController extends AbstractController implements PaginatorAwareIn
      * @Route("/new_popup", name="epigraphy_new_popup", methods={"GET","POST"})
      * @Template()
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @param Request $request
      *
      * @return array|RedirectResponse
      */
@@ -132,7 +129,6 @@ class EpigraphyController extends AbstractController implements PaginatorAwareIn
     /**
      * @Route("/{id}", name="epigraphy_show", methods={"GET"})
      * @Template()
-     * @param Epigraphy $epigraphy
      *
      * @return array
      */
@@ -145,8 +141,6 @@ class EpigraphyController extends AbstractController implements PaginatorAwareIn
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
      * @Route("/{id}/edit", name="epigraphy_edit", methods={"GET","POST"})
-     * @param Request $request
-     * @param Epigraphy $epigraphy
      *
      * @Template()
      *
@@ -165,15 +159,13 @@ class EpigraphyController extends AbstractController implements PaginatorAwareIn
 
         return [
             'epigraphy' => $epigraphy,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ];
     }
 
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
      * @Route("/{id}", name="epigraphy_delete", methods={"DELETE"})
-     * @param Request $request
-     * @param Epigraphy $epigraphy
      *
      * @return RedirectResponse
      */

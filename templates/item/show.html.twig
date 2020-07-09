@@ -2,9 +2,9 @@
 
 {% block title %}Item Details {% endblock %}
 
- {% block pageheader %} 
+ {% block pageheader %}
     <h1>Item Details</h1>
- {% endblock %} 
+ {% endblock %}
 
 {% block body %}
 
@@ -53,7 +53,7 @@
             </tr>
         <tr>
                 <th>Revisions</th>
-                <td>{{ item.revisions }}</td>
+                <td>{{ item.revisions|join(', ') }}</td>
             </tr>
                 <tr>
             <th>Created</th>

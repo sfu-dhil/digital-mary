@@ -1,42 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Technique;
 use App\Form\TechniqueType;
 use App\Repository\TechniqueRepository;
-
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/technique")
  * @IsGranted("ROLE_USER")
  */
-class TechniqueController extends AbstractController implements PaginatorAwareInterface
-{
+class TechniqueController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
      * @Route("/", name="technique_index", methods={"GET"})
-     * @param Request $request
-     * @param TechniqueRepository $techniqueRepository
      *
      * @Template()
-     *
-     * @return array
      */
-    public function index(Request $request, TechniqueRepository $techniqueRepository) : array
-    {
+    public function index(Request $request, TechniqueRepository $techniqueRepository) : array {
         $query = $techniqueRepository->indexQuery();
         $pageSize = $this->getParameter('page_size');
         $page = $request->query->getint('page', 1);
@@ -57,7 +56,7 @@ class TechniqueController extends AbstractController implements PaginatorAwareIn
         $q = $request->query->get('q');
         if ($q) {
             $query = $techniqueRepository->searchQuery($q);
-            $techniques = $this->paginator->paginate($query, $request->query->getInt('page', 1), $this->getParameter('page_size'), array('wrap-queries'=>true));
+            $techniques = $this->paginator->paginate($query, $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
         } else {
             $techniques = [];
         }
@@ -82,7 +81,7 @@ class TechniqueController extends AbstractController implements PaginatorAwareIn
         foreach ($techniqueRepository->typeaheadSearch($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
-                'text' => (string)$result,
+                'text' => (string) $result,
             ];
         }
 
@@ -93,7 +92,6 @@ class TechniqueController extends AbstractController implements PaginatorAwareIn
      * @Route("/new", name="technique_new", methods={"GET","POST"})
      * @Template()
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @param Request $request
      *
      * @return array|RedirectResponse
      */
@@ -121,7 +119,6 @@ class TechniqueController extends AbstractController implements PaginatorAwareIn
      * @Route("/new_popup", name="technique_new_popup", methods={"GET","POST"})
      * @Template()
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @param Request $request
      *
      * @return array|RedirectResponse
      */
@@ -132,7 +129,6 @@ class TechniqueController extends AbstractController implements PaginatorAwareIn
     /**
      * @Route("/{id}", name="technique_show", methods={"GET"})
      * @Template()
-     * @param Technique $technique
      *
      * @return array
      */
@@ -145,8 +141,6 @@ class TechniqueController extends AbstractController implements PaginatorAwareIn
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
      * @Route("/{id}/edit", name="technique_edit", methods={"GET","POST"})
-     * @param Request $request
-     * @param Technique $technique
      *
      * @Template()
      *
@@ -165,15 +159,13 @@ class TechniqueController extends AbstractController implements PaginatorAwareIn
 
         return [
             'technique' => $technique,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ];
     }
 
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
      * @Route("/{id}", name="technique_delete", methods={"DELETE"})
-     * @param Request $request
-     * @param Technique $technique
      *
      * @return RedirectResponse
      */

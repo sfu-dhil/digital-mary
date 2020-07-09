@@ -55,7 +55,7 @@ class Item extends AbstractEntity {
 
     /**
      * @var string
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(name="bibliography", type="text", nullable=true)
      */
     private $references;
 

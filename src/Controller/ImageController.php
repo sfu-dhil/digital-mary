@@ -1,42 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Image;
 use App\Form\ImageType;
 use App\Repository\ImageRepository;
-
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/image")
  * @IsGranted("ROLE_USER")
  */
-class ImageController extends AbstractController implements PaginatorAwareInterface
-{
+class ImageController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
      * @Route("/", name="image_index", methods={"GET"})
-     * @param Request $request
-     * @param ImageRepository $imageRepository
      *
      * @Template()
-     *
-     * @return array
      */
-    public function index(Request $request, ImageRepository $imageRepository) : array
-    {
+    public function index(Request $request, ImageRepository $imageRepository) : array {
         $query = $imageRepository->indexQuery();
         $pageSize = $this->getParameter('page_size');
         $page = $request->query->getint('page', 1);
@@ -57,7 +56,7 @@ class ImageController extends AbstractController implements PaginatorAwareInterf
         $q = $request->query->get('q');
         if ($q) {
             $query = $imageRepository->searchQuery($q);
-            $images = $this->paginator->paginate($query, $request->query->getInt('page', 1), $this->getParameter('page_size'), array('wrap-queries'=>true));
+            $images = $this->paginator->paginate($query, $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
         } else {
             $images = [];
         }
@@ -82,7 +81,7 @@ class ImageController extends AbstractController implements PaginatorAwareInterf
         foreach ($imageRepository->typeaheadSearch($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
-                'text' => (string)$result,
+                'text' => (string) $result,
             ];
         }
 
@@ -93,7 +92,6 @@ class ImageController extends AbstractController implements PaginatorAwareInterf
      * @Route("/new", name="image_new", methods={"GET","POST"})
      * @Template()
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @param Request $request
      *
      * @return array|RedirectResponse
      */
@@ -121,7 +119,6 @@ class ImageController extends AbstractController implements PaginatorAwareInterf
      * @Route("/new_popup", name="image_new_popup", methods={"GET","POST"})
      * @Template()
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @param Request $request
      *
      * @return array|RedirectResponse
      */
@@ -132,7 +129,6 @@ class ImageController extends AbstractController implements PaginatorAwareInterf
     /**
      * @Route("/{id}", name="image_show", methods={"GET"})
      * @Template()
-     * @param Image $image
      *
      * @return array
      */
@@ -145,8 +141,6 @@ class ImageController extends AbstractController implements PaginatorAwareInterf
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
      * @Route("/{id}/edit", name="image_edit", methods={"GET","POST"})
-     * @param Request $request
-     * @param Image $image
      *
      * @Template()
      *
@@ -165,15 +159,13 @@ class ImageController extends AbstractController implements PaginatorAwareInterf
 
         return [
             'image' => $image,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ];
     }
 
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
      * @Route("/{id}", name="image_delete", methods={"DELETE"})
-     * @param Request $request
-     * @param Image $image
      *
      * @return RedirectResponse
      */

@@ -1,42 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Item;
 use App\Form\ItemType;
 use App\Repository\ItemRepository;
-
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/item")
  * @IsGranted("ROLE_USER")
  */
-class ItemController extends AbstractController implements PaginatorAwareInterface
-{
+class ItemController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
      * @Route("/", name="item_index", methods={"GET"})
-     * @param Request $request
-     * @param ItemRepository $itemRepository
      *
      * @Template()
-     *
-     * @return array
      */
-    public function index(Request $request, ItemRepository $itemRepository) : array
-    {
+    public function index(Request $request, ItemRepository $itemRepository) : array {
         $query = $itemRepository->indexQuery();
         $pageSize = $this->getParameter('page_size');
         $page = $request->query->getint('page', 1);
@@ -57,7 +56,7 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
         $q = $request->query->get('q');
         if ($q) {
             $query = $itemRepository->searchQuery($q);
-            $items = $this->paginator->paginate($query, $request->query->getInt('page', 1), $this->getParameter('page_size'), array('wrap-queries'=>true));
+            $items = $this->paginator->paginate($query, $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
         } else {
             $items = [];
         }
@@ -82,7 +81,7 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
         foreach ($itemRepository->typeaheadSearch($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
-                'text' => (string)$result,
+                'text' => (string) $result,
             ];
         }
 
@@ -93,7 +92,6 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
      * @Route("/new", name="item_new", methods={"GET","POST"})
      * @Template()
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @param Request $request
      *
      * @return array|RedirectResponse
      */
@@ -121,7 +119,6 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
      * @Route("/new_popup", name="item_new_popup", methods={"GET","POST"})
      * @Template()
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @param Request $request
      *
      * @return array|RedirectResponse
      */
@@ -132,7 +129,6 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
     /**
      * @Route("/{id}", name="item_show", methods={"GET"})
      * @Template()
-     * @param Item $item
      *
      * @return array
      */
@@ -145,8 +141,6 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
      * @Route("/{id}/edit", name="item_edit", methods={"GET","POST"})
-     * @param Request $request
-     * @param Item $item
      *
      * @Template()
      *
@@ -165,15 +159,13 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
 
         return [
             'item' => $item,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ];
     }
 
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
      * @Route("/{id}", name="item_delete", methods={"DELETE"})
-     * @param Request $request
-     * @param Item $item
      *
      * @return RedirectResponse
      */
