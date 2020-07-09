@@ -1,10 +1,13 @@
 {
     "type": "project",
-    "license": "proprietary",
+    "license": "gpl",
     "require": {
-        "php": "^7.1.3",
+        "php": "^7.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-imagick": "*",
+        "ext-intl": "*",
+        "ninsuo/symfony-collection": "^2.1",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "4.4.*",
         "symfony/console": "4.4.*",
@@ -25,14 +28,25 @@
         "symfony/twig-pack": "*",
         "symfony/validator": "4.4.*",
         "symfony/web-link": "4.4.*",
-        "symfony/yaml": "4.4.*"
+        "symfony/yaml": "4.4.*",
+        "tetranz/select2entity-bundle": "^3.0",
+        "twig/string-extra": "^3.0",
+        "ubermichael/nines": "4.x-dev"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "liip/test-fixtures-bundle": "^1.6",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "*"
     },
+    "repositories": [
+        {
+            "type": "github",
+            "url": "https://github.com/ubermichael/nines-bundles.git"
+        }
+    ],
     "config": {
         "preferred-install": {
             "*": "dist"
@@ -55,7 +69,8 @@
         "symfony/polyfill-iconv": "*",
         "symfony/polyfill-php71": "*",
         "symfony/polyfill-php70": "*",
-        "symfony/polyfill-php56": "*"
+        "symfony/polyfill-php56": "*",
+        "symfony/thanks": "*"
     },
     "scripts": {
         "auto-scripts": {
@@ -63,14 +78,17 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "Fuz\\Symfony\\Collection\\ScriptHandler::postInstall"
         ],
         "post-update-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "Fuz\\Symfony\\Collection\\ScriptHandler::postUpdate"
         ]
     },
     "conflict": {
-        "symfony/symfony": "*"
+        "symfony/symfony": "*",
+        "symfony/thanks": "*"
     },
     "extra": {
         "symfony": {

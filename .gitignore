@@ -14,3 +14,13 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+# PHP Storm
+.idea
+
+# Composer installed
+templates/jquery.collection.html.twig
+public/js/jquery.collection.js
+
+# Yarn installed
+public/yarn
