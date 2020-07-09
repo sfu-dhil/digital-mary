@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Technique Details {% endblock %}
+
+ {% block pageheader %} 
+    <h1>Technique Details</h1>
+ {% endblock %} 
+
+{% block body %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+    <div class='btn-toolbar pull-right'>
+        <div class='btn-group'>
+            <a href="{{ path('technique_edit', {'id': technique.id }) }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-edit"></span> Edit
+            </a>
+        </div>
+        <div class='btn-group'>
+            <form class='delete-form' method="post" action="{{ path('technique_delete', {'id': technique.id }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_token" value="{{ csrf_token("delete" ~ technique.id) }}">
+                <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <td>{{ technique.name }}</td>
+            </tr>
+        <tr>
+                <th>Label</th>
+                <td>{{ technique.label }}</td>
+            </tr>
+        <tr>
+                <th>Description</th>
+                <td>{{ technique.description }}</td>
+            </tr>
+                <tr>
+            <th>Created</th>
+            <td>{{ technique.created|date }}</td>
+        </tr>
+        <tr>
+            <th>Updated</th>
+            <td>{{ technique.updated|date }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+{% endblock %}

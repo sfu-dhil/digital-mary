@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Civilization List{% endblock %}
+
+{% block pageheader %}
+    <h1>Civilization List</h1>
+    <p class="count">
+        Displaying {{ civilizations|length }} civilizations of {{ civilizations.getTotalItemCount }} total.
+    </p>
+ {% endblock %} 
+
+{% block body %}
+
+    <div class='btn-toolbar pull-right'>
+        <div class='btn-group'>
+            {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('civilization_new') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus"></span> New
+            </a>
+            {% endif %}
+
+            <a href="{{ path('civilization_search') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </a>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>                                           <th>Name</th>
+                                                               <th>Label</th>
+                                                               <th>Description</th>
+                    
+            </tr>
+        </thead>
+        <tbody>
+        {% for civilization in civilizations %}
+            <tr>
+
+                <td>
+                    <a href="{{ path('civilization_show', { 'id': civilization.id }) }}">
+                        {{ civilization.id }}
+                    </a>
+                </td>
+                <td>
+                    {{ civilization.name }}
+                </td>
+            
+                <td>
+                    {{ civilization.label }}
+                </td>
+            
+                <td>
+                    {{ civilization.description }}
+                </td>
+            
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(civilizations) }}
+    </div>
+
+{% endblock %}
