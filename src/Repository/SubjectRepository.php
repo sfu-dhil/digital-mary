@@ -12,6 +12,7 @@ namespace App\Repository;
 
 use App\Entity\Subject;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use RuntimeException;
@@ -43,10 +44,9 @@ class SubjectRepository extends ServiceEntityRepository {
      * @return Collection|Subject[]
      */
     public function typeaheadSearch($q) {
-        throw new RuntimeException('Not implemented yet.');
         $qb = $this->createQueryBuilder('subject');
-        $qb->andWhere('subject.column LIKE :q');
-        $qb->orderBy('subject.column', 'ASC');
+        $qb->andWhere('subject.label LIKE :q');
+        $qb->orderBy('subject.label', 'ASC');
         $qb->setParameter('q', "{$q}%");
 
         return $qb->getQuery()->execute();

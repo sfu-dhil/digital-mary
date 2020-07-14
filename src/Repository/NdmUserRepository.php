@@ -36,19 +36,4 @@ class NdmUserRepository extends ServiceEntityRepository {
             ->getQuery()
         ;
     }
-
-    /**
-     * @param string $q
-     *
-     * @return Collection|NdmUser[]
-     */
-    public function typeaheadSearch($q) {
-        throw new RuntimeException('Not implemented yet.');
-        $qb = $this->createQueryBuilder('ndmUser');
-        $qb->andWhere('ndmUser.column LIKE :q');
-        $qb->orderBy('ndmUser.column', 'ASC');
-        $qb->setParameter('q', "{$q}%");
-
-        return $qb->getQuery()->execute();
-    }
 }

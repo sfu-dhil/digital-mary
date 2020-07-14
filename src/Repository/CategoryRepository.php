@@ -15,6 +15,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use RuntimeException;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @method null|Category find($id, $lockMode = null, $lockVersion = null)
@@ -43,10 +44,9 @@ class CategoryRepository extends ServiceEntityRepository {
      * @return Category[]|Collection
      */
     public function typeaheadSearch($q) {
-        throw new RuntimeException('Not implemented yet.');
         $qb = $this->createQueryBuilder('category');
-        $qb->andWhere('category.column LIKE :q');
-        $qb->orderBy('category.column', 'ASC');
+        $qb->andWhere('category.label LIKE :q');
+        $qb->orderBy('category.label', 'ASC');
         $qb->setParameter('q', "{$q}%");
 
         return $qb->getQuery()->execute();

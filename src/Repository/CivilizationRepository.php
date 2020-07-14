@@ -15,6 +15,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use RuntimeException;
+use Doctrine\Common\Collections\Collection;
+
 
 /**
  * @method null|Civilization find($id, $lockMode = null, $lockVersion = null)
@@ -43,10 +45,9 @@ class CivilizationRepository extends ServiceEntityRepository {
      * @return Civilization[]|Collection
      */
     public function typeaheadSearch($q) {
-        throw new RuntimeException('Not implemented yet.');
         $qb = $this->createQueryBuilder('civilization');
-        $qb->andWhere('civilization.column LIKE :q');
-        $qb->orderBy('civilization.column', 'ASC');
+        $qb->andWhere('civilization.label LIKE :q');
+        $qb->orderBy('civilization.label', 'ASC');
         $qb->setParameter('q', "{$q}%");
 
         return $qb->getQuery()->execute();

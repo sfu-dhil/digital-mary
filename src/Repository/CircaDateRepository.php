@@ -15,6 +15,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use RuntimeException;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @method null|CircaDate find($id, $lockMode = null, $lockVersion = null)
@@ -37,18 +38,4 @@ class CircaDateRepository extends ServiceEntityRepository {
         ;
     }
 
-    /**
-     * @param string $q
-     *
-     * @return CircaDate[]|Collection
-     */
-    public function typeaheadSearch($q) {
-        throw new RuntimeException('Not implemented yet.');
-        $qb = $this->createQueryBuilder('circaDate');
-        $qb->andWhere('circaDate.column LIKE :q');
-        $qb->orderBy('circaDate.column', 'ASC');
-        $qb->setParameter('q', "{$q}%");
-
-        return $qb->getQuery()->execute();
-    }
 }

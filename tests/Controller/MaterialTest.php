@@ -90,7 +90,7 @@ class MaterialTest extends ControllerBaseCase {
      * @group typeahead
      */
     public function testAnonTypeahead() {
-        $this->client->request('GET', '/material/typeahead?q=material');
+        $this->client->request('GET', '/material/typeahead?q=new');
         $response = $this->client->getResponse();
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
         if(self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
@@ -108,7 +108,7 @@ class MaterialTest extends ControllerBaseCase {
      */
     public function testUserTypeahead() {
         $this->login('user.user');
-        $this->client->request('GET', '/material/typeahead?q=material');
+        $this->client->request('GET', '/material/typeahead?q=new');
         $response = $this->client->getResponse();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertEquals('application/json', $response->headers->get('content-type'));
@@ -122,7 +122,7 @@ class MaterialTest extends ControllerBaseCase {
      */
     public function testAdminTypeahead() {
         $this->login('user.admin');
-        $this->client->request('GET', '/material/typeahead?q=material');
+        $this->client->request('GET', '/material/typeahead?q=new');
         $response = $this->client->getResponse();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertEquals('application/json', $response->headers->get('content-type'));

@@ -15,6 +15,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use RuntimeException;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @method null|Epigraphy find($id, $lockMode = null, $lockVersion = null)
@@ -43,10 +44,9 @@ class EpigraphyRepository extends ServiceEntityRepository {
      * @return Collection|Epigraphy[]
      */
     public function typeaheadSearch($q) {
-        throw new RuntimeException('Not implemented yet.');
         $qb = $this->createQueryBuilder('epigraphy');
-        $qb->andWhere('epigraphy.column LIKE :q');
-        $qb->orderBy('epigraphy.column', 'ASC');
+        $qb->andWhere('epigraphy.label LIKE :q');
+        $qb->orderBy('epigraphy.label', 'ASC');
         $qb->setParameter('q', "{$q}%");
 
         return $qb->getQuery()->execute();

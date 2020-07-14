@@ -43,10 +43,9 @@ class MaterialRepository extends ServiceEntityRepository {
      * @return Collection|Material[]
      */
     public function typeaheadSearch($q) {
-        throw new RuntimeException('Not implemented yet.');
         $qb = $this->createQueryBuilder('material');
-        $qb->andWhere('material.column LIKE :q');
-        $qb->orderBy('material.column', 'ASC');
+        $qb->andWhere('material.label LIKE :q');
+        $qb->orderBy('material.label', 'ASC');
         $qb->setParameter('q', "{$q}%");
 
         return $qb->getQuery()->execute();

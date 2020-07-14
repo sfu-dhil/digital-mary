@@ -12,6 +12,7 @@ namespace App\Repository;
 
 use App\Entity\Item;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use RuntimeException;
@@ -43,10 +44,9 @@ class ItemRepository extends ServiceEntityRepository {
      * @return Collection|Item[]
      */
     public function typeaheadSearch($q) {
-        throw new RuntimeException('Not implemented yet.');
         $qb = $this->createQueryBuilder('item');
-        $qb->andWhere('item.column LIKE :q');
-        $qb->orderBy('item.column', 'ASC');
+        $qb->andWhere('item.name LIKE :q');
+        $qb->orderBy('item.name', 'ASC');
         $qb->setParameter('q', "{$q}%");
 
         return $qb->getQuery()->execute();

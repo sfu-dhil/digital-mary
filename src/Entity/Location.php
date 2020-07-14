@@ -15,11 +15,48 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractEntity;
+use Nines\UtilBundle\Entity\AbstractTerm;
 
 /**
  * @ORM\Entity(repositoryClass=LocationRepository::class)
  */
-class Location extends AbstractEntity {
+class Location extends AbstractTerm {
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Id
+     */
+    private $geonameid;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="decimal", precision=10, scale=7, nullable=true)
+     */
+    private $latitude;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="decimal", precision=10, scale=7, nullable=true)
+     */
+    private $longitude;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=2, nullable=true)
+     */
+    private $country;
+
+    /**
+     * @var array
+     * @ORM\Column(type="array", nullable=false)
+     */
+    private $alternateNames;
+
     /**
      * @var Collection|Item[]
      * @ORM\OneToMany(targetEntity="App\Entity\Item", mappedBy="findSpot")
@@ -36,13 +73,6 @@ class Location extends AbstractEntity {
         parent::__construct();
         $this->itemsFound = new ArrayCollection();
         $this->itemsProvenanced = new ArrayCollection();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __toString() : string {
-        // TODO: Implement __toString() method.
     }
 
     /**

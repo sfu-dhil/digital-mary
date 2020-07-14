@@ -139,7 +139,7 @@ class Item extends AbstractEntity {
      * {@inheritdoc}
      */
     public function __toString() : string {
-        // TODO: Implement __toString() method.
+        return $this->name;
     }
 
     public function getName() : ?string {
