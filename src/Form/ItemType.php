@@ -40,6 +40,13 @@ class ItemType extends AbstractType {
                 'class' => 'tinymce',
             ],
         ]);
+        $builder->add('circaDate', TextareaType::class, [
+            'label' => 'Date',
+            'required' => false,
+            'attr' => [
+                'help_block' => 'Date ranges (1901-1903) and circas (c1902) are supported here',
+            ]
+        ]);
         $builder->add('inscription', TextareaType::class, [
             'label' => 'Inscription',
             'required' => false,

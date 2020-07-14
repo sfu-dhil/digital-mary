@@ -18,9 +18,11 @@ use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -89,44 +91,6 @@ class ImageController extends AbstractController implements PaginatorAwareInterf
     }
 
     /**
-     * @Route("/new", name="image_new", methods={"GET","POST"})
-     * @Template()
-     * @IsGranted("ROLE_CONTENT_ADMIN")
-     *
-     * @return array|RedirectResponse
-     */
-    public function new(Request $request) {
-        $image = new Image();
-        $form = $this->createForm(ImageType::class, $image);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($image);
-            $entityManager->flush();
-            $this->addFlash('success', 'The new image has been saved.');
-
-            return $this->redirectToRoute('image_show', ['id' => $image->getId()]);
-        }
-
-        return [
-            'image' => $image,
-            'form' => $form->createView(),
-        ];
-    }
-
-    /**
-     * @Route("/new_popup", name="image_new_popup", methods={"GET","POST"})
-     * @Template()
-     * @IsGranted("ROLE_CONTENT_ADMIN")
-     *
-     * @return array|RedirectResponse
-     */
-    public function new_popup(Request $request) {
-        return $this->new($request);
-    }
-
-    /**
      * @Route("/{id}", name="image_show", methods={"GET"})
      * @Template()
      *
@@ -139,44 +103,34 @@ class ImageController extends AbstractController implements PaginatorAwareInterf
     }
 
     /**
-     * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}/edit", name="image_edit", methods={"GET","POST"})
+     * Finds and returns a raw image file.
      *
-     * @Template()
+     * @Route("/{id}/view", name="image_view", methods={"GET"})
      *
-     * @return array|RedirectResponse
+     * @return BinaryFileResponse
      */
-    public function edit(Request $request, Image $image) {
-        $form = $this->createForm(ImageType::class, $image);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('success', 'The updated image has been saved.');
-
-            return $this->redirectToRoute('image_show', ['id' => $image->getId()]);
+    public function imageAction(Image $image) {
+        if ( ! $image->getPublic() && ! $this->getUser()) {
+            throw new AccessDeniedHttpException();
         }
 
-        return [
-            'image' => $image,
-            'form' => $form->createView(),
-        ];
+        return new BinaryFileResponse($image->getImageFile());
     }
 
     /**
-     * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}", name="image_delete", methods={"DELETE"})
+     * Finds and returns a raw image file.
      *
-     * @return RedirectResponse
+     * @Route("/{id}/tn", name="image_thumbnail", methods={"GET"})
+     *
+     * @return BinaryFileResponse
      */
-    public function delete(Request $request, Image $image) {
-        if ($this->isCsrfTokenValid('delete' . $image->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($image);
-            $entityManager->flush();
-            $this->addFlash('success', 'The image has been deleted.');
+    public function thumbnailAction(Image $image) {
+        if ( ! $image->getPublic() && ! $this->getUser()) {
+            throw new AccessDeniedHttpException();
         }
 
-        return $this->redirectToRoute('image_index');
+        return new BinaryFileResponse($image->getThumbFile());
     }
+
+
 }

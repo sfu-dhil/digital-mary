@@ -11,7 +11,10 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Entity\Image;
+use App\Entity\Item;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,6 +26,31 @@ class ImageType extends AbstractType {
      * Add form fields to $builder.
      */
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
+        $builder->add('item', EntityType::class, [
+            'class' => Item::class,
+            'disabled' => true,
+        ]);
+        $builder->add('public', ChoiceType::class, [
+            'label' => 'Public',
+            'expanded' => true,
+            'multiple' => false,
+            'required' => true,
+            'choices' => [
+                'No' => 0,
+                'Yes' => 1,
+            ],
+            'attr' => [
+                'help_block' => '',
+            ],
+        ]);
+        $builder->add('description', null, [
+            'label' => 'Description',
+            'required' => false,
+            'attr' => [
+                'help_block' => '',
+                'class' => 'tinymce',
+            ],
+        ]);
     }
 
     /**

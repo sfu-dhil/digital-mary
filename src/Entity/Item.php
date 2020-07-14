@@ -69,7 +69,7 @@ class Item extends AbstractEntity {
 
     /**
      * @var CircaDate
-     * @ORM\OneToOne(targetEntity="App\Entity\CircaDate", orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="App\Entity\CircaDate", cascade={"persist", "remove"})
      */
     private $circaDate;
 
@@ -233,7 +233,7 @@ class Item extends AbstractEntity {
     }
 
     public function setCircaDate(?CircaDate $circaDate) : self {
-        $this->circaDate = $circaDate;
+        $this->circaDate = CircaDate::build($circaDate);
 
         return $this;
     }

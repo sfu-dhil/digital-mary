@@ -10,19 +10,22 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Image;
 use App\Entity\Item;
 use App\Form\ItemType;
 use App\Repository\ItemRepository;
 use App\Util\Initializer;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
-use Nines\UserBundle\Entity\User;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -105,7 +108,6 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
 
         if ($form->isSubmitted() && $form->isValid()) {
             $item->addRevision(date('Y-m-d'), Initializer::generate($user->getFullname()));
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($item);
             $entityManager->flush();
@@ -185,4 +187,65 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
 
         return $this->redirectToRoute('item_index');
     }
+
+    /**
+     * Add an image to an item.
+     *
+     * @IsGranted("ROLE_CONTENT_ADMIN")
+     * @Route("/{id}/add_image", name="item_add_image", methods={"GET","POST"})
+     * @Template()
+     */
+    public function addImage(Request $request, Item $item) {}
+
+    /**
+     * Edit an image
+     *
+     * @IsGranted("ROLE_CONTENT_ADMIN")
+     * @Route("/{id}/edit_image/{image_id}", name="item_edit_image", methods={"GET","POST"})
+     * @ParamConverter("image", options={"id" = "image_id"})
+     * @Template()
+     */
+    public function editImage(Request $request, Item $item, Image $image) {}
+
+    /**
+     * Edit an image
+     *
+     * @IsGranted("ROLE_CONTENT_ADMIN")
+     * @Route("/{id}/delete_image/{image_id}", name="item_delete_image", methods={"GET","POST"})
+     * @Template()
+     */
+    public function deleteImage(Request $request, Item $item, Image $image) {}
+
+    /**
+     * Finds and returns a raw image file.
+     *
+     * @Route("/{id}/image/{image_id}", name="item_image_view", methods={"GET"})
+     * @ParamConverter("image", options={"id" = "image_id"})
+     *
+     * @return BinaryFileResponse
+     */
+    public function view(Image $image) {
+        if ( ! $image->getPublic() && ! $this->getUser()) {
+            throw new AccessDeniedHttpException();
+        }
+
+        return new BinaryFileResponse($image->getImageFile());
+    }
+
+    /**
+     * Finds and returns a raw image file.
+     *
+     * @Route("/{id}/tn/{image_id}", name="item_image_thumbnail", methods={"GET"})
+     * @ParamConverter("image", options={"id" = "image_id"})
+     *
+     * @return BinaryFileResponse
+     */
+    public function thumbnail(Image $image) {
+        if ( ! $image->getPublic() && ! $this->getUser()) {
+            throw new AccessDeniedHttpException();
+        }
+
+        return new BinaryFileResponse($image->getThumbFile());
+    }
+
 }

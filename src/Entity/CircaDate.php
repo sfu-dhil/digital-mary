@@ -68,19 +68,41 @@ class CircaDate extends AbstractEntity {
 
     /**
      * Return a string representation.
+     *
+     * @return string
      */
     public function __toString() : string {
         if (($this->startCirca === $this->endCirca) && ($this->start === $this->end)) {
             return ($this->startCirca ? 'c' : '') . $this->start;
         }
 
-        return ($this->startCirca ? 'c' : '') . $this->start .
-            '-' .
-            ($this->endCirca ? 'c' : '') . $this->end;
+        return ($this->startCirca ? 'c' : '') . $this->start . '-' . ($this->endCirca ? 'c' : '') . $this->end;
+    }
+
+    /**
+     * Build an approximate date and return it.
+     *
+     * @param null|CircaDate|string $value
+     *
+     * @throws Exception
+     *
+     * @return null|CircaDate
+     */
+    public static function build($value) {
+        if (null === $value) {
+            return;
+        }
+        if ($value instanceof CircaDate) {
+            return $value;
+        }
+        $date = new CircaDate();
+        $date->setValue($value);
+
+        return $date;
     }
 
     public function getValue() {
-        return (string) $this->value;
+        return (string) $this;
     }
 
     public function setValue($value) {
@@ -115,9 +137,7 @@ class CircaDate extends AbstractEntity {
     }
 
     public function isRange() {
-        return
-            ($this->startCirca !== $this->endCirca) ||
-            ($this->start !== $this->end);
+        return ($this->startCirca !== $this->endCirca) || ($this->start !== $this->end);
     }
 
     public function hasStart() {
