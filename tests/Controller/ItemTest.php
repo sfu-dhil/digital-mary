@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ItemTest extends ControllerBaseCase {
 
     // Change this to HTTP_OK when the site is public.
-    private const ANON_RESPONSE_CODE=Response::HTTP_FOUND;
+    private const ANON_RESPONSE_CODE = Response::HTTP_FOUND;
 
     protected function fixtures() : array {
         return [
@@ -93,7 +93,7 @@ class ItemTest extends ControllerBaseCase {
         $this->client->request('GET', '/item/typeahead?q=new');
         $response = $this->client->getResponse();
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
-        if(self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
+        if (self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
             // If authentication is required stop here.
             return;
         }
@@ -134,7 +134,7 @@ class ItemTest extends ControllerBaseCase {
     public function testAnonSearch() : void {
         $crawler = $this->client->request('GET', '/item/search');
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
-        if(self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
+        if (self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
             // If authentication is required stop here.
             return;
         }
@@ -156,7 +156,7 @@ class ItemTest extends ControllerBaseCase {
     public function testUserSearch() : void {
         $crawler = $this->client->request('GET', '/item/search');
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
-        if(self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
+        if (self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
             // If authentication is required stop here.
             return;
         }
@@ -179,7 +179,7 @@ class ItemTest extends ControllerBaseCase {
     public function testAdminSearch() : void {
         $crawler = $this->client->request('GET', '/item/search');
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
-        if(self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
+        if (self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
             // If authentication is required stop here.
             return;
         }
@@ -229,27 +229,26 @@ class ItemTest extends ControllerBaseCase {
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Save')->form([
-        'item[name]' => 'Updated Name',
+            'item[name]' => 'Updated Name',
             'item[description]' => 'Updated Description',
             'item[inscription]' => 'Updated Inscription',
             'item[translatedInscription]' => 'Updated TranslatedInscription',
             'item[dimensions]' => 'Updated Dimensions',
             'item[references]' => 'Updated Bibliography',
-            'item[revisions]' => 'Updated Revisions',
-                    ]);
+        ]);
 
         $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect('/item/1'));
         $responseCrawler = $this->client->followRedirect();
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Name")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Description")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Inscription")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated TranslatedInscription")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Dimensions")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Bibliography")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Revisions")')->count());
-                }
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Description")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Inscription")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated TranslatedInscription")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Dimensions")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Bibliography")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Revisions")')->count());
+    }
 
     /**
      * @group anon
@@ -301,27 +300,26 @@ class ItemTest extends ControllerBaseCase {
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Create')->form([
-        'item[name]' => 'New Name',
+            'item[name]' => 'New Name',
             'item[description]' => 'New Description',
             'item[inscription]' => 'New Inscription',
             'item[translatedInscription]' => 'New TranslatedInscription',
             'item[dimensions]' => 'New Dimensions',
             'item[references]' => 'New Bibliography',
-            'item[revisions]' => 'New Revisions',
-                    ]);
+        ]);
 
         $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $responseCrawler = $this->client->followRedirect();
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertEquals(1, $responseCrawler->filter('td:contains("New Name")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Description")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Inscription")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("New TranslatedInscription")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Dimensions")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Bibliography")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Revisions")')->count());
-                }
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("New Description")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("New Inscription")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("New TranslatedInscription")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("New Dimensions")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("New Bibliography")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("New Revisions")')->count());
+    }
 
     /**
      * @group admin
@@ -333,27 +331,26 @@ class ItemTest extends ControllerBaseCase {
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Create')->form([
-        'item[name]' => 'New Name',
+            'item[name]' => 'New Name',
             'item[description]' => 'New Description',
             'item[inscription]' => 'New Inscription',
             'item[translatedInscription]' => 'New TranslatedInscription',
             'item[dimensions]' => 'New Dimensions',
             'item[references]' => 'New Bibliography',
-            'item[revisions]' => 'New Revisions',
-                    ]);
+        ]);
 
         $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $responseCrawler = $this->client->followRedirect();
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertEquals(1, $responseCrawler->filter('td:contains("New Name")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Description")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Inscription")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("New TranslatedInscription")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Dimensions")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Bibliography")')->count());
-            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Revisions")')->count());
-                }
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("New Description")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("New Inscription")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("New TranslatedInscription")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("New Dimensions")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("New Bibliography")')->count());
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("New Revisions")')->count());
+    }
 
     /**
      * @group admin

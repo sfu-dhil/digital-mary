@@ -71,13 +71,6 @@ class ItemType extends AbstractType {
                 'class' => 'tinymce',
             ],
         ]);
-        $builder->add('revisions', null, [
-            'label' => 'Revisions',
-            'required' => true,
-            'attr' => [
-                'help_block' => '',
-            ],
-        ]);
     }
 
     /**

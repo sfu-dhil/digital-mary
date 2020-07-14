@@ -133,6 +133,7 @@ class Item extends AbstractEntity {
         $this->techniques = new ArrayCollection();
         $this->materials = new ArrayCollection();
         $this->subjects = new ArrayCollection();
+        $this->revisions = [];
     }
 
     /**
@@ -203,6 +204,9 @@ class Item extends AbstractEntity {
     }
 
     public function getRevisions() : ?array {
+        usort($this->revisions, function($a, $b){
+            return $a['date'] <=> $b['date'] || $a['initials'] <=> $b['initials'];
+        });
         return $this->revisions;
     }
 
@@ -210,6 +214,15 @@ class Item extends AbstractEntity {
         $this->revisions = $revisions;
 
         return $this;
+    }
+
+    public function addRevision($date, $initials) {
+        foreach($this->revisions as $revision) {
+            if($revision['date'] === $date && $revision['initials'] === $initials) {
+                return;
+            }
+        }
+        $this->revisions[] = ['date' => $date, 'initials' => $initials];
     }
 
     public function getCircaDate() : ?CircaDate {

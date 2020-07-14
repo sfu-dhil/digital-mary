@@ -13,7 +13,9 @@ namespace App\Controller;
 use App\Entity\Item;
 use App\Form\ItemType;
 use App\Repository\ItemRepository;
+use App\Util\Initializer;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
+use Nines\UserBundle\Entity\User;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -22,6 +24,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @Route("/item")
@@ -95,12 +98,14 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
      *
      * @return array|RedirectResponse
      */
-    public function new(Request $request) {
+    public function new(Request $request, UserInterface $user) {
         $item = new Item();
         $form = $this->createForm(ItemType::class, $item);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $item->addRevision('Y-m-d', Initializer::generate($user->getFullname()));
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($item);
             $entityManager->flush();
@@ -122,8 +127,8 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
      *
      * @return array|RedirectResponse
      */
-    public function new_popup(Request $request) {
-        return $this->new($request);
+    public function new_popup(Request $request, UserInterface $user) {
+        return $this->new($request, $user);
     }
 
     /**
@@ -146,11 +151,12 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
      *
      * @return array|RedirectResponse
      */
-    public function edit(Request $request, Item $item) {
+    public function edit(Request $request, Item $item, UserInterface $user) {
         $form = $this->createForm(ItemType::class, $item);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $item->addRevision('Y-m-d', Initializer::generate($user->getFullname()));
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'The updated item has been saved.');
 

@@ -26,19 +26,18 @@ class Location extends AbstractTerm {
      * @var int
      *
      * @ORM\Column(type="integer", nullable=true)
-     * @ORM\Id
      */
     private $geonameid;
 
     /**
-     * @var string
+     * @var float
      *
      * @ORM\Column(type="decimal", precision=10, scale=7, nullable=true)
      */
     private $latitude;
 
     /**
-     * @var string
+     * @var float
      *
      * @ORM\Column(type="decimal", precision=10, scale=7, nullable=true)
      */
@@ -127,6 +126,66 @@ class Location extends AbstractTerm {
                 $itemsProvenanced->setProvenance(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGeonameid(): ?int
+    {
+        return $this->geonameid;
+    }
+
+    public function setGeonameid(?int $geonameid): self
+    {
+        $this->geonameid = $geonameid;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?float
+    {
+        return $this->latitude;
+    }
+
+    public function setLatitude(?float $latitude): self
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    public function getLongitude(): ?float
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(?float $longitude): self
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?string $country): self
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    public function getAlternateNames(): ?array
+    {
+        return $this->alternateNames;
+    }
+
+    public function setAlternateNames(array $alternateNames): self
+    {
+        $this->alternateNames = $alternateNames;
 
         return $this;
     }

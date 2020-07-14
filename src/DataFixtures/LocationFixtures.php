@@ -22,6 +22,11 @@ class LocationFixtures extends Fixture {
     public function load(ObjectManager $em) : void {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Location();
+            $fixture->setName('new location ' . $i);
+            $fixture->setLabel('New Location ' . $i);
+            $fixture->setDescription('New location description ' . $i);
+            $fixture->setLatitude(30.044420 + $i);
+            $fixture->setLongitude(31.235712 + $i);
 
             $em->persist($fixture);
             $this->setReference('location.' . $i, $fixture);

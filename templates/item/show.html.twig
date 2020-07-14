@@ -53,7 +53,11 @@
             </tr>
         <tr>
                 <th>Revisions</th>
-                <td>{{ item.revisions|join(', ') }}</td>
+                <td>
+                    {% for revision in item.revisions %}
+                    {{ revision.date }} - {{ revision.initials }}<br/>
+                    {% endfor %}
+                </td>
             </tr>
                 <tr>
             <th>Created</th>
