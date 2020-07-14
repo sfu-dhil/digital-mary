@@ -40,9 +40,8 @@
                 <div id="navbar" class="collapse navbar-collapse">
                     {{ knp_menu_render('main') }}
                     {{ knp_menu_render('nines_blog_pages') }}
-                    {% if is_granted('ROLE_COMMENT_ADMIN') %}
-                        {{ knp_menu_render('nines_feedback') }}
-                    {% endif %}
+                    {{ knp_menu_render('nines_blog_posts') }}
+
                     {{ knp_menu_render('nines_user_nav') }}
                 </div><!--/.nav-collapse -->
             </div>
@@ -71,7 +70,7 @@
         <footer class="footer">
             <div class="container">
                 <p>
-                    <b>Database of Canada's Early Women Writers</b>
+                    <b>New Digital Mary</b>
                     <br/>
                     <a href="{{ asset('docs/sphinx/index.html') }}">Documentation</a> |
                     <a href="{{ path('privacy') }}">Privacy</a> |
