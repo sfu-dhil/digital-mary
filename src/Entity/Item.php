@@ -205,7 +205,10 @@ class Item extends AbstractEntity {
 
     public function getRevisions() : ?array {
         usort($this->revisions, function($a, $b){
-            return $a['date'] <=> $b['date'] || $a['initials'] <=> $b['initials'];
+            if($b['date'] === $a['date']) {
+                return strcmp($a['initials'], $b['initials']);
+            }
+            return $b['date'] <=> $a['date'];
         });
         return $this->revisions;
     }

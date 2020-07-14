@@ -104,7 +104,7 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $item->addRevision('Y-m-d', Initializer::generate($user->getFullname()));
+            $item->addRevision(date('Y-m-d'), Initializer::generate($user->getFullname()));
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($item);
@@ -156,7 +156,7 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $item->addRevision('Y-m-d', Initializer::generate($user->getFullname()));
+            $item->addRevision(date('Y-m-d'), Initializer::generate($user->getFullname()));
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'The updated item has been saved.');
 

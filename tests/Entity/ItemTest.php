@@ -31,8 +31,8 @@ class ItemTest extends TestCase {
             $item->addRevision($d['date'], $d['initials']);
         }
         $revisions = $item->getRevisions();
-        $this->assertEquals($data[1], $revisions[0]);
-        $this->assertEquals($data[2], $revisions[1]);
-        $this->assertEquals($data[0], $revisions[2]);
+        $this->assertEquals($data[2], $revisions[0]);
+        $this->assertEquals($data[0], $revisions[1]);
+        $this->assertEquals($data[1], $revisions[2]);
     }
 }
