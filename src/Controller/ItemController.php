@@ -15,6 +15,7 @@ use App\Entity\Item;
 use App\Form\ImageType;
 use App\Form\ItemType;
 use App\Repository\ItemRepository;
+use App\Services\FileUploader;
 use App\Util\Initializer;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
@@ -23,6 +24,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -223,16 +225,57 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
      * @ParamConverter("image", options={"id" = "image_id"})
      * @Template()
      */
-    public function editImage(Request $request, Item $item, Image $image) {}
+    public function editImage(Request $request, Item $item, Image $image, FileUploader $fileUploader, EntityManagerInterface $em) {
+        $form = $this->createForm(ImageType::class, $image);
+        $form->remove('imageFile');
+        $form->add('newImageFile', FileType::class, [
+            'label' => 'Replacement Image',
+            'required' => false,
+            'attr' => [
+                'help_block' => "Select a file to upload which is less than {$fileUploader->getMaxUploadSize(false)} in size.",
+                'data-maxsize' => $fileUploader->getMaxUploadSize(),
+            ],
+            'mapped' => false,
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if(($upload = $form->get('newImageFile')->getData())) {
+                $image->setImageFile($upload);
+                $image->preUpdate(); // The doctrine event won't fire properly without this.
+            }
+            $em->flush();
+            $this->addFlash('success', 'The image has been updated.');
+//            return $this->redirectToRoute('item_show', ['id' => $item->getId()]);
+        }
+        return [
+            'item' => $item,
+            'image' => $image,
+            'form' => $form->createView(),
+        ];
+    }
 
     /**
      * Edit an image
      *
      * @IsGranted("ROLE_CONTENT_ADMIN")
      * @Route("/{id}/delete_image/{image_id}", name="item_delete_image", methods={"GET","POST"})
+     * @ParamConverter("image", options={"id" = "image_id"})
      * @Template()
      */
-    public function deleteImage(Request $request, Item $item, Image $image) {}
+    public function deleteImage(Request $request, Item $item, Image $image, EntityManagerInterface $em) {
+        if ($image->getItem() === $item) {
+            $item->removeImage($image);
+            $em->remove($image);
+            $em->flush();
+            $this->addFlash('success', 'The image has been removed.');
+        } else {
+            $this->addFlash('warning', 'The image was not removed.');
+        }
+
+        return $this->redirectToRoute('item_show', ['id' => $item->getId()]);
+    }
 
     /**
      * Finds and returns a raw image file.

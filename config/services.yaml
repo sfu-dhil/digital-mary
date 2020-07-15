@@ -58,7 +58,7 @@ services:
         arguments:
             $root: '%kernel.project_dir%'
         calls:
-            - [ setUploadDir, [ '%dm.image.dir%'] ]
+            - [ setUploadDir, [ '%dm.image.dir%/%kernel.environment%'] ]
 
     App\Services\Thumbnailer:
         calls:

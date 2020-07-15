@@ -26,7 +26,7 @@ class ImageFixtures extends Fixture implements DependentFixtureInterface {
         for ($i = 0; $i < 4; $i++) {
             $image = new Imagick();
             $hue = $i * 20;
-            $image->newImage(640,480,new ImagickPixel("hsb({$i}%, 100%,  75%)"));
+            $image->newImage(640,480,new ImagickPixel("hsb({$hue}%, 100%,  75%)"));
             $image->setImageFormat('png');
             $tmp = tmpfile();
             fwrite($tmp, $image->getImageBlob());
