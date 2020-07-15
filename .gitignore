@@ -16,11 +16,14 @@
 ###< symfony/phpunit-bridge ###
 
 # PHP Storm
-.idea
+/.idea
 
 # Composer installed
-templates/jquery.collection.html.twig
-public/js/jquery.collection.js
+/templates/jquery.collection.html.twig
+/public/js/jquery.collection.js
 
 # Yarn installed
-public/yarn
+/public/yarn
+
+# Uploads and other data
+/data

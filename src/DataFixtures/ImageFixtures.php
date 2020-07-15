@@ -14,6 +14,9 @@ use App\Entity\Image;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Imagick;
+use ImagickPixel;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageFixtures extends Fixture implements DependentFixtureInterface {
     /**
@@ -21,8 +24,19 @@ class ImageFixtures extends Fixture implements DependentFixtureInterface {
      */
     public function load(ObjectManager $em) : void {
         for ($i = 0; $i < 4; $i++) {
+            $image = new Imagick();
+            $hue = $i * 20;
+            $image->newImage(640,480,new ImagickPixel("hsb({$i}%, 100%,  75%)"));
+            $image->setImageFormat('png');
+            $tmp = tmpfile();
+            fwrite($tmp, $image->getImageBlob());
+            $upload = new UploadedFile(stream_get_meta_data($tmp)['uri'], "image_{$i}.png", 'image/png', null, true);
+
             $fixture = new Image();
+            $fixture->setImageFile($upload);
             $fixture->setItem($this->getReference('item.' . $i));
+            $fixture->setPublic($i % 2 === 0);
+            $fixture->setDescription('Image ' . $i);
             $em->persist($fixture);
             $this->setReference('image.' . $i, $fixture);
         }

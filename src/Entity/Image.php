@@ -93,7 +93,7 @@ class Image extends AbstractEntity {
      * {@inheritdoc}
      */
     public function __toString() : string {
-        // TODO: Implement __toString() method.
+        return $this->imageFile->getFilename();
     }
 
     public function getItem() : ?Item {
@@ -106,8 +106,18 @@ class Image extends AbstractEntity {
         return $this;
     }
 
+    public function setThumbFile(File $file) : self {
+        $this->thumbFile = $file;
+        return $this;
+    }
+
     public function getThumbFile() : ?File {
         return $this->thumbFile;
+    }
+
+    public function setImageFile(File $file) : self {
+        $this->imageFile = $file;
+        return $this;
     }
 
     public function getImageFile() : ?File {

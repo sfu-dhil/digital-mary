@@ -12,9 +12,11 @@ namespace App\Controller;
 
 use App\Entity\Image;
 use App\Entity\Item;
+use App\Form\ImageType;
 use App\Form\ItemType;
 use App\Repository\ItemRepository;
 use App\Util\Initializer;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -195,7 +197,23 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
      * @Route("/{id}/add_image", name="item_add_image", methods={"GET","POST"})
      * @Template()
      */
-    public function addImage(Request $request, Item $item) {}
+    public function addImage(Request $request, Item $item, EntityManagerInterface $em) {
+        $image = new Image();
+        $image->setItem($item);
+        $form = $this->createForm(ImageType::class, $image);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $em->persist($image);
+            $em->flush();
+            $this->addFlash('success', 'The image has been added to the item.');
+            return $this->redirectToRoute('item_show',['id' => $item->getId()]);
+        }
+        return [
+            'item' => $item,
+            'form' => $form->createView(),
+        ];
+    }
 
     /**
      * Edit an image

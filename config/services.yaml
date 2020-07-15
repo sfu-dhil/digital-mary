@@ -16,6 +16,10 @@ parameters:
     dhil.piwik_siteid: ~
     dhil.piwik_domain: ~
 
+    dm.image.dir: '%env(string:DM_IMAGE_DIR)%'
+    dm.thumb.width: 450
+    dm.thumb.height: 350
+
     # pagination
     page_size: 25
 
@@ -40,6 +44,23 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+    App\EventListener\ImageListener:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postLoad }
+
     App\Menu\Builder:
         tags:
             - { name: knp_menu.menu_builder, method: mainMenu, alias: main}
+
+    App\Services\FileUploader:
+        arguments:
+            $root: '%kernel.project_dir%'
+        calls:
+            - [ setUploadDir, [ '%dm.image.dir%'] ]
+
+    App\Services\Thumbnailer:
+        calls:
+            - [ setHeight, [ '%dm.thumb.height%' ] ]
+            - [ setWidth, [ '%dm.thumb.width%' ] ]
