@@ -84,6 +84,12 @@ div.collection-complex > div:not(:last-child) {
 }
 
 /* Image gallery styles. */
+.thumbnail-small {
+    max-width: 160px;
+    max-height: 124px;
+    margin: 0 auto;
+}
+
 .img-container {
     height: 160px;
     text-align: center;
