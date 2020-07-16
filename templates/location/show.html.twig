@@ -2,9 +2,9 @@
 
 {% block title %}Location Details {% endblock %}
 
- {% block pageheader %} 
+ {% block pageheader %}
     <h1>Location Details</h1>
- {% endblock %} 
+ {% endblock %}
 
 {% block body %}
 
@@ -37,5 +37,9 @@
         </tr>
         </tbody>
     </table>
+
+    {% include 'item/partial/list.html.twig' with {'items': itemsFound, 'head': 'Items Found'} %}
+
+    {% include 'item/partial/list.html.twig' with {'items': itemsProvenanced, 'head': 'Items Provanced'} %}
 
 {% endblock %}

@@ -132,9 +132,11 @@ class MaterialController extends AbstractController implements PaginatorAwareInt
      *
      * @return array
      */
-    public function show(Material $material) {
+    public function show(Request $request, Material $material) {
+        $items = $this->paginator->paginate($material->getItems(), $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
         return [
             'material' => $material,
+            'items' => $items,
         ];
     }
 

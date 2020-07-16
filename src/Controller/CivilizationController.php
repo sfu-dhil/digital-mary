@@ -132,9 +132,11 @@ class CivilizationController extends AbstractController implements PaginatorAwar
      *
      * @return array
      */
-    public function show(Civilization $civilization) {
+    public function show(Request $request, Civilization $civilization) {
+        $items = $this->paginator->paginate($civilization->getItems(), $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
         return [
             'civilization' => $civilization,
+            'items' => $items,
         ];
     }
 

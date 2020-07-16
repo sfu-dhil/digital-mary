@@ -132,9 +132,11 @@ class TechniqueController extends AbstractController implements PaginatorAwareIn
      *
      * @return array
      */
-    public function show(Technique $technique) {
+    public function show(Request $request, Technique $technique) {
+        $items = $this->paginator->paginate($technique->getItems(), $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
         return [
             'technique' => $technique,
+            'items' => $items,
         ];
     }
 

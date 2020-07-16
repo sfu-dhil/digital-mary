@@ -7,7 +7,7 @@
     <p class="count">
         Displaying {{ locations|length }} locations of {{ locations.getTotalItemCount }} total.
     </p>
- {% endblock %} 
+ {% endblock %}
 
 {% block body %}
 
@@ -29,6 +29,7 @@
         <thead>
             <tr>
                 <th>ID</th>
+                <th>Name</th>
             </tr>
         </thead>
         <tbody>
@@ -39,6 +40,9 @@
                     <a href="{{ path('location_show', { 'id': location.id }) }}">
                         {{ location.id }}
                     </a>
+                </td>
+                <td>
+                    {{ location }}
                 </td>
             </tr>
         {% endfor %}

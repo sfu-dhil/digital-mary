@@ -1,0 +1,15 @@
+{% if items|length > 0 %}
+    <h2>{{ head|default('Items') }}</h2>
+    <ul>
+        {% for item in items %}
+            <li>
+                <a href='{{ path('item_show', {'id': item.id}) }}'>
+                    {{ item }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="navigation">
+        {{ knp_pagination_render(items) }}
+    </div>
+{% endif %}

@@ -10,12 +10,20 @@ declare(strict_types=1);
 
 namespace App\Form;
 
+use App\Entity\Category;
+use App\Entity\Civilization;
+use App\Entity\Epigraphy;
 use App\Entity\Item;
+use App\Entity\Location;
+use App\Entity\Material;
+use App\Entity\Subject;
+use App\Entity\Technique;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 
 /**
  * Item form.
@@ -77,6 +85,103 @@ class ItemType extends AbstractType {
                 'help_block' => '',
                 'class' => 'tinymce',
             ],
+        ]);
+        $builder->add('category', Select2EntityType::class, [
+            'label' => 'Category',
+            'multiple' => false,
+            'remote_route' => 'category_typeahead',
+            'class' => Category::class,
+            'allow_clear' => true,
+            'attr' => [
+                'add_path' => 'category_new_popup',
+                'add_label' => 'New Category',
+                'help_block' => '',
+            ]
+        ]);
+        $builder->add('civilization', Select2EntityType::class, [
+            'label' => 'Civilization',
+            'multiple' => false,
+            'remote_route' => 'civilization_typeahead',
+            'class' => Civilization::class,
+            'allow_clear' => true,
+            'attr' => [
+                'add_path' => 'civilization_new_popup',
+                'add_label' => 'New Civilization',
+                'help_block' => '',
+            ]
+        ]);
+        $builder->add('epigraphy', Select2EntityType::class, [
+            'label' => 'Epigraphy',
+            'multiple' => false,
+            'remote_route' => 'epigraphy_typeahead',
+            'class' => Epigraphy::class,
+            'allow_clear' => true,
+            'attr' => [
+                'add_path' => 'epigraphy_new_popup',
+                'add_label' => 'New Epigraphy',
+                'help_block' => '',
+            ]
+        ]);
+        $builder->add('provenance', Select2EntityType::class, [
+            'label' => 'Provenance',
+            'multiple' => false,
+            'remote_route' => 'location_typeahead',
+            'class' => Location::class,
+            'allow_clear' => true,
+            'attr' => [
+                'add_path' => 'location_new_popup',
+                'add_label' => 'New Location',
+                'help_block' => '',
+            ]
+        ]);
+        $builder->add('findSpot', Select2EntityType::class, [
+            'label' => 'Find Spot',
+            'multiple' => false,
+            'remote_route' => 'location_typeahead',
+            'class' => Location::class,
+            'allow_clear' => true,
+            'attr' => [
+                'add_path' => 'location_new_popup',
+                'add_label' => 'New Location',
+                'help_block' => '',
+            ]
+        ]);
+        $builder->add('materials', Select2EntityType::class, [
+            'label' => 'Materials',
+            'multiple' => true,
+            'remote_route' => 'material_typeahead',
+            'class' => Material::class,
+            'allow_clear' => true,
+            'attr' => [
+                'add_path' => 'material_new_popup',
+                'add_label' => 'New Material',
+                'help_block' => '',
+            ]
+        ]);
+
+        $builder->add('techniques', Select2EntityType::class, [
+            'label' => 'Techniques',
+            'multiple' => true,
+            'remote_route' => 'category_typeahead',
+            'class' => Technique::class,
+            'allow_clear' => true,
+            'attr' => [
+                'add_path' => 'technique_new_popup',
+                'add_label' => 'New Technique',
+                'help_block' => '',
+            ]
+        ]);
+        $builder->add('subjects', Select2EntityType::class, [
+            'label' => 'Subjects',
+            'multiple' => true,
+            'remote_route' => 'subject_typeahead',
+            'class' => Subject::class,
+            'allow_clear' => true,
+            'attr' => [
+                'add_path' => 'subject_new_popup',
+                'add_label' => 'New Subject',
+                'help_block' => '',
+            ]
         ]);
     }
 

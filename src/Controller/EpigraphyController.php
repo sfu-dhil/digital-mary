@@ -132,9 +132,11 @@ class EpigraphyController extends AbstractController implements PaginatorAwareIn
      *
      * @return array
      */
-    public function show(Epigraphy $epigraphy) {
+    public function show(Request $request, Epigraphy $epigraphy) {
+        $items = $this->paginator->paginate($epigraphy->getItems(), $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
         return [
             'epigraphy' => $epigraphy,
+            'items' => $items,
         ];
     }
 

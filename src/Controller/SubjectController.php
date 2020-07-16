@@ -132,9 +132,11 @@ class SubjectController extends AbstractController implements PaginatorAwareInte
      *
      * @return array
      */
-    public function show(Subject $subject) {
+    public function show(Request $request, Subject $subject) {
+        $items = $this->paginator->paginate($subject->getItems(), $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
         return [
             'subject' => $subject,
+            'items' => $items,
         ];
     }
 

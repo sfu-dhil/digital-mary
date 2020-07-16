@@ -32,15 +32,15 @@
             </tr>
             <tr>
                 <th>Description</th>
-                <td>{{ item.description }}</td>
+                <td>{{ item.description|raw }}</td>
             </tr>
             <tr>
                 <th>Inscription</th>
-                <td>{{ item.inscription }}</td>
+                <td>{{ item.inscription|raw }}</td>
             </tr>
             <tr>
                 <th>Translated Inscription</th>
-                <td>{{ item.translatedInscription }}</td>
+                <td>{{ item.translatedInscription|raw }}</td>
             </tr>
             <tr>
                 <th>Dimensions</th>
@@ -48,8 +48,78 @@
             </tr>
             <tr>
                 <th>References</th>
-                <td>{{ item.references }}</td>
+                <td>{{ item.references|raw }}</td>
             </tr>
+
+            <tr>
+                <th>Category</th>
+                <td>
+                    {% if item.category %}
+                        <a href='{{ path('category_show', {'id': item.category.id}) }}'>
+                            {{ item.category }}
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Civilization</th>
+                <td>
+                    {% if item.civilization %}
+                        <a href='{{ path('civilization_show', {'id': item.civilization.id}) }}'>
+                            {{ item.civilization }}
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Epigraphy</th>
+                <td>
+                    {% if item.epigraphy %}
+                        <a href='{{ path('epigraphy_show', {'id': item.epigraphy.id}) }}'>
+                            {{ item.epigraphy }}
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Find spot</th>
+                <td>
+                    {% if item.findSpot %}
+                        <a href='{{ path('location_show', {'id': item.findSpot.id}) }}'>
+                            {{ item.findSpot }}
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th>Provenance</th>
+                <td>
+                    {% if item.provenance %}
+                        <a href='{{ path('location_show', {'id': item.provenance.id}) }}'>
+                            {{ item.provenance }}
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th>Techniques</th>
+                <td>
+                    {% if item.techniques | length > 0 %}
+                        <ul>
+                            {% for technique in item.techniques %}
+                                <li>
+                                    <a href='{{ path('technique_show', {'id': technique.id}) }}'>
+                                        {{ technique }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </td>
+            </tr>
+
             <tr>
                 <th>Revisions</th>
                 <td>
@@ -74,14 +144,13 @@
         <div class="btn-toolbar">
             <div class="btn-group pull-right">
                 <a href="{{ path('item_add_image', {'id': item.id}) }}" class="btn btn-default">
-                    <span class='glyphicon glyphicon-plus'></span> Add Image
-                </a>
+                    <span class='glyphicon glyphicon-plus'></span> Add Image </a>
             </div>
         </div>
     {% endif %}
 
     {% if item.images | length == 0 %}
-    <p>No images yet.</p>
+        <p>No images yet.</p>
     {% else %}
         {% embed 'image/partial/list.html.twig' with {'images': item.images } %}
         {% endembed %}

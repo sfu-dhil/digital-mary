@@ -232,7 +232,7 @@ class Item extends AbstractEntity {
         return $this->circaDate;
     }
 
-    public function setCircaDate(?CircaDate $circaDate) : self {
+    public function setCircaDate($circaDate = null) : self {
         $this->circaDate = CircaDate::build($circaDate);
 
         return $this;

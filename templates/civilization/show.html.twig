@@ -2,9 +2,9 @@
 
 {% block title %}Civilization Details {% endblock %}
 
- {% block pageheader %} 
+ {% block pageheader %}
     <h1>Civilization Details</h1>
- {% endblock %} 
+ {% endblock %}
 
 {% block body %}
 
@@ -49,5 +49,7 @@
         </tr>
         </tbody>
     </table>
+
+    {% include 'item/partial/list.html.twig' with {'items': items} %}
 
 {% endblock %}

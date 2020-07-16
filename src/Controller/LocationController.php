@@ -132,9 +132,13 @@ class LocationController extends AbstractController implements PaginatorAwareInt
      *
      * @return array
      */
-    public function show(Location $location) {
+    public function show(Request $request, Location $location) {
+        $itemsFound = $this->paginator->paginate($location->getItemsFound(), $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
+        $itemsProvenanced = $this->paginator->paginate($location->getItemsProvenanced(), $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
         return [
             'location' => $location,
+            'itemsFound' => $itemsFound,
+            'itemsProvenanced' => $itemsProvenanced
         ];
     }
 

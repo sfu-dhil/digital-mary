@@ -247,7 +247,7 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
             }
             $em->flush();
             $this->addFlash('success', 'The image has been updated.');
-//            return $this->redirectToRoute('item_show', ['id' => $item->getId()]);
+            return $this->redirectToRoute('item_show', ['id' => $item->getId()]);
         }
         return [
             'item' => $item,

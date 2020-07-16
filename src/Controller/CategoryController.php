@@ -132,9 +132,11 @@ class CategoryController extends AbstractController implements PaginatorAwareInt
      *
      * @return array
      */
-    public function show(Category $category) {
+    public function show(Request $request, Category $category) {
+        $items = $this->paginator->paginate($category->getItems(), $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
         return [
             'category' => $category,
+            'items' => $items,
         ];
     }
 
