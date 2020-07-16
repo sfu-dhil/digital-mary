@@ -19,10 +19,10 @@ parameters:
     dm.image.dir: '%env(string:DM_IMAGE_DIR)%'
     dm.thumb.width: 450
     dm.thumb.height: 350
+    dm.geonames.username: '%env(string:DM_GEONAMES_USERNAME)%'
 
     # pagination
     page_size: 25
-
 services:
     # default configuration for services in *this* file
     _defaults:

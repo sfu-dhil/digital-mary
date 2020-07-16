@@ -4,8 +4,65 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c514a70f64a58f8764f469993ed1ec89",
+    "content-hash": "f5349a33a1f9d9acc5bfdc71ee061547",
     "packages": [
+        {
+            "name": "aternus/geonames-client",
+            "version": "1.0.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Aternus/geonames-client.git",
+                "reference": "7d2dc23a73704a46603f22a072481e7b7770f285"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Aternus/geonames-client/zipball/7d2dc23a73704a46603f22a072481e7b7770f285",
+                "reference": "7d2dc23a73704a46603f22a072481e7b7770f285",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-xml": "*",
+                "guzzlehttp/guzzle": "^6.3",
+                "php": ">=7.1.0"
+            },
+            "require-dev": {
+                "ext-xdebug": "*",
+                "phpunit/phpunit": "^7.3",
+                "squizlabs/php_codesniffer": "^3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GeoNames\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kiril Reznik",
+                    "email": "kiril@atern.us",
+                    "homepage": "https://atern.us/"
+                }
+            ],
+            "description": "GeoNames API Client",
+            "homepage": "https://github.com/Aternus/geonames-client",
+            "keywords": [
+                "ISO-639-1",
+                "api",
+                "countries",
+                "database",
+                "geographical",
+                "geonames",
+                "iso-3166",
+                "languages"
+            ],
+            "time": "2020-04-29T20:27:49+00:00"
+        },
         {
             "name": "composer/package-versions-deprecated",
             "version": "1.8.1",
@@ -7857,12 +7914,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ubermichael/nines-bundles.git",
-                "reference": "e571f0bed64eb5e2cd16c8a3b08c5c246879ea1a"
+                "reference": "d6df265cc2b9bf204988c5ffabcc877330e7b4c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ubermichael/nines-bundles/zipball/e571f0bed64eb5e2cd16c8a3b08c5c246879ea1a",
-                "reference": "e571f0bed64eb5e2cd16c8a3b08c5c246879ea1a",
+                "url": "https://api.github.com/repos/ubermichael/nines-bundles/zipball/d6df265cc2b9bf204988c5ffabcc877330e7b4c0",
+                "reference": "d6df265cc2b9bf204988c5ffabcc877330e7b4c0",
                 "shasum": ""
             },
             "require": {
@@ -7908,7 +7965,7 @@
                 "source": "https://github.com/ubermichael/nines-bundles/tree/4.x",
                 "issues": "https://github.com/ubermichael/nines-bundles/issues"
             },
-            "time": "2020-06-25T18:31:51+00:00"
+            "time": "2020-07-16T18:20:35+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -9005,7 +9062,9 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-imagick": "*",
-        "ext-intl": "*"
+        "ext-intl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "1.1.0"

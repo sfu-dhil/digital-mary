@@ -11,18 +11,42 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Entity\Location;
+use Nines\UtilBundle\Form\TermType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Location form.
  */
-class LocationType extends AbstractType {
+class LocationType extends TermType {
     /**
      * Add form fields to $builder.
      */
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
+        parent::buildForm($builder, $options);
+        $builder->add('geonameid', TextType::class, [
+            'label' => 'Geonames ID',
+            'required' => false,
+        ]);
+        $builder->add('latitude');
+        $builder->add('longitude');
+        $builder->add('country');
+        $builder->add('alternateNames', CollectionType::class, [
+            'label' => 'Alternate Names',
+            'allow_add' => true,
+            'allow_delete' => true,
+            'prototype' => true,
+            'entry_type' => TextType::class,
+            'entry_options' => ['label' => false],
+            'required' => false,
+            'attr' => [
+                'help_block' => '',
+                'class' => 'collection collection-simple',
+            ],
+        ]);
     }
 
     /**

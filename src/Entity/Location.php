@@ -144,7 +144,7 @@ class Location extends AbstractTerm {
 
     public function getLatitude(): ?float
     {
-        return $this->latitude;
+        return (float)$this->latitude;
     }
 
     public function setLatitude(?float $latitude): self
@@ -156,7 +156,7 @@ class Location extends AbstractTerm {
 
     public function getLongitude(): ?float
     {
-        return $this->longitude;
+        return (float)$this->longitude;
     }
 
     public function setLongitude(?float $longitude): self

@@ -15,6 +15,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use Nines\UtilBundle\Repository\TermRepository;
 use RuntimeException;
 
 /**
@@ -23,32 +24,9 @@ use RuntimeException;
  * @method Technique[]    findAll()
  * @method Technique[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TechniqueRepository extends ServiceEntityRepository {
+class TechniqueRepository extends TermRepository {
     public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Technique::class);
     }
 
-    /**
-     * @return Query
-     */
-    public function indexQuery() {
-        return $this->createQueryBuilder('technique')
-            ->orderBy('technique.id')
-            ->getQuery()
-        ;
-    }
-
-    /**
-     * @param string $q
-     *
-     * @return Collection|Technique[]
-     */
-    public function typeaheadSearch($q) {
-        $qb = $this->createQueryBuilder('technique');
-        $qb->andWhere('technique.label LIKE :q');
-        $qb->orderBy('technique.label', 'ASC');
-        $qb->setParameter('q', "{$q}%");
-
-        return $qb->getQuery()->execute();
-    }
 }

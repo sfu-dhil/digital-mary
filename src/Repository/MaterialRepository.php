@@ -14,6 +14,7 @@ use App\Entity\Material;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use Nines\UtilBundle\Repository\TermRepository;
 use RuntimeException;
 
 /**
@@ -22,32 +23,9 @@ use RuntimeException;
  * @method Material[]    findAll()
  * @method Material[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class MaterialRepository extends ServiceEntityRepository {
+class MaterialRepository extends TermRepository {
     public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Material::class);
     }
 
-    /**
-     * @return Query
-     */
-    public function indexQuery() {
-        return $this->createQueryBuilder('material')
-            ->orderBy('material.id')
-            ->getQuery()
-        ;
-    }
-
-    /**
-     * @param string $q
-     *
-     * @return Collection|Material[]
-     */
-    public function typeaheadSearch($q) {
-        $qb = $this->createQueryBuilder('material');
-        $qb->andWhere('material.label LIKE :q');
-        $qb->orderBy('material.label', 'ASC');
-        $qb->setParameter('q', "{$q}%");
-
-        return $qb->getQuery()->execute();
-    }
 }

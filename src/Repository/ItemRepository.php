@@ -51,4 +51,19 @@ class ItemRepository extends ServiceEntityRepository {
 
         return $qb->getQuery()->execute();
     }
+
+    /**
+     * @param string $q
+     *
+     * @return Query
+     */
+    public function searchQuery($q) {
+        $qb = $this->createQueryBuilder('item');
+        $qb->addSelect('MATCH(item.name,item.description,item.inscription,item.translatedInscription) AGAINST(:q) AS HIDDEN relevance');
+        $qb->andHaving('relevance > 0');
+        $qb->orderBy('relevance', 'DESC');
+        $qb->setParameter('q', $q);
+
+        return $qb->getQuery();
+    }
 }

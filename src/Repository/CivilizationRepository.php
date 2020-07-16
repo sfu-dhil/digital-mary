@@ -14,6 +14,7 @@ use App\Entity\Civilization;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use Nines\UtilBundle\Repository\TermRepository;
 use RuntimeException;
 use Doctrine\Common\Collections\Collection;
 
@@ -24,32 +25,9 @@ use Doctrine\Common\Collections\Collection;
  * @method Civilization[]    findAll()
  * @method Civilization[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CivilizationRepository extends ServiceEntityRepository {
+class CivilizationRepository extends TermRepository {
     public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Civilization::class);
     }
 
-    /**
-     * @return Query
-     */
-    public function indexQuery() {
-        return $this->createQueryBuilder('civilization')
-            ->orderBy('civilization.id')
-            ->getQuery()
-        ;
-    }
-
-    /**
-     * @param string $q
-     *
-     * @return Civilization[]|Collection
-     */
-    public function typeaheadSearch($q) {
-        $qb = $this->createQueryBuilder('civilization');
-        $qb->andWhere('civilization.label LIKE :q');
-        $qb->orderBy('civilization.label', 'ASC');
-        $qb->setParameter('q', "{$q}%");
-
-        return $qb->getQuery()->execute();
-    }
 }

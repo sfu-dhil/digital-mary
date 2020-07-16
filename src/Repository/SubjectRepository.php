@@ -15,6 +15,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use Nines\UtilBundle\Repository\TermRepository;
 use RuntimeException;
 
 /**
@@ -23,32 +24,9 @@ use RuntimeException;
  * @method Subject[]    findAll()
  * @method Subject[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SubjectRepository extends ServiceEntityRepository {
+class SubjectRepository extends TermRepository {
     public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Subject::class);
     }
 
-    /**
-     * @return Query
-     */
-    public function indexQuery() {
-        return $this->createQueryBuilder('subject')
-            ->orderBy('subject.id')
-            ->getQuery()
-        ;
-    }
-
-    /**
-     * @param string $q
-     *
-     * @return Collection|Subject[]
-     */
-    public function typeaheadSearch($q) {
-        $qb = $this->createQueryBuilder('subject');
-        $qb->andWhere('subject.label LIKE :q');
-        $qb->orderBy('subject.label', 'ASC');
-        $qb->setParameter('q', "{$q}%");
-
-        return $qb->getQuery()->execute();
-    }
 }
