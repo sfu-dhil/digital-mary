@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use App\Entity\Epigraphy;
+use App\Entity\InscriptionStyle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,14 +19,14 @@ use RuntimeException;
 use Doctrine\Common\Collections\Collection;
 
 /**
- * @method null|Epigraphy find($id, $lockMode = null, $lockVersion = null)
- * @method null|Epigraphy findOneBy(array $criteria, array $orderBy = null)
- * @method Epigraphy[]    findAll()
- * @method Epigraphy[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method null|InscriptionStyle find($id, $lockMode = null, $lockVersion = null)
+ * @method null|InscriptionStyle findOneBy(array $criteria, array $orderBy = null)
+ * @method InscriptionStyle[]    findAll()
+ * @method InscriptionStyle[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class EpigraphyRepository extends TermRepository {
+class InscriptionStyleRepository extends TermRepository {
     public function __construct(ManagerRegistry $registry) {
-        parent::__construct($registry, Epigraphy::class);
+        parent::__construct($registry, InscriptionStyle::class);
     }
 
 }

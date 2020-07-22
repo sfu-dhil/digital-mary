@@ -12,7 +12,7 @@ namespace App\Form;
 
 use App\Entity\Category;
 use App\Entity\Civilization;
-use App\Entity\Epigraphy;
+use App\Entity\InscriptionStyle;
 use App\Entity\Item;
 use App\Entity\Location;
 use App\Entity\Material;
@@ -110,15 +110,15 @@ class ItemType extends AbstractType {
                 'help_block' => '',
             ]
         ]);
-        $builder->add('epigraphy', Select2EntityType::class, [
-            'label' => 'Epigraphy',
+        $builder->add('inscriptionStyle', Select2EntityType::class, [
+            'label' => 'InscriptionStyle',
             'multiple' => false,
-            'remote_route' => 'epigraphy_typeahead',
-            'class' => Epigraphy::class,
+            'remote_route' => 'inscription_style_typeahead',
+            'class' => InscriptionStyle::class,
             'allow_clear' => true,
             'attr' => [
-                'add_path' => 'epigraphy_new_popup',
-                'add_label' => 'New Epigraphy',
+                'add_path' => 'inscription_style_new_popup',
+                'add_label' => 'New InscriptionStyle',
                 'help_block' => '',
             ]
         ]);

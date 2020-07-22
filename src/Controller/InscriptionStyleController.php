@@ -10,9 +10,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\Epigraphy;
-use App\Form\EpigraphyType;
-use App\Repository\EpigraphyRepository;
+use App\Entity\InscriptionStyle;
+use App\Form\InscriptionStyleType;
+use App\Repository\InscriptionStyleRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -24,19 +24,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/epigraphy")
+ * @Route("/inscription_style")
  * @IsGranted("ROLE_USER")
  */
-class EpigraphyController extends AbstractController implements PaginatorAwareInterface {
+class InscriptionStyleController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
-     * @Route("/", name="epigraphy_index", methods={"GET"})
+     * @Route("/", name="inscription_style_index", methods={"GET"})
      *
      * @Template()
      */
-    public function index(Request $request, EpigraphyRepository $epigraphyRepository) : array {
-        $query = $epigraphyRepository->indexQuery();
+    public function index(Request $request, InscriptionStyleRepository $inscriptionStyleRepository) : array {
+        $query = $inscriptionStyleRepository->indexQuery();
         $pageSize = $this->getParameter('page_size');
         $page = $request->query->getint('page', 1);
 
@@ -46,16 +46,16 @@ class EpigraphyController extends AbstractController implements PaginatorAwareIn
     }
 
     /**
-     * @Route("/search", name="epigraphy_search", methods={"GET"})
+     * @Route("/search", name="inscription_style_search", methods={"GET"})
      *
      * @Template()
      *
      * @return array
      */
-    public function search(Request $request, EpigraphyRepository $epigraphyRepository) {
+    public function search(Request $request, InscriptionStyleRepository $inscriptionStyleRepository) {
         $q = $request->query->get('q');
         if ($q) {
-            $query = $epigraphyRepository->searchQuery($q);
+            $query = $inscriptionStyleRepository->searchQuery($q);
             $epigraphies = $this->paginator->paginate($query, $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
         } else {
             $epigraphies = [];
@@ -68,17 +68,17 @@ class EpigraphyController extends AbstractController implements PaginatorAwareIn
     }
 
     /**
-     * @Route("/typeahead", name="epigraphy_typeahead", methods={"GET"})
+     * @Route("/typeahead", name="inscription_style_typeahead", methods={"GET"})
      *
      * @return JsonResponse
      */
-    public function typeahead(Request $request, EpigraphyRepository $epigraphyRepository) {
+    public function typeahead(Request $request, InscriptionStyleRepository $inscriptionStyleRepository) {
         $q = $request->query->get('q');
         if ( ! $q) {
             return new JsonResponse([]);
         }
         $data = [];
-        foreach ($epigraphyRepository->typeaheadSearch($q) as $result) {
+        foreach ($inscriptionStyleRepository->typeaheadSearch($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => (string) $result,
@@ -89,34 +89,34 @@ class EpigraphyController extends AbstractController implements PaginatorAwareIn
     }
 
     /**
-     * @Route("/new", name="epigraphy_new", methods={"GET","POST"})
+     * @Route("/new", name="inscription_style_new", methods={"GET","POST"})
      * @Template()
      * @IsGranted("ROLE_CONTENT_ADMIN")
      *
      * @return array|RedirectResponse
      */
     public function new(Request $request) {
-        $epigraphy = new Epigraphy();
-        $form = $this->createForm(EpigraphyType::class, $epigraphy);
+        $inscriptionStyle = new InscriptionStyle();
+        $form = $this->createForm(InscriptionStyleType::class, $inscriptionStyle);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($epigraphy);
+            $entityManager->persist($inscriptionStyle);
             $entityManager->flush();
-            $this->addFlash('success', 'The new epigraphy has been saved.');
+            $this->addFlash('success', 'The new inscriptionStyle has been saved.');
 
-            return $this->redirectToRoute('epigraphy_show', ['id' => $epigraphy->getId()]);
+            return $this->redirectToRoute('inscription_style_show', ['id' => $inscriptionStyle->getId()]);
         }
 
         return [
-            'epigraphy' => $epigraphy,
+            'inscriptionStyle' => $inscriptionStyle,
             'form' => $form->createView(),
         ];
     }
 
     /**
-     * @Route("/new_popup", name="epigraphy_new_popup", methods={"GET","POST"})
+     * @Route("/new_popup", name="inscription_style_new_popup", methods={"GET","POST"})
      * @Template()
      * @IsGranted("ROLE_CONTENT_ADMIN")
      *
@@ -127,58 +127,58 @@ class EpigraphyController extends AbstractController implements PaginatorAwareIn
     }
 
     /**
-     * @Route("/{id}", name="epigraphy_show", methods={"GET"})
+     * @Route("/{id}", name="inscription_style_show", methods={"GET"})
      * @Template()
      *
      * @return array
      */
-    public function show(Request $request, Epigraphy $epigraphy) {
-        $items = $this->paginator->paginate($epigraphy->getItems(), $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
+    public function show(Request $request, InscriptionStyle $inscriptionStyle) {
+        $items = $this->paginator->paginate($inscriptionStyle->getItems(), $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
         return [
-            'epigraphy' => $epigraphy,
+            'inscriptionStyle' => $inscriptionStyle,
             'items' => $items,
         ];
     }
 
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}/edit", name="epigraphy_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="inscription_style_edit", methods={"GET","POST"})
      *
      * @Template()
      *
      * @return array|RedirectResponse
      */
-    public function edit(Request $request, Epigraphy $epigraphy) {
-        $form = $this->createForm(EpigraphyType::class, $epigraphy);
+    public function edit(Request $request, InscriptionStyle $inscriptionStyle) {
+        $form = $this->createForm(InscriptionStyleType::class, $inscriptionStyle);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('success', 'The updated epigraphy has been saved.');
+            $this->addFlash('success', 'The updated inscriptionStyle has been saved.');
 
-            return $this->redirectToRoute('epigraphy_show', ['id' => $epigraphy->getId()]);
+            return $this->redirectToRoute('inscription_style_show', ['id' => $inscriptionStyle->getId()]);
         }
 
         return [
-            'epigraphy' => $epigraphy,
+            'inscriptionStyle' => $inscriptionStyle,
             'form' => $form->createView(),
         ];
     }
 
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}", name="epigraphy_delete", methods={"DELETE"})
+     * @Route("/{id}", name="inscription_style_delete", methods={"DELETE"})
      *
      * @return RedirectResponse
      */
-    public function delete(Request $request, Epigraphy $epigraphy) {
-        if ($this->isCsrfTokenValid('delete' . $epigraphy->getId(), $request->request->get('_token'))) {
+    public function delete(Request $request, InscriptionStyle $inscriptionStyle) {
+        if ($this->isCsrfTokenValid('delete' . $inscriptionStyle->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($epigraphy);
+            $entityManager->remove($inscriptionStyle);
             $entityManager->flush();
-            $this->addFlash('success', 'The epigraphy has been deleted.');
+            $this->addFlash('success', 'The inscriptionStyle has been deleted.');
         }
 
-        return $this->redirectToRoute('epigraphy_index');
+        return $this->redirectToRoute('inscription_style_index');
     }
 }

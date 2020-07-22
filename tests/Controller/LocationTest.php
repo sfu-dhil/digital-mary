@@ -90,7 +90,7 @@ class LocationTest extends ControllerBaseCase {
      * @group typeahead
      */
     public function testAnonTypeahead() {
-        $this->client->request('GET', '/location/typeahead?q=new');
+        $this->client->request('GET', '/location/typeahead?q=location');
         $response = $this->client->getResponse();
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
         if(self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
@@ -108,7 +108,7 @@ class LocationTest extends ControllerBaseCase {
      */
     public function testUserTypeahead() {
         $this->login('user.user');
-        $this->client->request('GET', '/location/typeahead?q=new');
+        $this->client->request('GET', '/location/typeahead?q=location');
         $response = $this->client->getResponse();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertEquals('application/json', $response->headers->get('content-type'));
@@ -122,7 +122,7 @@ class LocationTest extends ControllerBaseCase {
      */
     public function testAdminTypeahead() {
         $this->login('user.admin');
-        $this->client->request('GET', '/location/typeahead?q=new');
+        $this->client->request('GET', '/location/typeahead?q=location');
         $response = $this->client->getResponse();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertEquals('application/json', $response->headers->get('content-type'));
@@ -156,10 +156,6 @@ class LocationTest extends ControllerBaseCase {
     public function testUserSearch() : void {
         $crawler = $this->client->request('GET', '/location/search');
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
-        if(self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
-            // If authentication is required stop here.
-            return;
-        }
 
         $this->login('user.user');
         $repo = $this->createMock(LocationRepository::class);
@@ -179,12 +175,8 @@ class LocationTest extends ControllerBaseCase {
     public function testAdminSearch() : void {
         $crawler = $this->client->request('GET', '/location/search');
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
-        if(self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
-            // If authentication is required stop here.
-            return;
-        }
 
-        $this->login('user.user');
+        $this->login('user.admin');
         $repo = $this->createMock(LocationRepository::class);
         $repo->method('searchQuery')->willReturn([$this->getReference('location.1')]);
         $this->client->disableReboot();
@@ -229,13 +221,29 @@ class LocationTest extends ControllerBaseCase {
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Save')->form([
-                ]);
+        'location[name]' => 'Updated Name',
+            'location[label]' => 'Updated Label',
+            'location[description]' => 'Updated Description',
+            'location[geonameid]' => 'Updated Geonameid',
+            'location[latitude]' => 'Updated Latitude',
+            'location[longitude]' => 'Updated Longitude',
+            'location[country]' => 'Updated Country',
+            'location[alternateNames]' => 'Updated AlternateNames',
+                    ]);
 
         $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect('/location/1'));
         $responseCrawler = $this->client->followRedirect();
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-            }
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Name")')->count());
+            $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Label")')->count());
+            $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Description")')->count());
+            $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Geonameid")')->count());
+            $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Latitude")')->count());
+            $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Longitude")')->count());
+            $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Country")')->count());
+            $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated AlternateNames")')->count());
+                }
 
     /**
      * @group anon
@@ -287,13 +295,29 @@ class LocationTest extends ControllerBaseCase {
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Create')->form([
-                ]);
+        'location[name]' => 'New Name',
+            'location[label]' => 'New Label',
+            'location[description]' => 'New Description',
+            'location[geonameid]' => 'New Geonameid',
+            'location[latitude]' => 'New Latitude',
+            'location[longitude]' => 'New Longitude',
+            'location[country]' => 'New Country',
+            'location[alternateNames]' => 'New AlternateNames',
+                    ]);
 
         $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $responseCrawler = $this->client->followRedirect();
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-            }
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("New Name")')->count());
+            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Label")')->count());
+            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Description")')->count());
+            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Geonameid")')->count());
+            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Latitude")')->count());
+            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Longitude")')->count());
+            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Country")')->count());
+            $this->assertEquals(1, $responseCrawler->filter('td:contains("New AlternateNames")')->count());
+                }
 
     /**
      * @group admin
@@ -305,13 +329,29 @@ class LocationTest extends ControllerBaseCase {
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Create')->form([
-                ]);
+        'location[name]' => 'New Name',
+            'location[label]' => 'New Label',
+            'location[description]' => 'New Description',
+            'location[geonameid]' => 'New Geonameid',
+            'location[latitude]' => 'New Latitude',
+            'location[longitude]' => 'New Longitude',
+            'location[country]' => 'New Country',
+            'location[alternateNames]' => 'New AlternateNames',
+                    ]);
 
         $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $responseCrawler = $this->client->followRedirect();
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-            }
+        $this->assertEquals(1, $responseCrawler->filter('td:contains("New Name")')->count());
+            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Label")')->count());
+            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Description")')->count());
+            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Geonameid")')->count());
+            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Latitude")')->count());
+            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Longitude")')->count());
+            $this->assertEquals(1, $responseCrawler->filter('td:contains("New Country")')->count());
+            $this->assertEquals(1, $responseCrawler->filter('td:contains("New AlternateNames")')->count());
+                }
 
     /**
      * @group admin

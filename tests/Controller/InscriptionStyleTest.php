@@ -2,21 +2,21 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\Epigraphy;
-use App\DataFixtures\EpigraphyFixtures;
-use App\Repository\EpigraphyRepository;
+use App\Entity\InscriptionStyle;
+use App\DataFixtures\InscriptionStyleFixtures;
+use App\Repository\InscriptionStyleRepository;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\Tests\ControllerBaseCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class EpigraphyTest extends ControllerBaseCase {
+class InscriptionStyleTest extends ControllerBaseCase {
 
     // Change this to HTTP_OK when the site is public.
     private const ANON_RESPONSE_CODE=Response::HTTP_FOUND;
 
     protected function fixtures() : array {
         return [
-            EpigraphyFixtures::class,
+            InscriptionStyleFixtures::class,
             UserFixtures::class,
         ];
     }
@@ -26,7 +26,7 @@ class EpigraphyTest extends ControllerBaseCase {
      * @group index
      */
     public function testAnonIndex() {
-        $crawler = $this->client->request('GET', '/epigraphy/');
+        $crawler = $this->client->request('GET', '/inscription_style/');
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('New')->count());
     }
@@ -37,7 +37,7 @@ class EpigraphyTest extends ControllerBaseCase {
      */
     public function testUserIndex() {
         $this->login('user.user');
-        $crawler = $this->client->request('GET', '/epigraphy/');
+        $crawler = $this->client->request('GET', '/inscription_style/');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('New')->count());
     }
@@ -48,7 +48,7 @@ class EpigraphyTest extends ControllerBaseCase {
      */
     public function testAdminIndex() {
         $this->login('user.admin');
-        $crawler = $this->client->request('GET', '/epigraphy/');
+        $crawler = $this->client->request('GET', '/inscription_style/');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertEquals(1, $crawler->selectLink('New')->count());
     }
@@ -58,7 +58,7 @@ class EpigraphyTest extends ControllerBaseCase {
      * @group show
      */
     public function testAnonShow() {
-        $crawler = $this->client->request('GET', '/epigraphy/1');
+        $crawler = $this->client->request('GET', '/inscription_style/1');
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('Edit')->count());
     }
@@ -69,7 +69,7 @@ class EpigraphyTest extends ControllerBaseCase {
      */
     public function testUserShow() {
         $this->login('user.user');
-        $crawler = $this->client->request('GET', '/epigraphy/1');
+        $crawler = $this->client->request('GET', '/inscription_style/1');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertEquals(0, $crawler->selectLink('Edit')->count());
     }
@@ -80,7 +80,7 @@ class EpigraphyTest extends ControllerBaseCase {
      */
     public function testAdminShow() {
         $this->login('user.admin');
-        $crawler = $this->client->request('GET', '/epigraphy/1');
+        $crawler = $this->client->request('GET', '/inscription_style/1');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertEquals(1, $crawler->selectLink('Edit')->count());
     }
@@ -90,7 +90,7 @@ class EpigraphyTest extends ControllerBaseCase {
      * @group typeahead
      */
     public function testAnonTypeahead() {
-        $this->client->request('GET', '/epigraphy/typeahead?q=new');
+        $this->client->request('GET', '/inscription_style/typeahead?q=inscriptionStyle');
         $response = $this->client->getResponse();
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
         if(self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
@@ -108,7 +108,7 @@ class EpigraphyTest extends ControllerBaseCase {
      */
     public function testUserTypeahead() {
         $this->login('user.user');
-        $this->client->request('GET', '/epigraphy/typeahead?q=new');
+        $this->client->request('GET', '/inscription_style/typeahead?q=inscriptionStyle');
         $response = $this->client->getResponse();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertEquals('application/json', $response->headers->get('content-type'));
@@ -122,7 +122,7 @@ class EpigraphyTest extends ControllerBaseCase {
      */
     public function testAdminTypeahead() {
         $this->login('user.admin');
-        $this->client->request('GET', '/epigraphy/typeahead?q=new');
+        $this->client->request('GET', '/inscription_style/typeahead?q=inscriptionStyle');
         $response = $this->client->getResponse();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertEquals('application/json', $response->headers->get('content-type'));
@@ -132,20 +132,20 @@ class EpigraphyTest extends ControllerBaseCase {
 
 
     public function testAnonSearch() : void {
-        $crawler = $this->client->request('GET', '/epigraphy/search');
+        $crawler = $this->client->request('GET', '/inscription_style/search');
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
         if(self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
             // If authentication is required stop here.
             return;
         }
 
-        $repo = $this->createMock(EpigraphyRepository::class);
-        $repo->method('searchQuery')->willReturn([$this->getReference('epigraphy.1')]);
+        $repo = $this->createMock(InscriptionStyleRepository::class);
+        $repo->method('searchQuery')->willReturn([$this->getReference('inscriptionstyle.1')]);
         $this->client->disableReboot();
-        $this->client->getContainer()->set(EpigraphyRepository::class, $repo);
+        $this->client->getContainer()->set(InscriptionStyleRepository::class, $repo);
 
         $form = $crawler->selectButton('Search')->form([
-            'q' => 'epigraphy',
+            'q' => 'inscriptionStyle',
         ]);
 
         $responseCrawler = $this->client->submit($form);
@@ -154,21 +154,17 @@ class EpigraphyTest extends ControllerBaseCase {
     }
 
     public function testUserSearch() : void {
-        $crawler = $this->client->request('GET', '/epigraphy/search');
+        $crawler = $this->client->request('GET', '/inscription_style/search');
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
-        if(self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
-            // If authentication is required stop here.
-            return;
-        }
 
         $this->login('user.user');
-        $repo = $this->createMock(EpigraphyRepository::class);
-        $repo->method('searchQuery')->willReturn([$this->getReference('epigraphy.1')]);
+        $repo = $this->createMock(InscriptionStyleRepository::class);
+        $repo->method('searchQuery')->willReturn([$this->getReference('inscriptionstyle.1')]);
         $this->client->disableReboot();
-        $this->client->getContainer()->set(EpigraphyRepository::class, $repo);
+        $this->client->getContainer()->set(InscriptionStyleRepository::class, $repo);
 
         $form = $crawler->selectButton('Search')->form([
-            'q' => 'epigraphy',
+            'q' => 'inscriptionStyle',
         ]);
 
         $responseCrawler = $this->client->submit($form);
@@ -177,21 +173,17 @@ class EpigraphyTest extends ControllerBaseCase {
     }
 
     public function testAdminSearch() : void {
-        $crawler = $this->client->request('GET', '/epigraphy/search');
+        $crawler = $this->client->request('GET', '/inscription_style/search');
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
-        if(self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
-            // If authentication is required stop here.
-            return;
-        }
 
-        $this->login('user.user');
-        $repo = $this->createMock(EpigraphyRepository::class);
-        $repo->method('searchQuery')->willReturn([$this->getReference('epigraphy.1')]);
+        $this->login('user.admin');
+        $repo = $this->createMock(InscriptionStyleRepository::class);
+        $repo->method('searchQuery')->willReturn([$this->getReference('inscriptionstyle.1')]);
         $this->client->disableReboot();
-        $this->client->getContainer()->set(EpigraphyRepository::class, $repo);
+        $this->client->getContainer()->set(InscriptionStyleRepository::class, $repo);
 
         $form = $crawler->selectButton('Search')->form([
-            'q' => 'epigraphy',
+            'q' => 'inscriptionStyle',
         ]);
 
         $responseCrawler = $this->client->submit($form);
@@ -204,7 +196,7 @@ class EpigraphyTest extends ControllerBaseCase {
      * @group edit
      */
     public function testAnonEdit() {
-        $crawler = $this->client->request('GET', '/epigraphy/1/edit');
+        $crawler = $this->client->request('GET', '/inscription_style/1/edit');
         $this->assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
     }
@@ -215,7 +207,7 @@ class EpigraphyTest extends ControllerBaseCase {
      */
     public function testUserEdit() {
         $this->login('user.user');
-        $crawler = $this->client->request('GET', '/epigraphy/1/edit');
+        $crawler = $this->client->request('GET', '/inscription_style/1/edit');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
 
@@ -225,17 +217,17 @@ class EpigraphyTest extends ControllerBaseCase {
      */
     public function testAdminEdit() {
         $this->login('user.admin');
-        $formCrawler = $this->client->request('GET', '/epigraphy/1/edit');
+        $formCrawler = $this->client->request('GET', '/inscription_style/1/edit');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Save')->form([
-        'epigraphy[name]' => 'Updated Name',
-            'epigraphy[label]' => 'Updated Label',
-            'epigraphy[description]' => 'Updated Description',
+        'inscriptionStyle[name]' => 'Updated Name',
+            'inscriptionStyle[label]' => 'Updated Label',
+            'inscriptionStyle[description]' => 'Updated Description',
                     ]);
 
         $this->client->submit($form);
-        $this->assertTrue($this->client->getResponse()->isRedirect('/epigraphy/1'));
+        $this->assertTrue($this->client->getResponse()->isRedirect('/inscription_style/1'));
         $responseCrawler = $this->client->followRedirect();
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertEquals(1, $responseCrawler->filter('td:contains("Updated Name")')->count());
@@ -248,7 +240,7 @@ class EpigraphyTest extends ControllerBaseCase {
      * @group new
      */
     public function testAnonNew() {
-        $crawler = $this->client->request('GET', '/epigraphy/new');
+        $crawler = $this->client->request('GET', '/inscription_style/new');
         $this->assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
     }
@@ -258,7 +250,7 @@ class EpigraphyTest extends ControllerBaseCase {
      * @group new
      */
     public function testAnonNewPopup() {
-        $crawler = $this->client->request('GET', '/epigraphy/new_popup');
+        $crawler = $this->client->request('GET', '/inscription_style/new_popup');
         $this->assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
     }
@@ -269,7 +261,7 @@ class EpigraphyTest extends ControllerBaseCase {
      */
     public function testUserNew() {
         $this->login('user.user');
-        $crawler = $this->client->request('GET', '/epigraphy/new');
+        $crawler = $this->client->request('GET', '/inscription_style/new');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
 
@@ -279,7 +271,7 @@ class EpigraphyTest extends ControllerBaseCase {
      */
     public function testUserNewPopup() {
         $this->login('user.user');
-        $crawler = $this->client->request('GET', '/epigraphy/new_popup');
+        $crawler = $this->client->request('GET', '/inscription_style/new_popup');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
 
@@ -289,13 +281,13 @@ class EpigraphyTest extends ControllerBaseCase {
      */
     public function testAdminNew() {
         $this->login('user.admin');
-        $formCrawler = $this->client->request('GET', '/epigraphy/new');
+        $formCrawler = $this->client->request('GET', '/inscription_style/new');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Create')->form([
-        'epigraphy[name]' => 'New Name',
-            'epigraphy[label]' => 'New Label',
-            'epigraphy[description]' => 'New Description',
+        'inscriptionStyle[name]' => 'New Name',
+            'inscriptionStyle[label]' => 'New Label',
+            'inscriptionStyle[description]' => 'New Description',
                     ]);
 
         $this->client->submit($form);
@@ -313,13 +305,13 @@ class EpigraphyTest extends ControllerBaseCase {
      */
     public function testAdminNewPopup() {
         $this->login('user.admin');
-        $formCrawler = $this->client->request('GET', '/epigraphy/new_popup');
+        $formCrawler = $this->client->request('GET', '/inscription_style/new_popup');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Create')->form([
-        'epigraphy[name]' => 'New Name',
-            'epigraphy[label]' => 'New Label',
-            'epigraphy[description]' => 'New Description',
+        'inscriptionStyle[name]' => 'New Name',
+            'inscriptionStyle[label]' => 'New Label',
+            'inscriptionStyle[description]' => 'New Description',
                     ]);
 
         $this->client->submit($form);
@@ -336,10 +328,10 @@ class EpigraphyTest extends ControllerBaseCase {
      * @group delete
      */
     public function testAdminDelete() {
-        $repo = self::$container->get(EpigraphyRepository::class);
+        $repo = self::$container->get(InscriptionStyleRepository::class);
         $preCount = count($repo->findAll());
         $this->login('user.admin');
-        $crawler = $this->client->request('GET', '/epigraphy/1');
+        $crawler = $this->client->request('GET', '/inscription_style/1');
         $form = $crawler->selectButton('Delete')->form();
         $this->client->submit($form);
 

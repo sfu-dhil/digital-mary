@@ -41,7 +41,7 @@ class ItemFixtures extends Fixture implements DependentFixtureInterface {
 
             $fixture->setCategory($this->getReference('category.' . $i));
             $fixture->setCivilization($this->getReference('civilization.' . $i));
-            $fixture->setEpigraphy($this->getReference('epigraphy.' . $i));
+            $fixture->setInscriptionStyle($this->getReference('inscriptionStyle.' . $i));
             $fixture->setFindSpot($this->getReference('location.' . $i));
             $fixture->setProvenance($this->getReference('location.' . $i));
             $fixture->addMaterial($this->getReference('material.' . $i));
@@ -65,7 +65,7 @@ class ItemFixtures extends Fixture implements DependentFixtureInterface {
             CategoryFixtures::class,
             CircaDateFixtures::class,
             CivilizationFixtures::class,
-            EpigraphyFixtures::class,
+            InscriptionStyleFixtures::class,
             LocationFixtures::class,
             MaterialFixtures::class,
             SubjectFixtures::class,

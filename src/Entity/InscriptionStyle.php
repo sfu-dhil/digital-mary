@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Repository\EpigraphyRepository;
+use App\Repository\InscriptionStyleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,12 +19,12 @@ use Nines\UtilBundle\Entity\AbstractTerm;
 /**
  * The type of writing or inscription present on the item.
  *
- * @ORM\Entity(repositoryClass=EpigraphyRepository::class)
+ * @ORM\Entity(repositoryClass=InscriptionStyleRepository::class)
  */
-class Epigraphy extends AbstractTerm {
+class InscriptionStyle extends AbstractTerm {
     /**
      * @var Collection|Item[]
-     * @ORM\OneToMany(targetEntity="App\Entity\Item", mappedBy="epigraphy")
+     * @ORM\OneToMany(targetEntity="App\Entity\Item", mappedBy="inscriptionStyle")
      */
     private $items;
 
@@ -43,7 +43,7 @@ class Epigraphy extends AbstractTerm {
     public function addItem(Item $item) : self {
         if ( ! $this->items->contains($item)) {
             $this->items[] = $item;
-            $item->setEpigraphy($this);
+            $item->setInscriptionStyle($this);
         }
 
         return $this;
@@ -53,8 +53,8 @@ class Epigraphy extends AbstractTerm {
         if ($this->items->contains($item)) {
             $this->items->removeElement($item);
             // set the owning side to null (unless already changed)
-            if ($item->getEpigraphy() === $this) {
-                $item->setEpigraphy(null);
+            if ($item->getInscriptionStyle() === $this) {
+                $item->setInscriptionStyle(null);
             }
         }
 

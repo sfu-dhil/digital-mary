@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace App\Form;
 
-use App\Entity\Epigraphy;
+use App\Entity\InscriptionStyle;
 use Nines\UtilBundle\Form\TermType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -19,9 +19,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Epigraphy form.
+ * InscriptionStyle form.
  */
-class EpigraphyType extends TermType {
+class InscriptionStyleType extends TermType {
     /**
      * Add form fields to $builder.
      */
@@ -37,7 +37,7 @@ class EpigraphyType extends TermType {
      */
     public function configureOptions(OptionsResolver $resolver) : void {
         $resolver->setDefaults([
-            'data_class' => Epigraphy::class,
+            'data_class' => InscriptionStyle::class,
         ]);
     }
 }

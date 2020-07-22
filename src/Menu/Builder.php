@@ -76,34 +76,31 @@ class Builder implements ContainerAwareInterface {
         $browse->setLinkAttribute('class', 'dropdown-toggle');
         $browse->setLinkAttribute('data-toggle', 'dropdown');
         $browse->setChildrenAttribute('class', 'dropdown-menu');
-        $browse->addChild('Items', [
+        $browse->addChild('Item', [
             'route' => 'item_index',
         ]);
-        $browse->addChild('Items', [
-            'route' => 'item_index',
-        ]);
-        $browse->addChild('Categories', [
+        $browse->addChild('Category', [
             'route' => 'category_index',
         ]);
-        $browse->addChild('Civilizations', [
+        $browse->addChild('Civilization', [
             'route' => 'civilization_index',
         ]);
-        $browse->addChild('Epigraphies', [
-            'route' => 'epigraphy_index',
+        $browse->addChild('Inscription Style', [
+            'route' => 'inscription_style_index',
         ]);
-        $browse->addChild('Images', [
+        $browse->addChild('Image', [
             'route' => 'image_index',
         ]);
-        $browse->addChild('Locations', [
+        $browse->addChild('Location', [
             'route' => 'location_index',
         ]);
-        $browse->addChild('Materials', [
+        $browse->addChild('Material', [
             'route' => 'material_index',
         ]);
         $browse->addChild('Subject', [
             'route' => 'subject_index',
         ]);
-        $browse->addChild('Techniques', [
+        $browse->addChild('Technique', [
             'route' => 'technique_index',
         ]);
 
@@ -115,7 +112,7 @@ class Builder implements ContainerAwareInterface {
                 'role' => 'separator',
                 'class' => 'divider',
             ]);
-            $browse->addChild('Dates', [
+            $browse->addChild('Date', [
                 'route' => 'circa_date_index',
             ]);
         }

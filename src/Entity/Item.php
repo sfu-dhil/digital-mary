@@ -86,10 +86,10 @@ class Item extends AbstractEntity {
     private $civilization;
 
     /**
-     * @var Epigraphy
-     * @ORM\ManyToOne(targetEntity="App\Entity\Epigraphy", inversedBy="items")
+     * @var InscriptionStyle
+     * @ORM\ManyToOne(targetEntity="App\Entity\InscriptionStyle", inversedBy="items")
      */
-    private $epigraphy;
+    private $inscriptionStyle;
 
     /**
      * @var Location
@@ -258,12 +258,12 @@ class Item extends AbstractEntity {
         return $this;
     }
 
-    public function getEpigraphy() : ?Epigraphy {
-        return $this->epigraphy;
+    public function getInscriptionStyle() : ?InscriptionStyle {
+        return $this->inscriptionStyle;
     }
 
-    public function setEpigraphy(?Epigraphy $epigraphy) : self {
-        $this->epigraphy = $epigraphy;
+    public function setInscriptionStyle(?InscriptionStyle $inscriptionStyle) : self {
+        $this->inscriptionStyle = $inscriptionStyle;
 
         return $this;
     }

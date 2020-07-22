@@ -90,7 +90,7 @@ class CivilizationTest extends ControllerBaseCase {
      * @group typeahead
      */
     public function testAnonTypeahead() {
-        $this->client->request('GET', '/civilization/typeahead?q=new');
+        $this->client->request('GET', '/civilization/typeahead?q=civilization');
         $response = $this->client->getResponse();
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
         if(self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
@@ -108,7 +108,7 @@ class CivilizationTest extends ControllerBaseCase {
      */
     public function testUserTypeahead() {
         $this->login('user.user');
-        $this->client->request('GET', '/civilization/typeahead?q=new');
+        $this->client->request('GET', '/civilization/typeahead?q=civilization');
         $response = $this->client->getResponse();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertEquals('application/json', $response->headers->get('content-type'));
@@ -122,7 +122,7 @@ class CivilizationTest extends ControllerBaseCase {
      */
     public function testAdminTypeahead() {
         $this->login('user.admin');
-        $this->client->request('GET', '/civilization/typeahead?q=new');
+        $this->client->request('GET', '/civilization/typeahead?q=civilization');
         $response = $this->client->getResponse();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertEquals('application/json', $response->headers->get('content-type'));
@@ -156,10 +156,6 @@ class CivilizationTest extends ControllerBaseCase {
     public function testUserSearch() : void {
         $crawler = $this->client->request('GET', '/civilization/search');
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
-        if(self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
-            // If authentication is required stop here.
-            return;
-        }
 
         $this->login('user.user');
         $repo = $this->createMock(CivilizationRepository::class);
@@ -179,12 +175,8 @@ class CivilizationTest extends ControllerBaseCase {
     public function testAdminSearch() : void {
         $crawler = $this->client->request('GET', '/civilization/search');
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
-        if(self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
-            // If authentication is required stop here.
-            return;
-        }
 
-        $this->login('user.user');
+        $this->login('user.admin');
         $repo = $this->createMock(CivilizationRepository::class);
         $repo->method('searchQuery')->willReturn([$this->getReference('civilization.1')]);
         $this->client->disableReboot();
