@@ -1,25 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Epigraphy List{% endblock %}
+{% block title %}Inscription Style List{% endblock %}
 
 {% block pageheader %}
-    <h1>Epigraphy List</h1>
+    <h1>Inscription Style List</h1>
     <p class="count">
         Displaying {{ epigraphies|length }} epigraphies of {{ epigraphies.getTotalItemCount }} total.
     </p>
- {% endblock %} 
+ {% endblock %}
 
 {% block body %}
 
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
             {% if is_granted('ROLE_ADMIN') %}
-            <a href="{{ path('epigraphy_new') }}" class="btn btn-default">
+            <a href="{{ path('inscription_style_new') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-plus"></span> New
             </a>
             {% endif %}
 
-            <a href="{{ path('epigraphy_search') }}" class="btn btn-default">
+            <a href="{{ path('inscription_style_search') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-search"></span> Search
             </a>
         </div>
@@ -31,30 +31,30 @@
                 <th>ID</th>                                           <th>Name</th>
                                                                <th>Label</th>
                                                                <th>Description</th>
-                    
+
             </tr>
         </thead>
         <tbody>
-        {% for epigraphy in epigraphies %}
+        {% for inscription_style in epigraphies %}
             <tr>
 
                 <td>
-                    <a href="{{ path('epigraphy_show', { 'id': epigraphy.id }) }}">
-                        {{ epigraphy.id }}
+                    <a href="{{ path('inscription_style_show', { 'id': inscription_style.id }) }}">
+                        {{ inscription_style.id }}
                     </a>
                 </td>
                 <td>
-                    {{ epigraphy.name }}
+                    {{ inscription_style.name }}
                 </td>
-            
+
                 <td>
-                    {{ epigraphy.label }}
+                    {{ inscription_style.label }}
                 </td>
-            
+
                 <td>
-                    {{ epigraphy.description }}
+                    {{ inscription_style.description }}
                 </td>
-            
+
             </tr>
         {% endfor %}
         </tbody>

@@ -72,11 +72,11 @@
                 </td>
             </tr>
             <tr>
-                <th>Epigraphy</th>
+                <th>Inscription Style</th>
                 <td>
-                    {% if item.epigraphy %}
-                        <a href='{{ path('epigraphy_show', {'id': item.epigraphy.id}) }}'>
-                            {{ item.epigraphy }}
+                    {% if item.inscription_style %}
+                        <a href='{{ path('inscription_style_show', {'id': item.inscription_style.id}) }}'>
+                            {{ item.inscription_style }}
                         </a>
                     {% endif %}
                 </td>
