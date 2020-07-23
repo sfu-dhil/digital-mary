@@ -105,7 +105,7 @@ class Item extends AbstractEntity {
 
     /**
      * @var Collection|Image[]
-     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="item")
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="item", cascade={"REMOVE"})
      */
     private $images;
 
@@ -123,7 +123,7 @@ class Item extends AbstractEntity {
 
     /**
      * @var Collection|RemoteImage[]
-     * @ORM\OneToMany(targetEntity="App\Entity\RemoteImage", mappedBy="item")
+     * @ORM\OneToMany(targetEntity="App\Entity\RemoteImage", mappedBy="item", cascade={"REMOVE"})
      */
     private $remoteImages;
 

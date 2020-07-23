@@ -74,9 +74,9 @@
             <tr>
                 <th>Inscription Style</th>
                 <td>
-                    {% if item.inscription_style %}
-                        <a href='{{ path('inscription_style_show', {'id': item.inscription_style.id}) }}'>
-                            {{ item.inscription_style }}
+                    {% if item.inscriptionStyle %}
+                        <a href='{{ path('inscription_style_show', {'id': item.inscriptionStyle.id}) }}'>
+                            {{ item.inscriptionStyle }}
                         </a>
                     {% endif %}
                 </td>
