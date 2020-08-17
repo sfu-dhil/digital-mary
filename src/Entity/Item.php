@@ -63,7 +63,7 @@ class Item extends AbstractEntity {
      * A mapping of dates -> initials.
      *
      * @var array
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="array")
      */
     private $revisions;
 
