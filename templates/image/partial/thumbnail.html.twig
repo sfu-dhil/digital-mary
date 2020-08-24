@@ -28,6 +28,10 @@
                 {{ image.item }}
             </a>
         </p>
+
+        {% if image.license %}
+            {{ image.license|raw }}
+        {% endif %}
     </div>
 
 </div>
