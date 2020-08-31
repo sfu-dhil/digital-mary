@@ -30,7 +30,6 @@ body > .container {
 }
 
 /* Custom app styles */
-
 label.required::after {
     content: ' *';
     color: red;
@@ -70,20 +69,16 @@ tbody tr th {
     width: 20%;
 }
 
-@media (max-width: 480px) {
-    ul.columnated {
-        -moz-column-count: 1;
-        -webkit-column-count: 1;
-        column-count: 1;
-    }
-}
-
 div.collection-complex > div:not(:last-child) {
     padding-top: 15px;
     border: 1px solid rgba(128, 128, 128, 0.31);
 }
 
 /* Image gallery styles. */
+.thumbnail {
+    word-wrap: break-word;
+}
+
 .thumbnail-small {
     max-width: 160px;
     max-height: 124px;

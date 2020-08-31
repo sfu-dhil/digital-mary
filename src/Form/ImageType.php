@@ -17,6 +17,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -64,6 +65,14 @@ class ImageType extends AbstractType {
         ]);
         $builder->add('description', null, [
             'label' => 'Description',
+            'required' => false,
+            'attr' => [
+                'help_block' => '',
+                'class' => 'tinymce',
+            ],
+        ]);
+        $builder->add('license', TextareaType::class, [
+            'label' => 'License',
             'required' => false,
             'attr' => [
                 'help_block' => '',

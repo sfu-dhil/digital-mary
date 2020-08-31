@@ -79,6 +79,12 @@ class Image extends AbstractEntity {
     private $description;
 
     /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $license;
+
+    /**
      * @var Item
      * @ORM\ManyToOne(targetEntity="App\Entity\Item", inversedBy="images")
      * @ORM\JoinColumn(nullable=false)
@@ -216,6 +222,17 @@ class Image extends AbstractEntity {
     public function setThumbPath(string $thumbPath): self
     {
         $this->thumbPath = $thumbPath;
+
+        return $this;
+    }
+    public function getLicense(): ?string
+    {
+        return $this->license;
+    }
+
+    public function setLicense(string $license): self
+    {
+        $this->license = $license;
 
         return $this;
     }
