@@ -1,0 +1,482 @@
+@charset "UTF-8";
+/*
+ * Base SCSS stylesheet for the Manuscript Verse Miscellanies
+ * Database.
+ *
+ * @author: Joey Takeda (DHIL)
+ * @date: 2020
+ */
+/**
+* Namespaces
+*
+**/
+/**
+* Imports
+*
+* Note that it's necessary to call the mixins _scss first. When we do put this into production,
+* we'll have a yarn package for the DHIL mixins that we can download using yarn.
+**/
+/* Mixins file, which we should try and use globally across DHIL projects,
+since there's stuff I tend to do quite a bit.
+ */
+/* Make sure to import the modularscale-sass library */
+/* @dhil-headers
+ *
+ * Standard header creation from a typescale
+ */
+/* @dhil-reset
+ *
+ * Adds a number of resets that are common across the dhil
+ */
+/* @dhil-make-navbar
+ *
+ * Resets and customizes the navbar
+ */
+/* @dhil-gallery
+ *
+ * Creates a standard gallery view (note that we used to do this with flex,
+ * but grid is much better for handling variable numbers of objects)
+ */
+/* @dhil-clamp-lines
+ *
+ * Clamps lines at a particular vertical line length with a fallback for unsupported
+ * browsers.
+ */
+/* 'Nunito Sans' normal 200*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 200;
+  src: local("Nunito Sans ExtraLight"), local("NunitoSans-ExtraLight"), url("/digital-mary/public/fonts/NunitoSans-ExtraLight-200.woff2") format("woff2"), url("/digital-mary/public/fonts/NunitoSans-ExtraLight-200.woff") format("woff");
+}
+/* 'Nunito Sans' normal 300*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 300;
+  src: local("Nunito Sans Light"), local("NunitoSans-Light"), url("/digital-mary/public/fonts/NunitoSans-Light-300.woff2") format("woff2"), url("/digital-mary/public/fonts/NunitoSans-Light-300.woff") format("woff");
+}
+/* 'Nunito Sans' italic 200*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: italic;
+  font-weight: 200;
+  src: local("Nunito Sans ExtraLight Italic"), local("NunitoSans-ExtraLightItalic"), url("/digital-mary/public/fonts/NunitoSans-ExtraLightItalic-200.woff2") format("woff2"), url("/digital-mary/public/fonts/NunitoSans-ExtraLightItalic-200.woff") format("woff");
+}
+/* 'Nunito Sans' italic 300*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: italic;
+  font-weight: 300;
+  src: local("Nunito Sans Light Italic"), local("NunitoSans-LightItalic"), url("/digital-mary/public/fonts/NunitoSans-LightItalic-300.woff2") format("woff2"), url("/digital-mary/public/fonts/NunitoSans-LightItalic-300.woff") format("woff");
+}
+/* 'Nunito Sans' normal 400*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Nunito Sans Regular"), local("NunitoSans-Regular"), url("/digital-mary/public/fonts/NunitoSans-Regular-400.woff2") format("woff2"), url("/digital-mary/public/fonts/NunitoSans-Regular-400.woff") format("woff");
+}
+/* 'Nunito Sans' italic 400*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: italic;
+  font-weight: 400;
+  src: local("Nunito Sans Italic"), local("NunitoSans-Italic"), url("/digital-mary/public/fonts/NunitoSans-Italic-400.woff2") format("woff2"), url("/digital-mary/public/fonts/NunitoSans-Italic-400.woff") format("woff");
+}
+/* 'Nunito Sans' normal 700*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 700;
+  src: local("Nunito Sans Bold"), local("NunitoSans-Bold"), url("/digital-mary/public/fonts/NunitoSans-Bold-700.woff2") format("woff2"), url("/digital-mary/public/fonts/NunitoSans-Bold-700.woff") format("woff");
+}
+/* 'Nunito Sans' italic 700*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: italic;
+  font-weight: 700;
+  src: local("Nunito Sans Bold Italic"), local("NunitoSans-BoldItalic"), url("/digital-mary/public/fonts/NunitoSans-BoldItalic-700.woff2") format("woff2"), url("/digital-mary/public/fonts/NunitoSans-BoldItalic-700.woff") format("woff");
+}
+/* 'Nunito Sans' normal 800*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 800;
+  src: local("Nunito Sans ExtraBold"), local("NunitoSans-ExtraBold"), url("/digital-mary/public/fonts/NunitoSans-ExtraBold-800.woff2") format("woff2"), url("/digital-mary/public/fonts/NunitoSans-ExtraBold-800.woff") format("woff");
+}
+/* 'Nunito Sans' italic 800*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: italic;
+  font-weight: 800;
+  src: local("Nunito Sans ExtraBold Italic"), local("NunitoSans-ExtraBoldItalic"), url("/digital-mary/public/fonts/NunitoSans-ExtraBoldItalic-800.woff2") format("woff2"), url("/digital-mary/public/fonts/NunitoSans-ExtraBoldItalic-800.woff") format("woff");
+}
+/* 'Nunito Sans' normal 900*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 900;
+  src: local("Nunito Sans Black"), local("NunitoSans-Black"), url("/digital-mary/public/fonts/NunitoSans-Black-900.woff2") format("woff2"), url("/digital-mary/public/fonts/NunitoSans-Black-900.woff") format("woff");
+}
+/* 'Nunito Sans' italic 900*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: italic;
+  font-weight: 900;
+  src: local("Nunito Sans Black Italic"), local("NunitoSans-BlackItalic"), url("/digital-mary/public/fonts/NunitoSans-BlackItalic-900.woff2") format("woff2"), url("/digital-mary/public/fonts/NunitoSans-BlackItalic-900.woff") format("woff");
+}
+/* 'Crimson Text' normal 400*/
+@font-face {
+  font-family: "Crimson Text";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Crimson Text Regular"), local("CrimsonText-Regular"), url("/digital-mary/public/fonts/CrimsonText-Regular-400.woff2") format("woff2"), url("/digital-mary/public/fonts/CrimsonText-Regular-400.woff") format("woff");
+}
+/* 'Crimson Text' italic 400*/
+@font-face {
+  font-family: "Crimson Text";
+  font-style: italic;
+  font-weight: 400;
+  src: local("Crimson Text Italic"), local("CrimsonText-Italic"), url("/digital-mary/public/fonts/CrimsonText-Italic-400.woff2") format("woff2"), url("/digital-mary/public/fonts/CrimsonText-Italic-400.woff") format("woff");
+}
+/* 'Crimson Text' normal 600*/
+@font-face {
+  font-family: "Crimson Text";
+  font-style: normal;
+  font-weight: 600;
+  src: local("Crimson Text SemiBold"), local("CrimsonText-SemiBold"), url("/digital-mary/public/fonts/CrimsonText-SemiBold-600.woff2") format("woff2"), url("/digital-mary/public/fonts/CrimsonText-SemiBold-600.woff") format("woff");
+}
+/* 'Crimson Text' italic 600*/
+@font-face {
+  font-family: "Crimson Text";
+  font-style: italic;
+  font-weight: 600;
+  src: local("Crimson Text SemiBold Italic"), local("CrimsonText-SemiBoldItalic"), url("/digital-mary/public/fonts/CrimsonText-SemiBoldItalic-600.woff2") format("woff2"), url("/digital-mary/public/fonts/CrimsonText-SemiBoldItalic-600.woff") format("woff");
+}
+/* 'Crimson Text' normal 700*/
+@font-face {
+  font-family: "Crimson Text";
+  font-style: normal;
+  font-weight: 700;
+  src: local("Crimson Text Bold"), local("CrimsonText-Bold"), url("/digital-mary/public/fonts/CrimsonText-Bold-700.woff2") format("woff2"), url("/digital-mary/public/fonts/CrimsonText-Bold-700.woff") format("woff");
+}
+/* 'Crimson Text' italic 700*/
+@font-face {
+  font-family: "Crimson Text";
+  font-style: italic;
+  font-weight: 700;
+  src: local("Crimson Text Bold Italic"), local("CrimsonText-BoldItalic"), url("/digital-mary/public/fonts/CrimsonText-BoldItalic-700.woff2") format("woff2"), url("/digital-mary/public/fonts/CrimsonText-BoldItalic-700.woff") format("woff");
+}
+h1 {
+  font-size: 2.6180340252rem;
+  font-family: "Crimson Text";
+}
+h1 > a {
+  line-height: 1.4;
+}
+
+h2 {
+  font-size: 1.618034rem;
+  font-family: "Crimson Text";
+}
+h2 > a {
+  line-height: 1.4;
+}
+
+h3 {
+  font-size: 1rem;
+  font-family: "Crimson Text";
+}
+h3 > a {
+  line-height: 1.4;
+}
+
+h4 {
+  font-size: 1rem;
+  font-family: "Crimson Text";
+}
+h4 > a {
+  line-height: 1.4;
+}
+
+h5 {
+  font-size: 1rem;
+  font-family: "Crimson Text";
+}
+h5 > a {
+  line-height: 1.4;
+}
+
+html, body {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+article {
+  min-height: 100vh;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  line-height: 1.6;
+}
+
+html, body, .dropdown-menu {
+  font-family: "Nunito Sans";
+}
+
+.navbar-default {
+  /* Fix the height to make it easier to have sticky
+     positioned things  */
+  min-height: unset;
+  height: 50px;
+  /* Change the width to 100vw rather than 100%, since 100% causes
+     jump behaviour when overflow-y on the body is set to hidden
+   */
+  width: 100vw;
+  padding-right: 5px;
+  /* Set the background colour */
+  background: #C0B283;
+  text-transform: uppercase;
+  /* Reset the fixed-top to be sticky rather than fixed,
+     so to avoid the problem with fixed position things overlapping
+   */
+  /* Switch the text colour */
+}
+.navbar-default .navbar-nav > li > a:hover {
+  color: #ffffff;
+}
+.navbar-default.navbar-fixed-top {
+  position: sticky !important;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #ffffff;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 1.618034rem;
+  grid-row-gap: 1.618034rem;
+}
+
+.tag-list {
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+.tag-list > li {
+  margin-top: 0.3819660059rem;
+  margin-bottom: 0.3819660059rem;
+  margin-right: 0.3819660059rem;
+  transition: border-color 0.2s ease-in-out, background 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+.tag-list > li > a {
+  padding: 0.3819660059rem 0.3819660059rem;
+  display: inline-block;
+  transition: border-color 0.2s ease-in-out, background 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+.tag-list > li > a:hover {
+  text-decoration: none;
+}
+.tag-list li {
+  background: #E7DED1;
+}
+.tag-list li:hover {
+  background: #C0B283;
+}
+.tag-list li:hover > a {
+  color: white;
+  border-color: #E7DED1;
+}
+.tag-list li > a {
+  margin: 0.3819660059rem;
+  border: 2px solid white;
+  color: black;
+  padding: 0.3819660059rem 0.6180339845rem;
+}
+
+.gallery .item {
+  height: 20rem;
+  display: flex;
+  flex-direction: column;
+  border: 0.2360679726rem solid rgba(192, 178, 131, 0.1);
+  --img: url("https://via.placeholder.com/800?text=NO%20IMAGE%20AVAILABLE");
+  background-image: var(--img);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.gallery .item h2 {
+  width: 100%;
+  padding: 1rem 0.6180339845rem;
+  text-align: center;
+  font-size: 1.5rem;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  margin-top: auto;
+  margin-bottom: 0.6180339845rem;
+}
+
+.item_show .content {
+  display: grid;
+}
+@media (min-width: 767px) {
+  .item_show .content {
+    grid-template-columns: 1fr 1.5fr;
+    grid-column-gap: 5rem;
+  }
+}
+@media (max-width: 767px) {
+  .item_show .content .images {
+    grid-row: 1;
+  }
+}
+
+a.zoomable {
+  cursor: zoom-in;
+}
+a.zoomable img {
+  transform: scale(1);
+}
+a.zoomable:hover img {
+  transform: scale(1.01);
+}
+
+dt {
+  text-transform: lowercase;
+  font-variant: small-caps;
+  font-size: 1.618034rem;
+  margin-bottom: 0.2360679726rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+}
+
+dd {
+  margin-bottom: 1.618034rem;
+}
+
+.img-content {
+  top: 50px;
+  position: sticky;
+}
+
+/* Carousel */
+#carousel {
+  height: 450px;
+  background: rgba(231, 222, 209, 0.25);
+}
+#carousel .carousel-inner {
+  height: 100%;
+}
+#carousel .carousel-control {
+  background: transparent;
+}
+#carousel .carousel-indicators {
+  bottom: -8px;
+}
+#carousel .carousel-indicators li {
+  border: 2px solid #C0B283;
+  width: 20px;
+  height: 20px;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+/* Menu bar styling */
+a.dropdown-toggle::after {
+  content: "▾";
+  padding-left: 0.3em;
+  font-size: small;
+}
+
+/* Custom app styles */
+label.required::after {
+  content: " *";
+  color: red;
+  font-weight: bold;
+}
+
+a[href^="mailto:"]::after {
+  content: "✉";
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  padding-left: 0.5ex;
+  font-family: "Glyphicons Halflings";
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a[href^="http://"]::after,
+a[href^="https://"]::after {
+  content: "";
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  padding-left: 0.5ex;
+  font-family: "Glyphicons Halflings";
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+tbody tr th {
+  width: 20%;
+}
+
+@media (max-width: 480px) {
+  ul.columnated {
+    -moz-column-count: 1;
+    -webkit-column-count: 1;
+    column-count: 1;
+  }
+}
+div.collection-complex > div:not(:last-child) {
+  padding-top: 15px;
+  border: 1px solid rgba(128, 128, 128, 0.31);
+}
+
+/* Image gallery styles. */
+.thumbnail-small {
+  max-width: 160px;
+  max-height: 124px;
+  margin: 0 auto;
+}
+
+.img-container {
+  height: 160px;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.thumbnail .caption {
+  margin-top: 15px;
+}
+
+.thumbnail .title {
+  margin-bottom: 15px;
+}
+
+.thumbnail .img-thumbnail {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/*# sourceMappingURL=ndm.css.map */

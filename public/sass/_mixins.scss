@@ -1,0 +1,156 @@
+/* Mixins file, which we should try and use globally across DHIL projects,
+since there's stuff I tend to do quite a bit.
+ */
+
+/* Make sure to import the modularscale-sass library */
+@import '../yarn/modularscale-sass/stylesheets/_modularscale.scss';
+
+$heading-font: 'Serif'!default;
+$body-font: 'Sans'!default;
+$modscale-start: 4!default;
+$base-font-size: 16px!default;
+$base-line-height: 1.6!default;
+$nav-height: 50px!default;
+
+
+/* @dhil-headers
+ *
+ * Standard header creation from a typescale
+ */
+@mixin dhil-headers{
+  @for $i from 1 to 6 {
+    $h-scale: max($modscale-start - $i, 0);
+    h#{$i} {
+      font-size: ms($h-scale);
+      font-family: $heading-font;
+      & > a{
+        line-height: 1.4;
+      }
+    }
+  }
+}
+
+/* @dhil-reset
+ *
+ * Adds a number of resets that are common across the dhil
+ */
+@mixin dhil-reset{
+  html, body{
+    font-size: $base-font-size;
+    line-height: $base-line-height;
+  }
+  article{
+    min-height:100vh;
+  }
+  *{
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    line-height: $base-line-height;
+  }
+
+}
+
+/* @dhil-make-navbar
+ *
+ * Resets and customizes the navbar
+ */
+@mixin dhil-make-navbar($background, $text-color, $text-callback: none){
+   .navbar-default{
+    /* Fix the height to make it easier to have sticky
+       positioned things  */
+     min-height:unset;
+     height: $nav-height;
+
+     /* Change the width to 100vw rather than 100%, since 100% causes
+        jump behaviour when overflow-y on the body is set to hidden
+      */
+     width:100vw;
+     padding-right:5px;
+
+     /* Set the background colour */
+     background: $background;
+     @content;
+
+     /* Reset the fixed-top to be sticky rather than fixed,
+        so to avoid the problem with fixed position things overlapping
+      */
+     &.navbar-fixed-top{
+      position:sticky!important;
+     }
+
+     /* Switch the text colour */
+    .navbar-nav{
+      & > li {
+        & > a {
+          color: $text-color;
+        }
+      }
+    }
+  }
+}
+
+@mixin dhil-tags ($tagListClass: 'tags', $tagItemClass: 'tag'){
+  .tag-list{
+    list-style-type:none;
+    display:flex;
+    flex-wrap:wrap;
+    margin: 0;
+    padding: 0;
+    align-items:center;
+    & > li{
+      margin-top: ms(-2);
+      margin-bottom:ms(-2);
+      margin-right: ms(-2);
+      transition: border-color 0.2s ease-in-out,
+      background 0.2s ease-in-out,
+      color 0.2s ease-in-out;
+      & > a{
+        padding: ms(-2) ms(-2);
+        display:inline-block;
+        transition: border-color 0.2s ease-in-out,
+        background 0.2s ease-in-out,
+        color 0.2s ease-in-out;
+        &:hover{
+          text-decoration:none;
+        }
+      }
+    }
+    @content;
+  }
+}
+
+
+/* @dhil-gallery
+ *
+ * Creates a standard gallery view (note that we used to do this with flex,
+ * but grid is much better for handling variable numbers of objects)
+ */
+@mixin dhil-gallery($class: 'gallery', $count: 3, $column-gap: 1rem, $row-gap: 1rem){
+  .#{$class} {
+    display:grid;
+    grid-template-columns: repeat(#{$count}, 1fr);
+    grid-column-gap: $column-gap;
+    grid-row-gap: $row-gap;
+  }
+}
+
+/* @dhil-clamp-lines
+ *
+ * Clamps lines at a particular vertical line length with a fallback for unsupported
+ * browsers.
+ */
+@mixin dhil-clamp-lines($lines, $font-size: $base-font-size, $line-height: $base-line-height){
+
+  max-height: #{$lines * $font-size}em;
+
+  /* But if -webkit-box is available, then we can use the much nicer -webkit-line-clamp,
+   * which provdes ellipses when truncated */
+  @supports (display: -webkit-box){
+    max-height:unset;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+  }
+}

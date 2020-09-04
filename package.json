@@ -9,9 +9,11 @@
     "bootstrap3": "^3.3",
     "jquery": "^3.5",
     "jquery-ui-dist": "^1.12",
+    "modularscale-sass": "^3.0.10",
     "select2": "^4.0",
     "select2-bootstrap-css": "^1.4",
     "symfony-collection": "^2.1",
-    "tinymce": "^5.4"
+    "tinymce": "^5.4",
+    "viewerjs": "^1.6.1"
   }
 }

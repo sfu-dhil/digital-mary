@@ -9,8 +9,7 @@
     </p>
 {% endblock %}
 
-{% block body %}
-
+{% block admin %}
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
             {% if is_granted('ROLE_ADMIN') %}
@@ -22,7 +21,12 @@
                 <span class="glyphicon glyphicon-search"></span> Search </a>
         </div>
     </div>
+{%  endblock %}
 
+{% block body %}
+    {% include 'item/partial/list.html.twig' %}
+
+    {#
     <table class="table table-bordered table-condensed table-hover table-striped">
         <thead>
             <tr>
@@ -54,9 +58,10 @@
             {% endfor %}
         </tbody>
     </table>
+    #}
 
-    <div class="navigation">
+    {#<div class="navigation">
         {{ knp_pagination_render(items) }}
-    </div>
+    </div> #}
 
 {% endblock %}

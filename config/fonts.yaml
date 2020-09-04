@@ -1,0 +1,16 @@
+fonts:
+  path: public/fonts
+  css: public/sass/_fonts.scss
+
+  families:
+    nunito-sans:
+      styles: [ 'normal', 'italic']
+      weights: ['100', '200', '300', '400', '500', '700', '800', '900']
+    crimson-text:
+      styles: [ 'normal', 'italic' ]
+      weights: ['400', '600', '700']
+  formats: [ 'woff2', 'woff' ]
+  subsets: [ 'latin', 'latin-ext' ]
+
+  filename: "{id}-{weight}.{ext}"
+  prefix: 'fonts'

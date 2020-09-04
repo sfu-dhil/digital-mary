@@ -1,0 +1,257 @@
+/*
+ * Base SCSS stylesheet for the Manuscript Verse Miscellanies
+ * Database.
+ *
+ * @author: Joey Takeda (DHIL)
+ * @date: 2020
+ */
+
+/**
+* Namespaces
+*
+**/
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:color';
+@use 'sass:list';
+
+/**
+* Imports
+*
+* Note that it's necessary to call the mixins _scss first. When we do put this into production,
+* we'll have a yarn package for the DHIL mixins that we can download using yarn.
+**/
+
+
+@import '_mixins.scss';
+@import '_fonts.scss';
+@import '_variables.scss';
+
+
+@include dhil-headers;
+@include dhil-reset;
+
+html, body, .dropdown-menu {
+  font-family: $body-font;
+}
+
+@include dhil-make-navbar($ndm-gold, $ndm-white){
+  text-transform:uppercase;
+  .navbar-nav{
+
+    & > li {
+      & > a:hover {
+        color: $ndm-white;
+      }
+    }
+  }
+};
+
+@include dhil-gallery('gallery', 3, ms(1), ms(1));
+@include dhil-tags(){
+  li{
+    background: $ndm-light-gold;
+    &:hover{
+      background: $ndm-gold;
+      & > a{
+        color:white;
+        border-color: $ndm-light-gold;
+      }
+    }
+    & > a{
+      margin: ms(-2);
+      border:2px solid white;
+      color:black;
+      padding:ms(-2) ms(-1);
+    }
+  }
+
+}
+
+.gallery .item{
+  height:20rem;
+  display:flex;
+  flex-direction:column;
+  border:ms(-3) solid rgba($ndm-gold, 0.1);
+  --img: url('https://via.placeholder.com/800?text=NO%20IMAGE%20AVAILABLE');
+  background-image: var(--img);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  h2{
+    width:100%;
+    padding:ms(0) ms(-1);
+    text-align:center;
+    font-size: ms(0) * 1.5;
+    background: rgba(black, 0.8);
+    color: white;
+    margin-top:auto;
+    margin-bottom: ms(-1);
+  }
+}
+
+
+.item_show .content{
+  display:grid;
+  @media (min-width: 767px){
+    grid-template-columns: 1fr 1.5fr;
+    grid-column-gap: 5rem;
+  }
+  @media(max-width: 767px){
+    .images{
+      grid-row: 1;
+    }
+  }
+}
+
+
+a.zoomable{
+  cursor: zoom-in;
+  img{
+    transform: scale(1);
+  }
+
+  &:hover{
+    img{
+      transform: scale(1.01);
+    }
+  }
+}
+
+dt{
+  text-transform: lowercase;
+  font-variant: small-caps;
+  font-size: ms(1);
+  margin-bottom:ms(-3);
+  font-weight:500;
+  letter-spacing:2px;
+}
+
+dd{
+  margin-bottom: ms(1);
+}
+
+.img-content{
+  top: $nav-height;
+  position:sticky;
+}
+
+
+
+/* Carousel */
+
+#carousel{
+  height:450px;
+  background: rgba($ndm-light-gold, 0.25);
+  .carousel-inner{
+    height:100%;
+  }
+  .carousel-control{
+    background:transparent;
+  }
+  .carousel-indicators{
+    bottom:-8px;
+    li{
+      border:2px solid $ndm-gold;
+      width:20px;
+      height:20px;
+    }
+
+  }
+}
+
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+
+/* Menu bar styling */
+a.dropdown-toggle::after {
+  content: "▾";
+  padding-left: 0.3em;
+  font-size: small;
+}
+
+
+/* Custom app styles */
+
+label.required::after {
+  content: ' *';
+  color: red;
+  font-weight: bold;
+}
+
+a[href ^= 'mailto:']::after {
+  content: "\2709";
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  padding-left: 0.5ex;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a[href ^= 'http://']::after,
+a[href ^= 'https://']::after {
+  content: "\e164";
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  padding-left: 0.5ex;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+tbody tr th {
+  width: 20%;
+}
+
+@media (max-width: 480px) {
+  ul.columnated {
+    -moz-column-count: 1;
+    -webkit-column-count: 1;
+    column-count: 1;
+  }
+}
+
+div.collection-complex > div:not(:last-child) {
+  padding-top: 15px;
+  border: 1px solid rgba(128, 128, 128, 0.31);
+}
+
+/* Image gallery styles. */
+.thumbnail-small {
+  max-width: 160px;
+  max-height: 124px;
+  margin: 0 auto;
+}
+
+.img-container {
+  height: 160px;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.thumbnail .caption {
+  margin-top: 15px;
+}
+.thumbnail .title {
+  margin-bottom: 15px;
+}
+.thumbnail .img-thumbnail {
+  max-width: 100%;
+  max-height: 100%;
+}
+

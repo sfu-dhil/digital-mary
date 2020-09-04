@@ -1,14 +1,18 @@
 {% if items|length > 0 %}
-    <h2>{{ head|default('Items') }}</h2>
-    <ul>
-        {% for item in items %}
-            <li>
-                <a href='{{ path('item_show', {'id': item.id}) }}'>
-                    {{ item }}
-                </a>
-            </li>
+    <div class="gallery">
+        {%  for item in items %}
+            <a class="item" href="{{ path('item_show', { 'id': item.id }) }}"
+                    {% if item.images|length > 0 %}
+                data-img="{{ path('item_image_thumbnail', {'id': item.id, 'image_id': item.images[0].id}) }}"
+                style="--img: url({{ path('item_image_thumbnail', {'id': item.id, 'image_id': item.images[0].id}) }})"
+                    {% endif %}>
+                <h2>{{  item.name }}</h2>
+                {# <div class="caption">
+                     <p>{{ item.description|raw }}</p>
+                 </div> #}
+            </a>
         {% endfor %}
-    </ul>
+    </div>
     <div class="navigation">
         {{ knp_pagination_render(items) }}
     </div>

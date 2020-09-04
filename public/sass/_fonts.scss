@@ -1,0 +1,180 @@
+
+/* 'Nunito Sans' normal 200*/
+@font-face {
+    font-family: 'Nunito Sans';
+    font-style: normal;
+    font-weight: 200;
+    src: local('Nunito Sans ExtraLight'),local('NunitoSans-ExtraLight'),
+    url('/digital-mary/public/fonts/NunitoSans-ExtraLight-200.woff2') format('woff2'),
+    url('/digital-mary/public/fonts/NunitoSans-ExtraLight-200.woff') format('woff');
+}
+
+/* 'Nunito Sans' normal 300*/
+@font-face {
+    font-family: 'Nunito Sans';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Nunito Sans Light'),local('NunitoSans-Light'),
+    url('/digital-mary/public/fonts/NunitoSans-Light-300.woff2') format('woff2'),
+    url('/digital-mary/public/fonts/NunitoSans-Light-300.woff') format('woff');
+}
+
+/* 'Nunito Sans' italic 200*/
+@font-face {
+    font-family: 'Nunito Sans';
+    font-style: italic;
+    font-weight: 200;
+    src: local('Nunito Sans ExtraLight Italic'),local('NunitoSans-ExtraLightItalic'),
+    url('/digital-mary/public/fonts/NunitoSans-ExtraLightItalic-200.woff2') format('woff2'),
+    url('/digital-mary/public/fonts/NunitoSans-ExtraLightItalic-200.woff') format('woff');
+}
+
+/* 'Nunito Sans' italic 300*/
+@font-face {
+    font-family: 'Nunito Sans';
+    font-style: italic;
+    font-weight: 300;
+    src: local('Nunito Sans Light Italic'),local('NunitoSans-LightItalic'),
+    url('/digital-mary/public/fonts/NunitoSans-LightItalic-300.woff2') format('woff2'),
+    url('/digital-mary/public/fonts/NunitoSans-LightItalic-300.woff') format('woff');
+}
+
+/* 'Nunito Sans' normal 400*/
+@font-face {
+    font-family: 'Nunito Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Nunito Sans Regular'),local('NunitoSans-Regular'),
+    url('/digital-mary/public/fonts/NunitoSans-Regular-400.woff2') format('woff2'),
+    url('/digital-mary/public/fonts/NunitoSans-Regular-400.woff') format('woff');
+}
+
+/* 'Nunito Sans' italic 400*/
+@font-face {
+    font-family: 'Nunito Sans';
+    font-style: italic;
+    font-weight: 400;
+    src: local('Nunito Sans Italic'),local('NunitoSans-Italic'),
+    url('/digital-mary/public/fonts/NunitoSans-Italic-400.woff2') format('woff2'),
+    url('/digital-mary/public/fonts/NunitoSans-Italic-400.woff') format('woff');
+}
+
+/* 'Nunito Sans' normal 700*/
+@font-face {
+    font-family: 'Nunito Sans';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Nunito Sans Bold'),local('NunitoSans-Bold'),
+    url('/digital-mary/public/fonts/NunitoSans-Bold-700.woff2') format('woff2'),
+    url('/digital-mary/public/fonts/NunitoSans-Bold-700.woff') format('woff');
+}
+
+/* 'Nunito Sans' italic 700*/
+@font-face {
+    font-family: 'Nunito Sans';
+    font-style: italic;
+    font-weight: 700;
+    src: local('Nunito Sans Bold Italic'),local('NunitoSans-BoldItalic'),
+    url('/digital-mary/public/fonts/NunitoSans-BoldItalic-700.woff2') format('woff2'),
+    url('/digital-mary/public/fonts/NunitoSans-BoldItalic-700.woff') format('woff');
+}
+
+/* 'Nunito Sans' normal 800*/
+@font-face {
+    font-family: 'Nunito Sans';
+    font-style: normal;
+    font-weight: 800;
+    src: local('Nunito Sans ExtraBold'),local('NunitoSans-ExtraBold'),
+    url('/digital-mary/public/fonts/NunitoSans-ExtraBold-800.woff2') format('woff2'),
+    url('/digital-mary/public/fonts/NunitoSans-ExtraBold-800.woff') format('woff');
+}
+
+/* 'Nunito Sans' italic 800*/
+@font-face {
+    font-family: 'Nunito Sans';
+    font-style: italic;
+    font-weight: 800;
+    src: local('Nunito Sans ExtraBold Italic'),local('NunitoSans-ExtraBoldItalic'),
+    url('/digital-mary/public/fonts/NunitoSans-ExtraBoldItalic-800.woff2') format('woff2'),
+    url('/digital-mary/public/fonts/NunitoSans-ExtraBoldItalic-800.woff') format('woff');
+}
+
+/* 'Nunito Sans' normal 900*/
+@font-face {
+    font-family: 'Nunito Sans';
+    font-style: normal;
+    font-weight: 900;
+    src: local('Nunito Sans Black'),local('NunitoSans-Black'),
+    url('/digital-mary/public/fonts/NunitoSans-Black-900.woff2') format('woff2'),
+    url('/digital-mary/public/fonts/NunitoSans-Black-900.woff') format('woff');
+}
+
+/* 'Nunito Sans' italic 900*/
+@font-face {
+    font-family: 'Nunito Sans';
+    font-style: italic;
+    font-weight: 900;
+    src: local('Nunito Sans Black Italic'),local('NunitoSans-BlackItalic'),
+    url('/digital-mary/public/fonts/NunitoSans-BlackItalic-900.woff2') format('woff2'),
+    url('/digital-mary/public/fonts/NunitoSans-BlackItalic-900.woff') format('woff');
+}
+
+/* 'Crimson Text' normal 400*/
+@font-face {
+    font-family: 'Crimson Text';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Crimson Text Regular'),local('CrimsonText-Regular'),
+    url('/digital-mary/public/fonts/CrimsonText-Regular-400.woff2') format('woff2'),
+    url('/digital-mary/public/fonts/CrimsonText-Regular-400.woff') format('woff');
+}
+
+/* 'Crimson Text' italic 400*/
+@font-face {
+    font-family: 'Crimson Text';
+    font-style: italic;
+    font-weight: 400;
+    src: local('Crimson Text Italic'),local('CrimsonText-Italic'),
+    url('/digital-mary/public/fonts/CrimsonText-Italic-400.woff2') format('woff2'),
+    url('/digital-mary/public/fonts/CrimsonText-Italic-400.woff') format('woff');
+}
+
+/* 'Crimson Text' normal 600*/
+@font-face {
+    font-family: 'Crimson Text';
+    font-style: normal;
+    font-weight: 600;
+    src: local('Crimson Text SemiBold'),local('CrimsonText-SemiBold'),
+    url('/digital-mary/public/fonts/CrimsonText-SemiBold-600.woff2') format('woff2'),
+    url('/digital-mary/public/fonts/CrimsonText-SemiBold-600.woff') format('woff');
+}
+
+/* 'Crimson Text' italic 600*/
+@font-face {
+    font-family: 'Crimson Text';
+    font-style: italic;
+    font-weight: 600;
+    src: local('Crimson Text SemiBold Italic'),local('CrimsonText-SemiBoldItalic'),
+    url('/digital-mary/public/fonts/CrimsonText-SemiBoldItalic-600.woff2') format('woff2'),
+    url('/digital-mary/public/fonts/CrimsonText-SemiBoldItalic-600.woff') format('woff');
+}
+
+/* 'Crimson Text' normal 700*/
+@font-face {
+    font-family: 'Crimson Text';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Crimson Text Bold'),local('CrimsonText-Bold'),
+    url('/digital-mary/public/fonts/CrimsonText-Bold-700.woff2') format('woff2'),
+    url('/digital-mary/public/fonts/CrimsonText-Bold-700.woff') format('woff');
+}
+
+/* 'Crimson Text' italic 700*/
+@font-face {
+    font-family: 'Crimson Text';
+    font-style: italic;
+    font-weight: 700;
+    src: local('Crimson Text Bold Italic'),local('CrimsonText-BoldItalic'),
+    url('/digital-mary/public/fonts/CrimsonText-BoldItalic-700.woff2') format('woff2'),
+    url('/digital-mary/public/fonts/CrimsonText-BoldItalic-700.woff') format('woff');
+}
