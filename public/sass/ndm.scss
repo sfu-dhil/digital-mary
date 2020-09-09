@@ -47,7 +47,7 @@ html, body, .dropdown-menu {
   }
 };
 
-@include dhil-gallery('gallery', 3, ms(1), ms(1));
+
 @include dhil-tags(){
   li{
     background: $ndm-light-gold;
@@ -68,23 +68,52 @@ html, body, .dropdown-menu {
 
 }
 
+
+/* GALLERY STUFF */
+@include dhil-gallery('gallery', 3, ms(1), ms(1));
 .gallery .item{
-  height:20rem;
   display:flex;
   flex-direction:column;
-  border:ms(-3) solid rgba($ndm-gold, 0.1);
-  --img: url('https://via.placeholder.com/800?text=NO%20IMAGE%20AVAILABLE');
-  background-image: var(--img);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+  text-align:center;
+  margin-bottom: ms(0);
+  img{
+    max-width:100%;
+  }
+  > a {
+    height:100%;
+    border:1px solid rgba($ndm-light-gold, 0.5);
+    transition:border 0.2s ease-in-out;
+    padding:ms(0);
+    &:hover{
+      border-color: $ndm-gold;
+    }
+    display:flex;
+    flex-direction:column;
+    text-decoration:none!important;
+    > div{
+        margin-top:auto;
+        &:first-child{
+          margin-bottom:auto;
+          padding-bottom: ms(0);
+        }
+       &.item-content-wrapper{
+         border-top: 5px solid #efefef;
+         border-top-style: outset;
+
+       }
+    }
+  }
+
   h2{
     width:100%;
     padding:ms(0) ms(-1);
     text-align:center;
-    font-size: ms(0) * 1.5;
-    background: rgba(black, 0.8);
-    color: white;
+    font-size: ms(0);
+    font-family: $body-font;
+    font-weight:300;
+    color: black;
+    line-height:1.4;
+    text-align:left;
     margin-top:auto;
     margin-bottom: ms(-1);
   }

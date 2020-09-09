@@ -5,7 +5,7 @@
 
 const toolbarOpts = ['zoomIn', 'zoomOut', 'oneToOne', 'reset', 'prev', 'next','rotateLeft','rotateRight'];
 let gallery;
-
+let ndmViewerContainer = document.querySelector('#ndm-viewer-container');
 
 resizeCarousel();
 makeImageViewer();
@@ -32,6 +32,8 @@ function resizeCarousel() {
     }
 }
 
+
+
 function makeImageViewer(){
     let imgCtr = document.querySelector('.images');
     let images = imgCtr.querySelectorAll('a[data-img]');
@@ -51,11 +53,14 @@ function makeImageViewer(){
         do want it in all other cases.
      */
 
+
     gallery = new Viewer(imgCtr, {
         url: function(img){
-            return img.parentNode.getAttribute('data-img');
+            let src = img.parentNode.getAttribute('data-img');
+            return src;
         },
         transition: true,
+        container: ndmViewerContainer,
         toolbar
     });
 

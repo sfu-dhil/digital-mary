@@ -256,13 +256,6 @@ html, body, .dropdown-menu {
   color: #ffffff;
 }
 
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-column-gap: 1.618034rem;
-  grid-row-gap: 1.618034rem;
-}
-
 .tag-list {
   list-style-type: none;
   display: flex;
@@ -302,24 +295,64 @@ html, body, .dropdown-menu {
   padding: 0.3819660059rem 0.6180339845rem;
 }
 
+/* GALLERY STUFF */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-column-gap: 1.618034rem;
+  grid-row-gap: 1.618034rem;
+}
+.gallery > .item {
+  grid-column: span 3;
+}
+@media (max-width: 991px) {
+  .gallery > .item {
+    grid-column: span 4;
+  }
+}
+
 .gallery .item {
-  height: 20rem;
   display: flex;
   flex-direction: column;
-  border: 0.2360679726rem solid rgba(192, 178, 131, 0.1);
-  --img: url("https://via.placeholder.com/800?text=NO%20IMAGE%20AVAILABLE");
-  background-image: var(--img);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.gallery .item img {
+  max-width: 100%;
+}
+.gallery .item > a {
+  height: 100%;
+  border: 1px solid rgba(231, 222, 209, 0.5);
+  transition: border 0.2s ease-in-out;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none !important;
+}
+.gallery .item > a:hover {
+  border-color: #C0B283;
+}
+.gallery .item > a > div {
+  margin-top: auto;
+}
+.gallery .item > a > div:first-child {
+  margin-bottom: auto;
+  padding-bottom: 1rem;
+}
+.gallery .item > a > div.item-content-wrapper {
+  border-top: 5px solid #efefef;
+  border-top-style: outset;
 }
 .gallery .item h2 {
   width: 100%;
   padding: 1rem 0.6180339845rem;
   text-align: center;
-  font-size: 1.5rem;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
+  font-size: 1rem;
+  font-family: "Nunito Sans";
+  font-weight: 300;
+  color: black;
+  line-height: 1.4;
+  text-align: left;
   margin-top: auto;
   margin-bottom: 0.6180339845rem;
 }
