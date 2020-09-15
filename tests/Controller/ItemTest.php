@@ -12,10 +12,8 @@ namespace App\Tests\Controller;
 
 use App\DataFixtures\ItemFixtures;
 use App\DataFixtures\RemoteImageFixtures;
-use App\Entity\Episode;
 use App\Entity\Item;
 use App\Repository\ItemRepository;
-use App\Repository\RemoteImageRepository;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\Tests\ControllerBaseCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -375,7 +373,6 @@ class ItemTest extends ControllerBaseCase {
         $this->assertSame($preCount - 1, $postCount);
     }
 
-
     public function testAnonNewImage() : void {
         $formCrawler = $this->client->request('GET', '/item/1/add_image');
         $this->assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
@@ -577,5 +574,4 @@ class ItemTest extends ControllerBaseCase {
         $this->assertSame(1, $responseCrawler->filter('td:contains("New Title")')->count());
         $this->assertSame(1, $responseCrawler->filter('td:contains("New Description")')->count());
     }
-
 }

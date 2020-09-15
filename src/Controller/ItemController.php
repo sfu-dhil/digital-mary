@@ -69,8 +69,7 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
         if ($q) {
             $query = $itemRepository->searchQuery($q);
             $items = $this->paginator->paginate($query, $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
-        }
-        else {
+        } else {
             $items = [];
         }
 
@@ -277,8 +276,7 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
             $em->remove($image);
             $em->flush();
             $this->addFlash('success', 'The image has been removed.');
-        }
-        else {
+        } else {
             $this->addFlash('warning', 'The image was not removed.');
         }
 
@@ -316,7 +314,6 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
 
         return new BinaryFileResponse($image->getThumbFile());
     }
-
 
     /**
      * @Route("/{id}/add_remote_image", name="item_add_remote_image", methods={"GET","POST"})
@@ -391,5 +388,4 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
 
         return $this->redirectToRoute('item_show', ['id' => $item->getId()]);
     }
-
 }

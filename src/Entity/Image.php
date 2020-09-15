@@ -101,10 +101,11 @@ class Image extends AbstractEntity {
      * {@inheritdoc}
      */
     public function __toString() : string {
-        if($this->imageFile) {
+        if ($this->imageFile) {
             return $this->imageFile->getFilename();
         }
-        return "unknown image file.";
+
+        return 'unknown image file.';
     }
 
     public function getItem() : ?Item {
