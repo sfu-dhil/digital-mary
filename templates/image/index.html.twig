@@ -7,15 +7,14 @@
     <p class="count">
         Displaying {{ images|length }} images of {{ images.getTotalItemCount }} total.
     </p>
- {% endblock %}
+{% endblock %}
 
 {% block body %}
 
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
             <a href="{{ path('image_search') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span> Search
-            </a>
+                <span class="glyphicon glyphicon-search"></span> Search </a>
         </div>
     </div>
     <div class='clearfix'></div>
@@ -25,7 +24,6 @@
 
     {% embed 'image/partial/image_modal.html.twig' %}
     {% endembed %}
-
 
     <div class="navigation">
         {{ knp_pagination_render(images) }}

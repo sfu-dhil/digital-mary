@@ -3,12 +3,13 @@
 {% block title %}Inscription Style Search{% endblock %}
 
  {% block pageheader %}
-    <h1>Inscription Style Search</h1>
-    {% if epigraphies|length %}
-    <p class="count">
-        Displaying {{ epigraphies|length }} epigraphies of {{ epigraphies.getTotalItemCount }} total.
-    </p>
-	{% endif %}
+     <h1>Inscription Style Search</h1>
+     {% if inscription_styles|length %}
+         <p class="count">
+             Displaying {{ inscription_styles|length }} inscription_styles of {{ inscription_styles.getTotalItemCount }}
+             total.
+         </p>
+     {% endif %}
  {% endblock %}
 
 {% block body %}
@@ -22,7 +23,7 @@
                     <div class='input-group'>
                         <input type='text' name='q' id='q' class='form-control' value='{{ q }}'>
                         <span class="input-group-btn">
-                            <button class="btn btn-primary" type="submit">
+                            <button class="btn btn-primary" id='btn-search' type="submit">
                                 <span class='glyphicon glyphicon-search'></span>
                                 Search
                             </button>
@@ -30,7 +31,7 @@
                     </div>
                 </div>
             </div>
-            <p>	Full text searching options, if available:</p>
+            <p> Full text searching options, if available:</p>
             <ul>
                 <li><code>shakespeare</code> - shakespeare should be present, but might not be</li>
                 <li><code>shakes*</code> - words starting with shakes should be present</li>
@@ -42,47 +43,15 @@
         </fieldset>
     </form>
 
-	{% if epigraphies|length %}
-<table class="table table-bordered table-condensed table-hover table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-                <th>Name</th>
-                <th>Label</th>
-                <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for inscription_style in epigraphies %}
-        <tr>
+    {% if inscription_styles|length %}
 
-            <td>
-                <a href="{{ path('inscription_style_show', { 'id': inscription_style.id }) }}">
-                    {{ inscription_style.id }}
-                </a>
-            </td>
-                        <td>
-                            {{ inscription_style.name }}
-                        </td>
+        {% embed 'inscription_style/partial/table.html.twig' %}
+        {% endembed %}
 
-                        <td>
-                            {{ inscription_style.label }}
-                        </td>
-
-                        <td>
-                            {{ inscription_style.description }}
-                        </td>
-
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-
-    <div class="navigation">
-        {{ knp_pagination_render(epigraphies) }}
-    </div>
-	{% endif %}
+        <div class="navigation">
+            {{ knp_pagination_render(inscription_styles) }}
+        </div>
+    {% endif %}
 
 {% endblock %}
 

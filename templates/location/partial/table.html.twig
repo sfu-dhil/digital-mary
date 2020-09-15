@@ -1,0 +1,57 @@
+<table class="table table-bordered table-condensed table-hover table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Label</th>
+            <th>Description</th>
+            <th>Geonameid</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Country</th>
+            <th>Alternate Names</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for location in locations %}
+            <tr>
+                <td>
+                    <a href="{{ path('location_show', { 'id': location.id }) }}">
+                        {{ location.id }}
+                    </a>
+                </td>
+                <td>
+                    {{ location.name }}
+                </td>
+
+                <td>
+                    {{ location.label }}
+                </td>
+
+                <td>
+                    {{ location.description|raw }}
+                </td>
+
+                <td>
+                    {{ location.geonameid }}
+                </td>
+
+                <td>
+                    {{ location.latitude }}
+                </td>
+
+                <td>
+                    {{ location.longitude }}
+                </td>
+
+                <td>
+                    {{ location.country }}
+                </td>
+
+                <td>{% if location.alternateNames %}{{ location.alternateNames|join(', ') }}{% endif %}</td>
+
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

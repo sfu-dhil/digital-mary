@@ -17,9 +17,11 @@ use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity(repositoryClass=ImageRepository::class)
+ * @ORM\Table(indexes={
+ *   @ORM\Index(columns={"original_name", "description"}, flags={"fulltext"})
+ * })
  */
 class Image extends AbstractEntity {
-
     /**
      * @var File
      */
@@ -99,7 +101,11 @@ class Image extends AbstractEntity {
      * {@inheritdoc}
      */
     public function __toString() : string {
-        return $this->imageFile->getFilename();
+        if ($this->imageFile) {
+            return $this->imageFile->getFilename();
+        }
+
+        return 'unknown image file.';
     }
 
     public function getItem() : ?Item {
@@ -114,6 +120,7 @@ class Image extends AbstractEntity {
 
     public function setThumbFile(File $file) : self {
         $this->thumbFile = $file;
+
         return $this;
     }
 
@@ -123,6 +130,7 @@ class Image extends AbstractEntity {
 
     public function setImageFile(File $file) : self {
         $this->imageFile = $file;
+
         return $this;
     }
 
@@ -130,108 +138,91 @@ class Image extends AbstractEntity {
         return $this->imageFile;
     }
 
-    public function getImageSize(): ?int
-    {
+    public function getImageSize() : ?int {
         return $this->imageSize;
     }
 
-    public function setImageSize(int $imageSize): self
-    {
+    public function setImageSize(int $imageSize) : self {
         $this->imageSize = $imageSize;
 
         return $this;
     }
 
-    public function getImageWidth(): ?int
-    {
+    public function getImageWidth() : ?int {
         return $this->imageWidth;
     }
 
-    public function setImageWidth(int $imageWidth): self
-    {
+    public function setImageWidth(int $imageWidth) : self {
         $this->imageWidth = $imageWidth;
 
         return $this;
     }
 
-    public function getImageHeight(): ?int
-    {
+    public function getImageHeight() : ?int {
         return $this->imageHeight;
     }
 
-    public function setImageHeight(int $imageHeight): self
-    {
+    public function setImageHeight(int $imageHeight) : self {
         $this->imageHeight = $imageHeight;
 
         return $this;
     }
 
-    public function getDescription(): ?string
-    {
+    public function getDescription() : ?string {
         return $this->description;
     }
 
-    public function setDescription(?string $description): self
-    {
+    public function setDescription(?string $description) : self {
         $this->description = $description;
 
         return $this;
     }
 
-    public function getPublic(): ?bool
-    {
+    public function getPublic() : ?bool {
         return $this->public;
     }
 
-    public function setPublic(bool $public): self
-    {
+    public function setPublic(bool $public) : self {
         $this->public = $public;
 
         return $this;
     }
 
-    public function getOriginalName(): ?string
-    {
+    public function getOriginalName() : ?string {
         return $this->originalName;
     }
 
-    public function setOriginalName(string $originalName): self
-    {
+    public function setOriginalName(string $originalName) : self {
         $this->originalName = $originalName;
 
         return $this;
     }
 
-    public function getImagePath(): ?string
-    {
+    public function getImagePath() : ?string {
         return $this->imagePath;
     }
 
-    public function setImagePath(string $imagePath): self
-    {
+    public function setImagePath(string $imagePath) : self {
         $this->imagePath = $imagePath;
 
         return $this;
     }
 
-    public function getThumbPath(): ?string
-    {
+    public function getThumbPath() : ?string {
         return $this->thumbPath;
     }
 
-    public function setThumbPath(string $thumbPath): self
-    {
+    public function setThumbPath(string $thumbPath) : self {
         $this->thumbPath = $thumbPath;
 
         return $this;
     }
-    public function getLicense(): ?string
-    {
+
+    public function getLicense() : ?string {
         return $this->license;
     }
 
-    public function setLicense(string $license): self
-    {
+    public function setLicense(string $license) : self {
         $this->license = $license;
 
         return $this;

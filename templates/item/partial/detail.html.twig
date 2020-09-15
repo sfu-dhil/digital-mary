@@ -1,0 +1,153 @@
+<table class='table table-bordered table-condensed table-hover table-striped'>
+    <tbody>
+        <tr>
+            <th>Name</th>
+            <td>
+                {{ item.name }}
+            </td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>
+                {{ item.description|raw }}
+            </td>
+        </tr>
+        <tr>
+            <th>Inscription</th>
+            <td>
+                {{ item.inscription|raw }}
+            </td>
+        </tr>
+        <tr>
+            <th>Translated Inscription</th>
+            <td>
+                {{ item.translatedInscription|raw }}
+            </td>
+        </tr>
+        <tr>
+            <th>Dimensions</th>
+            <td>
+                {{ item.dimensions }}
+            </td>
+        </tr>
+        <tr>
+            <th>References</th>
+            <td>
+                {{ item.references|raw }}
+            </td>
+        </tr>
+        <tr>
+            <th>Revisions</th>
+            <td>
+                {% for revision in item.revisions %}
+                    {{ revision.date|date('Y-m-d') }} - {{ revision.initials }}<br />
+                {% endfor %}
+            </td>
+        </tr>
+
+        <tr>
+            <th>Date</th>
+            <td>
+                {% if item.circaDate %}
+                    <a href='{{ path("circa_date_show", {"id": item.circaDate.id}) }}'>{{ item.circaDate }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Category</th>
+            <td>
+                {% if item.category %}
+                    <a href='{{ path("category_show", {"id": item.category.id}) }}'>{{ item.category }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Civilization</th>
+            <td>
+                {% if item.civilization %}
+                    <a href='{{ path("civilization_show", {"id": item.civilization.id}) }}'>{{ item.civilization }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Inscription Style</th>
+            <td>
+                {% if item.inscriptionStyle %}
+                    <a href='{{ path("inscription_style_show", {"id": item.inscriptionStyle.id}) }}'>{{ item.inscriptionStyle }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Find spot</th>
+            <td>
+                {% if item.findSpot %}
+                    <a href='{{ path("location_show", {"id": item.findSpot.id}) }}'>{{ item.findSpot }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Provenance</th>
+            <td>
+                {% if item.provenance %}
+                    <a href='{{ path("location_show", {"id": item.provenance.id}) }}'>{{ item.provenance }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Technique</th>
+            <td>
+                {% if item.techniques|length > 0 %}
+                    <ul>
+                        {% for technique in item.techniques %}
+                            <li>
+                                <a href='{{ path("technique_show", {"id":technique.id }) }}'>
+                                    {{ technique }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Material</th>
+            <td>
+                {% if item.materials|length > 0 %}
+                    <ul>
+                        {% for material in item.materials %}
+                            <li>
+                                <a href='{{ path("material_show", {"id":material.id }) }}'>
+                                    {{ material }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Subject</th>
+            <td>
+                {% if item.subjects|length > 0 %}
+                    <ul>
+                        {% for subject in item.subjects %}
+                            <li>
+                                <a href='{{ path("subject_show", {"id":subject.id }) }}'>
+                                    {{ subject }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Created</th>
+            <td>{{ item.created|date }}</td>
+        </tr>
+        <tr>
+            <th>Updated</th>
+            <td>{{ item.updated|date }}</td>
+        </tr>
+    </tbody>
+</table>

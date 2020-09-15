@@ -11,12 +11,8 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Location;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use Nines\UtilBundle\Repository\TermRepository;
-use RuntimeException;
 
 /**
  * @method null|Location find($id, $lockMode = null, $lockVersion = null)
@@ -28,5 +24,4 @@ class LocationRepository extends TermRepository {
     public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Location::class);
     }
-
 }
