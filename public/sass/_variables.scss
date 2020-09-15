@@ -10,3 +10,22 @@ $ndm-white: #ffffff;
 $nav-height:50px;
 $ndm-img-height: 350;
 $ndm-img-width: 450;
+
+/*Hamburger stuff */
+$hamburger-types: (collapse);
+$hamburger-layer-height: $nav-height / 13;
+$hamburger-layer-spacing: $nav-height/ 8;
+$hamburger-layer-color: $ndm-white;
+
+@mixin ndm-link{
+  text-decoration:none!important;
+  border-bottom-style: solid;
+  border-bottom-width: ms(-3);
+  border-bottom-color: rgba($ndm-gold, 0.5);
+  transition: border-bottom-color 0.2s ease-in-out;
+  color:inherit;
+  &:hover{
+    color:inherit;
+    border-bottom-color:rgba($ndm-gold, 0.8)
+  }
+}

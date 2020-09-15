@@ -13,6 +13,13 @@ if (ndmViewerContainer){
     makeImageViewer();
 }
 
+document.querySelectorAll('.hamburger').forEach(ham => {
+    ham.addEventListener('click', e => {
+        ham.classList.toggle('is-active');
+    })
+})
+
+
 function resizeCarousel() {
     let carousel = document.getElementById('carousel');
     if (carousel) {
@@ -30,7 +37,8 @@ function resizeCarousel() {
         })
         Promise.all(heights).then(hs => {
             let maxHeight = Math.max(...hs);
-            carousel.style.height = (maxHeight + 100) + "px";
+            let padding = (heights.length > 1) ? 100 : 0;
+            carousel.style.height = (maxHeight + padding) + "px";
         })
     }
 }

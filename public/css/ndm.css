@@ -173,6 +173,107 @@ since there's stuff I tend to do quite a bit.
   font-weight: 700;
   src: local("Crimson Text Bold Italic"), local("CrimsonText-BoldItalic"), url("/digital-mary/public/fonts/CrimsonText-BoldItalic-700.woff2") format("woff2"), url("/digital-mary/public/fonts/CrimsonText-BoldItalic-700.woff") format("woff");
 }
+/*Hamburger stuff */
+/*!
+ * Hamburgers
+ * @description Tasty CSS-animated hamburgers
+ * @author Jonathan Suh @jonsuh
+ * @site https://jonsuh.com/hamburgers
+ * @link https://github.com/jonsuh/hamburgers
+ */
+.hamburger {
+  padding: 15px 15px;
+  display: inline-block;
+  cursor: pointer;
+  transition-property: opacity, filter;
+  transition-duration: 0.15s;
+  transition-timing-function: linear;
+  font: inherit;
+  color: inherit;
+  text-transform: none;
+  background-color: transparent;
+  border: 0;
+  margin: 0;
+  overflow: visible;
+}
+.hamburger:hover {
+  opacity: 0.7;
+}
+.hamburger.is-active:hover {
+  opacity: 0.7;
+}
+.hamburger.is-active .hamburger-inner,
+.hamburger.is-active .hamburger-inner::before,
+.hamburger.is-active .hamburger-inner::after {
+  background-color: #ffffff;
+}
+
+.hamburger-box {
+  width: 40px;
+  height: 24.0384615385px;
+  display: inline-block;
+  position: relative;
+}
+
+.hamburger-inner {
+  display: block;
+  top: 50%;
+  margin-top: -1.9230769231px;
+}
+.hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
+  width: 40px;
+  height: 3.8461538462px;
+  background-color: #ffffff;
+  border-radius: 4px;
+  position: absolute;
+  transition-property: transform;
+  transition-duration: 0.15s;
+  transition-timing-function: ease;
+}
+.hamburger-inner::before, .hamburger-inner::after {
+  content: "";
+  display: block;
+}
+.hamburger-inner::before {
+  top: -10.0961538462px;
+}
+.hamburger-inner::after {
+  bottom: -10.0961538462px;
+}
+
+/*
+ * Collapse
+ */
+.hamburger--collapse .hamburger-inner {
+  top: auto;
+  bottom: 0;
+  transition-duration: 0.13s;
+  transition-delay: 0.13s;
+  transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+.hamburger--collapse .hamburger-inner::after {
+  top: -20.1923076923px;
+  transition: top 0.2s 0.2s cubic-bezier(0.33333, 0.66667, 0.66667, 1), opacity 0.1s linear;
+}
+.hamburger--collapse .hamburger-inner::before {
+  transition: top 0.12s 0.2s cubic-bezier(0.33333, 0.66667, 0.66667, 1), transform 0.13s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+.hamburger--collapse.is-active .hamburger-inner {
+  transform: translate3d(0, -10.0961538462px, 0) rotate(-45deg);
+  transition-delay: 0.22s;
+  transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.hamburger--collapse.is-active .hamburger-inner::after {
+  top: 0;
+  opacity: 0;
+  transition: top 0.2s cubic-bezier(0.33333, 0, 0.66667, 0.33333), opacity 0.1s 0.22s linear;
+}
+.hamburger--collapse.is-active .hamburger-inner::before {
+  top: 0;
+  transform: rotate(-90deg);
+  transition: top 0.1s 0.16s cubic-bezier(0.33333, 0, 0.66667, 0.33333), transform 0.13s 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
 h1 {
   font-size: 2.6180340252rem;
   font-family: "Crimson Text";
@@ -239,18 +340,16 @@ html, body, .dropdown-menu {
 }
 
 .navbar-default {
-  /* Fix the height to make it easier to have sticky
-     positioned things  */
-  min-height: unset;
-  height: 50px;
+  min-height: 50px;
   /* Change the width to 100vw rather than 100%, since 100% causes
      jump behaviour when overflow-y on the body is set to hidden
    */
   width: 100vw;
-  padding-right: 5px;
+  padding-right: 10px;
   /* Set the background colour */
   background: #C0B283;
   text-transform: uppercase;
+  /* Have to add the min-width hiding again */
   /* Reset the fixed-top to be sticky rather than fixed,
      so to avoid the problem with fixed position things overlapping
    */
@@ -259,11 +358,54 @@ html, body, .dropdown-menu {
 .navbar-default .navbar-nav > li > a:hover {
   color: #ffffff;
 }
+@media (min-width: 768px) {
+  .navbar-default .navbar-toggle {
+    display: none;
+  }
+}
 .navbar-default.navbar-fixed-top {
   position: sticky !important;
 }
+.navbar-default .navbar-header {
+  margin-left: 0;
+  margin-right: 0;
+}
 .navbar-default .navbar-nav > li > a {
   color: #ffffff;
+}
+
+.item_show .content {
+  display: grid;
+}
+.item_show .content.imageless {
+  grid-template-columns: auto !important;
+}
+@media (min-width: 767px) {
+  .item_show .content {
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 2.6180340252rem;
+  }
+}
+@media (max-width: 767px) {
+  .item_show .content {
+    grid-row-gap: 2.6180340252rem;
+  }
+  .item_show .content .images {
+    grid-row: 1;
+  }
+}
+
+.content a {
+  text-decoration: none !important;
+  border-bottom-style: solid;
+  border-bottom-width: 0.2360679726rem;
+  border-bottom-color: rgba(192, 178, 131, 0.5);
+  transition: border-bottom-color 0.2s ease-in-out;
+  color: inherit;
+}
+.content a:hover {
+  color: inherit;
+  border-bottom-color: rgba(192, 178, 131, 0.8);
 }
 
 .details .subjects ul {
@@ -389,21 +531,6 @@ html, body, .dropdown-menu {
   font-size: 2.0225425rem;
 }
 
-.item_show .content {
-  display: grid;
-}
-@media (min-width: 767px) {
-  .item_show .content {
-    grid-template-columns: 1fr 1.5fr;
-    grid-column-gap: 5rem;
-  }
-}
-@media (max-width: 767px) {
-  .item_show .content .images {
-    grid-row: 1;
-  }
-}
-
 a.zoomable {
   cursor: zoom-in;
 }
@@ -428,11 +555,11 @@ dd {
 }
 
 /* Carousel */
-#carousel {
-  height: 450px;
-}
 #carousel .carousel-inner {
   height: 100%;
+}
+#carousel .img-thumbnail {
+  border: none;
 }
 #carousel .carousel-control {
   display: none;
@@ -447,12 +574,12 @@ dd {
 /* Footer */
 footer {
   background: #F3F4F5;
+  margin-top: 1.618034rem;
 }
 footer:before {
-  content: url("../images/footer.svg");
-  min-height: 5rem;
-  height: calc(12.5vw);
-  max-height: 15rem;
+  content: " ";
+  background-image: url("../images/footer.svg");
+  height: 4.2360680659rem;
   overflow: hidden;
   display: block;
 }

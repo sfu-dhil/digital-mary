@@ -25,10 +25,12 @@
 @import '../yarn/roy/scss/roy.scss';
 @import '_fonts.scss';
 @import '_variables.scss';
+@import '../yarn/hamburgers/_sass/hamburgers/hamburgers.scss';
 
 
 @include dhil-headers;
 @include dhil-reset;
+
 
 html, body, .dropdown-menu {
   font-family: $body-font;
@@ -37,15 +39,42 @@ html, body, .dropdown-menu {
 @include dhil-make-navbar($ndm-gold, $ndm-white){
   text-transform:uppercase;
   .navbar-nav{
-
     & > li {
       & > a:hover {
         color: $ndm-white;
       }
     }
   }
+  /* Have to add the min-width hiding again */
+  @media (min-width: 768px){
+    .navbar-toggle {
+      display: none;
+    }
+  }
 };
 
+.item_show .content{
+  display:grid;
+  &.imageless{
+    grid-template-columns: auto!important;
+  }
+  @media (min-width: 767px){
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: ms(2);
+  }
+  @media(max-width: 767px){
+    grid-row-gap: ms(2);
+    .images{
+      grid-row: 1;
+    }
+  }
+}
+
+.content{
+    a{
+      @include ndm-link();
+    }
+}
 
 .details .subjects{
     ul{
@@ -70,6 +99,8 @@ html, body, .dropdown-menu {
     }
 
   }
+
+
 
 .images{
   margin:0 auto;
@@ -141,18 +172,7 @@ html, body, .dropdown-menu {
   }
 }
 
-.item_show .content{
-  display:grid;
-  @media (min-width: 767px){
-    grid-template-columns: 1fr 1.5fr;
-    grid-column-gap: 5rem;
-  }
-  @media(max-width: 767px){
-    .images{
-      grid-row: 1;
-    }
-  }
-}
+
 
 
 a.zoomable{
@@ -189,9 +209,11 @@ dd{
 /* Carousel */
 
 #carousel{
-  height:450px;
   .carousel-inner{
     height:100%;
+  }
+  .img-thumbnail{
+    border:none;
   }
   .carousel-control{
     display:none;
@@ -212,11 +234,11 @@ dd{
 
 footer{
   background:#F3F4F5;
+  margin-top:ms(1);
   &:before{
-    content: url('../images/footer.svg');
-    min-height:5rem;
-    height: calc(12.5vw);
-    max-height: 15rem;
+    content:" ";
+    background-image: url('../images/footer.svg');
+    height:ms(3);
     overflow:hidden;
     display:block;
   }

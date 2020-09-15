@@ -28,78 +28,62 @@
         </div>
 {% endblock %}
 
-{% block body %}
+{% block bodyclass %}
+{% if item.images|length ==0 %} imageless{% endif %}
+{% endblock %}
 
+{% block body %}
     <section class="details">
         <h2 class="sr-only">Details</h2>
-
-
-             <dl>
-                 {{ dl.make(item.name, 'Name') }}
-                 {{ dl.make(item.description, 'Description') }}
-                 {{ dl.make(item.subjects, "Subjects", "subject_show") }}
-                 {{ dl.make(item.inscription, 'Inscription') }}
-                 {{ dl.make(item.translatedInscription, 'Translated Inscription') }}
-                 {{ dl.make(item.dimensions, 'Dimensions') }}
-                 {{ dl.make(item.references, 'References') }}
-                 {{ dl.make(item.civilization, 'Civilization', 'civilization_show') }}
-                 {{ dl.make(item.inscriptionStyle, "Style of Inscription", "inscription_style_show") }}
-                 {{ dl.make(item.findSpot, "Find Spot", "location_show") }}
-                 {{ dl.make(item.provenance, "Provenance", "location_show") }}
-                 {{ dl.make(item.category, 'Category', 'category_show') }}
-                 {{ dl.make(item.techniques, "Techniques", "techique_show") }}
-
-                 {% if is_granted('ROLE_CONTENT_ADMIN') %}
-                    <dt>Revisions</dt>
-                    <dd>
-                        {% if item.revisions|length > 0 %}
+        <dl>
+            {{ dl.make(item.name, 'Name') }}
+            {{ dl.make(item.description, 'Description') }}
+            {{ dl.make(item.category, 'Category', 'category_show') }}
+            {{ dl.make(item.subjects, "Subjects", "subject_show") }}
+            {{ dl.make(item.inscription, 'Inscription') }}
+            {{ dl.make(item.translatedInscription, 'Translated Inscription') }}
+            {{ dl.make(item.inscriptionStyle, "Style of Inscription", "inscription_style_show") }}
+            {{ dl.make(item.civilization, 'Civilization', 'civilization_show') }}
+            {{ dl.make(item.techniques, "Techniques", "techique_show") }}
+            {{ dl.make(item.dimensions, 'Dimensions') }}
+            {{ dl.make(item.provenance, "Provenance", "location_show") }}
+            {{ dl.make(item.findSpot, "Find Spot", "location_show") }}
+            {{ dl.make(item.references, 'References') }}
+            {% if is_granted('ROLE_CONTENT_ADMIN') %}
+                <dt>Revisions</dt>
+                <dd>
+                    {% if item.revisions|length > 0 %}
                         {% for revision in item.revisions %}
                             {{ revision.date }} - {{ revision.initials }}<br />
                         {% endfor %}
-                        {% else %}
-                            —
-                        {% endif %}
-                    </dd>
+                    {% else %}
+                        —
+                    {% endif %}
+                </dd>
 
-                     <dt>Created</dt>
-                    <dd>{{ item.created|date }}</dd>
+                <dt>Created</dt>
+                <dd>{{ item.created|date }}</dd>
 
-                    <dt>Updated</dt>
-                    <dd>{{ item.updated|date }}</dd>
-                 {% endif %}
-             </dl>
+                <dt>Updated</dt>
+                <dd>{{ item.updated|date }}</dd>
+            {% endif %}
+        </dl>
     </section>
-    <section class="images">
-        <h2 class="sr-only">Images</h2>
-        <div class="img-content">
-
-
-
-            {% if item.images | length == 0 %}
-                <p>No images yet.</p>
-            {% else %}
+    {% if item.images|length > 0 %}
+        <section class="images">
+            <h2 class="sr-only">Images</h2>
+            <div class="img-content">
                 {% embed 'image/partial/carousel.html.twig' with {'images': item.images } %}
                 {% endembed %}
-            {% endif %}
-
+            </div>
+        </section>
+        <div id="ndm-viewer-container">
         </div>
-
-    </section>
-
-    <div id="ndm-viewer-container">
-
-    </div>
-
-
-
-
+    {% endif %}
 {% endblock %}
 
 {%  block styles %}
     <link rel="stylesheet" type="text/css" href="{{ asset('yarn/viewerjs/dist/viewer.css') }}"/>
-    <style>
-        --header-chars: {{ item.name|length }};
-    </style>
 {%  endblock %}
 
 {%  block  javascripts %}
