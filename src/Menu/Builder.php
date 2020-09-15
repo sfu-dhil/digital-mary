@@ -88,9 +88,6 @@ class Builder implements ContainerAwareInterface {
         $browse->addChild('Inscription Style', [
             'route' => 'inscription_style_index',
         ]);
-        $browse->addChild('Image', [
-            'route' => 'image_index',
-        ]);
         $browse->addChild('Location', [
             'route' => 'location_index',
         ]);
@@ -112,8 +109,12 @@ class Builder implements ContainerAwareInterface {
                 'role' => 'separator',
                 'class' => 'divider',
             ]);
+
             $browse->addChild('Date', [
                 'route' => 'circa_date_index',
+            ]);
+            $browse->addChild('Image', [
+                'route' => 'image_index',
             ]);
         }
 
