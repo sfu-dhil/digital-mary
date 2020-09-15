@@ -91,9 +91,12 @@
         </footer>
 
         <script src="{{ asset('yarn/bootstrap3/dist/js/bootstrap.min.js') }}"></script>
-
         {% block javascripts %}
         {% endblock %}
-
+        <script>
+            let placeholder = "{{ asset('images/blur.jpg') }}";
+        </script>
+        <script src="{{  asset('js/ndm.js') }}"></script>
+        <script src="{{ asset('yarn/roy/js/roy.js') }}"></script>
     </body>
 </html>

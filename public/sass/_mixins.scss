@@ -39,6 +39,11 @@ $nav-height: 50px!default;
     font-size: $base-font-size;
     line-height: $base-line-height;
   }
+
+  /*Always hide x overflow */
+  body{
+    overflow-x:hidden;
+  }
   article{
     min-height:100vh;
   }
@@ -137,6 +142,9 @@ $nav-height: 50px!default;
 
         @media (max-width: 991px){
           grid-column: span 4;
+        }
+        @media (max-width: 768px){
+          grid-column: span 6;
         }
     }
   }

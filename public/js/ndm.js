@@ -7,8 +7,11 @@ const toolbarOpts = ['zoomIn', 'zoomOut', 'oneToOne', 'reset', 'prev', 'next','r
 let gallery;
 let ndmViewerContainer = document.querySelector('#ndm-viewer-container');
 
-resizeCarousel();
-makeImageViewer();
+document.querySelector('body').classList.add('js');
+if (ndmViewerContainer){
+    resizeCarousel();
+    makeImageViewer();
+}
 
 function resizeCarousel() {
     let carousel = document.getElementById('carousel');
@@ -31,7 +34,6 @@ function resizeCarousel() {
         })
     }
 }
-
 
 
 function makeImageViewer(){

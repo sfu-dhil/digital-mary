@@ -1,25 +1,8 @@
 {% if items|length > 0 %}
     <div class="gallery">
         {%  for item in items %}
-        <div class="item">
-            <a href="{{ path('item_show', { 'id': item.id }) }}">
-                <div class="item-img-wrapper">
-                    {%  if item.images|length > 0 %}
-                        <img
-                         src="{{ path('item_image_thumbnail', {'id': item.id, 'image_id': item.images[0].id}) }}"/>
-                    {% else %}
-                        <img
-                        src="{{ asset('images/no-img.png') }}" alt="No image available"/>
-                    {%  endif %}
-                </div>
-                <div class="item-content-wrapper">
-                    <h2> {{ item.name }}</h2>
-                </div>
-            </a>
-        </div>
+            {% include 'item/partial/gallery-item.html.twig' %}
         {% endfor %}
-    </div>
-    <div class="navigation">
-        {{ knp_pagination_render(items) }}
+        {% block callback %}{% endblock %}
     </div>
 {% endif %}

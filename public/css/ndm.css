@@ -42,6 +42,11 @@ since there's stuff I tend to do quite a bit.
  * Clamps lines at a particular vertical line length with a fallback for unsupported
  * browsers.
  */
+/* @dhil-lazyload
+ *
+ * Basic adjustments for images that are loaded lazily.
+ *
+ */
 /* 'Nunito Sans' normal 200*/
 @font-face {
   font-family: "Nunito Sans";
@@ -213,6 +218,11 @@ html, body {
   line-height: 1.6;
 }
 
+/*Always hide x overflow */
+body {
+  overflow-x: hidden;
+}
+
 article {
   min-height: 100vh;
 }
@@ -256,43 +266,53 @@ html, body, .dropdown-menu {
   color: #ffffff;
 }
 
-.tag-list {
+.details .subjects ul {
   list-style-type: none;
   display: flex;
+  color: red;
   flex-wrap: wrap;
   margin: 0;
   padding: 0;
   align-items: center;
 }
-.tag-list > li {
+.details .subjects ul > li {
   margin-top: 0.3819660059rem;
   margin-bottom: 0.3819660059rem;
   margin-right: 0.3819660059rem;
   transition: border-color 0.2s ease-in-out, background 0.2s ease-in-out, color 0.2s ease-in-out;
 }
-.tag-list > li > a {
+.details .subjects ul > li > a {
   padding: 0.3819660059rem 0.3819660059rem;
   display: inline-block;
   transition: border-color 0.2s ease-in-out, background 0.2s ease-in-out, color 0.2s ease-in-out;
 }
-.tag-list > li > a:hover {
+.details .subjects ul > li > a:hover {
   text-decoration: none;
 }
-.tag-list li {
+.details .subjects ul li {
   background: #E7DED1;
 }
-.tag-list li:hover {
+.details .subjects ul li:hover {
   background: #C0B283;
 }
-.tag-list li:hover > a {
+.details .subjects ul li:hover > a {
   color: white;
   border-color: #E7DED1;
 }
-.tag-list li > a {
+.details .subjects ul li > a {
   margin: 0.3819660059rem;
   border: 2px solid white;
   color: black;
   padding: 0.3819660059rem 0.6180339845rem;
+}
+
+.images {
+  margin: 0 auto;
+}
+.images .img-content {
+  top: 3.7430339845rem;
+  position: sticky;
+  margin: 0 auto;
 }
 
 /* GALLERY STUFF */
@@ -308,6 +328,11 @@ html, body, .dropdown-menu {
 @media (max-width: 991px) {
   .gallery > .item {
     grid-column: span 4;
+  }
+}
+@media (max-width: 768px) {
+  .gallery > .item {
+    grid-column: span 6;
   }
 }
 
@@ -357,6 +382,13 @@ html, body, .dropdown-menu {
   margin-bottom: 0.6180339845rem;
 }
 
+.subject-item {
+  margin-bottom: 1.618034rem;
+}
+.subject-item h2 {
+  font-size: 2.0225425rem;
+}
+
 .item_show .content {
   display: grid;
 }
@@ -395,36 +427,37 @@ dd {
   margin-bottom: 1.618034rem;
 }
 
-.img-content {
-  top: 50px;
-  position: sticky;
-}
-
 /* Carousel */
 #carousel {
   height: 450px;
-  background: rgba(231, 222, 209, 0.25);
 }
 #carousel .carousel-inner {
   height: 100%;
 }
 #carousel .carousel-control {
-  background: transparent;
-}
-#carousel .carousel-indicators {
-  bottom: -8px;
+  display: none;
 }
 #carousel .carousel-indicators li {
-  border: 2px solid #C0B283;
-  width: 20px;
-  height: 20px;
+  border-color: #C0B283;
+}
+#carousel .carousel-indicators li.active {
+  background-color: #C0B283;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
+/* Footer */
+footer {
+  background: #F3F4F5;
+}
+footer:before {
+  content: url("../images/footer.svg");
+  min-height: 5rem;
+  height: calc(12.5vw);
+  max-height: 15rem;
+  overflow: hidden;
+  display: block;
+}
+footer > div.container {
   position: relative;
-  min-height: 100%;
 }
 
 /* Menu bar styling */
@@ -472,44 +505,6 @@ a[href^="https://"]::after {
 
 tbody tr th {
   width: 20%;
-}
-
-@media (max-width: 480px) {
-  ul.columnated {
-    -moz-column-count: 1;
-    -webkit-column-count: 1;
-    column-count: 1;
-  }
-}
-div.collection-complex > div:not(:last-child) {
-  padding-top: 15px;
-  border: 1px solid rgba(128, 128, 128, 0.31);
-}
-
-/* Image gallery styles. */
-.thumbnail-small {
-  max-width: 160px;
-  max-height: 124px;
-  margin: 0 auto;
-}
-
-.img-container {
-  height: 160px;
-  text-align: center;
-  margin-top: 15px;
-}
-
-.thumbnail .caption {
-  margin-top: 15px;
-}
-
-.thumbnail .title {
-  margin-bottom: 15px;
-}
-
-.thumbnail .img-thumbnail {
-  max-width: 100%;
-  max-height: 100%;
 }
 
 /*# sourceMappingURL=ndm.css.map */

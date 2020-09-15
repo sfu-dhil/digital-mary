@@ -1,0 +1,47 @@
+
+
+{% macro make(value, name, path, force=false) %}
+    {% set process = value is iterable ? value|length > 0 : value is not null %}
+    {% if process or force %}
+        <dt>{{ name }}</dt>
+        <dd class="{{ name|u.snake }}">
+            {% if value is not null %}
+                {% if path is not null %}
+                    {{ _self.link(value, path) }}
+                {% else %}
+                    {{ value|raw }}
+                {% endif %}
+            {% else %}
+                {{ _self.default() }}
+            {% endif %}
+        </dd>
+    {% endif %}
+{% endmacro %}
+
+{% macro link(value, path) %}
+    {% if value is iterable %}
+        {% if value|length > 0 %}
+        <ul>
+            {% for val in value %}
+                <li>
+                    <a href="{{ path(path, {'id': val.id}) }}">{{ val }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+            {{ _self.default() }}
+        {% endif %}
+    {% else %}
+        {% if value is not null %}
+             <a href="{{ path(path, {'id': value.id}) }}">{{ value }}</a>
+        {% else %}
+            {{ _self.default() }}
+        {% endif %}
+    {% endif %}
+{% endmacro %}
+
+{% macro default() %}
+    —
+{% endmacro %}
+
+

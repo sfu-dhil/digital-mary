@@ -3,7 +3,7 @@
 {% block title %}Subject Details {% endblock %}
 
  {% block pageheader %}
-    <h1>Subject Details</h1>
+    <h1>Subject: {{  subject.label }}</h1>
  {% endblock %}
 
 {% block body %}
@@ -23,8 +23,6 @@
             </form>
         </div>
     </div>
-    {% endif %}
-
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
             <tr>
@@ -49,6 +47,7 @@
         </tr>
         </tbody>
     </table>
+    {% endif %}
 
     {% include 'item/partial/list.html.twig' with {'items': items} %}
 

@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{% import 'item/partial/detail.html.twig' as dl %}
 
 {% block title %}Item Details {% endblock %}
 
@@ -10,6 +10,10 @@
 
 {% block admin %}
         <div class='btn-toolbar pull-right'>
+            <div class="btn-group">
+                <a href="{{ path('item_add_image', {'id': item.id}) }}" class="btn btn-default">
+                    <span class='glyphicon glyphicon-plus'></span> Add Image </a>
+            </div>
             <div class='btn-group'>
                 <a href="{{ path('item_edit', {'id': item.id }) }}" class="btn btn-default">
                     <span class="glyphicon glyphicon-edit"></span> Edit </a>
@@ -25,167 +29,49 @@
 {% endblock %}
 
 {% block body %}
+
     <section class="details">
         <h2 class="sr-only">Details</h2>
-        
+
+
              <dl>
+                 {{ dl.make(item.name, 'Name') }}
+                 {{ dl.make(item.description, 'Description') }}
+                 {{ dl.make(item.subjects, "Subjects", "subject_show") }}
+                 {{ dl.make(item.inscription, 'Inscription') }}
+                 {{ dl.make(item.translatedInscription, 'Translated Inscription') }}
+                 {{ dl.make(item.dimensions, 'Dimensions') }}
+                 {{ dl.make(item.references, 'References') }}
+                 {{ dl.make(item.civilization, 'Civilization', 'civilization_show') }}
+                 {{ dl.make(item.inscriptionStyle, "Style of Inscription", "inscription_style_show") }}
+                 {{ dl.make(item.findSpot, "Find Spot", "location_show") }}
+                 {{ dl.make(item.provenance, "Provenance", "location_show") }}
+                 {{ dl.make(item.category, 'Category', 'category_show') }}
+                 {{ dl.make(item.techniques, "Techniques", "techique_show") }}
 
+                 {% if is_granted('ROLE_CONTENT_ADMIN') %}
+                    <dt>Revisions</dt>
+                    <dd>
+                        {% if item.revisions|length > 0 %}
+                        {% for revision in item.revisions %}
+                            {{ revision.date }} - {{ revision.initials }}<br />
+                        {% endfor %}
+                        {% else %}
+                            —
+                        {% endif %}
+                    </dd>
 
-                <dt>Name</dt>
-                <dd>{{ item.name|default('—') }}</dd>
-            
-            
-                <dt>Description</dt>
-                <dd>{{ item.description|default('—')|raw }}</dd>
-            
-                <dt>Subjects</dt>
-                <dd>
-                    {% if (item.subjects) %}
-                        <ul class="tag-list">
-                            {%  for subject in item.subjects %}
-                                <li>
-                                    <a href="{{ path('subject_show', {'id': subject.id}) }}">
-                                        {{ subject.label }}
-                                    </a>
-                                </li>
-                            {%  endfor %}
+                     <dt>Created</dt>
+                    <dd>{{ item.created|date }}</dd>
 
-                        </ul>
-
-                    {% endif %}
-
-                </dd>
-
-
-                <dt>Inscription</dt>
-                <dd>{{ item.inscription|default('—')|raw }}</dd>
-            
-            
-                <dt>Translated Inscription</dt>
-                <dd>{{ item.translatedInscription|default('—')|raw }}</dd>
-            
-            
-                <dt>Dimensions</dt>
-                <dd>{{ item.dimensions|default('—') }}</dd>
-            
-            
-                <dt>References</dt>
-                <dd>{{ item.references|default('—')|raw }}</dd>
-            
-
-            
-                <dt>Category</dt>
-                <dd>
-                    {% if item.category %}
-                        <a href='{{ path('category_show', {'id': item.category.id}) }}'>
-                            {{ item.category }}
-                        </a>
-                    {% else %}
-                        —
-                    {% endif %}
-                </dd>
-            
-            
-                <dt>Civilization</dt>
-                <dd>
-                    {% if item.civilization %}
-                        <a href='{{ path('civilization_show', {'id': item.civilization.id}) }}'>
-                            {{ item.civilization }}
-                        </a>
-                    {% else %}
-                        —
-                    {% endif %}
-                </dd>
-            
-            
-                <dt>Inscription Style</dt>
-                <dd>
-                    {% if item.inscriptionStyle %}
-                        <a href='{{ path('inscription_style_show', {'id': item.inscriptionStyle.id}) }}'>
-                            {{ item.inscriptionStyle }}
-                        </a>
-                    {% else %}
-                        —
-                    {% endif %}
-                </dd>
-            
-            
-                <dt>Find spot</dt>
-                <dd>
-                    {% if item.findSpot %}
-                        <a href='{{ path('location_show', {'id': item.findSpot.id}) }}'>
-                            {{ item.findSpot }}
-                        </a>
-                    {% else %}
-                    —
-                    {% endif %}
-                </dd>
-            
-
-            
-                <dt>Provenance</dt>
-                <dd>
-                    {% if item.provenance %}
-                        <a href='{{ path('location_show', {'id': item.provenance.id}) }}'>
-                            {{ item.provenance }}
-                        </a>
-                    {% else %}
-                    —
-                    {% endif %}
-                </dd>
-            
-
-            
-                <dt>Techniques</dt>
-                <dd>
-                    {% if item.techniques | length > 0 %}
-                        <ul>
-                            {% for technique in item.techniques %}
-                                <li>
-                                    <a href='{{ path('technique_show', {'id': technique.id}) }}'>
-                                        {{ technique }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                    —
-                    {% endif %}
-                </dd>
-            
-
-            
-                <dt>Revisions</dt>
-                <dd>
-                    {% for revision in item.revisions %}
-                        {{ revision.date }} - {{ revision.initials }}<br />
-                    {% endfor %}
-                </dd>
-            
-            
-                <dt>Created</dt>
-                <dd>{{ item.created|date }}</dd>
-            
-            
-                <dt>Updated</dt>
-                <dd>{{ item.updated|date }}</dd>
+                    <dt>Updated</dt>
+                    <dd>{{ item.updated|date }}</dd>
+                 {% endif %}
              </dl>
-
-
     </section>
     <section class="images">
         <h2 class="sr-only">Images</h2>
         <div class="img-content">
-
-
-            {% if is_granted('ROLE_CONTENT_ADMIN') %}
-                <div class="btn-toolbar">
-                    <div class="btn-group pull-right">
-                        <a href="{{ path('item_add_image', {'id': item.id}) }}" class="btn btn-default">
-                            <span class='glyphicon glyphicon-plus'></span> Add Image </a>
-                    </div>
-                </div>
-            {% endif %}
 
 
 
@@ -218,5 +104,4 @@
 
 {%  block  javascripts %}
 <script src="{{ asset('yarn/viewerjs/dist/viewer.js') }}"></script>
-<script src="{{ asset('js/ndm.js') }}"></script>
 {% endblock %}

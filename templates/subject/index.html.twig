@@ -1,12 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{%  set display = 3 %}
+
 {% block title %}Subject List{% endblock %}
 
 {% block pageheader %}
     <h1>Subject List</h1>
-    <p class="count">
-        Displaying {{ subjects|length }} subjects of {{ subjects.getTotalItemCount }} total.
-    </p>
+    {% include 'partial/count.html.twig'
+        with {'index': subjects, 'label': 'subjects'} %}
  {% endblock %} 
 
 {% block body %}
@@ -24,41 +25,33 @@
             </a>
         </div>
     </div>
-
-    <table class="table table-bordered table-condensed table-hover table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>                                           <th>Name</th>
-                                                               <th>Label</th>
-                                                               <th>Description</th>
-                    
-            </tr>
-        </thead>
-        <tbody>
-        {% for subject in subjects %}
-            <tr>
-
-                <td>
-                    <a href="{{ path('subject_show', { 'id': subject.id }) }}">
-                        {{ subject.id }}
-                    </a>
-                </td>
-                <td>
-                    {{ subject.name }}
-                </td>
-            
-                <td>
-                    {{ subject.label }}
-                </td>
-            
-                <td>
-                    {{ subject.description }}
-                </td>
-            
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <section>
+        {%  for subject in subjects %}
+            <div class="subject-item">
+                <h2><a href="{{ path('subject_show', { 'id': subject.id }) }}">{{ subject.label }}</a></h2>
+                <div class="subject-desc">
+                    {% if subject.description %}
+                        {{ subject.description|raw }}
+                    {% else  %}
+                        <p>No description available.</p>
+                    {%  endif %}
+                </div>
+                {% if subject.items|length > 0 %}
+                    {% set sorted = subject.items|sort((a,b) => a.images|length < b.images|length) %}
+                    {% set subset = sorted|slice(0, display) %}
+                    {%  embed 'item/partial/list.html.twig' with {'items': subset} %}
+                        {% block callback %}
+                            {% if subject.items|length > display %}
+                                {% include 'item/partial/gallery-item.html.twig'
+                                    with {'path': path('subject_show', { 'id': subject.id }),
+                                          'img': asset('images/plus.svg')} %}
+                            {% endif %}
+                        {% endblock %}
+                    {% endembed %}
+                {% endif %}
+            </div>
+        {%  endfor %}
+    </section>
 
     <div class="navigation">
         {{ knp_pagination_render(subjects) }}
