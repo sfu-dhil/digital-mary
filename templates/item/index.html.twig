@@ -13,7 +13,7 @@
 
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
-            {% if is_granted('ROLE_ADMIN') %}
+            {% if is_granted('ROLE_CONTENT_ADMIN') %}
                 <a href="{{ path('item_new') }}" class="btn btn-default"> <span class="glyphicon glyphicon-plus"></span>
                     New </a>
             {% endif %}
@@ -23,37 +23,8 @@
         </div>
     </div>
 
-    <table class="table table-bordered table-condensed table-hover table-striped">
-        <thead>
-            <tr>
-                <th>Preview</th>
-                <th>Name</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in items %}
-                <tr>
-                    <td>
-                        {% if item.images|length > 0 %}
-                            <a href='{{ path('item_show', {'id': item.id}) }}'>
-                                <img class='thumbnail thumbnail-small'  src='{{ path('item_image_thumbnail', {'id': item.id, 'image_id': item.images[0].id}) }}'>
-                            </a>
-                        {% endif %}
-                    </td>
-                    <td>
-                        <a href="{{ path('item_show', { 'id': item.id }) }}">
-                            {{ item.name }}
-                        </a>
-                    </td>
-                    <td>
-                        {{ item.description|raw }}
-                    </td>
-
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    {% embed 'item/partial/table.html.twig' %}
+    {% endembed %}
 
     <div class="navigation">
         {{ knp_pagination_render(items) }}

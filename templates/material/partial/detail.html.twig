@@ -1,0 +1,49 @@
+<table class='table table-bordered table-condensed table-hover table-striped'>
+    <tbody>
+        <tr>
+            <th>Name</th>
+            <td>
+                {{ material.name }}
+            </td>
+        </tr>
+        <tr>
+            <th>Label</th>
+            <td>
+                {{ material.label }}
+            </td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>
+                {{ material.description|raw }}
+            </td>
+        </tr>
+
+        <tr>
+            <th>Item</th>
+            <td>
+                {% if material.items|length > 0 %}
+                    <ul>
+                        {% for item in material.items %}
+                            <li>
+                                <a href='{{ path("item_show", {"id":item.id }) }}'>
+                                    {{ item }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Created</th>
+            <td>{{ material.created|date }}</td>
+        </tr>
+        <tr>
+            <th>Updated</th>
+            <td>{{ material.updated|date }}</td>
+        </tr>
+    </tbody>
+</table>
+
+

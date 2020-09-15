@@ -25,7 +25,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/material")
- * @IsGranted("ROLE_USER")
  */
 class MaterialController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
@@ -78,7 +77,7 @@ class MaterialController extends AbstractController implements PaginatorAwareInt
             return new JsonResponse([]);
         }
         $data = [];
-        foreach ($materialRepository->typeaheadSearch($q) as $result) {
+        foreach ($materialRepository->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => (string) $result,
@@ -132,11 +131,9 @@ class MaterialController extends AbstractController implements PaginatorAwareInt
      *
      * @return array
      */
-    public function show(Request $request, Material $material) {
-        $items = $this->paginator->paginate($material->getItems(), $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
+    public function show(Material $material) {
         return [
             'material' => $material,
-            'items' => $items,
         ];
     }
 

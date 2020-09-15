@@ -63,7 +63,7 @@ class ImageType extends AbstractType {
                 'help_block' => '',
             ],
         ]);
-        $builder->add('description', null, [
+        $builder->add('description', TextareaType::class, [
             'label' => 'Description',
             'required' => false,
             'attr' => [

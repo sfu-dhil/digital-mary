@@ -2,14 +2,14 @@
 
 {% block title %}Category Search{% endblock %}
 
- {% block pageheader %} 
-    <h1>Category Search</h1>
-    {% if categories|length %}
-    <p class="count">
-        Displaying {{ categories|length }} categories of {{ categories.getTotalItemCount }} total.
-    </p>
-	{% endif %}
- {% endblock %} 
+ {% block pageheader %}
+     <h1>Category Search</h1>
+     {% if categories|length %}
+         <p class="count">
+             Displaying {{ categories|length }} categories of {{ categories.getTotalItemCount }} total.
+         </p>
+     {% endif %}
+ {% endblock %}
 
 {% block body %}
 
@@ -22,7 +22,7 @@
                     <div class='input-group'>
                         <input type='text' name='q' id='q' class='form-control' value='{{ q }}'>
                         <span class="input-group-btn">
-                            <button class="btn btn-primary" type="submit">
+                            <button class="btn btn-primary" id='btn-search' type="submit">
                                 <span class='glyphicon glyphicon-search'></span>
                                 Search
                             </button>
@@ -30,7 +30,7 @@
                     </div>
                 </div>
             </div>
-            <p>	Full text searching options, if available:</p>
+            <p> Full text searching options, if available:</p>
             <ul>
                 <li><code>shakespeare</code> - shakespeare should be present, but might not be</li>
                 <li><code>shakes*</code> - words starting with shakes should be present</li>
@@ -42,47 +42,15 @@
         </fieldset>
     </form>
 
-	{% if categories|length %}
-<table class="table table-bordered table-condensed table-hover table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-                <th>Name</th>
-                <th>Label</th>
-                <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for category in categories %}
-        <tr>
+    {% if categories|length %}
 
-            <td>
-                <a href="{{ path('category_show', { 'id': category.id }) }}">
-                    {{ category.id }}
-                </a>
-            </td>
-                        <td>
-                            {{ category.name }}
-                        </td>
-                
-                        <td>
-                            {{ category.label }}
-                        </td>
-                
-                        <td>
-                            {{ category.description }}
-                        </td>
-                
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        {% embed 'category/partial/table.html.twig' %}
+        {% endembed %}
 
-
-    <div class="navigation">
-        {{ knp_pagination_render(categories) }}
-    </div>
-	{% endif %}
+        <div class="navigation">
+            {{ knp_pagination_render(categories) }}
+        </div>
+    {% endif %}
 
 {% endblock %}
 

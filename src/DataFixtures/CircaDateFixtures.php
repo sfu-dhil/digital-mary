@@ -12,7 +12,6 @@ namespace App\DataFixtures;
 
 use App\Entity\CircaDate;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class CircaDateFixtures extends Fixture {
@@ -21,14 +20,14 @@ class CircaDateFixtures extends Fixture {
      */
     public function load(ObjectManager $em) : void {
         for ($i = 0; $i < 4; $i++) {
+            $data = "190{$i}";
             $fixture = new CircaDate();
-
-            $fixture->setValue(($i % 2 ? 'c' : '') . '20' . $i);
-
+            $fixture->setValue($data);
+            $fixture->setStartCirca(0 === $i % 2);
+            $fixture->setEndCirca(0 === $i % 2);
             $em->persist($fixture);
             $this->setReference('circadate.' . $i, $fixture);
         }
-
         $em->flush();
     }
 }

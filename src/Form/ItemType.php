@@ -15,9 +15,6 @@ use App\Entity\Civilization;
 use App\Entity\InscriptionStyle;
 use App\Entity\Item;
 use App\Entity\Location;
-use App\Entity\Material;
-use App\Entity\Subject;
-use App\Entity\Technique;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -48,13 +45,6 @@ class ItemType extends AbstractType {
                 'class' => 'tinymce',
             ],
         ]);
-        $builder->add('circaDate', TextareaType::class, [
-            'label' => 'Date',
-            'required' => false,
-            'attr' => [
-                'help_block' => 'Date ranges (1901-1903) and circas (c1902) are supported here',
-            ]
-        ]);
         $builder->add('inscription', TextareaType::class, [
             'label' => 'Inscription',
             'required' => false,
@@ -73,115 +63,85 @@ class ItemType extends AbstractType {
         ]);
         $builder->add('dimensions', TextType::class, [
             'label' => 'Dimensions',
-            'required' => true,
+            'required' => false,
             'attr' => [
                 'help_block' => '',
             ],
         ]);
         $builder->add('references', TextareaType::class, [
-            'label' => 'References',
+            'label' => 'Bibliography',
             'required' => false,
             'attr' => [
                 'help_block' => '',
                 'class' => 'tinymce',
             ],
         ]);
-        $builder->add('category', Select2EntityType::class, [
-            'label' => 'Category',
-            'multiple' => false,
-            'remote_route' => 'category_typeahead',
-            'class' => Category::class,
-            'allow_clear' => true,
+
+        $builder->add('circaDate', TextType::class, [
+            'label' => 'Date',
             'attr' => [
-                'add_path' => 'category_new_popup',
-                'add_label' => 'New Category',
-                'help_block' => '',
-            ]
-        ]);
-        $builder->add('civilization', Select2EntityType::class, [
-            'label' => 'Civilization',
-            'multiple' => false,
-            'remote_route' => 'civilization_typeahead',
-            'class' => Civilization::class,
-            'allow_clear' => true,
-            'attr' => [
-                'add_path' => 'civilization_new_popup',
-                'add_label' => 'New Civilization',
-                'help_block' => '',
-            ]
-        ]);
-        $builder->add('inscriptionStyle', Select2EntityType::class, [
-            'label' => 'InscriptionStyle',
-            'multiple' => false,
-            'remote_route' => 'inscription_style_typeahead',
-            'class' => InscriptionStyle::class,
-            'allow_clear' => true,
-            'attr' => [
-                'add_path' => 'inscription_style_new_popup',
-                'add_label' => 'New InscriptionStyle',
-                'help_block' => '',
-            ]
-        ]);
-        $builder->add('provenance', Select2EntityType::class, [
-            'label' => 'Provenance',
-            'multiple' => false,
-            'remote_route' => 'location_typeahead',
-            'class' => Location::class,
-            'allow_clear' => true,
-            'attr' => [
-                'add_path' => 'location_new_popup',
-                'add_label' => 'New Location',
-                'help_block' => '',
-            ]
-        ]);
-        $builder->add('findSpot', Select2EntityType::class, [
-            'label' => 'Find Spot',
-            'multiple' => false,
-            'remote_route' => 'location_typeahead',
-            'class' => Location::class,
-            'allow_clear' => true,
-            'attr' => [
-                'add_path' => 'location_new_popup',
-                'add_label' => 'New Location',
-                'help_block' => '',
-            ]
-        ]);
-        $builder->add('materials', Select2EntityType::class, [
-            'label' => 'Materials',
-            'multiple' => true,
-            'remote_route' => 'material_typeahead',
-            'class' => Material::class,
-            'allow_clear' => true,
-            'attr' => [
-                'add_path' => 'material_new_popup',
-                'add_label' => 'New Material',
-                'help_block' => '',
-            ]
+                'help_block' => 'Gregorian date ranges (1901-1903) and circas (c1902) are supported here',
+            ],
         ]);
 
-        $builder->add('techniques', Select2EntityType::class, [
-            'label' => 'Techniques',
-            'multiple' => true,
+        $builder->add('category', Select2EntityType::class, [
+            'label' => 'Category',
+            'class' => Category::class,
             'remote_route' => 'category_typeahead',
-            'class' => Technique::class,
             'allow_clear' => true,
             'attr' => [
-                'add_path' => 'technique_new_popup',
-                'add_label' => 'New Technique',
                 'help_block' => '',
-            ]
+                'add_path' => 'category_new_popup',
+                'add_label' => 'Add Category',
+            ],
         ]);
-        $builder->add('subjects', Select2EntityType::class, [
-            'label' => 'Subjects',
-            'multiple' => true,
-            'remote_route' => 'subject_typeahead',
-            'class' => Subject::class,
+
+        $builder->add('civilization', Select2EntityType::class, [
+            'label' => 'Civilization',
+            'class' => Civilization::class,
+            'remote_route' => 'civilization_typeahead',
             'allow_clear' => true,
             'attr' => [
-                'add_path' => 'subject_new_popup',
-                'add_label' => 'New Subject',
                 'help_block' => '',
-            ]
+                'add_path' => 'civilization_new_popup',
+                'add_label' => 'Add Civilization',
+            ],
+        ]);
+
+        $builder->add('inscriptionStyle', Select2EntityType::class, [
+            'label' => 'Inscription Style',
+            'class' => InscriptionStyle::class,
+            'remote_route' => 'inscription_style_typeahead',
+            'allow_clear' => true,
+            'attr' => [
+                'help_block' => '',
+                'add_path' => 'inscription_style_new_popup',
+                'add_label' => 'Add InscriptionStyle',
+            ],
+        ]);
+
+        $builder->add('findSpot', Select2EntityType::class, [
+            'label' => 'Find Spot',
+            'class' => Location::class,
+            'remote_route' => 'location_typeahead',
+            'allow_clear' => true,
+            'attr' => [
+                'help_block' => '',
+                'add_path' => 'location_new_popup',
+                'add_label' => 'Add Location',
+            ],
+        ]);
+
+        $builder->add('provenance', Select2EntityType::class, [
+            'label' => 'Provenance',
+            'class' => Location::class,
+            'remote_route' => 'location_typeahead',
+            'allow_clear' => true,
+            'attr' => [
+                'help_block' => '',
+                'add_path' => 'location_new_popup',
+                'add_label' => 'Add Location',
+            ],
         ]);
     }
 

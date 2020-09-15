@@ -3,12 +3,12 @@
 {% block title %}Technique Details {% endblock %}
 
  {% block pageheader %}
-    <h1>Technique Details</h1>
+     <h1>Technique Details</h1>
  {% endblock %}
 
 {% block body %}
 
-    {% if is_granted('ROLE_ADMIN') %}
+    {% if is_granted('ROLE_CONTENT_ADMIN') %}
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
             <a href="{{ path('technique_edit', {'id': technique.id }) }}" class="btn btn-default">
@@ -25,31 +25,7 @@
     </div>
     {% endif %}
 
-    <table class="table table-bordered table-condensed table-hover table-striped">
-        <tbody>
-            <tr>
-                <th>Name</th>
-                <td>{{ technique.name }}</td>
-            </tr>
-        <tr>
-                <th>Label</th>
-                <td>{{ technique.label }}</td>
-            </tr>
-        <tr>
-                <th>Description</th>
-                <td>{{ technique.description }}</td>
-            </tr>
-                <tr>
-            <th>Created</th>
-            <td>{{ technique.created|date }}</td>
-        </tr>
-        <tr>
-            <th>Updated</th>
-            <td>{{ technique.updated|date }}</td>
-        </tr>
-        </tbody>
-    </table>
-
-    {% include 'item/partial/list.html.twig' with {'items': items} %}
+    {% embed 'technique/partial/detail.html.twig' %}
+    {% endembed %}
 
 {% endblock %}

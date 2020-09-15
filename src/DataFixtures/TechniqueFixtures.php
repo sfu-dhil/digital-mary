@@ -12,7 +12,6 @@ namespace App\DataFixtures;
 
 use App\Entity\Technique;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class TechniqueFixtures extends Fixture {
@@ -22,15 +21,12 @@ class TechniqueFixtures extends Fixture {
     public function load(ObjectManager $em) : void {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Technique();
-
-            $fixture->setName('New Name ' . $i);
-            $fixture->setLabel('New Label ' . $i);
-            $fixture->setDescription('New Description ' . $i);
-
+            $fixture->setName('Name ' . $i);
+            $fixture->setLabel('Label ' . $i);
+            $fixture->setDescription("<p>This is paragraph {$i}</p>");
             $em->persist($fixture);
             $this->setReference('technique.' . $i, $fixture);
         }
-
         $em->flush();
     }
 }

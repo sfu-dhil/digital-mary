@@ -17,14 +17,12 @@ use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/circa_date")
- * @IsGranted("ROLE_USER")
+ * @IsGranted("ROLE_ADMIN")
  */
 class CircaDateController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
@@ -55,5 +53,4 @@ class CircaDateController extends AbstractController implements PaginatorAwareIn
             'circa_date' => $circaDate,
         ];
     }
-
 }
