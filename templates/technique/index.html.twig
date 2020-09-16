@@ -7,21 +7,20 @@
     <p class="count">
         Displaying {{ techniques|length }} techniques of {{ techniques.getTotalItemCount }} total.
     </p>
- {% endblock %} 
+ {% endblock %}
 
 {% block body %}
 
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
-            {% if is_granted('ROLE_ADMIN') %}
+            {% if is_granted('ROLE_CONTENT_ADMIN') %}
             <a href="{{ path('technique_new') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-plus"></span> New
             </a>
             {% endif %}
 
             <a href="{{ path('technique_search') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span> Search
-            </a>
+                <span class="glyphicon glyphicon-search"></span> Search </a>
         </div>
     </div>
 
@@ -31,7 +30,7 @@
                 <th>ID</th>                                           <th>Name</th>
                                                                <th>Label</th>
                                                                <th>Description</th>
-                    
+
             </tr>
         </thead>
         <tbody>
@@ -46,15 +45,15 @@
                 <td>
                     {{ technique.name }}
                 </td>
-            
+
                 <td>
                     {{ technique.label }}
                 </td>
-            
+
                 <td>
                     {{ technique.description }}
                 </td>
-            
+
             </tr>
         {% endfor %}
         </tbody>

@@ -25,7 +25,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/category")
- * @IsGranted("ROLE_USER")
  */
 class CategoryController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
@@ -78,7 +77,7 @@ class CategoryController extends AbstractController implements PaginatorAwareInt
             return new JsonResponse([]);
         }
         $data = [];
-        foreach ($categoryRepository->typeaheadSearch($q) as $result) {
+        foreach ($categoryRepository->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => (string) $result,
@@ -134,6 +133,7 @@ class CategoryController extends AbstractController implements PaginatorAwareInt
      */
     public function show(Request $request, Category $category) {
         $items = $this->paginator->paginate($category->getItems(), $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
+
         return [
             'category' => $category,
             'items' => $items,

@@ -12,7 +12,6 @@ namespace App\DataFixtures;
 
 use App\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class CategoryFixtures extends Fixture {
@@ -22,15 +21,12 @@ class CategoryFixtures extends Fixture {
     public function load(ObjectManager $em) : void {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Category();
-
-            $fixture->setName('New Name ' . $i);
-            $fixture->setLabel('New Label ' . $i);
-            $fixture->setDescription('New Description ' . $i);
-
+            $fixture->setName('Name ' . $i);
+            $fixture->setLabel('Label ' . $i);
+            $fixture->setDescription("<p>This is paragraph {$i}</p>");
             $em->persist($fixture);
             $this->setReference('category.' . $i, $fixture);
         }
-
         $em->flush();
     }
 }

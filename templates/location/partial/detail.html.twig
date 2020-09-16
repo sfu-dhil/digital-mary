@@ -1,0 +1,95 @@
+<table class='table table-bordered table-condensed table-hover table-striped'>
+    <tbody>
+        <tr>
+            <th>Name</th>
+            <td>
+                {{ location.name }}
+            </td>
+        </tr>
+        <tr>
+            <th>Label</th>
+            <td>
+                {{ location.label }}
+            </td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>
+                {{ location.description|raw }}
+            </td>
+        </tr>
+        <tr>
+            <th>Geonameid</th>
+            <td>
+                {{ location.geonameid }}
+            </td>
+        </tr>
+        <tr>
+            <th>Latitude</th>
+            <td>
+                {{ location.latitude }}
+            </td>
+        </tr>
+        <tr>
+            <th>Longitude</th>
+            <td>
+                {{ location.longitude }}
+            </td>
+        </tr>
+        <tr>
+            <th>Country</th>
+            <td>
+                {{ location.country }}
+            </td>
+        </tr>
+        <tr>
+            <th>Alternate Names</th>
+            <td>
+                {% if location.alternateNames %}{{ location.alternateNames|join(', ') }}{% endif %}
+            </td>
+        </tr>
+
+        <tr>
+            <th>Item</th>
+            <td>
+                {% if location.itemsFound|length > 0 %}
+                    <ul>
+                        {% for item in location.itemsFound %}
+                            <li>
+                                <a href='{{ path("item_show", {"id":item.id }) }}'>
+                                    {{ item }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Item</th>
+            <td>
+                {% if location.itemsProvenanced|length > 0 %}
+                    <ul>
+                        {% for item in location.itemsProvenanced %}
+                            <li>
+                                <a href='{{ path("item_show", {"id":item.id }) }}'>
+                                    {{ item }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Created</th>
+            <td>{{ location.created|date }}</td>
+        </tr>
+        <tr>
+            <th>Updated</th>
+            <td>{{ location.updated|date }}</td>
+        </tr>
+    </tbody>
+</table>
+
+
