@@ -16,6 +16,7 @@
 } %}
 {% endblock %}
 
+
 {% block admin %}
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
@@ -62,6 +63,6 @@
     </table>
     {% endif %}
 
-    {% include 'item/partial/list.html.twig' with {'items': items} %}
+    {% include 'item/partial/list.html.twig' with {'items': subject.items} %}
 
 {% endblock %}

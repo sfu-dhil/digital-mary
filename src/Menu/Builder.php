@@ -113,9 +113,6 @@ class Builder implements ContainerAwareInterface {
             $browse->addChild('Date', [
                 'route' => 'circa_date_index',
             ]);
-            $browse->addChild('Image', [
-                'route' => 'image_index',
-            ]);
         }
 
         return $menu;

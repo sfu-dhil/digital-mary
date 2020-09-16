@@ -18,11 +18,9 @@
 {% block admin %}
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
-            {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('category_new') }}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-plus"></span> New
-                </a>
-            {% endif %}
+            <a href="{{ path('category_new') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus"></span> New
+            </a>
             <a href="{{ path('category_search') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-search"></span> Search
             </a>

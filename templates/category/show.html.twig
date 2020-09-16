@@ -15,6 +15,7 @@
         ]
     } %}
 {% endblock %}
+
 {% block admin %}
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
@@ -32,8 +33,6 @@
 {% endblock %}
 
 {% block body %}
-
-    {% if is_granted('ROLE_ADMIN') %}
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
             <tr>
@@ -58,7 +57,7 @@
             </tr>
         </tbody>
     </table>
-{% endif %}
+
 
     {% include 'item/partial/list.html.twig' with {'items': items} %}
 

@@ -38,6 +38,7 @@
         </div>
 {% endblock %}
 
+
 {% block bodyclass %}
 {% if item.images|length ==0 %} imageless{% endif %}
 {% endblock %}
@@ -98,6 +99,7 @@
 {%  block styles %}
     <link rel="stylesheet" type="text/css" href="{{ asset('yarn/viewerjs/dist/viewer.css') }}"/>
 {%  endblock %}
+
 
 {%  block  javascripts %}
 <script src="{{ asset('yarn/viewerjs/dist/viewer.js') }}"></script>
