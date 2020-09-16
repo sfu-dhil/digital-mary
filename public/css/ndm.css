@@ -49,6 +49,12 @@ since there's stuff I tend to do quite a bit.
  *
  */
 /* Note to be called directly, but just to reset everything */
+/* Take, with thanks, from:
+https://css-tricks.com/snippets/sass/px-to-em-functions/
+ */
+/* Taken, with thanks, from:
+https://makandracards.com/makandra/42500-sass-how-to-convert-an-rgba-color-to-its-rgb-look-alike
+ */
 /* 'Nunito Sans' normal 200*/
 @font-face {
   font-family: "Nunito Sans";
@@ -208,7 +214,7 @@ since there's stuff I tend to do quite a bit.
 .hamburger.is-active .hamburger-inner,
 .hamburger.is-active .hamburger-inner::before,
 .hamburger.is-active .hamburger-inner::after {
-  background-color: #ffffff;
+  background-color: #61605d;
 }
 
 .hamburger-box {
@@ -226,7 +232,7 @@ since there's stuff I tend to do quite a bit.
 .hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
   width: 40px;
   height: 3.8461538462px;
-  background-color: #ffffff;
+  background-color: #61605d;
   border-radius: 4px;
   position: absolute;
   transition-property: transform;
@@ -357,6 +363,10 @@ html, body, .dropdown-menu {
   font-family: "Nunito Sans";
 }
 
+main {
+  margin-top: 2.6180340252rem;
+}
+
 .navbar-default {
   min-height: 50px;
   /* Change the width to 100vw rather than 100%, since 100% causes
@@ -365,7 +375,9 @@ html, body, .dropdown-menu {
   width: 100vw;
   padding-right: 10px;
   /* Set the background colour */
-  background: #C0B283;
+  background: #f3efe8;
+  box-shadow: none !important;
+  border: none !important;
   text-transform: uppercase;
   /* Have to add the min-width hiding again */
   /* Reset the fixed-top to be sticky rather than fixed,
@@ -373,8 +385,8 @@ html, body, .dropdown-menu {
    */
   /* Switch the text colour */
 }
-.navbar-default .navbar-nav > li > a:hover {
-  color: #ffffff;
+.navbar-default .navbar-nav > li > a, .navbar-default .navbar-nav > li > a:hover {
+  color: black;
 }
 @media (min-width: 768px) {
   .navbar-default .navbar-toggle {
@@ -389,7 +401,7 @@ html, body, .dropdown-menu {
   margin-right: 0;
 }
 .navbar-default .navbar-nav > li > a {
-  color: #ffffff;
+  color: black;
 }
 
 .body-nav {
@@ -399,6 +411,7 @@ html, body, .dropdown-menu {
   margin-top: 0;
   margin-bottom: 0.3819660059rem;
   align-items: end;
+  margin-bottom: 1.618034rem;
 }
 .body-nav > * {
   margin-bottom: 0.6180339845rem;
@@ -519,11 +532,24 @@ li > .breadcrumbs .current {
 /**************************** Page Header */
 .page-header {
   border-bottom: none;
-  margin-top: 1rem;
+  margin-top: 0;
 }
 .item_show .page-header {
   margin: 0;
   padding-bottom: 0;
+}
+
+.content a {
+  text-decoration: none !important;
+  border-bottom-style: solid;
+  border-bottom-width: 0.2360679726rem;
+  border-bottom-color: rgba(192, 178, 131, 0.5);
+  transition: border-bottom-color 0.2s ease-in-out;
+  color: inherit;
+}
+.content a:hover {
+  color: inherit;
+  border-bottom-color: rgba(192, 178, 131, 0.8);
 }
 
 @media (min-width: 768px) {
@@ -594,19 +620,6 @@ li > .breadcrumbs .current {
     padding: 0.3819660059rem 0.6180339845rem 0.6180339845rem 0.6180339845rem;
     border: 1px solid #E5E5E5;
   }
-}
-
-.content a {
-  text-decoration: none !important;
-  border-bottom-style: solid;
-  border-bottom-width: 0.2360679726rem;
-  border-bottom-color: rgba(192, 178, 131, 0.5);
-  transition: border-bottom-color 0.2s ease-in-out;
-  color: inherit;
-}
-.content a:hover {
-  color: inherit;
-  border-bottom-color: rgba(192, 178, 131, 0.8);
 }
 
 .details .subjects ul {

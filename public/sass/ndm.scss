@@ -36,12 +36,17 @@ html, body, .dropdown-menu {
   font-family: $body-font;
 }
 
-@include dhil-make-navbar($ndm-gold, $ndm-white){
+main{
+  margin-top: ms(2);
+}
+
+@include dhil-make-navbar($ndm-nav-background-color, $ndm-black){
   text-transform:uppercase;
   .navbar-nav{
     & > li {
-      & > a:hover {
-        color: $ndm-white;
+      & > a,
+      & > a:hover{
+        color: $ndm-black;
       }
     }
   }
@@ -54,7 +59,9 @@ html, body, .dropdown-menu {
 };
 
 
-@include dhil-body-nav();
+@include dhil-body-nav(){
+  margin-bottom: ms(1);
+};
 
 @include dhil-breadcrumb();
 
@@ -62,12 +69,20 @@ html, body, .dropdown-menu {
 
 .page-header{
   border-bottom:none;
-  margin-top: ms(0);
+  margin-top:0;
   .item_show &{
     margin:0;
     padding-bottom:0;
   }
 }
+
+.content{
+  a{
+    @include ndm-link();
+  }
+}
+
+
 
 .mobile-header{
   @media (min-width: 768px){
@@ -127,11 +142,7 @@ html, body, .dropdown-menu {
 
 
 
-.content{
-    a{
-      @include ndm-link();
-    }
-}
+
 
 .details .subjects{
     ul{

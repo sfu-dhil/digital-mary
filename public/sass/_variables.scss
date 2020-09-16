@@ -11,6 +11,7 @@ $ndm-white: #ffffff;
 $nav-height:50px;
 $ndm-img-height: 350;
 $ndm-img-width: 450;
+$ndm-nav-background-color: rgba-to-rgb(rgba($ndm-light-gold, .5));
 
 
 $base-text-color: $ndm-black;
@@ -19,7 +20,7 @@ $base-text-color: $ndm-black;
 $hamburger-types: (collapse);
 $hamburger-layer-height: $nav-height / 13;
 $hamburger-layer-spacing: $nav-height/ 8;
-$hamburger-layer-color: $ndm-white;
+$hamburger-layer-color: rgba-to-rgb(rgba($ndm-black, 0.6), $ndm-nav-background-color);
 
 /*Breadcrumb stuff */
 $breadcrumb-arrow-color: $ndm-light-gold;
