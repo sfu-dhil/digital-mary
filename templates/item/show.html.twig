@@ -4,7 +4,7 @@
 {% block title %}Item Details {% endblock %}
 
  {% block pageheader %}
-     <h1 class="sr-only">{{ item.name }}</h1>
+     <h1 class="mobile-header">{{ item.name }}</h1>
  {% endblock %}
 
 {% block breadcrumb %}
@@ -46,7 +46,7 @@
 {% block body %}
     <section class="details">
         <h2 class="sr-only">Details</h2>
-        <div class="thing">
+        <div class="full-view-header">
             <h1>{{ item.name }}</h1>
         </div>
         <dl>
