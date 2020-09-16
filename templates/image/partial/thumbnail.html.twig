@@ -12,13 +12,8 @@
     {% endif %}
 
     <div class="img-container">
-<<<<<<< HEAD
-        <a href="{{ path('image_view', {'id': image.id }) }}" data-date="{{ image.created|date }}" data-img="{{ path('image_view', {'id': image.id}) }}">
-            <img src="{{ path('image_thumbnail', {'id': image.id}) }}" class="img-thumbnail" alt="{{  image.originalName }}">
-=======
         <a href="#imgModal" data-toggle="modal" data-title="{{ image.originalName }}" data-date="{{ image.created|date }}" data-target="#imgModal" data-img="{{ path('image_view', {'id': image.id}) }}">
             <img src="{{ path('image_thumbnail', {'id': image.id}) }}" class="img-thumbnail" />
->>>>>>> parent of 9936a06... Merge pull request #7 from ubermichael/main
         </a>
     </div>
 
@@ -27,7 +22,6 @@
             {{ image.originalName }}
         </div>
         {{ image.description|raw }}
-
         <p>Item:
             <a href="{{ path('item_show', {'id': image.item.id}) }}">
                 {{ image.item }}
