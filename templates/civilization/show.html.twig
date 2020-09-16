@@ -3,12 +3,10 @@
 {% block title %}Civilization Details {% endblock %}
 
  {% block pageheader %}
-    <h1>Civilization Details</h1>
+    <h1>Civilization: {{ civilization.name }}</h1>
  {% endblock %}
 
-{% block body %}
-
-    {% if is_granted('ROLE_ADMIN') %}
+{% block admin %}
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
             <a href="{{ path('civilization_edit', {'id': civilization.id }) }}" class="btn btn-default">
@@ -23,8 +21,18 @@
             </form>
         </div>
     </div>
-    {% endif %}
+{% endblock %}
 
+{% block breadcrumb %}
+    {% include 'partial/breadcrumb.html.twig' with {
+        'content':  [
+                        ['Civilizations', path('civilization_index')],
+                        [ civlization.name ]
+                    ]
+    } %}
+{% endblock %}
+
+{% block body %}
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
             <tr>

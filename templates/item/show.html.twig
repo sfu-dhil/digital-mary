@@ -4,9 +4,19 @@
 {% block title %}Item Details {% endblock %}
 
  {% block pageheader %}
-     <h1>{{ item.name }}</h1>
+     <h1 class="sr-only">{{ item.name }}</h1>
  {% endblock %}
 
+{% block breadcrumb %}
+    {% include 'partial/breadcrumb.html.twig' with {
+        'content':
+       [
+           ['Items', path('item_index')],
+           [item.name]
+        ]
+    }
+   %}
+{% endblock %}
 
 {% block admin %}
         <div class='btn-toolbar pull-right'>
@@ -35,8 +45,11 @@
 {% block body %}
     <section class="details">
         <h2 class="sr-only">Details</h2>
+        <div class="thing">
+            <h1>{{ item.name }}</h1>
+        </div>
         <dl>
-            {{ dl.make(item.name, 'Name') }}
+            <!-- {{ dl.make(item.name, 'Name') }} -->
             {{ dl.make(item.description, 'Description') }}
             {{ dl.make(item.category, 'Category', 'category_show') }}
             {{ dl.make(item.subjects, "Subjects", "subject_show") }}

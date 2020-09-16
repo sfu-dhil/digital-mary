@@ -6,16 +6,27 @@ $modscale-start: 3;
 $ndm-gold: #C0B283;
 $ndm-light-gold: #E7DED1;
 $ndm-grey: #E5E5E5;
+$ndm-black: black;
 $ndm-white: #ffffff;
 $nav-height:50px;
 $ndm-img-height: 350;
 $ndm-img-width: 450;
+
+
+$base-text-color: $ndm-black;
 
 /*Hamburger stuff */
 $hamburger-types: (collapse);
 $hamburger-layer-height: $nav-height / 13;
 $hamburger-layer-spacing: $nav-height/ 8;
 $hamburger-layer-color: $ndm-white;
+
+/*Breadcrumb stuff */
+$breadcrumb-arrow-color: $ndm-light-gold;
+$breadcrumb-hover-color:$ndm-light-gold;
+$breadcrumb-arrow-width: 2px;
+$breadcrumb-current-background: $ndm-grey;
+
 
 @mixin ndm-link{
   text-decoration:none!important;

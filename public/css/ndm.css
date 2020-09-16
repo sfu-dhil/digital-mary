@@ -20,6 +20,7 @@
 since there's stuff I tend to do quite a bit.
  */
 /* Make sure to import the modularscale-sass library */
+/* DEFAULTS */
 /* @dhil-headers
  *
  * Standard header creation from a typescale
@@ -174,6 +175,7 @@ since there's stuff I tend to do quite a bit.
   src: local("Crimson Text Bold Italic"), local("CrimsonText-BoldItalic"), url("/digital-mary/public/fonts/CrimsonText-BoldItalic-700.woff2") format("woff2"), url("/digital-mary/public/fonts/CrimsonText-BoldItalic-700.woff") format("woff");
 }
 /*Hamburger stuff */
+/*Breadcrumb stuff */
 /*!
  * Hamburgers
  * @description Tasty CSS-animated hamburgers
@@ -374,19 +376,34 @@ html, body, .dropdown-menu {
   color: #ffffff;
 }
 
+/**************************** Page Header */
+.page-header {
+  border-bottom: none;
+  margin-top: 1rem;
+}
+.item_show .page-header {
+  margin: 0;
+  padding-bottom: 0;
+}
+
 .item_show .content {
   display: grid;
+  margin-top: 1.618034rem;
+}
+.item_show .content h1 {
+  margin-top: 0;
+  margin-bottom: 1.618034rem;
 }
 .item_show .content.imageless {
   grid-template-columns: auto !important;
 }
-@media (min-width: 767px) {
+@media (min-width: 768px) {
   .item_show .content {
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 2.6180340252rem;
   }
 }
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .item_show .content {
     grid-row-gap: 2.6180340252rem;
   }
@@ -448,6 +465,130 @@ html, body, .dropdown-menu {
   padding: 0.3819660059rem 0.6180339845rem;
 }
 
+.body-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 0;
+  margin-bottom: 0.3819660059rem;
+  align-items: end;
+}
+.body-nav > * {
+  margin-bottom: 0.6180339845rem;
+}
+.body-nav .btn-toolbar {
+  margin-top: -1px;
+}
+
+.breadcrumbs {
+  list-style: none;
+  overflow: hidden;
+  padding: 0;
+  display: flex;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  font-weight: 300;
+  font-size: 12px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.breadcrumbs li > * {
+  text-decoration: none;
+  position: relative;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  color: black;
+  padding: 0.5em 0 0.5em 4em;
+}
+
+/*
+* Now create the various triangles
+* that will overlap; this is the
+* common stuff between the two
+* triangles
+*/
+.breadcrumbs li > *:before,
+.breadcrumbs li > *:after {
+  content: " ";
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 50px solid transparent;
+  border-bottom: 50px solid transparent;
+  position: absolute;
+  top: 50%;
+  margin-top: -50px;
+  left: 100%;
+  border-left-width: 30px;
+  border-left-style: solid;
+}
+
+.breadcrumbs li:not(:last-child) > *:before {
+  /*And make sure the zindex is 1*/
+  z-index: 1;
+  /*This should be the colour
+  you want the arrow*/
+  border-left-color: #E7DED1;
+  /*The margin left here dictates the width of the arrow*/
+  margin-left: 2px;
+}
+
+.breadcrumbs li > *:after {
+  /*Z index should be 2 to overlap*/
+  z-index: 2;
+  /*BORDER LEFT should be the
+  same as the background colour*/
+  border-left-color: white;
+}
+
+/*Now small, project specific
+paddings etc*/
+.breadcrumbs li:first-child > * {
+  padding: 0 0 0 1rem;
+}
+
+.breadcrumbs li > *,
+.breadcrumbs li > *:after,
+.breadcrumbs li > *:before {
+  transition: all 0.2s ease-in-out;
+}
+
+.breadcrumbs li:last-child {
+  background: #E5E5E5;
+}
+
+.breadcrumbs li:not(:last-child) > *:hover {
+  background: #E7DED1;
+}
+.breadcrumbs li:not(:last-child) > *:hover:after, .breadcrumbs li:not(:last-child) > *:hover:before {
+  border-left-color: #E7DED1;
+}
+
+.breadcrumbs .current {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-x: hidden;
+  margin: 0 1rem 0 0;
+  font-style: italic;
+  max-width: 25ch;
+}
+li > .breadcrumbs .current {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.breadcrumbs li:last-child > *:after,
+.breadcrumbs li:last-child > *:before {
+  content: unset;
+}
+
+/* Media query to reset the size of things */
+@media (max-width: 780px) {
+  .current {
+    max-width: 25ch;
+  }
+}
 .images {
   margin: 0 auto;
 }
@@ -569,6 +710,57 @@ dd {
 }
 #carousel .carousel-indicators li.active {
   background-color: #C0B283;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+}
+.pagination > li {
+  border-radius: 0;
+  border: none;
+  float: none;
+  color: black;
+  background-color: inherit;
+}
+.pagination > li > a, .pagination > li > span {
+  border-radius: 0;
+  border: none;
+  float: none;
+  color: black;
+  background-color: inherit;
+}
+.pagination > li > a:hover, .pagination > li > a:focus, .pagination > li > span:hover, .pagination > li > span:focus {
+  border-radius: 0;
+  border: none;
+  float: none;
+  color: black;
+  background-color: inherit;
+}
+.pagination > li.active, .pagination > li:hover, .pagination > li:focus {
+  border-radius: 0;
+  border: none;
+  float: none;
+  color: black;
+  background-color: inherit;
+}
+.pagination > li.active > a, .pagination > li.active > span, .pagination > li:hover > a, .pagination > li:hover > span, .pagination > li:focus > a, .pagination > li:focus > span {
+  border-radius: 0;
+  border: none;
+  float: none;
+  color: black;
+  background-color: inherit;
+}
+.pagination > li.active > a:hover, .pagination > li.active > a:focus, .pagination > li.active > span:hover, .pagination > li.active > span:focus, .pagination > li:hover > a:hover, .pagination > li:hover > a:focus, .pagination > li:hover > span:hover, .pagination > li:hover > span:focus, .pagination > li:focus > a:hover, .pagination > li:focus > a:focus, .pagination > li:focus > span:hover, .pagination > li:focus > span:focus {
+  border-radius: 0;
+  border: none;
+  float: none;
+  color: black;
+  background-color: inherit;
+}
+.pagination > li:not(:last-child) {
+  border-right: 2px solid #efefef;
 }
 
 /* Footer */

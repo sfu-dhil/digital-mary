@@ -8,16 +8,24 @@
     <h1>Subject List</h1>
     {% include 'partial/count.html.twig'
         with {'index': subjects, 'label': 'subjects'} %}
- {% endblock %} 
+ {% endblock %}
 
-{% block body %}
+{% block breadcrumb %}
+    {% include 'partial/breadcrumb.html.twig' with {
+        'content':
+        [
+            ['Subjects']
+        ]
+    } %}
+{% endblock %}
 
+{% block admin %}
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
             {% if is_granted('ROLE_ADMIN') %}
-            <a href="{{ path('subject_new') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-plus"></span> New
-            </a>
+                <a href="{{ path('subject_new') }}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-plus"></span> New
+                </a>
             {% endif %}
 
             <a href="{{ path('subject_search') }}" class="btn btn-default">
@@ -25,6 +33,9 @@
             </a>
         </div>
     </div>
+{% endblock %}
+
+{% block body %}
     <section>
         {%  for subject in subjects %}
             <div class="subject-item">

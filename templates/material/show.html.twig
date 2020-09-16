@@ -6,9 +6,7 @@
     <h1>Material Details</h1>
  {% endblock %}
 
-{% block body %}
-
-    {% if is_granted('ROLE_ADMIN') %}
+{% block admin %}
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
             <a href="{{ path('material_edit', {'id': material.id }) }}" class="btn btn-default">
@@ -23,8 +21,18 @@
             </form>
         </div>
     </div>
-    {% endif %}
+{% endblock %}
 
+{% block breadcrumb %}
+    {% include 'partial/breadcrumb.html.twig' with {
+        'content': [
+                        ['Materials', path('material_index')],
+                        [ material.label ]
+        ]
+    } %}
+{% endblock %}
+
+{% block body %}
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
             <tr>

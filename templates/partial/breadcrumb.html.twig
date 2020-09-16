@@ -1,0 +1,12 @@
+
+
+<ul class="breadcrumbs">
+    <li><a href="{{ path('homepage') }}">Home</a></li>
+    {% for item in content %}
+        {% if loop.last %}
+            <li><span class="current">{{ item[0] }}</span></li>
+        {% else %}
+            <li><a href="{{ item[1] }}">{{ item[0] }}</a></li>
+        {% endif %}
+    {% endfor %}
+</ul>
