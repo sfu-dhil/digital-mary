@@ -5,13 +5,8 @@
             <div class="btn-group pull-right">
                 <a href="{{ path('item_edit_image', {'id': image.item.id, 'image_id': image.id}) }}" class="btn btn-default">
                     <span class='glyphicon glyphicon-edit'></span> </a>
-                <div class='btn-group'>
-                    <form class='delete-form' method="post" action="{{ path('item_delete_image', {'id': image.item.id, 'image_id': image.id }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <input type="hidden" name="_token" value="{{ csrf_token("delete" ~ image.id) }}">
-                        <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
-                    </form>
-                </div>
+                <a href="{{ path('item_delete_image', {'id': image.item.id, 'image_id': image.id}) }}" class="btn btn-default" data-confirm="Are you sure you want to delete this image?">
+                    <span class='glyphicon glyphicon-remove'></span> </a>
             </div>
         </div>
     {% endif %}
@@ -28,7 +23,8 @@
         </div>
         {{ image.description|raw }}
 
-        <p>Item: <a href="{{ path('item_show', {'id': image.item.id}) }}">
+        <p>Item:
+            <a href="{{ path('item_show', {'id': image.item.id}) }}">
                 {{ image.item }}
             </a>
         </p>

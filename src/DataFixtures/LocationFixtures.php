@@ -12,6 +12,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Location;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class LocationFixtures extends Fixture {
@@ -21,17 +22,16 @@ class LocationFixtures extends Fixture {
     public function load(ObjectManager $em) : void {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Location();
-            $fixture->setName('Name ' . $i);
-            $fixture->setLabel('Label ' . $i);
-            $fixture->setDescription("<p>This is paragraph {$i}</p>");
-            $fixture->setGeonameid($i);
-            $fixture->setLatitude($i + 0.5);
-            $fixture->setLongitude($i + 0.5);
-            $fixture->setCountry('a' . chr(64 + $i));
-            $fixture->setAlternateNames(['AlternateNames ' . $i]);
+            $fixture->setName('new location ' . $i);
+            $fixture->setLabel('New Location ' . $i);
+            $fixture->setDescription('New location description ' . $i);
+            $fixture->setLatitude(30.044420 + $i);
+            $fixture->setLongitude(31.235712 + $i);
+
             $em->persist($fixture);
             $this->setReference('location.' . $i, $fixture);
         }
+
         $em->flush();
     }
 }

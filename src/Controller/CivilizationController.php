@@ -25,6 +25,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/civilization")
+ * @IsGranted("ROLE_USER")
  */
 class CivilizationController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
@@ -77,7 +78,7 @@ class CivilizationController extends AbstractController implements PaginatorAwar
             return new JsonResponse([]);
         }
         $data = [];
-        foreach ($civilizationRepository->typeaheadQuery($q) as $result) {
+        foreach ($civilizationRepository->typeaheadSearch($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => (string) $result,
@@ -133,7 +134,6 @@ class CivilizationController extends AbstractController implements PaginatorAwar
      */
     public function show(Request $request, Civilization $civilization) {
         $items = $this->paginator->paginate($civilization->getItems(), $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
-
         return [
             'civilization' => $civilization,
             'items' => $items,

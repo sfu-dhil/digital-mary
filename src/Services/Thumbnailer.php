@@ -13,6 +13,7 @@ namespace App\Services;
 use App\Entity\Image;
 use Exception;
 use Imagick;
+use ImagickException;
 use ImagickPixel;
 use Psr\Log\LoggerInterface;
 

@@ -68,6 +68,8 @@ class CircaDate extends AbstractEntity {
 
     /**
      * Return a string representation.
+     *
+     * @return string
      */
     public function __toString() : string {
         if (($this->startCirca === $this->endCirca) && ($this->start === $this->end)) {

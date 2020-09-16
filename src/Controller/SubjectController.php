@@ -25,6 +25,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/subject")
+ * @IsGranted("ROLE_USER")
  */
 class SubjectController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
@@ -77,7 +78,7 @@ class SubjectController extends AbstractController implements PaginatorAwareInte
             return new JsonResponse([]);
         }
         $data = [];
-        foreach ($subjectRepository->typeaheadQuery($q) as $result) {
+        foreach ($subjectRepository->typeaheadSearch($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => (string) $result,
@@ -133,7 +134,6 @@ class SubjectController extends AbstractController implements PaginatorAwareInte
      */
     public function show(Request $request, Subject $subject) {
         $items = $this->paginator->paginate($subject->getItems(), $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
-
         return [
             'subject' => $subject,
             'items' => $items,

@@ -25,6 +25,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/technique")
+ * @IsGranted("ROLE_USER")
  */
 class TechniqueController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
@@ -77,7 +78,7 @@ class TechniqueController extends AbstractController implements PaginatorAwareIn
             return new JsonResponse([]);
         }
         $data = [];
-        foreach ($techniqueRepository->typeaheadQuery($q) as $result) {
+        foreach ($techniqueRepository->typeaheadSearch($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => (string) $result,
@@ -133,7 +134,6 @@ class TechniqueController extends AbstractController implements PaginatorAwareIn
      */
     public function show(Request $request, Technique $technique) {
         $items = $this->paginator->paginate($technique->getItems(), $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
-
         return [
             'technique' => $technique,
             'items' => $items,

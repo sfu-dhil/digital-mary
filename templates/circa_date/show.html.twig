@@ -3,12 +3,42 @@
 {% block title %}Circa Date Details {% endblock %}
 
  {% block pageheader %}
-     <h1>Circa Date Details</h1>
+    <h1>Circa Date Details</h1>
  {% endblock %}
 
 {% block body %}
 
-    {% embed 'circa_date/partial/detail.html.twig' %}
-    {% endembed %}
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <tbody>
+            <tr>
+                <th>Value</th>
+                <td>{{ circa_date.value }}</td>
+            </tr>
+        <tr>
+                <th>Start</th>
+                <td>{{ circa_date.start }}</td>
+            </tr>
+        <tr>
+                <th>Start Circa</th>
+                <td>{% if circa_date.startCirca %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        <tr>
+                <th>End</th>
+                <td>{{ circa_date.end }}</td>
+            </tr>
+        <tr>
+                <th>End Circa</th>
+                <td>{% if circa_date.endCirca %}Yes{% else %}No{% endif %}</td>
+            </tr>
+                <tr>
+            <th>Created</th>
+            <td>{{ circa_date.created|date }}</td>
+        </tr>
+        <tr>
+            <th>Updated</th>
+            <td>{{ circa_date.updated|date }}</td>
+        </tr>
+        </tbody>
+    </table>
 
 {% endblock %}

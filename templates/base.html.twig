@@ -76,8 +76,7 @@
             {% for type, messages in app.session.flashbag.all() %}
                 {% for message in messages %}
                     <div class="alert alert-{{ type }}">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         {{ message }}
                     </div>
                 {% endfor %}
@@ -92,8 +91,11 @@
         <footer class="footer">
             <div class="container">
                 <p>
-                    <b>New Digital Mary</b> <br /> <a href="{{ asset('docs/sphinx/index.html') }}">Documentation</a> |
-                    <a href="{{ path('privacy') }}">Privacy</a> | <a href="https://github.com/sfu-dhil/ndm">GitHub</a>
+                    <b>New Digital Mary</b>
+                    <br/>
+                    <a href="{{ asset('docs/sphinx/index.html') }}">Documentation</a> |
+                    <a href="{{ path('privacy') }}">Privacy</a> |
+                    <a href="https://github.com/sfu-dhil/ndm">GitHub</a>
                 </p>
             </div>
         </footer>

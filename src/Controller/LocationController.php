@@ -10,9 +10,14 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Geonames;
 use App\Entity\Location;
 use App\Form\LocationType;
 use App\Repository\LocationRepository;
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
+use Exception;
+use GeoNames\Client as GeoNamesClient;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -25,6 +30,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/location")
+ * @IsGranted("ROLE_USER")
  */
 class LocationController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
@@ -77,7 +83,7 @@ class LocationController extends AbstractController implements PaginatorAwareInt
             return new JsonResponse([]);
         }
         $data = [];
-        foreach ($locationRepository->typeaheadQuery($q) as $result) {
+        foreach ($locationRepository->typeaheadSearch($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => (string) $result,
@@ -126,14 +132,95 @@ class LocationController extends AbstractController implements PaginatorAwareInt
     }
 
     /**
+     * Search and display results from the Geonames API in preparation for import.
+     *
+     * @isGranted("ROLE_CONTENT_ADMIN")
+     * @Route("/import", name="location_import", methods={"GET"})
+     *
+     * @Template()
+     *
+     * @return array
+     */
+    public function importAction(Request $request) {
+        $q = $request->query->get('q');
+        $results = [];
+        if ($q) {
+            $user = $this->getParameter('dm.geonames.username');
+            $client = new GeoNamesClient($user);
+            $results = $client->search([
+                'name' => $q,
+                'fcl' => ['A', 'P'],
+                'lang' => 'en',
+            ]);
+        }
+
+        return [
+            'q' => $q,
+            'results' => $results,
+        ];
+    }
+
+    /**
+     * Import one or more search results from the Geonames API.
+     *
+     * @throws Exception
+     *
+     * @return RedirectResponse
+     * @isGranted("ROLE_CONTENT_ADMIN")
+     * @Route("/import", name="geonames_import_save", methods={"POST"})
+     */
+    public function importSaveAction(Request $request, EntityManagerInterface $em, LocationRepository $repo) {
+        $user = $this->getParameter('dm.geonames.username');
+        $client = new GeoNamesClient($user);
+
+        foreach ($request->request->get('geonameid') as $geonameid) {
+            if ($repo->find($geonameid)) {
+                $this->addFlash('warning', "Geoname #{$geonameid} ({$data->asciiName}) is already in the database.");
+
+                continue;
+            }
+            $data = $client->get([
+                'geonameId' => $geonameid,
+                'lang' => 'en',
+            ]);
+            $location = new Location();
+            $location->setGeonameid($data->geonameId);
+            $location->setName($data->name . '-' . $data->geonameId);
+            $location->setLabel($data->name);
+            $alternateNames = [];
+            foreach ($data->alternateNames as $name) {
+                if (isset($name->lang) && 'en' !== $name->lang) {
+                    continue;
+                }
+                $alternateNames[] = $name->name;
+            }
+            $location->setAlternatenames($alternateNames);
+            $location->setLatitude((float)$data->lat);
+            $location->setLongitude((float)$data->lng);
+            if(isset($data->countryCode)) {
+                $location->setCountry($data->countryCode);
+            }
+            $em->persist($location);
+        }
+        $em->flush();
+        $this->addFlash('success', 'The selected geonames have been imported.');
+
+        return $this->redirectToRoute('location_import', [$request->query->get('q')]);
+    }
+
+    /**
      * @Route("/{id}", name="location_show", methods={"GET"})
      * @Template()
      *
      * @return array
      */
-    public function show(Location $location) {
+    public function show(Request $request, Location $location) {
+        $itemsFound = $this->paginator->paginate($location->getItemsFound(), $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
+        $itemsProvenanced = $this->paginator->paginate($location->getItemsProvenanced(), $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
         return [
             'location' => $location,
+            'itemsFound' => $itemsFound,
+            'itemsProvenanced' => $itemsProvenanced
         ];
     }
 

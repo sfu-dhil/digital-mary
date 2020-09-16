@@ -25,6 +25,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/inscription_style")
+ * @IsGranted("ROLE_USER")
  */
 class InscriptionStyleController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
@@ -40,7 +41,7 @@ class InscriptionStyleController extends AbstractController implements Paginator
         $page = $request->query->getint('page', 1);
 
         return [
-            'inscription_styles' => $this->paginator->paginate($query, $page, $pageSize),
+            'epigraphies' => $this->paginator->paginate($query, $page, $pageSize),
         ];
     }
 
@@ -55,13 +56,13 @@ class InscriptionStyleController extends AbstractController implements Paginator
         $q = $request->query->get('q');
         if ($q) {
             $query = $inscriptionStyleRepository->searchQuery($q);
-            $inscriptionStyles = $this->paginator->paginate($query, $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
+            $epigraphies = $this->paginator->paginate($query, $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
         } else {
-            $inscriptionStyles = [];
+            $epigraphies = [];
         }
 
         return [
-            'inscription_styles' => $inscriptionStyles,
+            'epigraphies' => $epigraphies,
             'q' => $q,
         ];
     }
@@ -77,7 +78,7 @@ class InscriptionStyleController extends AbstractController implements Paginator
             return new JsonResponse([]);
         }
         $data = [];
-        foreach ($inscriptionStyleRepository->typeaheadQuery($q) as $result) {
+        foreach ($inscriptionStyleRepository->typeaheadSearch($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => (string) $result,
@@ -109,7 +110,7 @@ class InscriptionStyleController extends AbstractController implements Paginator
         }
 
         return [
-            'inscription_style' => $inscriptionStyle,
+            'inscriptionStyle' => $inscriptionStyle,
             'form' => $form->createView(),
         ];
     }
@@ -131,9 +132,11 @@ class InscriptionStyleController extends AbstractController implements Paginator
      *
      * @return array
      */
-    public function show(InscriptionStyle $inscriptionStyle) {
+    public function show(Request $request, InscriptionStyle $inscriptionStyle) {
+        $items = $this->paginator->paginate($inscriptionStyle->getItems(), $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
         return [
-            'inscription_style' => $inscriptionStyle,
+            'inscriptionStyle' => $inscriptionStyle,
+            'items' => $items,
         ];
     }
 
@@ -157,7 +160,7 @@ class InscriptionStyleController extends AbstractController implements Paginator
         }
 
         return [
-            'inscription_style' => $inscriptionStyle,
+            'inscriptionStyle' => $inscriptionStyle,
             'form' => $form->createView(),
         ];
     }

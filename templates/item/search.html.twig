@@ -22,7 +22,7 @@
                     <div class='input-group'>
                         <input type='text' name='q' id='q' class='form-control' value='{{ q }}'>
                         <span class="input-group-btn">
-                            <button class="btn btn-primary" id='btn-search' type="submit">
+                            <button class="btn btn-primary" type="submit">
                                 <span class='glyphicon glyphicon-search'></span>
                                 Search
                             </button>
@@ -43,9 +43,56 @@
     </form>
 
     {% if items|length %}
+        <table class="table table-bordered table-condensed table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Inscription</th>
+                    <th>Translated Inscription</th>
+                    <th>Dimensions</th>
+                    <th>References</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                    <tr>
 
-        {% embed 'item/partial/table.html.twig' %}
-        {% endembed %}
+                        <td>
+                            <a href="{{ path('item_show', { 'id': item.id }) }}">
+                                {{ item.id }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ item.name }}
+                        </td>
+
+                        <td>
+                            {{ item.description }}
+                        </td>
+
+                        <td>
+                            {{ item.inscription }}
+                        </td>
+
+                        <td>
+                            {{ item.translatedInscription }}
+                        </td>
+
+                        <td>
+                            {{ item.dimensions }}
+                        </td>
+
+                        <td>
+                            {{ item.references }}
+                        </td>
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
 
         <div class="navigation">
             {{ knp_pagination_render(items) }}

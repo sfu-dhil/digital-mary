@@ -12,6 +12,7 @@ namespace App\DataFixtures;
 
 use App\Entity\InscriptionStyle;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class InscriptionStyleFixtures extends Fixture {
@@ -21,12 +22,16 @@ class InscriptionStyleFixtures extends Fixture {
     public function load(ObjectManager $em) : void {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new InscriptionStyle();
-            $fixture->setName('Name ' . $i);
-            $fixture->setLabel('Label ' . $i);
-            $fixture->setDescription("<p>This is paragraph {$i}</p>");
+
+            $fixture->setName('New Name ' . $i);
+            $fixture->setLabel('New Label ' . $i);
+            $fixture->setDescription('New Description ' . $i);
+
             $em->persist($fixture);
-            $this->setReference('inscriptionstyle.' . $i, $fixture);
+            $this->setReference('inscriptionStyle.' . $i, $fixture);
         }
+
         $em->flush();
     }
+
 }

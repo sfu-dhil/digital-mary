@@ -26,7 +26,7 @@ class ImageFixtures extends Fixture implements DependentFixtureInterface {
         for ($i = 0; $i < 4; $i++) {
             $image = new Imagick();
             $hue = $i * 20;
-            $image->newImage(640, 480, new ImagickPixel("hsb({$hue}%, 100%,  75%)"));
+            $image->newImage(640,480,new ImagickPixel("hsb({$hue}%, 100%,  75%)"));
             $image->setImageFormat('png');
             $tmp = tmpfile();
             fwrite($tmp, $image->getImageBlob());
@@ -34,13 +34,13 @@ class ImageFixtures extends Fixture implements DependentFixtureInterface {
 
             $fixture = new Image();
             $fixture->setImageFile($upload);
-            $fixture->setPublic(0 === $i % 2);
-            $fixture->setDescription("<p>This is paragraph {$i}</p>");
-            $fixture->setLicense("<p>This is paragraph {$i}</p>");
-            $fixture->setItem($this->getReference('item.1'));
+            $fixture->setItem($this->getReference('item.' . $i));
+            $fixture->setPublic($i % 2 === 0);
+            $fixture->setDescription('Image ' . $i);
             $em->persist($fixture);
             $this->setReference('image.' . $i, $fixture);
         }
+
         $em->flush();
     }
 
@@ -48,6 +48,8 @@ class ImageFixtures extends Fixture implements DependentFixtureInterface {
      * {@inheritdoc}
      */
     public function getDependencies() {
+        // add dependencies here, or remove this
+        // function and "implements DependentFixtureInterface" above
         return [
             ItemFixtures::class,
         ];

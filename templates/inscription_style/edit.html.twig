@@ -1,15 +1,25 @@
-{% extends 'base.html.twig' %}
+    {% extends 'base.html.twig' %}
 
     {% block title %}Edit Inscription Style {% endblock %}
 
     {% block body %}
-        <h1>Edit Inscription Style</h1>
+    <h1>Edit Inscription Style</h1>
 
-        {% embed 'inscription_style/partial/form.html.twig' %}
-        {% endembed %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="form-group">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-10">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a href="{{ path('inscription_style_show', { 'id': inscription_style.id }) }}" class="btn btn-warning">
+                Cancel
+            </a>
+        </div>
+    </div>
+    {{ form_end(form) }}
 
     {% endblock %}
 
     {% block javascripts %}
-        {% include '@NinesEditor/editor/widget.html.twig' %}
+    {% include '@NinesEditor/editor/widget.html.twig' %}
     {% endblock %}
