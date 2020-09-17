@@ -14,6 +14,7 @@ use App\Entity\Category;
 use App\Entity\Civilization;
 use App\Entity\InscriptionStyle;
 use App\Entity\Item;
+use App\Entity\Language;
 use App\Entity\Location;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -43,6 +44,17 @@ class ItemType extends AbstractType {
             'attr' => [
                 'help_block' => '',
                 'class' => 'tinymce',
+            ],
+        ]);
+        $builder->add('inscriptionLanguage', Select2EntityType::class, [
+            'label' => 'Inscription Language',
+            'class' => Language::class,
+            'remote_route' => 'language_typeahead',
+            'allow_clear' => true,
+            'attr' => [
+                'help_block' => '',
+                'add_path' => 'language_new_popup',
+                'add_label' => 'Add Language',
             ],
         ]);
         $builder->add('inscription', TextareaType::class, [

@@ -70,6 +70,14 @@
             </td>
         </tr>
         <tr>
+            <th>Inscription Language</th>
+            <td>
+                {% if item.inscriptionLanguage %}
+                    <a href='{{ path("language_show", {"id": item.inscriptionLanguage.id}) }}'>{{ item.inscriptionLanguage }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
             <th>Inscription Style</th>
             <td>
                 {% if item.inscriptionStyle %}

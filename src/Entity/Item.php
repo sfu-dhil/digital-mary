@@ -92,6 +92,12 @@ class Item extends AbstractEntity {
     private $inscriptionStyle;
 
     /**
+     * @var Language
+     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="items")
+     */
+    private $inscriptionLanguage;
+
+    /**
      * @var Location
      * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="itemsFound")
      */
@@ -428,6 +434,16 @@ class Item extends AbstractEntity {
                 $remoteImage->setItem(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getInscriptionLanguage() : ?Language {
+        return $this->inscriptionLanguage;
+    }
+
+    public function setInscriptionLanguage(?Language $inscriptionLanguage) : self {
+        $this->inscriptionLanguage = $inscriptionLanguage;
 
         return $this;
     }
