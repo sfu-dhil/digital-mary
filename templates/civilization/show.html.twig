@@ -1,12 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Civilization Details {% endblock %}
+{% block title %}Culture Details {% endblock %}
 
  {% block pageheader %}
-    <h1>Civilization: {{ civilization.name }}</h1>
+     <h1>Culture Details</h1>
  {% endblock %}
 
-{% block admin %}
+{% block body %}
+
+    {% if is_granted('ROLE_CONTENT_ADMIN') %}
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
             <a href="{{ path('civilization_edit', {'id': civilization.id }) }}" class="btn btn-default">
@@ -14,53 +16,16 @@
             </a>
         </div>
         <div class='btn-group'>
-            <form class='delete-form' method="post"
-                  action="{{ path('civilization_delete', {'id': civilization.id }) }}"
-                  onsubmit="return confirm('Are you sure you want to delete this item?');">
+            <form class='delete-form' method="post" action="{{ path('civilization_delete', {'id': civilization.id }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
                 <input type="hidden" name="_method" value="DELETE">
                 <input type="hidden" name="_token" value="{{ csrf_token("delete" ~ civilization.id) }}">
                 <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button>
             </form>
         </div>
     </div>
- {% endblock %}
+    {% endif %}
 
-
-{% block breadcrumb %}
-    {% include 'partial/breadcrumb.html.twig' with {
-        'content':  [
-                        ['Civilizations', path('civilization_index')],
-                        [ civlization.name ]
-                    ]
-    } %}
-{% endblock %}
-
-{% block body %}
-    <table class="table table-bordered table-condensed table-hover table-striped">
-        <tbody>
-            <tr>
-                <th>Name</th>
-                <td>{{ civilization.name }}</td>
-            </tr>
-        <tr>
-                <th>Label</th>
-                <td>{{ civilization.label }}</td>
-            </tr>
-        <tr>
-                <th>Description</th>
-                <td>{{ civilization.description }}</td>
-            </tr>
-                <tr>
-            <th>Created</th>
-            <td>{{ civilization.created|date }}</td>
-        </tr>
-        <tr>
-            <th>Updated</th>
-            <td>{{ civilization.updated|date }}</td>
-        </tr>
-        </tbody>
-    </table>
-
-    {% include 'item/partial/list.html.twig' with {'items': items} %}
+    {% embed 'civilization/partial/detail.html.twig' %}
+    {% endembed %}
 
 {% endblock %}

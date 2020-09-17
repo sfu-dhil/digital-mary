@@ -1,5 +1,3 @@
-
-
 {% macro make(value, name, path, force=false) %}
     {% set process = value is iterable ? value|length > 0 : value is not null %}
     {% if process or force %}

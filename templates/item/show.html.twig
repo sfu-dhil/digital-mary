@@ -80,6 +80,8 @@
 
                 <dt>Updated</dt>
                 <dd>{{ item.updated|date }}</dd>
+
+                {% include 'partial/citation.html.twig' with {'title': item.name, 'updated': item.updated} %}
             {% endif %}
         </dl>
     </section>
@@ -94,12 +96,13 @@
         <div id="ndm-viewer-container">
         </div>
     {% endif %}
+
+
 {% endblock %}
 
 {%  block styles %}
     <link rel="stylesheet" type="text/css" href="{{ asset('yarn/viewerjs/dist/viewer.css') }}"/>
 {%  endblock %}
-
 
 {%  block  javascripts %}
 <script src="{{ asset('yarn/viewerjs/dist/viewer.js') }}"></script>

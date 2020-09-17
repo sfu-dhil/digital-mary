@@ -1,11 +1,11 @@
-{% extends 'popup.html.twig' %}
+{% extends 'base.html.twig' %}
 
-    {% block title %}New Culture {% endblock %}
+    {% block title %}New Language {% endblock %}
 
     {% block body %}
-        <h1>New Culture</h1>
+        <h1>New Language</h1>
 
-        {% embed 'civilization/partial/form.html.twig' %}
+        {% embed 'language/partial/form.html.twig' %}
         {% endembed %}
 
     {% endblock %}

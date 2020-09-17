@@ -82,11 +82,17 @@ class Builder implements ContainerAwareInterface {
         $browse->addChild('Category', [
             'route' => 'category_index',
         ]);
-        $browse->addChild('Civilization', [
+        $browse->addChild('Culture', [
             'route' => 'civilization_index',
         ]);
         $browse->addChild('Inscription Style', [
             'route' => 'inscription_style_index',
+        ]);
+        $browse->addChild('Image', [
+            'route' => 'image_index',
+        ]);
+        $browse->addChild('Language', [
+            'route' => 'language_index',
         ]);
         $browse->addChild('Location', [
             'route' => 'location_index',
@@ -109,9 +115,11 @@ class Builder implements ContainerAwareInterface {
                 'role' => 'separator',
                 'class' => 'divider',
             ]);
-
             $browse->addChild('Date', [
                 'route' => 'circa_date_index',
+            ]);
+            $browse->addChild('Remote Image', [
+                'route' => 'remote_image_index',
             ]);
         }
 
