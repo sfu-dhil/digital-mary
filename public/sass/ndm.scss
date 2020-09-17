@@ -78,7 +78,9 @@ main{
 
 .content{
   a{
-    @include ndm-link();
+    &:not(.btn){
+      @include ndm-link();
+    }
   }
 }
 

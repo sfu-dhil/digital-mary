@@ -1,38 +1,41 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Culture List{% endblock %}
+{% block title %}All Cultures{% endblock %}
 
 {% block pageheader %}
-    <h1>Culture List</h1>
+    <h1>All Cultures</h1>
     <p class="count">
         Displaying {{ civilizations|length }} civilizations of {{ civilizations.getTotalItemCount }} total.
     </p>
- {% endblock %} 
+ {% endblock %}
 
-{% block body %}
-
+{% block breadcrumb %}
+{% include 'partial/breadcrumb.html.twig' with {
+    'content': [['Cultures']]
+} %}
+{% endblock %}
+{% block admin %}
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
-            {% if is_granted('ROLE_ADMIN') %}
             <a href="{{ path('civilization_new') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-plus"></span> New
             </a>
-            {% endif %}
-
             <a href="{{ path('civilization_search') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-search"></span> Search
             </a>
         </div>
     </div>
+{% endblock %}
 
+{% block body %}
     <table class="table table-bordered table-condensed table-hover table-striped">
         <thead>
-            <tr>
-                <th>ID</th>                                           <th>Name</th>
-                                                               <th>Label</th>
-                                                               <th>Description</th>
-                    
-            </tr>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Label</th>
+            <th>Description</th>
+        </tr>
         </thead>
         <tbody>
         {% for civilization in civilizations %}

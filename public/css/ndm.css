@@ -539,7 +539,7 @@ li > .breadcrumbs .current {
   padding-bottom: 0;
 }
 
-.content a {
+.content a:not(.btn) {
   text-decoration: none !important;
   border-bottom-style: solid;
   border-bottom-width: 0.2360679726rem;
@@ -547,7 +547,7 @@ li > .breadcrumbs .current {
   transition: border-bottom-color 0.2s ease-in-out;
   color: inherit;
 }
-.content a:hover {
+.content a:not(.btn):hover {
   color: inherit;
   border-bottom-color: rgba(192, 178, 131, 0.8);
 }
