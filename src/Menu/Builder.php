@@ -82,7 +82,7 @@ class Builder implements ContainerAwareInterface {
         $browse->addChild('Category', [
             'route' => 'category_index',
         ]);
-        $browse->addChild('Civilization', [
+        $browse->addChild('Culture', [
             'route' => 'civilization_index',
         ]);
         $browse->addChild('Inscription Style', [
