@@ -54,17 +54,17 @@
             {{ dl.make(item.description, 'Description') }}
             {{ dl.make(item.category, 'Category', 'category_show') }}
             {{ dl.make(item.subjects, "Subjects", "subject_show") }}
-            {{ dl.make(item.inscription, 'Inscription') }}
+            {{ dl.make(item.inscription, 'Inscription (' ~ item.inscriptionLanguage ~ ')') }}
             {{ dl.make(item.translatedInscription, 'Translated Inscription') }}
             {{ dl.make(item.inscriptionStyle, "Style of Inscription", "inscription_style_show") }}
-            {{ dl.make(item.civilization, 'Civilization', 'civilization_show') }}
+            {{ dl.make(item.civilization, 'Culture', 'civilization_show') }}
             {{ dl.make(item.techniques, "Techniques", "techique_show") }}
             {{ dl.make(item.dimensions, 'Dimensions') }}
             {{ dl.make(item.provenance, "Provenance", "location_show") }}
             {{ dl.make(item.findSpot, "Find Spot", "location_show") }}
             {{ dl.make(item.references, 'References') }}
             {% if is_granted('ROLE_CONTENT_ADMIN') %}
-                <dt>Revisions</dt>
+                <dt>Contributor</dt>
                 <dd>
                     {% if item.revisions|length > 0 %}
                         {% for revision in item.revisions %}
@@ -81,7 +81,11 @@
                 <dt>Updated</dt>
                 <dd>{{ item.updated|date }}</dd>
 
-                {% include 'partial/citation.html.twig' with {'title': item.name, 'updated': item.updated} %}
+                <dt>Recommended Citation</dt>
+                <dd>
+                    {% include 'partial/citation.html.twig' with {'title': item.name, 'updated': item.updated} %}
+                </dd>
+
             {% endif %}
         </dl>
     </section>
