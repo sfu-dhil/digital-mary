@@ -11,6 +11,7 @@ services:
     test.App\Repository\ImageRepository: '@App\Repository\ImageRepository'
     test.App\Repository\InscriptionStyleRepository: '@App\Repository\InscriptionStyleRepository'
     test.App\Repository\ItemRepository: '@App\Repository\ItemRepository'
+    test.App\Repository\LanguageRepository: '@App\Repository\LanguageRepository'
     test.App\Repository\LocationRepository: '@App\Repository\LocationRepository'
     test.App\Repository\MaterialRepository: '@App\Repository\MaterialRepository'
     test.App\Repository\RemoteImageRepository: '@App\Repository\RemoteImageRepository'

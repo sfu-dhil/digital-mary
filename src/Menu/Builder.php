@@ -91,6 +91,9 @@ class Builder implements ContainerAwareInterface {
         $browse->addChild('Image', [
             'route' => 'image_index',
         ]);
+        $browse->addChild('Language', [
+            'route' => 'language_index',
+        ]);
         $browse->addChild('Location', [
             'route' => 'location_index',
         ]);

@@ -52,4 +52,7 @@
     {% embed 'remote_image/partial/table.html.twig' with {'remote_images': item.remoteImages} %}
     {% endembed %}
 
+    {% include 'partial/citation.html.twig' with {'title': item.name, 'updated': item.updated} %}
+
+
 {% endblock %}
