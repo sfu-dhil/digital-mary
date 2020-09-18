@@ -285,7 +285,7 @@ dd{
 
 /* Pagination */
 
-@include dhil-pagination();
+@include dhil-pagination('circular');
 
 
 /* Footer */

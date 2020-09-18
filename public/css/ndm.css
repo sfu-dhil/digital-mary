@@ -21,6 +21,7 @@ since there's stuff I tend to do quite a bit.
  */
 /* Make sure to import the modularscale-sass library */
 /* DEFAULTS */
+/* Note to be called directly, but just to reset everything */
 /* @dhil-headers
  *
  * Standard header creation from a typescale
@@ -48,7 +49,6 @@ since there's stuff I tend to do quite a bit.
  * Basic adjustments for images that are loaded lazily.
  *
  */
-/* Note to be called directly, but just to reset everything */
 /* Take, with thanks, from:
 https://css-tricks.com/snippets/sass/px-to-em-functions/
  */
@@ -779,7 +779,7 @@ dd {
 /* Pagination */
 .pagination {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 .pagination > li {
   border-radius: 0;
@@ -823,8 +823,40 @@ dd {
   color: black;
   background-color: inherit;
 }
-.pagination > li:not(:last-child) {
-  border-right: 2px solid #efefef;
+.pagination > li {
+  margin: 0 0.1458980297rem;
+  height: 3rem;
+  width: 3rem;
+}
+.pagination > li.active > a.page-link:not(.btn) {
+  background: #e0e0e0;
+}
+.pagination > li.disabled {
+  opacity: 0.7;
+}
+.pagination > li > a.page-link:not(.btn) {
+  border: 2px solid #efefef;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 3rem;
+  transition: border-color 0.2s ease-in-out;
+}
+.pagination > li > a.page-link:not(.btn) > .page-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  border: 0;
+  white-space: nowrap;
+}
+.pagination > li > a.page-link:not(.btn):hover {
+  border-radius: 3rem;
+  border-color: #ccc !important;
 }
 
 /* Footer */

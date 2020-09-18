@@ -54,7 +54,8 @@
             {{ dl.make(item.description, 'Description') }}
             {{ dl.make(item.category, 'Category', 'category_show') }}
             {{ dl.make(item.subjects, "Subjects", "subject_show") }}
-            {{ dl.make(item.inscription, 'Inscription (' ~ item.inscriptionLanguage ~ ')') }}
+            {% set inscriptionAppend = item.inscriptionLanguage ? " (" ~ item.inscriptionLanguage ~ ")" : null %}
+            {{ dl.make(item.inscription, 'Inscription' ~ inscriptionAppend) }}
             {{ dl.make(item.translatedInscription, 'Translated Inscription') }}
             {{ dl.make(item.inscriptionStyle, "Style of Inscription", "inscription_style_show") }}
             {{ dl.make(item.civilization, 'Culture', 'civilization_show') }}
@@ -68,7 +69,7 @@
                 <dd>
                     {% if item.revisions|length > 0 %}
                         {% for revision in item.revisions %}
-                            {{ revision.date }} - {{ revision.initials }}<br />
+                            {{ revision.date|date }} - {{ revision.initials }}<br />
                         {% endfor %}
                     {% else %}
                         —
@@ -95,6 +96,7 @@
             <div class="img-content">
                 {% embed 'image/partial/carousel.html.twig' with {'images': item.images } %}
                 {% endembed %}
+
             </div>
         </section>
         <div id="ndm-viewer-container">

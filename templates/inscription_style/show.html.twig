@@ -6,46 +6,46 @@
     <h1>Inscription Style Details</h1>
  {% endblock %}
 
-{% block body %}
-
-    {% if is_granted('ROLE_ADMIN') %}
+{% block admin %}
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
-            <a href="{{ path('inscription_style_edit', {'id': inscription_style.id }) }}" class="btn btn-default">
+            <a href="{{ path('inscription_style_edit', {'id': inscriptionStyle.id }) }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-edit"></span> Edit
             </a>
         </div>
         <div class='btn-group'>
-            <form class='delete-form' method="post" action="{{ path('inscription_style_delete', {'id': inscription_style.id }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+            <form class='delete-form' method="post" action="{{ path('inscription_style_delete', {'id': inscriptionStyle.id }) }}"
+                  onsubmit="return confirm('Are you sure you want to delete this item?');">
                 <input type="hidden" name="_method" value="DELETE">
-                <input type="hidden" name="_token" value="{{ csrf_token("delete" ~ inscription_style.id) }}">
+                <input type="hidden" name="_token" value="{{ csrf_token("delete" ~ inscriptionStyle.id) }}">
                 <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button>
             </form>
         </div>
     </div>
-    {% endif %}
+{% endblock %}
 
+{% block body %}
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
             <tr>
                 <th>Name</th>
-                <td>{{ inscription_style.name }}</td>
+                <td>{{ inscriptionStyle.name }}</td>
             </tr>
         <tr>
                 <th>Label</th>
-                <td>{{ inscription_style.label }}</td>
+                <td>{{ inscriptionStyle.label }}</td>
             </tr>
         <tr>
                 <th>Description</th>
-                <td>{{ inscription_style.description }}</td>
+                <td>{{ inscriptionStyle.description }}</td>
             </tr>
                 <tr>
             <th>Created</th>
-            <td>{{ inscription_style.created|date }}</td>
+            <td>{{ inscriptionStyle.created|date }}</td>
         </tr>
         <tr>
             <th>Updated</th>
-            <td>{{ inscription_style.updated|date }}</td>
+            <td>{{ inscriptionStyle.updated|date }}</td>
         </tr>
         </tbody>
     </table>
