@@ -56,15 +56,15 @@
             </div>
         </nav>
         <main class="container">
-
-            <nav class="body-nav">
-                {% block breadcrumb %}
-                {% endblock %}
-                {% if is_granted('ROLE_CONTENT_ADMIN') %}
-                    {% block admin %}
-                    {% endblock %}
-                {% endif %}
-            </nav>
+            {% if block('breadcrumb') is defined and block('breadcrumb') is not empty
+                or block('admin') is defined and block('admin')  is not empty %}
+                <nav class="body-nav">
+                    {{ block('breadcrumb') }}
+                    {% if is_granted('ROLE_CONTENT_ADMIN') %}
+                        {{ block('admin') }}
+                    {% endif %}
+                </nav>
+            {% endif %}
 
             {% if block('pageheader') is defined %}
                 <header class="page-header">

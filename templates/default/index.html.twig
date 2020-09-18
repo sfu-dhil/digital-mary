@@ -1,5 +1,42 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <p>New Digital Mary</p>
+    <section class="home-main">
+        <div class="home-header">
+            <h1>The Digital Mary Project</h1>
+            <div class="home-desc">
+                <p>Something something something, lorem ipsum stuff
+                    Something something something, lorem ipsum stuff
+                    Something something something, lorem ipsum stuff
+                    Something something something, lorem ipsum stuff
+                    Something something something, lorem ipsum stuff</p>
+            </div>
+        </div>
+        <div class="home-img">
+            <img src="{{ asset('images/home.svg') }}"/>
+        </div>
+    </section>
+
+    <section class="home-search">
+        <div class="home-search-container container">
+            <h2>Search the Archive</h2>
+            <div class="home-search-desc">
+                <p>Some sort of description here...</p>
+            </div>
+            <div class="home-search-input">
+                <input type="text"/>
+                <button>GO</button>
+            </div>
+            <div class="home-search-links">
+                <a>Advanced Search</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="items">
+        <!--Maybe make a gallery or something-->
+
+    </section>
+
 {% endblock %}
+

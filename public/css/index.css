@@ -1,0 +1,18 @@
+/* Some basic index styles */
+.home-main {
+  display: flex;
+  width: 100%;
+  max-height: 50vh;
+  justify-content: space-between;
+}
+.home-main > div {
+  width: 50%;
+}
+.home-main > div h1 {
+  font-size: ms(8);
+}
+.home-main img {
+  height: 100%;
+}
+
+/*# sourceMappingURL=index.css.map */

@@ -1,0 +1,51 @@
+
+/* Some basic index styles */
+
+@mixin homepage(){
+    .home-main {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+
+      > div {
+        width: 50%;
+        display:flex;
+        flex-direction:column;
+        h1 {
+          font-size: ms(4);
+          margin-bottom: ms(1);
+        }
+      }
+
+      img {
+        height:100%;
+        width:100%;
+        margin-left:auto;
+      }
+    }
+
+  .home-search{
+    @include full-width-in-container;
+    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('../images/search-bg.jpg');
+
+    .home-search-container{
+      padding: ms(1) 20px;
+      color:white;
+      h2{
+        margin:0;
+      }
+
+      .home-search-input{
+        width:100%;
+        input{
+          width:80%;
+        }
+      }
+    }
+  }
+
+
+}
+
+
+

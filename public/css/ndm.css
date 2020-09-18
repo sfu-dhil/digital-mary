@@ -283,6 +283,7 @@ https://makandracards.com/makandra/42500-sass-how-to-convert-an-rgba-color-to-it
   transition: top 0.1s 0.16s cubic-bezier(0.33333, 0, 0.66667, 0.33333), transform 0.13s 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
+/* Some basic index styles */
 h1 {
   /* It'd be nice to use scss:max() here, but
   PHP storm raises an erroneously raises an error.
@@ -920,6 +921,49 @@ a[href^="https://"]::after {
 
 tbody tr th {
   width: 20%;
+}
+
+/* Now include the homepage */
+.homepage .home-main {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.homepage .home-main > div {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+.homepage .home-main > div h1 {
+  font-size: 6.8541021569rem;
+  margin-bottom: 1.618034rem;
+}
+.homepage .home-main img {
+  height: 100%;
+  width: 100%;
+  margin-left: auto;
+}
+.homepage .home-search {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/search-bg.jpg");
+}
+.homepage .home-search .home-search-container {
+  padding: 1.618034rem 20px;
+  color: white;
+}
+.homepage .home-search .home-search-container h2 {
+  margin: 0;
+}
+.homepage .home-search .home-search-container .home-search-input {
+  width: 100%;
+}
+.homepage .home-search .home-search-container .home-search-input input {
+  width: 80%;
 }
 
 /*# sourceMappingURL=ndm.css.map */

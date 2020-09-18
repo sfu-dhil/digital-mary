@@ -26,7 +26,7 @@
 @import '_fonts.scss';
 @import '_variables.scss';
 @import '../yarn/hamburgers/_sass/hamburgers/hamburgers.scss';
-
+@import '_index.scss';
 
 @include dhil-headers;
 @include dhil-reset;
@@ -355,3 +355,8 @@ tbody tr th {
 }
 
 
+/* Now include the homepage */
+
+.homepage{
+  @include homepage();
+}
