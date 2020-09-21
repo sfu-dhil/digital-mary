@@ -16,7 +16,9 @@ use App\Entity\InscriptionStyle;
 use App\Entity\Item;
 use App\Entity\Language;
 use App\Entity\Location;
+use App\Entity\Material;
 use App\Entity\Subject;
+use App\Entity\Technique;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -83,7 +85,7 @@ class ItemType extends AbstractType {
             ],
         ]);
         $builder->add('references', TextareaType::class, [
-            'label' => 'Bibliography',
+            'label' => 'References',
             'required' => false,
             'attr' => [
                 'help_block' => '',
@@ -111,7 +113,7 @@ class ItemType extends AbstractType {
         ]);
 
         $builder->add('civilization', Select2EntityType::class, [
-            'label' => 'Civilization',
+            'label' => 'Culture',
             'class' => Civilization::class,
             'remote_route' => 'civilization_typeahead',
             'allow_clear' => true,
@@ -171,6 +173,36 @@ class ItemType extends AbstractType {
                 'help_block' => '',
                 'add_path' => 'subject_new_popup',
                 'add_label' => 'Add Subject',
+            ],
+        ]);
+        $builder->add('techniques', Select2EntityType::class, [
+            'label' => 'Techniques',
+            'primary_key' => 'id',
+            'text_property' => 'label',
+            'multiple' => true,
+            'required' => false,
+            'remote_route' => 'technique_typeahead',
+            'class' => Technique::class,
+            'allow_clear' => true,
+            'attr' => [
+                'help_block' => '',
+                'add_path' => 'technique_new_popup',
+                'add_label' => 'Add Technique',
+            ],
+        ]);
+        $builder->add('materials', Select2EntityType::class, [
+            'label' => 'Materials',
+            'primary_key' => 'id',
+            'text_property' => 'label',
+            'multiple' => true,
+            'required' => false,
+            'remote_route' => 'material_typeahead',
+            'class' => Material::class,
+            'allow_clear' => true,
+            'attr' => [
+                'help_block' => '',
+                'add_path' => 'material_new_popup',
+                'add_label' => 'Add Material',
             ],
         ]);
     }
