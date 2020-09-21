@@ -73,11 +73,12 @@ class ItemType extends AbstractType {
                 'class' => 'tinymce',
             ],
         ]);
-        $builder->add('dimensions', TextType::class, [
+        $builder->add('dimensions', TextareaType::class, [
             'label' => 'Dimensions',
             'required' => false,
             'attr' => [
                 'help_block' => '',
+                'class' => 'tinymce',
             ],
         ]);
         $builder->add('references', TextareaType::class, [
