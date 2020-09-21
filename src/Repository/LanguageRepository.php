@@ -11,8 +11,6 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Language;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use Nines\UtilBundle\Repository\TermRepository;
 

@@ -18,7 +18,6 @@ use App\Form\ItemType;
 use App\Form\RemoteImageType;
 use App\Repository\ItemRepository;
 use App\Services\FileUploader;
-use App\Util\Initializer;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
@@ -113,7 +112,7 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $item->addRevision(new DateTime(), Initializer::generate($user->getFullname()));
+            $item->addRevision(new DateTime(), $user->getFullname());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($item);
             $entityManager->flush();
@@ -164,7 +163,7 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $item->addRevision(new DateTime(), Initializer::generate($user->getFullname()));
+            $item->addRevision(new DateTime(), $user->getFullname());
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'The updated item has been saved.');
 
