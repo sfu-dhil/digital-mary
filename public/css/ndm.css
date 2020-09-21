@@ -936,12 +936,15 @@ tbody tr th {
 }
 .homepage .home-main > div h1 {
   font-size: 6.8541021569rem;
-  margin-bottom: 1.618034rem;
+  line-height: 1;
+  margin-bottom: 2.6180340252rem;
 }
 .homepage .home-main img {
   height: 100%;
   width: 100%;
+  max-height: 600px;
   margin-left: auto;
+  transform: skew(2deg);
 }
 .homepage .home-search {
   width: 100vw;
