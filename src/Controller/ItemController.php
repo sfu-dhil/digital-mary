@@ -18,7 +18,6 @@ use App\Form\ItemType;
 use App\Form\RemoteImageType;
 use App\Repository\ItemRepository;
 use App\Services\FileUploader;
-use App\Util\Initializer;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
