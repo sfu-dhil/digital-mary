@@ -7,6 +7,14 @@
             </td>
         </tr>
         <tr>
+            <th>Category</th>
+            <td>
+                {% if item.category %}
+                    <a href='{{ path("category_show", {"id": item.category.id}) }}'>{{ item.category }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
             <th>Description</th>
             <td>
                 {{ item.description|raw }}
@@ -19,54 +27,9 @@
             </td>
         </tr>
         <tr>
-            <th>Translated Inscription</th>
+            <th>Inscription Translation</th>
             <td>
                 {{ item.translatedInscription|raw }}
-            </td>
-        </tr>
-        <tr>
-            <th>Dimensions</th>
-            <td>
-                {{ item.dimensions|raw }}
-            </td>
-        </tr>
-        <tr>
-            <th>References</th>
-            <td>
-                {{ item.references|raw }}
-            </td>
-        </tr>
-        <tr>
-            <th>Contributor</th>
-            <td>
-                {% for revision in item.revisions %}
-                    {{ revision.date|date('Y-m-d') }} - {{ revision.initials }}<br />
-                {% endfor %}
-            </td>
-        </tr>
-
-        <tr>
-            <th>Date</th>
-            <td>
-                {% if item.circaDate %}
-                    <a href='{{ path("circa_date_show", {"id": item.circaDate.id}) }}'>{{ item.circaDate }}</a>
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <th>Category</th>
-            <td>
-                {% if item.category %}
-                    <a href='{{ path("category_show", {"id": item.category.id}) }}'>{{ item.category }}</a>
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <th>Culture</th>
-            <td>
-                {% if item.civilization %}
-                    <a href='{{ path("civilization_show", {"id": item.civilization.id}) }}'>{{ item.civilization }}</a>
-                {% endif %}
             </td>
         </tr>
         <tr>
@@ -86,10 +49,18 @@
             </td>
         </tr>
         <tr>
-            <th>Find spot</th>
+            <th>Culture</th>
             <td>
-                {% if item.findSpot %}
-                    <a href='{{ path("location_show", {"id": item.findSpot.id}) }}'>{{ item.findSpot }}</a>
+                {% if item.civilization %}
+                    <a href='{{ path("civilization_show", {"id": item.civilization.id}) }}'>{{ item.civilization }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td>
+                {% if item.circaDate %}
+                    <a href='{{ path("circa_date_show", {"id": item.circaDate.id}) }}'>{{ item.circaDate }}</a>
                 {% endif %}
             </td>
         </tr>
@@ -102,18 +73,10 @@
             </td>
         </tr>
         <tr>
-            <th>Technique</th>
+            <th>Find spot</th>
             <td>
-                {% if item.techniques|length > 0 %}
-                    <ul>
-                        {% for technique in item.techniques %}
-                            <li>
-                                <a href='{{ path("technique_show", {"id":technique.id }) }}'>
-                                    {{ technique }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                {% if item.findSpot %}
+                    <a href='{{ path("location_show", {"id": item.findSpot.id}) }}'>{{ item.findSpot }}</a>
                 {% endif %}
             </td>
         </tr>
@@ -134,6 +97,34 @@
             </td>
         </tr>
         <tr>
+            <th>Technique</th>
+            <td>
+                {% if item.techniques|length > 0 %}
+                    <ul>
+                        {% for technique in item.techniques %}
+                            <li>
+                                <a href='{{ path("technique_show", {"id":technique.id }) }}'>
+                                    {{ technique }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Dimensions</th>
+            <td>
+                {{ item.dimensions|raw }}
+            </td>
+        </tr>
+        <tr>
+            <th>Bibliographic References</th>
+            <td>
+                {{ item.references|raw }}
+            </td>
+        </tr>
+        <tr>
             <th>Subject</th>
             <td>
                 {% if item.subjects|length > 0 %}
@@ -147,6 +138,14 @@
                         {% endfor %}
                     </ul>
                 {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Contributor</th>
+            <td>
+                {% for revision in item.revisions %}
+                    {{ revision.date|date('Y-m-d') }} - {{ revision.initials }}<br />
+                {% endfor %}
             </td>
         </tr>
         <tr>

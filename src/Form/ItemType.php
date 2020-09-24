@@ -41,8 +41,35 @@ class ItemType extends AbstractType {
                 'help_block' => '',
             ],
         ]);
+        $builder->add('category', Select2EntityType::class, [
+            'label' => 'Category',
+            'class' => Category::class,
+            'remote_route' => 'category_typeahead',
+            'allow_clear' => true,
+            'attr' => [
+                'help_block' => '',
+                'add_path' => 'category_new_popup',
+                'add_label' => 'Add Category',
+            ],
+        ]);
         $builder->add('description', TextareaType::class, [
             'label' => 'Description',
+            'required' => false,
+            'attr' => [
+                'help_block' => '',
+                'class' => 'tinymce',
+            ],
+        ]);
+        $builder->add('inscription', TextareaType::class, [
+            'label' => 'Inscription',
+            'required' => false,
+            'attr' => [
+                'help_block' => '',
+                'class' => 'tinymce',
+            ],
+        ]);
+        $builder->add('translatedInscription', TextareaType::class, [
+            'label' => 'Inscription Translation',
             'required' => false,
             'attr' => [
                 'help_block' => '',
@@ -60,58 +87,17 @@ class ItemType extends AbstractType {
                 'add_label' => 'Add Language',
             ],
         ]);
-        $builder->add('inscription', TextareaType::class, [
-            'label' => 'Inscription',
-            'required' => false,
-            'attr' => [
-                'help_block' => '',
-                'class' => 'tinymce',
-            ],
-        ]);
-        $builder->add('translatedInscription', TextareaType::class, [
-            'label' => 'Translated Inscription',
-            'required' => false,
-            'attr' => [
-                'help_block' => '',
-                'class' => 'tinymce',
-            ],
-        ]);
-        $builder->add('dimensions', TextareaType::class, [
-            'label' => 'Dimensions',
-            'required' => false,
-            'attr' => [
-                'help_block' => '',
-                'class' => 'tinymce',
-            ],
-        ]);
-        $builder->add('references', TextareaType::class, [
-            'label' => 'References',
-            'required' => false,
-            'attr' => [
-                'help_block' => '',
-                'class' => 'tinymce',
-            ],
-        ]);
-
-        $builder->add('circaDate', TextType::class, [
-            'label' => 'Date',
-            'attr' => [
-                'help_block' => 'Gregorian date ranges (1901-1903) and circas (c1902) are supported here',
-            ],
-        ]);
-
-        $builder->add('category', Select2EntityType::class, [
-            'label' => 'Category',
-            'class' => Category::class,
-            'remote_route' => 'category_typeahead',
+        $builder->add('inscriptionStyle', Select2EntityType::class, [
+            'label' => 'Inscription Type',
+            'class' => InscriptionStyle::class,
+            'remote_route' => 'inscription_style_typeahead',
             'allow_clear' => true,
             'attr' => [
                 'help_block' => '',
-                'add_path' => 'category_new_popup',
-                'add_label' => 'Add Category',
+                'add_path' => 'inscription_style_new_popup',
+                'add_label' => 'Add InscriptionStyle',
             ],
         ]);
-
         $builder->add('civilization', Select2EntityType::class, [
             'label' => 'Culture',
             'class' => Civilization::class,
@@ -123,31 +109,12 @@ class ItemType extends AbstractType {
                 'add_label' => 'Add Civilization',
             ],
         ]);
-
-        $builder->add('inscriptionStyle', Select2EntityType::class, [
-            'label' => 'Inscription Style',
-            'class' => InscriptionStyle::class,
-            'remote_route' => 'inscription_style_typeahead',
-            'allow_clear' => true,
+        $builder->add('circaDate', TextType::class, [
+            'label' => 'Date',
             'attr' => [
-                'help_block' => '',
-                'add_path' => 'inscription_style_new_popup',
-                'add_label' => 'Add InscriptionStyle',
+                'help_block' => 'Gregorian date ranges (1901-1903) and circas (c1902) are supported here',
             ],
         ]);
-
-        $builder->add('findSpot', Select2EntityType::class, [
-            'label' => 'Find Spot',
-            'class' => Location::class,
-            'remote_route' => 'location_typeahead',
-            'allow_clear' => true,
-            'attr' => [
-                'help_block' => '',
-                'add_path' => 'location_new_popup',
-                'add_label' => 'Add Location',
-            ],
-        ]);
-
         $builder->add('provenance', Select2EntityType::class, [
             'label' => 'Provenance',
             'class' => Location::class,
@@ -159,20 +126,38 @@ class ItemType extends AbstractType {
                 'add_label' => 'Add Location',
             ],
         ]);
-
-        $builder->add('subjects', Select2EntityType::class, [
-            'label' => 'Subjects',
+        $builder->add('findSpot', Select2EntityType::class, [
+            'label' => 'Find Spot',
+            'class' => Location::class,
+            'remote_route' => 'location_typeahead',
+            'allow_clear' => true,
+            'attr' => [
+                'help_block' => '',
+                'add_path' => 'location_new_popup',
+                'add_label' => 'Add Location',
+            ],
+        ]);
+        $builder->add('dimensions', TextareaType::class, [
+            'label' => 'Dimensions',
+            'required' => false,
+            'attr' => [
+                'help_block' => '',
+                'class' => 'tinymce',
+            ],
+        ]);
+        $builder->add('materials', Select2EntityType::class, [
+            'label' => 'Materials',
             'primary_key' => 'id',
             'text_property' => 'label',
             'multiple' => true,
             'required' => false,
-            'remote_route' => 'subject_typeahead',
-            'class' => Subject::class,
+            'remote_route' => 'material_typeahead',
+            'class' => Material::class,
             'allow_clear' => true,
             'attr' => [
                 'help_block' => '',
-                'add_path' => 'subject_new_popup',
-                'add_label' => 'Add Subject',
+                'add_path' => 'material_new_popup',
+                'add_label' => 'Add Material',
             ],
         ]);
         $builder->add('techniques', Select2EntityType::class, [
@@ -190,19 +175,27 @@ class ItemType extends AbstractType {
                 'add_label' => 'Add Technique',
             ],
         ]);
-        $builder->add('materials', Select2EntityType::class, [
-            'label' => 'Materials',
+        $builder->add('references', TextareaType::class, [
+            'label' => 'Bibliographic References',
+            'required' => false,
+            'attr' => [
+                'help_block' => '',
+                'class' => 'tinymce',
+            ],
+        ]);
+        $builder->add('subjects', Select2EntityType::class, [
+            'label' => 'Subjects',
             'primary_key' => 'id',
             'text_property' => 'label',
             'multiple' => true,
             'required' => false,
-            'remote_route' => 'material_typeahead',
-            'class' => Material::class,
+            'remote_route' => 'subject_typeahead',
+            'class' => Subject::class,
             'allow_clear' => true,
             'attr' => [
                 'help_block' => '',
-                'add_path' => 'material_new_popup',
-                'add_label' => 'Add Material',
+                'add_path' => 'subject_new_popup',
+                'add_label' => 'Add Subject',
             ],
         ]);
     }
