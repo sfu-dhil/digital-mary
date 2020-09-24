@@ -75,13 +75,13 @@ class Item extends AbstractEntity {
 
     /**
      * @var Category
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="items")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="items")
      */
     private $category;
 
     /**
      * @var Civilization
-     * @ORM\ManyToOne(targetEntity="App\Entity\Civilization", inversedBy="items")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Civilization", inversedBy="items")
      */
     private $civilization;
 
@@ -99,7 +99,7 @@ class Item extends AbstractEntity {
 
     /**
      * @var Language
-     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="items")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Language", inversedBy="items")
      */
     private $inscriptionLanguage;
 
@@ -165,6 +165,9 @@ class Item extends AbstractEntity {
         $this->subjects = new ArrayCollection();
         $this->remoteImages = new ArrayCollection();
         $this->revisions = [];
+        $this->category = new ArrayCollection();
+        $this->civilization = new ArrayCollection();
+        $this->inscriptionLanguage = new ArrayCollection();
     }
 
     /**
@@ -277,26 +280,6 @@ class Item extends AbstractEntity {
         } else {
             $this->circaDate = CircaDate::build($circaDate);
         }
-
-        return $this;
-    }
-
-    public function getCategory() : ?Category {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category) : self {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    public function getCivilization() : ?Civilization {
-        return $this->civilization;
-    }
-
-    public function setCivilization(?Civilization $civilization) : self {
-        $this->civilization = $civilization;
 
         return $this;
     }
@@ -456,16 +439,6 @@ class Item extends AbstractEntity {
         return $this;
     }
 
-    public function getInscriptionLanguage() : ?Language {
-        return $this->inscriptionLanguage;
-    }
-
-    public function setInscriptionLanguage(?Language $inscriptionLanguage) : self {
-        $this->inscriptionLanguage = $inscriptionLanguage;
-
-        return $this;
-    }
-
     public function getCivilizationOther(): ?string
     {
         return $this->civilizationOther;
@@ -498,6 +471,84 @@ class Item extends AbstractEntity {
     public function setProvenanceOther(?string $provenanceOther): self
     {
         $this->provenanceOther = $provenanceOther;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategory(): Collection
+    {
+        return $this->category;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->category->contains($category)) {
+            $this->category[] = $category;
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->category->contains($category)) {
+            $this->category->removeElement($category);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Civilization[]
+     */
+    public function getCivilization(): Collection
+    {
+        return $this->civilization;
+    }
+
+    public function addCivilization(Civilization $civilization): self
+    {
+        if (!$this->civilization->contains($civilization)) {
+            $this->civilization[] = $civilization;
+        }
+
+        return $this;
+    }
+
+    public function removeCivilization(Civilization $civilization): self
+    {
+        if ($this->civilization->contains($civilization)) {
+            $this->civilization->removeElement($civilization);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Language[]
+     */
+    public function getInscriptionLanguage(): Collection
+    {
+        return $this->inscriptionLanguage;
+    }
+
+    public function addInscriptionLanguage(Language $inscriptionLanguage): self
+    {
+        if (!$this->inscriptionLanguage->contains($inscriptionLanguage)) {
+            $this->inscriptionLanguage[] = $inscriptionLanguage;
+        }
+
+        return $this;
+    }
+
+    public function removeInscriptionLanguage(Language $inscriptionLanguage): self
+    {
+        if ($this->inscriptionLanguage->contains($inscriptionLanguage)) {
+            $this->inscriptionLanguage->removeElement($inscriptionLanguage);
+        }
 
         return $this;
     }

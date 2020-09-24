@@ -46,6 +46,7 @@ class ItemType extends AbstractType {
             'class' => Category::class,
             'remote_route' => 'category_typeahead',
             'allow_clear' => true,
+            'multiple' => true,
             'attr' => [
                 'help_block' => '',
                 'add_path' => 'category_new_popup',
@@ -81,6 +82,7 @@ class ItemType extends AbstractType {
             'class' => Language::class,
             'remote_route' => 'language_typeahead',
             'allow_clear' => true,
+            'multiple' => true,
             'attr' => [
                 'help_block' => '',
                 'add_path' => 'language_new_popup',
@@ -103,6 +105,7 @@ class ItemType extends AbstractType {
             'class' => Civilization::class,
             'remote_route' => 'civilization_typeahead',
             'allow_clear' => true,
+            'multiple' => true,
             'attr' => [
                 'help_block' => '',
                 'add_path' => 'civilization_new_popup',
