@@ -75,15 +75,21 @@ class Item extends AbstractEntity {
 
     /**
      * @var Category
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="items")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="items")
      */
     private $category;
 
     /**
      * @var Civilization
-     * @ORM\ManyToOne(targetEntity="App\Entity\Civilization", inversedBy="items")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Civilization", inversedBy="items")
      */
     private $civilization;
+
+    /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $civilizationOther;
 
     /**
      * @var InscriptionStyle
@@ -93,7 +99,7 @@ class Item extends AbstractEntity {
 
     /**
      * @var Language
-     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="items")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Language", inversedBy="items")
      */
     private $inscriptionLanguage;
 
@@ -101,13 +107,25 @@ class Item extends AbstractEntity {
      * @var Location
      * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="itemsFound")
      */
-    private $findSpot;
+    private $findspot;
+
+    /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $findspotOther;
 
     /**
      * @var Location
      * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="itemsProvenanced")
      */
     private $provenance;
+
+    /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $provenanceOther;
 
     /**
      * @var Collection|Image[]
@@ -147,6 +165,9 @@ class Item extends AbstractEntity {
         $this->subjects = new ArrayCollection();
         $this->remoteImages = new ArrayCollection();
         $this->revisions = [];
+        $this->category = new ArrayCollection();
+        $this->civilization = new ArrayCollection();
+        $this->inscriptionLanguage = new ArrayCollection();
     }
 
     /**
@@ -263,26 +284,6 @@ class Item extends AbstractEntity {
         return $this;
     }
 
-    public function getCategory() : ?Category {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category) : self {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    public function getCivilization() : ?Civilization {
-        return $this->civilization;
-    }
-
-    public function setCivilization(?Civilization $civilization) : self {
-        $this->civilization = $civilization;
-
-        return $this;
-    }
-
     public function getInscriptionStyle() : ?InscriptionStyle {
         return $this->inscriptionStyle;
     }
@@ -293,12 +294,12 @@ class Item extends AbstractEntity {
         return $this;
     }
 
-    public function getFindSpot() : ?Location {
-        return $this->findSpot;
+    public function getFindspot() : ?Location {
+        return $this->findspot;
     }
 
-    public function setFindSpot(?Location $findSpot) : self {
-        $this->findSpot = $findSpot;
+    public function setFindspot(?Location $findspot) : self {
+        $this->findspot = $findspot;
 
         return $this;
     }
@@ -438,12 +439,116 @@ class Item extends AbstractEntity {
         return $this;
     }
 
-    public function getInscriptionLanguage() : ?Language {
+    public function getCivilizationOther(): ?string
+    {
+        return $this->civilizationOther;
+    }
+
+    public function setCivilizationOther(?string $civilizationOther): self
+    {
+        $this->civilizationOther = $civilizationOther;
+
+        return $this;
+    }
+
+    public function getFindspotOther(): ?string
+    {
+        return $this->findspotOther;
+    }
+
+    public function setFindspotOther(?string $findspotOther): self
+    {
+        $this->findspotOther = $findspotOther;
+
+        return $this;
+    }
+
+    public function getProvenanceOther(): ?string
+    {
+        return $this->provenanceOther;
+    }
+
+    public function setProvenanceOther(?string $provenanceOther): self
+    {
+        $this->provenanceOther = $provenanceOther;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategory(): Collection
+    {
+        return $this->category;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->category->contains($category)) {
+            $this->category[] = $category;
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->category->contains($category)) {
+            $this->category->removeElement($category);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Civilization[]
+     */
+    public function getCivilization(): Collection
+    {
+        return $this->civilization;
+    }
+
+    public function addCivilization(Civilization $civilization): self
+    {
+        if (!$this->civilization->contains($civilization)) {
+            $this->civilization[] = $civilization;
+        }
+
+        return $this;
+    }
+
+    public function removeCivilization(Civilization $civilization): self
+    {
+        if ($this->civilization->contains($civilization)) {
+            $this->civilization->removeElement($civilization);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Language[]
+     */
+    public function getInscriptionLanguage(): Collection
+    {
         return $this->inscriptionLanguage;
     }
 
-    public function setInscriptionLanguage(?Language $inscriptionLanguage) : self {
-        $this->inscriptionLanguage = $inscriptionLanguage;
+    public function addInscriptionLanguage(Language $inscriptionLanguage): self
+    {
+        if (!$this->inscriptionLanguage->contains($inscriptionLanguage)) {
+            $this->inscriptionLanguage[] = $inscriptionLanguage;
+        }
+
+        return $this;
+    }
+
+    public function removeInscriptionLanguage(Language $inscriptionLanguage): self
+    {
+        if ($this->inscriptionLanguage->contains($inscriptionLanguage)) {
+            $this->inscriptionLanguage->removeElement($inscriptionLanguage);
+        }
 
         return $this;
     }

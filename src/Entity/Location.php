@@ -56,7 +56,7 @@ class Location extends AbstractTerm {
 
     /**
      * @var Collection|Item[]
-     * @ORM\OneToMany(targetEntity="App\Entity\Item", mappedBy="findSpot")
+     * @ORM\OneToMany(targetEntity="App\Entity\Item", mappedBy="findspot")
      */
     private $itemsFound;
 
@@ -82,7 +82,7 @@ class Location extends AbstractTerm {
     public function addItemsFound(Item $itemsFound) : self {
         if ( ! $this->itemsFound->contains($itemsFound)) {
             $this->itemsFound[] = $itemsFound;
-            $itemsFound->setFindSpot($this);
+            $itemsFound->setFindspot($this);
         }
 
         return $this;
@@ -92,8 +92,8 @@ class Location extends AbstractTerm {
         if ($this->itemsFound->contains($itemsFound)) {
             $this->itemsFound->removeElement($itemsFound);
             // set the owning side to null (unless already changed)
-            if ($itemsFound->getFindSpot() === $this) {
-                $itemsFound->setFindSpot(null);
+            if ($itemsFound->getFindspot() === $this) {
+                $itemsFound->setFindspot(null);
             }
         }
 

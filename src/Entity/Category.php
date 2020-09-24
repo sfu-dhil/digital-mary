@@ -24,7 +24,7 @@ use Nines\UtilBundle\Entity\AbstractTerm;
 class Category extends AbstractTerm {
     /**
      * @var Collection|Item[]
-     * @ORM\OneToMany(targetEntity="App\Entity\Item", mappedBy="category")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Item", mappedBy="category")
      */
     private $items;
 
