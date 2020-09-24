@@ -51,6 +51,12 @@ class Item extends AbstractEntity {
      * @var string
      * @ORM\Column(type="text", nullable=true)
      */
+    private $location;
+
+    /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
     private $dimensions;
 
     /**
@@ -549,6 +555,18 @@ class Item extends AbstractEntity {
         if ($this->inscriptionLanguage->contains($inscriptionLanguage)) {
             $this->inscriptionLanguage->removeElement($inscriptionLanguage);
         }
+
+        return $this;
+    }
+
+    public function getLocation(): ?string
+    {
+        return $this->location;
+    }
+
+    public function setLocation(?string $location): self
+    {
+        $this->location = $location;
 
         return $this;
     }
