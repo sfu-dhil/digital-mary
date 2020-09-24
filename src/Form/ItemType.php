@@ -210,6 +210,13 @@ class ItemType extends AbstractType {
                 'class' => 'tinymce',
             ],
         ]);
+        $builder->add('location', TextareaType::class, [
+            'label' => 'Location',
+            'required' => false,
+            'attr' => [
+                'class' => 'tinymce',
+            ]
+        ]);
         $builder->add('subjects', Select2EntityType::class, [
             'label' => 'Subjects',
             'primary_key' => 'id',
