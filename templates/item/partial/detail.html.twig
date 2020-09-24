@@ -54,6 +54,9 @@
                 {% if item.civilization %}
                     <a href='{{ path("civilization_show", {"id": item.civilization.id}) }}'>{{ item.civilization }}</a>
                 {% endif %}
+                {% if item.civilizationOther %}
+                    {{ item.civilizationOther|raw }}
+                {% endif %}
             </td>
         </tr>
         <tr>
@@ -70,6 +73,9 @@
                 {% if item.provenance %}
                     <a href='{{ path("location_show", {"id": item.provenance.id}) }}'>{{ item.provenance }}</a>
                 {% endif %}
+                {% if item.provenanceOther %}
+                    {{ item.provenanceOther|raw }}
+                {% endif %}
             </td>
         </tr>
         <tr>
@@ -77,6 +83,9 @@
             <td>
                 {% if item.findspot %}
                     <a href='{{ path("location_show", {"id": item.findspot.id}) }}'>{{ item.findspot }}</a>
+                {% endif %}
+                {% if item.findspotOther %}
+                    {{ item.findspotOther|raw }}
                 {% endif %}
             </td>
         </tr>

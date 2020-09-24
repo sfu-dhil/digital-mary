@@ -109,6 +109,14 @@ class ItemType extends AbstractType {
                 'add_label' => 'Add Civilization',
             ],
         ]);
+        $builder->add('civilizationOther', TextareaType::class, [
+            'label' => 'Culture (unknown)',
+            'required' => false,
+            'attr' => [
+                'help_block' => 'If the object\'s culture is unknown, explain why',
+                'class' => 'tinymce',
+            ],
+        ]);
         $builder->add('circaDate', TextType::class, [
             'label' => 'Date',
             'attr' => [
@@ -126,6 +134,14 @@ class ItemType extends AbstractType {
                 'add_label' => 'Add Location',
             ],
         ]);
+        $builder->add('provenanceOther', TextareaType::class, [
+            'label' => 'Provenance (unknown)',
+            'required' => false,
+            'attr' => [
+                'help_block' => 'If the object\'s provenance is unknown, explain why',
+                'class' => 'tinymce',
+            ],
+        ]);
         $builder->add('findspot', Select2EntityType::class, [
             'label' => 'Findspot',
             'class' => Location::class,
@@ -135,6 +151,14 @@ class ItemType extends AbstractType {
                 'help_block' => '',
                 'add_path' => 'location_new_popup',
                 'add_label' => 'Add Location',
+            ],
+        ]);
+        $builder->add('findspotOther', TextareaType::class, [
+            'label' => 'Culture (unknown)',
+            'required' => false,
+            'attr' => [
+                'help_block' => 'If the object\'s findspot is unknown, explain why',
+                'class' => 'tinymce',
             ],
         ]);
         $builder->add('dimensions', TextareaType::class, [

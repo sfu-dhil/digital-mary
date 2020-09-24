@@ -86,6 +86,12 @@ class Item extends AbstractEntity {
     private $civilization;
 
     /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $civilizationOther;
+
+    /**
      * @var InscriptionStyle
      * @ORM\ManyToOne(targetEntity="App\Entity\InscriptionStyle", inversedBy="items")
      */
@@ -104,10 +110,22 @@ class Item extends AbstractEntity {
     private $findspot;
 
     /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $findspotOther;
+
+    /**
      * @var Location
      * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="itemsProvenanced")
      */
     private $provenance;
+
+    /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $provenanceOther;
 
     /**
      * @var Collection|Image[]
@@ -444,6 +462,42 @@ class Item extends AbstractEntity {
 
     public function setInscriptionLanguage(?Language $inscriptionLanguage) : self {
         $this->inscriptionLanguage = $inscriptionLanguage;
+
+        return $this;
+    }
+
+    public function getCivilizationOther(): ?string
+    {
+        return $this->civilizationOther;
+    }
+
+    public function setCivilizationOther(?string $civilizationOther): self
+    {
+        $this->civilizationOther = $civilizationOther;
+
+        return $this;
+    }
+
+    public function getFindspotOther(): ?string
+    {
+        return $this->findspotOther;
+    }
+
+    public function setFindspotOther(?string $findspotOther): self
+    {
+        $this->findspotOther = $findspotOther;
+
+        return $this;
+    }
+
+    public function getProvenanceOther(): ?string
+    {
+        return $this->provenanceOther;
+    }
+
+    public function setProvenanceOther(?string $provenanceOther): self
+    {
+        $this->provenanceOther = $provenanceOther;
 
         return $this;
     }

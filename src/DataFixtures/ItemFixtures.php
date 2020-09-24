@@ -39,9 +39,12 @@ class ItemFixtures extends Fixture implements DependentFixtureInterface {
             $fixture->setCircadate($this->getReference('circadate.' . $i));
             $fixture->setCategory($this->getReference('category.' . $i));
             $fixture->setCivilization($this->getReference('civilization.' . $i));
+            $fixture->setCivilizationOther('<p>Civilization details</p>');
             $fixture->setInscriptionstyle($this->getReference('inscriptionstyle.' . $i));
             $fixture->setFindspot($this->getReference('location.' . $i));
+            $fixture->setFindspotOther('<p>Findspot details</p>');
             $fixture->setProvenance($this->getReference('location.' . $i));
+            $fixture->setProvenanceOther('<p>Provenance details</p>');
             $em->persist($fixture);
             $this->setReference('item.' . $i, $fixture);
         }
