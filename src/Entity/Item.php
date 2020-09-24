@@ -101,7 +101,7 @@ class Item extends AbstractEntity {
      * @var Location
      * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="itemsFound")
      */
-    private $findSpot;
+    private $findspot;
 
     /**
      * @var Location
@@ -293,12 +293,12 @@ class Item extends AbstractEntity {
         return $this;
     }
 
-    public function getFindSpot() : ?Location {
-        return $this->findSpot;
+    public function getFindspot() : ?Location {
+        return $this->findspot;
     }
 
-    public function setFindSpot(?Location $findSpot) : self {
-        $this->findSpot = $findSpot;
+    public function setFindspot(?Location $findspot) : self {
+        $this->findspot = $findspot;
 
         return $this;
     }

@@ -126,8 +126,8 @@ class ItemType extends AbstractType {
                 'add_label' => 'Add Location',
             ],
         ]);
-        $builder->add('findSpot', Select2EntityType::class, [
-            'label' => 'Find Spot',
+        $builder->add('findspot', Select2EntityType::class, [
+            'label' => 'Findspot',
             'class' => Location::class,
             'remote_route' => 'location_typeahead',
             'allow_clear' => true,
