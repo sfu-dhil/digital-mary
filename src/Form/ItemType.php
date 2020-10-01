@@ -97,7 +97,7 @@ class ItemType extends AbstractType {
             'attr' => [
                 'help_block' => '',
                 'add_path' => 'inscription_style_new_popup',
-                'add_label' => 'Add InscriptionStyle',
+                'add_label' => 'Add Inscr. Type',
             ],
         ]);
         $builder->add('civilization', Select2EntityType::class, [
@@ -157,7 +157,7 @@ class ItemType extends AbstractType {
             ],
         ]);
         $builder->add('findspotOther', TextareaType::class, [
-            'label' => 'Culture (unknown)',
+            'label' => 'Findspot (unknown)',
             'required' => false,
             'attr' => [
                 'help_block' => 'If the object\'s findspot is unknown, explain why',

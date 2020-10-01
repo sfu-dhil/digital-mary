@@ -265,18 +265,18 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
      * Edit an image.
      *
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}/delete_image/{image_id}", name="item_delete_image", methods={"GET","POST"})
+     * @Route("/{id}/delete_image/{image_id}", name="item_delete_image", methods={"DELETE"})
      * @ParamConverter("image", options={"id" = "image_id"})
      * @Template()
      */
     public function deleteImage(Request $request, Item $item, Image $image, EntityManagerInterface $em) {
-        if ($image->getItem() === $item) {
-            $item->removeImage($image);
-            $em->remove($image);
-            $em->flush();
-            $this->addFlash('success', 'The image has been removed.');
+        if ( ! $this->isCsrfTokenValid('delete' . $image->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($image);
+            $entityManager->flush();
+            $this->addFlash('success', 'The remoteImage has been deleted.');
         } else {
-            $this->addFlash('warning', 'The image was not removed.');
+            $this->addFlash('warning', 'Invalid security token.');
         }
 
         return $this->redirectToRoute('item_show', ['id' => $item->getId()]);
