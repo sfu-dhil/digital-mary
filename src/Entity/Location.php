@@ -68,6 +68,7 @@ class Location extends AbstractTerm {
 
     public function __construct() {
         parent::__construct();
+        $this->alternateNames = [];
         $this->itemsFound = new ArrayCollection();
         $this->itemsProvenanced = new ArrayCollection();
     }

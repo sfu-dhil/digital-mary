@@ -18,6 +18,12 @@
                 {{ subject.description|raw }}
             </td>
         </tr>
+        <tr>
+            <th>Alternate Names</th>
+            <td>
+                {{ subject.alternateNames|join(', ') }}
+            </td>
+        </tr>
 
         <tr>
             <th>Item</th>
