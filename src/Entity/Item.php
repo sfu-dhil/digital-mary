@@ -74,13 +74,13 @@ class Item extends AbstractEntity {
     private $revisions;
 
     /**
-     * @var string|null
+     * @var null|string
      * @ORM\Column(type="string", length=60, nullable=true)
      */
     private $displayYear;
 
     /**
-     * @var int|null
+     * @var null|int
      * @ORM\Column(type="integer", nullable=true)
      */
     private $gregorianYear;
@@ -432,61 +432,52 @@ class Item extends AbstractEntity {
         return $this;
     }
 
-    public function getCivilizationOther(): ?string
-    {
+    public function getCivilizationOther() : ?string {
         return $this->civilizationOther;
     }
 
-    public function setCivilizationOther(?string $civilizationOther): self
-    {
+    public function setCivilizationOther(?string $civilizationOther) : self {
         $this->civilizationOther = $civilizationOther;
 
         return $this;
     }
 
-    public function getFindspotOther(): ?string
-    {
+    public function getFindspotOther() : ?string {
         return $this->findspotOther;
     }
 
-    public function setFindspotOther(?string $findspotOther): self
-    {
+    public function setFindspotOther(?string $findspotOther) : self {
         $this->findspotOther = $findspotOther;
 
         return $this;
     }
 
-    public function getProvenanceOther(): ?string
-    {
+    public function getProvenanceOther() : ?string {
         return $this->provenanceOther;
     }
 
-    public function setProvenanceOther(?string $provenanceOther): self
-    {
+    public function setProvenanceOther(?string $provenanceOther) : self {
         $this->provenanceOther = $provenanceOther;
 
         return $this;
     }
 
     /**
-     * @return Collection|Category[]
+     * @return Category[]|Collection
      */
-    public function getCategory(): Collection
-    {
+    public function getCategory() : Collection {
         return $this->category;
     }
 
-    public function addCategory(Category $category): self
-    {
-        if (!$this->category->contains($category)) {
+    public function addCategory(Category $category) : self {
+        if ( ! $this->category->contains($category)) {
             $this->category[] = $category;
         }
 
         return $this;
     }
 
-    public function removeCategory(Category $category): self
-    {
+    public function removeCategory(Category $category) : self {
         if ($this->category->contains($category)) {
             $this->category->removeElement($category);
         }
@@ -495,24 +486,21 @@ class Item extends AbstractEntity {
     }
 
     /**
-     * @return Collection|Civilization[]
+     * @return Civilization[]|Collection
      */
-    public function getCivilization(): Collection
-    {
+    public function getCivilization() : Collection {
         return $this->civilization;
     }
 
-    public function addCivilization(Civilization $civilization): self
-    {
-        if (!$this->civilization->contains($civilization)) {
+    public function addCivilization(Civilization $civilization) : self {
+        if ( ! $this->civilization->contains($civilization)) {
             $this->civilization[] = $civilization;
         }
 
         return $this;
     }
 
-    public function removeCivilization(Civilization $civilization): self
-    {
+    public function removeCivilization(Civilization $civilization) : self {
         if ($this->civilization->contains($civilization)) {
             $this->civilization->removeElement($civilization);
         }
@@ -523,22 +511,19 @@ class Item extends AbstractEntity {
     /**
      * @return Collection|Language[]
      */
-    public function getInscriptionLanguage(): Collection
-    {
+    public function getInscriptionLanguage() : Collection {
         return $this->inscriptionLanguage;
     }
 
-    public function addInscriptionLanguage(Language $inscriptionLanguage): self
-    {
-        if (!$this->inscriptionLanguage->contains($inscriptionLanguage)) {
+    public function addInscriptionLanguage(Language $inscriptionLanguage) : self {
+        if ( ! $this->inscriptionLanguage->contains($inscriptionLanguage)) {
             $this->inscriptionLanguage[] = $inscriptionLanguage;
         }
 
         return $this;
     }
 
-    public function removeInscriptionLanguage(Language $inscriptionLanguage): self
-    {
+    public function removeInscriptionLanguage(Language $inscriptionLanguage) : self {
         if ($this->inscriptionLanguage->contains($inscriptionLanguage)) {
             $this->inscriptionLanguage->removeElement($inscriptionLanguage);
         }
@@ -546,37 +531,31 @@ class Item extends AbstractEntity {
         return $this;
     }
 
-    public function getLocation(): ?string
-    {
+    public function getLocation() : ?string {
         return $this->location;
     }
 
-    public function setLocation(?string $location): self
-    {
+    public function setLocation(?string $location) : self {
         $this->location = $location;
 
         return $this;
     }
 
-    public function getDisplayYear(): ?string
-    {
+    public function getDisplayYear() : ?string {
         return $this->displayYear;
     }
 
-    public function setDisplayYear(?string $displayYear): self
-    {
+    public function setDisplayYear(?string $displayYear) : self {
         $this->displayYear = $displayYear;
 
         return $this;
     }
 
-    public function getGregorianYear(): ?int
-    {
+    public function getGregorianYear() : ?int {
         return $this->gregorianYear;
     }
 
-    public function setGregorianYear(?int $gregorianYear): self
-    {
+    public function setGregorianYear(?int $gregorianYear) : self {
         $this->gregorianYear = $gregorianYear;
 
         return $this;

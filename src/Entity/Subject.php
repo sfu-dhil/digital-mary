@@ -22,7 +22,6 @@ use Nines\UtilBundle\Entity\AbstractTerm;
  * @ORM\Entity(repositoryClass=SubjectRepository::class)
  */
 class Subject extends AbstractTerm {
-
     /**
      * @var array
      * @ORM\Column(type="array", nullable=false)
@@ -66,13 +65,11 @@ class Subject extends AbstractTerm {
         return $this;
     }
 
-    public function getAlternateNames(): ?array
-    {
+    public function getAlternateNames() : ?array {
         return $this->alternateNames;
     }
 
-    public function setAlternateNames(array $alternateNames): self
-    {
+    public function setAlternateNames(array $alternateNames) : self {
         $this->alternateNames = $alternateNames;
 
         return $this;

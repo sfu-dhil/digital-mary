@@ -126,14 +126,14 @@ class ItemType extends AbstractType {
             'required' => false,
             'attr' => [
                 'help_block' => 'A textual description of the item\'s date, shown to the users. Blank for unknown.',
-            ]
+            ],
         ]);
         $builder->add('gregorianYear', IntegerType::class, [
             'label' => 'Gregorian Date',
             'required' => false,
             'attr' => [
                 'help_block' => 'A number representing the most accurately known date of creation for the object, used only for sorting and searching',
-            ]
+            ],
         ]);
         $builder->add('provenance', Select2EntityType::class, [
             'label' => 'Provenance',
@@ -224,7 +224,7 @@ class ItemType extends AbstractType {
             'required' => false,
             'attr' => [
                 'class' => 'tinymce',
-            ]
+            ],
         ]);
         $builder->add('subjects', Select2EntityType::class, [
             'label' => 'Subjects',

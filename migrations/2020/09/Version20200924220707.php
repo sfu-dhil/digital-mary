@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Schema\Schema;
@@ -10,15 +16,12 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200924220707 extends AbstractMigration
-{
-    public function getDescription() : string
-    {
+final class Version20200924220707 extends AbstractMigration {
+    public function getDescription() : string {
         return '';
     }
 
-    public function up(Schema $schema) : void
-    {
+    public function up(Schema $schema) : void {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE item_language (item_id INT NOT NULL, language_id INT NOT NULL, INDEX IDX_B8D6B97E126F525E (item_id), INDEX IDX_B8D6B97E82F1BAF4 (language_id), PRIMARY KEY(item_id, language_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE item_civilization (item_id INT NOT NULL, civilization_id INT NOT NULL, INDEX IDX_B7F8DF00126F525E (item_id), INDEX IDX_B7F8DF006946BDDB (civilization_id), PRIMARY KEY(item_id, civilization_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -47,8 +50,7 @@ final class Version20200924220707 extends AbstractMigration
         $this->addSql('ALTER TABLE item DROP category_id, DROP civilization_id, DROP inscription_language_id');
     }
 
-    public function down(Schema $schema) : void
-    {
+    public function down(Schema $schema) : void {
         $this->throwIrreversibleMigrationException();
     }
 }
