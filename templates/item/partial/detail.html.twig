@@ -62,8 +62,17 @@
         <tr>
             <th>Date</th>
             <td>
-                {% if item.circaDate %}
-                    <a href='{{ path("circa_date_show", {"id": item.circaDate.id}) }}'>{{ item.circaDate }}</a>
+                {% if item.displayYear %}
+                    {{ item.displayYear }}
+                {% else %}
+                    {{ Unknown }}
+                {% endif %}
+                {% if is_granted('ROLE_CONTENT_ADMIN') %}
+                    {% if item.gregorianYear %}
+                        (<i>Sorted as {{ item.gregorianYear }}</i>)
+                    {% else %}
+                        (<i>No sorting information</i>)
+                    {% endif %}
                 {% endif %}
             </td>
         </tr>

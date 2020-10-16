@@ -19,6 +19,7 @@ use App\Entity\Location;
 use App\Entity\Material;
 use App\Entity\Subject;
 use App\Entity\Technique;
+use Doctrine\DBAL\Types\IntegerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -120,11 +121,19 @@ class ItemType extends AbstractType {
                 'class' => 'tinymce',
             ],
         ]);
-        $builder->add('circaDate', TextType::class, [
-            'label' => 'Date',
+        $builder->add('displayYear', TextareaType::class, [
+            'label' => 'Display Date',
+            'required' => false,
             'attr' => [
-                'help_block' => 'Gregorian date ranges (1901-1903) and circas (c1902) are supported here',
-            ],
+                'help_block' => 'A textual description of the item\'s date, shown to the users. Blank for unknown.',
+            ]
+        ]);
+        $builder->add('gregorianYear', IntegerType::class, [
+            'label' => 'Gregorian Date',
+            'required' => false,
+            'attr' => [
+                'help_block' => 'A number representing the most accurately known date of creation for the object, used only for sorting and searching',
+            ]
         ]);
         $builder->add('provenance', Select2EntityType::class, [
             'label' => 'Provenance',

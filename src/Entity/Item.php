@@ -74,10 +74,16 @@ class Item extends AbstractEntity {
     private $revisions;
 
     /**
-     * @var CircaDate
-     * @ORM\OneToOne(targetEntity="App\Entity\CircaDate", cascade={"persist", "remove"})
+     * @var string|null
+     * @ORM\Column(type="string", length=60, nullable=true)
      */
-    private $circaDate;
+    private $displayYear;
+
+    /**
+     * @var int|null
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $gregorianYear;
 
     /**
      * @var Category
@@ -269,25 +275,6 @@ class Item extends AbstractEntity {
             }
         }
         $this->revisions[] = ['date' => $date, 'initials' => $initials];
-    }
-
-    public function getCircaDate() : ?CircaDate {
-        return $this->circaDate;
-    }
-
-    /**
-     * @param null|CircaDate|string $circaDate
-     *
-     * @return $this
-     */
-    public function setCircaDate($circaDate) : self {
-        if ($circaDate instanceof CircaDate) {
-            $this->circaDate = $circaDate;
-        } else {
-            $this->circaDate = CircaDate::build($circaDate);
-        }
-
-        return $this;
     }
 
     public function getInscriptionStyle() : ?InscriptionStyle {
@@ -567,6 +554,30 @@ class Item extends AbstractEntity {
     public function setLocation(?string $location): self
     {
         $this->location = $location;
+
+        return $this;
+    }
+
+    public function getDisplayYear(): ?string
+    {
+        return $this->displayYear;
+    }
+
+    public function setDisplayYear(?string $displayYear): self
+    {
+        $this->displayYear = $displayYear;
+
+        return $this;
+    }
+
+    public function getGregorianYear(): ?int
+    {
+        return $this->gregorianYear;
+    }
+
+    public function setGregorianYear(?int $gregorianYear): self
+    {
+        $this->gregorianYear = $gregorianYear;
 
         return $this;
     }
