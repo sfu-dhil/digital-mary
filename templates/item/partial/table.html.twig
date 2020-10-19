@@ -3,6 +3,7 @@
         <tr>
             <th>Image</th>
             <th>Name</th>
+            <th>Date</th>
             <th>Description</th>
         </tr>
     </thead>
@@ -19,6 +20,12 @@
                     <a href="{{ path('item_show', { 'id': item.id }) }}">
                         {{ item.name }}
                     </a>
+                </td>
+                <td>
+                    {{ item.displayYear }}
+                    {% if is_granted('ROLE_CONTENT_ADMIN') and (item.periodStart or item.periodEnd)%}
+                        <br/><i>{{ item.periodStart }} - {{ item.periodEnd }}</i>
+                    {% endif %}
                 </td>
                 <td>
                     {{ item.description|raw }}

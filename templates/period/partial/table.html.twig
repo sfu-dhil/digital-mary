@@ -1,0 +1,39 @@
+  <table class="table table-bordered table-condensed table-hover table-striped">
+      <thead>
+          <tr>
+              <th>ID</th>                                       <th>Name</th>
+                                                         <th>Label</th>
+                                                         <th>Description</th>
+                                                         <th>Sortable Year</th>
+                  
+          </tr>
+      </thead>
+      <tbody>
+      {% for period in periods %}
+          <tr>
+              <td>
+                  <a href="{{ path('period_show', { 'id': period.id }) }}">
+                      {{ period.id }}
+                  </a>
+              </td>
+              <td>
+                  {{ period.name }}
+              </td>
+          
+              <td>
+                  {{ period.label }}
+              </td>
+          
+              <td>
+                  {{ period.description|raw }}
+              </td>
+          
+              <td>
+                  {{ period.sortableYear }}
+              </td>
+          
+          </tr>
+      {% endfor %}
+      </tbody>
+  </table>
+  

@@ -37,7 +37,8 @@ class ItemFixtures extends Fixture implements DependentFixtureInterface {
             $fixture->setReferences("<p>This is paragraph {$i}</p>");
             $fixture->setRevisions($revisions);
             $fixture->setDisplayYear(($i+4) . "th century");
-            $fixture->setGregorianYear(($i+4) * 100 + 50);
+            $fixture->setPeriodStart($this->getReference('period.' . $i));
+            $fixture->setPeriodEnd($this->getReference('period.' . $i));
             $fixture->addCategory($this->getReference('category.' . $i));
             $fixture->addCivilization($this->getReference('civilization.' . $i));
             $fixture->setCivilizationOther('<p>Civilization details</p>');
@@ -61,7 +62,7 @@ class ItemFixtures extends Fixture implements DependentFixtureInterface {
             CivilizationFixtures::class,
             InscriptionStyleFixtures::class,
             LocationFixtures::class,
-            LocationFixtures::class,
+            PeriodFixtures::class,
         ];
     }
 }

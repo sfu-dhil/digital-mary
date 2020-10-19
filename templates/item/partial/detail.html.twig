@@ -64,15 +64,11 @@
             <td>
                 {% if item.displayYear %}
                     {{ item.displayYear }}
+                    {% if is_granted('ROLE_CONTENT_ADMIN') and (item.periodStart or item.periodEnd)%}
+                        <i>{{ item.periodStart }} - {{ item.periodEnd }}</i>
+                    {% endif %}
                 {% else %}
                     Unknown
-                {% endif %}
-                {% if is_granted('ROLE_CONTENT_ADMIN') %}
-                    {% if item.gregorianYear %}
-                        (<i>Sorted as {{ item.gregorianYear }}</i>)
-                    {% else %}
-                        (<i>No sorting information</i>)
-                    {% endif %}
                 {% endif %}
             </td>
         </tr>

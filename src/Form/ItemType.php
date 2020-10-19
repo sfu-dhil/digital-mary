@@ -17,8 +17,11 @@ use App\Entity\Item;
 use App\Entity\Language;
 use App\Entity\Location;
 use App\Entity\Material;
+use App\Entity\Period;
 use App\Entity\Subject;
 use App\Entity\Technique;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -128,13 +131,31 @@ class ItemType extends AbstractType {
                 'help_block' => 'A textual description of the item\'s date, shown to the users. Blank for unknown.',
             ],
         ]);
-        $builder->add('gregorianYear', IntegerType::class, [
-            'label' => 'Gregorian Date',
-            'required' => false,
-            'attr' => [
-                'help_block' => 'A number representing the most accurately known date of creation for the object, used only for sorting and searching',
-            ],
+        $builder->add('periodStart', EntityType::class, [
+            'label' => 'Earliest creation',
+            'class' => Period::class,
+            'query_builder' => function(EntityRepository $er) {
+                return $er->createQueryBuilder('p')->orderBy('p.sortableYear', 'ASC');
+            },
+            'choice_attr' => function(Period $period, $key, $value) {
+                return ['data-year' => $period->getSortableYear()];
+            },
+            'expanded' => false,
+            'multiple' => false,
         ]);
+        $builder->add('periodEnd', EntityType::class, [
+            'label' => 'Latest creation',
+            'class' => Period::class,
+            'query_builder' => function(EntityRepository $er) {
+                return $er->createQueryBuilder('p')->orderBy('p.sortableYear', 'ASC');
+            },
+            'choice_attr' => function(Period $period, $key, $value) {
+                return ['data-year' => $period->getSortableYear()];
+            },
+            'expanded' => false,
+            'multiple' => false,
+        ]);
+
         $builder->add('provenance', Select2EntityType::class, [
             'label' => 'Provenance',
             'class' => Location::class,

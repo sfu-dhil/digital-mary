@@ -80,10 +80,16 @@ class Item extends AbstractEntity {
     private $displayYear;
 
     /**
-     * @var null|int
-     * @ORM\Column(type="integer", nullable=true)
+     * @var Period
+     * @ORM\ManyToOne(targetEntity="App\Entity\Period")
      */
-    private $gregorianYear;
+    private $periodStart;
+
+    /**
+     * @var Period
+     * @ORM\ManyToOne(targetEntity="App\Entity\Period")
+     */
+    private $periodEnd;
 
     /**
      * @var Category
@@ -551,13 +557,24 @@ class Item extends AbstractEntity {
         return $this;
     }
 
-    public function getGregorianYear() : ?int {
-        return $this->gregorianYear;
+    public function getPeriodStart() : ?Period {
+        return $this->periodStart;
     }
 
-    public function setGregorianYear(?int $gregorianYear) : self {
-        $this->gregorianYear = $gregorianYear;
+    public function setPeriodStart(?Period $periodStart) : self {
+        $this->periodStart = $periodStart;
 
         return $this;
     }
+
+    public function getPeriodEnd() : ?Period {
+        return $this->periodEnd;
+    }
+
+    public function setPeriodEnd(?Period $periodEnd) : self {
+        $this->periodEnd = $periodEnd;
+
+        return $this;
+    }
+
 }
