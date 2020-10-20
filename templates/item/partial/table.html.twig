@@ -23,8 +23,12 @@
                 </td>
                 <td>
                     {{ item.displayYear }}
-                    {% if is_granted('ROLE_CONTENT_ADMIN') and (item.periodStart or item.periodEnd)%}
-                        <br/><i>{{ item.periodStart }} - {{ item.periodEnd }}</i>
+                    {% if is_granted('ROLE_CONTENT_ADMIN') %}
+                        {% if item.periodStart or item.periodEnd%}<br/>
+                            <i>{{ item.periodStart }}-{{ item.periodEnd }}</i>
+                        {% else %}
+                            <i>No sortable date</i>
+                        {% endif %}
                     {% endif %}
                 </td>
                 <td>
