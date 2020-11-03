@@ -12,8 +12,7 @@ namespace App\Form;
 
 use App\Entity\Subject;
 use Nines\UtilBundle\Form\TermType;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,6 +26,22 @@ class SubjectType extends TermType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         parent::buildForm($builder, $options);
+        $builder->add('alternateNames', CollectionType::class, [
+            'label' => 'Alternate Names',
+            'required' => true,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'delete_empty' => true,
+            'entry_type' => TextType::class,
+            'entry_options' => [
+                'label' => false,
+            ],
+            'by_reference' => false,
+            'attr' => [
+                'class' => 'collection collection-simple',
+                'help_block' => '',
+            ],
+        ]);
     }
 
     /**

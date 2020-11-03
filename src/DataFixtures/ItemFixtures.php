@@ -30,24 +30,22 @@ class ItemFixtures extends Fixture implements DependentFixtureInterface {
         for ($i = 0; $i < 4; $i++) {
             $fixture = new Item();
 
-            $fixture->setName('New Name ' . $i);
-            $fixture->setCircaDate($this->getReference('circadate.' . $i));
-            $fixture->setDescription('New Description ' . $i);
-            $fixture->setInscription('New Inscription ' . $i);
-            $fixture->setTranslatedInscription('New TranslatedInscription ' . $i);
-            $fixture->setDimensions('New Dimensions ' . $i);
-            $fixture->setReferences('New References ' . $i);
-            $fixture->setRevisions($data);
-
-            $fixture->setCategory($this->getReference('category.' . $i));
-            $fixture->setCivilization($this->getReference('civilization.' . $i));
-            $fixture->setInscriptionStyle($this->getReference('inscriptionStyle.' . $i));
-            $fixture->setFindSpot($this->getReference('location.' . $i));
+            $fixture->setName('Name ' . $i);
+            $fixture->setDescription("<p>This is paragraph {$i}</p>");
+            $fixture->setInscription("<p>This is paragraph {$i}</p>");
+            $fixture->setTranslatedInscription("<p>This is paragraph {$i}</p>");
+            $fixture->setDimensions('Dimensions ' . $i);
+            $fixture->setReferences("<p>This is paragraph {$i}</p>");
+            $fixture->setRevisions($revisions);
+            $fixture->setCircadate($this->getReference('circadate.' . $i));
+            $fixture->addCategory($this->getReference('category.' . $i));
+            $fixture->addCivilization($this->getReference('civilization.' . $i));
+            $fixture->setCivilizationOther('<p>Civilization details</p>');
+            $fixture->setInscriptionstyle($this->getReference('inscriptionstyle.' . $i));
+            $fixture->setFindspot($this->getReference('location.' . $i));
+            $fixture->setFindspotOther('<p>Findspot details</p>');
             $fixture->setProvenance($this->getReference('location.' . $i));
-            $fixture->addMaterial($this->getReference('material.' . $i));
-            $fixture->addSubject($this->getReference('subject.' . $i));
-            $fixture->addTechnique($this->getReference('technique.' . $i));
-
+            $fixture->setProvenanceOther('<p>Provenance details</p>');
             $em->persist($fixture);
             $this->setReference('item.' . $i, $fixture);
         }

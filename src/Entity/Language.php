@@ -22,7 +22,7 @@ use Nines\UtilBundle\Entity\AbstractTerm;
 class Language extends AbstractTerm {
     /**
      * @var Collection|Item[]
-     * @ORM\OneToMany(targetEntity="App\Entity\Item", mappedBy="inscriptionLanguage")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Item", mappedBy="inscriptionLanguage")
      */
     private $items;
 

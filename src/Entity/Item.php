@@ -51,6 +51,12 @@ class Item extends AbstractEntity {
      * @var string
      * @ORM\Column(type="text", nullable=true)
      */
+    private $location;
+
+    /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
     private $dimensions;
 
     /**
@@ -75,15 +81,21 @@ class Item extends AbstractEntity {
 
     /**
      * @var Category
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="items")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="items")
      */
     private $category;
 
     /**
      * @var Civilization
-     * @ORM\ManyToOne(targetEntity="App\Entity\Civilization", inversedBy="items")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Civilization", inversedBy="items")
      */
     private $civilization;
+
+    /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $civilizationOther;
 
     /**
      * @var InscriptionStyle
@@ -93,7 +105,7 @@ class Item extends AbstractEntity {
 
     /**
      * @var Language
-     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="items")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Language", inversedBy="items")
      */
     private $inscriptionLanguage;
 
@@ -101,13 +113,25 @@ class Item extends AbstractEntity {
      * @var Location
      * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="itemsFound")
      */
-    private $findSpot;
+    private $findspot;
+
+    /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $findspotOther;
 
     /**
      * @var Location
      * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="itemsProvenanced")
      */
     private $provenance;
+
+    /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $provenanceOther;
 
     /**
      * @var Collection|Image[]
@@ -147,6 +171,9 @@ class Item extends AbstractEntity {
         $this->subjects = new ArrayCollection();
         $this->remoteImages = new ArrayCollection();
         $this->revisions = [];
+        $this->category = new ArrayCollection();
+        $this->civilization = new ArrayCollection();
+        $this->inscriptionLanguage = new ArrayCollection();
     }
 
     /**
@@ -156,166 +183,138 @@ class Item extends AbstractEntity {
         return $this->name;
     }
 
-    public function getName(): ?string
-    {
+    public function getName() : ?string {
         return $this->name;
     }
 
-    public function setName(string $name): self
-    {
+    public function setName(string $name) : self {
         $this->name = $name;
 
         return $this;
     }
 
-    public function getDescription(): ?string
-    {
+    public function getDescription() : ?string {
         return $this->description;
     }
 
-    public function setDescription(?string $description): self
-    {
+    public function setDescription(?string $description) : self {
         $this->description = $description;
 
         return $this;
     }
 
-    public function getInscription(): ?string
-    {
+    public function getInscription() : ?string {
         return $this->inscription;
     }
 
-    public function setInscription(?string $inscription): self
-    {
+    public function setInscription(?string $inscription) : self {
         $this->inscription = $inscription;
 
         return $this;
     }
 
-    public function getTranslatedInscription(): ?string
-    {
+    public function getTranslatedInscription() : ?string {
         return $this->translatedInscription;
     }
 
-    public function setTranslatedInscription(?string $translatedInscription): self
-    {
+    public function setTranslatedInscription(?string $translatedInscription) : self {
         $this->translatedInscription = $translatedInscription;
 
         return $this;
     }
 
-    public function getDimensions(): ?string
-    {
+    public function getDimensions() : ?string {
         return $this->dimensions;
     }
 
-    public function setDimensions(?string $dimensions): self
-    {
+    public function setDimensions(?string $dimensions) : self {
         $this->dimensions = $dimensions;
 
         return $this;
     }
 
-    public function getReferences(): ?string
-    {
+    public function getReferences() : ?string {
         return $this->references;
     }
 
-    public function setReferences(?string $references): self
-    {
+    public function setReferences(?string $references) : self {
         $this->references = $references;
 
         return $this;
     }
 
-    public function getRevisions(): ?array
-    {
+    public function getRevisions() : ?array {
+        usort($this->revisions, function ($a, $b) {
+            $d = $b['date'] <=> $a['date'];
+            if ($d) {
+                return $d;
+            }
+
+            return $a['initials'] <=> $b['initials'];
+        });
+
         return $this->revisions;
     }
 
-    public function setRevisions(array $revisions): self
-    {
+    public function setRevisions(array $revisions) : self {
         $this->revisions = $revisions;
 
         return $this;
     }
 
-    public function addRevision($date, $initials) {
-        foreach($this->revisions as $revision) {
-            if($revision['date'] === $date && $revision['initials'] === $initials) {
+    public function addRevision($date, $initials) : void {
+        foreach ($this->revisions as $revision) {
+            if ($revision['date'] === $date && $revision['initials'] === $initials) {
                 return;
             }
         }
         $this->revisions[] = ['date' => $date, 'initials' => $initials];
     }
 
-    public function getCircaDate(): ?CircaDate
-    {
+    public function getCircaDate() : ?CircaDate {
         return $this->circaDate;
     }
 
-    public function setCircaDate(?CircaDate $circaDate): self
-    {
-        $this->circaDate = $circaDate;
+    /**
+     * @param null|CircaDate|string $circaDate
+     *
+     * @return $this
+     */
+    public function setCircaDate($circaDate) : self {
+        if ($circaDate instanceof CircaDate) {
+            $this->circaDate = $circaDate;
+        } else {
+            $this->circaDate = CircaDate::build($circaDate);
+        }
 
         return $this;
     }
 
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): self
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    public function getCivilization(): ?Civilization
-    {
-        return $this->civilization;
-    }
-
-    public function setCivilization(?Civilization $civilization): self
-    {
-        $this->civilization = $civilization;
-
-        return $this;
-    }
-
-    public function getInscriptionStyle(): ?InscriptionStyle
-    {
+    public function getInscriptionStyle() : ?InscriptionStyle {
         return $this->inscriptionStyle;
     }
 
-    public function setInscriptionStyle(?InscriptionStyle $inscriptionStyle): self
-    {
+    public function setInscriptionStyle(?InscriptionStyle $inscriptionStyle) : self {
         $this->inscriptionStyle = $inscriptionStyle;
 
         return $this;
     }
 
-    public function getFindSpot(): ?Location
-    {
-        return $this->findSpot;
+    public function getFindspot() : ?Location {
+        return $this->findspot;
     }
 
-    public function setFindSpot(?Location $findSpot): self
-    {
-        $this->findSpot = $findSpot;
+    public function setFindspot(?Location $findspot) : self {
+        $this->findspot = $findspot;
 
         return $this;
     }
 
-    public function getProvenance(): ?Location
-    {
+    public function getProvenance() : ?Location {
         return $this->provenance;
     }
 
-    public function setProvenance(?Location $provenance): self
-    {
+    public function setProvenance(?Location $provenance) : self {
         $this->provenance = $provenance;
 
         return $this;
@@ -324,14 +323,12 @@ class Item extends AbstractEntity {
     /**
      * @return Collection|Image[]
      */
-    public function getImages(): Collection
-    {
+    public function getImages() : Collection {
         return $this->images;
     }
 
-    public function addImage(Image $image): self
-    {
-        if (!$this->images->contains($image)) {
+    public function addImage(Image $image) : self {
+        if ( ! $this->images->contains($image)) {
             $this->images[] = $image;
             $image->setItem($this);
         }
@@ -339,8 +336,7 @@ class Item extends AbstractEntity {
         return $this;
     }
 
-    public function removeImage(Image $image): self
-    {
+    public function removeImage(Image $image) : self {
         if ($this->images->contains($image)) {
             $this->images->removeElement($image);
             // set the owning side to null (unless already changed)
@@ -355,22 +351,19 @@ class Item extends AbstractEntity {
     /**
      * @return Collection|Technique[]
      */
-    public function getTechniques(): Collection
-    {
+    public function getTechniques() : Collection {
         return $this->techniques;
     }
 
-    public function addTechnique(Technique $technique): self
-    {
-        if (!$this->techniques->contains($technique)) {
+    public function addTechnique(Technique $technique) : self {
+        if ( ! $this->techniques->contains($technique)) {
             $this->techniques[] = $technique;
         }
 
         return $this;
     }
 
-    public function removeTechnique(Technique $technique): self
-    {
+    public function removeTechnique(Technique $technique) : self {
         if ($this->techniques->contains($technique)) {
             $this->techniques->removeElement($technique);
         }
@@ -381,22 +374,19 @@ class Item extends AbstractEntity {
     /**
      * @return Collection|Material[]
      */
-    public function getMaterials(): Collection
-    {
+    public function getMaterials() : Collection {
         return $this->materials;
     }
 
-    public function addMaterial(Material $material): self
-    {
-        if (!$this->materials->contains($material)) {
+    public function addMaterial(Material $material) : self {
+        if ( ! $this->materials->contains($material)) {
             $this->materials[] = $material;
         }
 
         return $this;
     }
 
-    public function removeMaterial(Material $material): self
-    {
+    public function removeMaterial(Material $material) : self {
         if ($this->materials->contains($material)) {
             $this->materials->removeElement($material);
         }
@@ -407,22 +397,19 @@ class Item extends AbstractEntity {
     /**
      * @return Collection|Subject[]
      */
-    public function getSubjects(): Collection
-    {
+    public function getSubjects() : Collection {
         return $this->subjects;
     }
 
-    public function addSubject(Subject $subject): self
-    {
-        if (!$this->subjects->contains($subject)) {
+    public function addSubject(Subject $subject) : self {
+        if ( ! $this->subjects->contains($subject)) {
             $this->subjects[] = $subject;
         }
 
         return $this;
     }
 
-    public function removeSubject(Subject $subject): self
-    {
+    public function removeSubject(Subject $subject) : self {
         if ($this->subjects->contains($subject)) {
             $this->subjects->removeElement($subject);
         }
@@ -433,14 +420,12 @@ class Item extends AbstractEntity {
     /**
      * @return Collection|RemoteImage[]
      */
-    public function getRemoteImages(): Collection
-    {
+    public function getRemoteImages() : Collection {
         return $this->remoteImages;
     }
 
-    public function addRemoteImage(RemoteImage $remoteImage): self
-    {
-        if (!$this->remoteImages->contains($remoteImage)) {
+    public function addRemoteImage(RemoteImage $remoteImage) : self {
+        if ( ! $this->remoteImages->contains($remoteImage)) {
             $this->remoteImages[] = $remoteImage;
             $remoteImage->setItem($this);
         }
@@ -448,8 +433,7 @@ class Item extends AbstractEntity {
         return $this;
     }
 
-    public function removeRemoteImage(RemoteImage $remoteImage): self
-    {
+    public function removeRemoteImage(RemoteImage $remoteImage) : self {
         if ($this->remoteImages->contains($remoteImage)) {
             $this->remoteImages->removeElement($remoteImage);
             // set the owning side to null (unless already changed)
@@ -461,12 +445,128 @@ class Item extends AbstractEntity {
         return $this;
     }
 
-    public function getInscriptionLanguage() : ?Language {
+    public function getCivilizationOther(): ?string
+    {
+        return $this->civilizationOther;
+    }
+
+    public function setCivilizationOther(?string $civilizationOther): self
+    {
+        $this->civilizationOther = $civilizationOther;
+
+        return $this;
+    }
+
+    public function getFindspotOther(): ?string
+    {
+        return $this->findspotOther;
+    }
+
+    public function setFindspotOther(?string $findspotOther): self
+    {
+        $this->findspotOther = $findspotOther;
+
+        return $this;
+    }
+
+    public function getProvenanceOther(): ?string
+    {
+        return $this->provenanceOther;
+    }
+
+    public function setProvenanceOther(?string $provenanceOther): self
+    {
+        $this->provenanceOther = $provenanceOther;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategory(): Collection
+    {
+        return $this->category;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->category->contains($category)) {
+            $this->category[] = $category;
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->category->contains($category)) {
+            $this->category->removeElement($category);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Civilization[]
+     */
+    public function getCivilization(): Collection
+    {
+        return $this->civilization;
+    }
+
+    public function addCivilization(Civilization $civilization): self
+    {
+        if (!$this->civilization->contains($civilization)) {
+            $this->civilization[] = $civilization;
+        }
+
+        return $this;
+    }
+
+    public function removeCivilization(Civilization $civilization): self
+    {
+        if ($this->civilization->contains($civilization)) {
+            $this->civilization->removeElement($civilization);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Language[]
+     */
+    public function getInscriptionLanguage(): Collection
+    {
         return $this->inscriptionLanguage;
     }
 
-    public function setInscriptionLanguage(?Language $inscriptionLanguage) : self {
-        $this->inscriptionLanguage = $inscriptionLanguage;
+    public function addInscriptionLanguage(Language $inscriptionLanguage): self
+    {
+        if (!$this->inscriptionLanguage->contains($inscriptionLanguage)) {
+            $this->inscriptionLanguage[] = $inscriptionLanguage;
+        }
+
+        return $this;
+    }
+
+    public function removeInscriptionLanguage(Language $inscriptionLanguage): self
+    {
+        if ($this->inscriptionLanguage->contains($inscriptionLanguage)) {
+            $this->inscriptionLanguage->removeElement($inscriptionLanguage);
+        }
+
+        return $this;
+    }
+
+    public function getLocation(): ?string
+    {
+        return $this->location;
+    }
+
+    public function setLocation(?string $location): self
+    {
+        $this->location = $location;
 
         return $this;
     }

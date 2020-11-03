@@ -22,6 +22,13 @@ use Nines\UtilBundle\Entity\AbstractTerm;
  * @ORM\Entity(repositoryClass=SubjectRepository::class)
  */
 class Subject extends AbstractTerm {
+
+    /**
+     * @var array
+     * @ORM\Column(type="array", nullable=false)
+     */
+    private $alternateNames;
+
     /**
      * @var Collection|Item[]
      * @ORM\ManyToMany(targetEntity="App\Entity\Item", mappedBy="subjects")
@@ -30,6 +37,7 @@ class Subject extends AbstractTerm {
 
     public function __construct() {
         parent::__construct();
+        $this->alternateNames = [];
         $this->items = new ArrayCollection();
     }
 
@@ -54,6 +62,24 @@ class Subject extends AbstractTerm {
             $this->items->removeElement($item);
             $item->removeSubject($this);
         }
+
+        return $this;
+    }
+
+    public function getAlternateNames(): ?array
+    {
+        return $this->alternateNames;
+    }
+
+    public function setAlternateNames(array $alternateNames): self
+    {
+        $this->alternateNames = $alternateNames;
+
+        return $this;
+    }
+
+    public function addAlternateName($alternateName) {
+        $this->alternateNames[] = $alternateName;
 
         return $this;
     }
