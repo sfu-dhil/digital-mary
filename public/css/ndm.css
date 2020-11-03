@@ -833,7 +833,9 @@ dd {
   background: #e0e0e0;
 }
 .pagination > li.disabled {
-  opacity: 0.7;
+  color: #CCC;
+  pointer-events: none;
+  cursor: not-allowed;
 }
 .pagination > li > a.page-link:not(.btn) {
   border: 2px solid #efefef;
@@ -855,7 +857,7 @@ dd {
   border: 0;
   white-space: nowrap;
 }
-.pagination > li > a.page-link:not(.btn):hover {
+.pagination > li:not(.disabled) > a.page-link:not(.btn):hover {
   border-radius: 3rem;
   border-color: #ccc !important;
 }
