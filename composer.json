@@ -9,6 +9,7 @@
         "ext-intl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
+        "doctrine/common": "^2.13",
         "aternus/geonames-client": "^1.0",
         "league/csv": "^9.6",
         "ninsuo/symfony-collection": "^2.1",
