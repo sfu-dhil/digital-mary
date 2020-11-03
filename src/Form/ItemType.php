@@ -17,9 +17,13 @@ use App\Entity\Item;
 use App\Entity\Language;
 use App\Entity\Location;
 use App\Entity\Material;
+use App\Entity\Period;
 use App\Entity\Subject;
 use App\Entity\Technique;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -120,12 +124,38 @@ class ItemType extends AbstractType {
                 'class' => 'tinymce',
             ],
         ]);
-        $builder->add('circaDate', TextType::class, [
-            'label' => 'Date',
+        $builder->add('displayYear', TextareaType::class, [
+            'label' => 'Display Date',
+            'required' => false,
             'attr' => [
-                'help_block' => 'Gregorian date ranges (1901-1903) and circas (c1902) are supported here',
+                'help_block' => 'A textual description of the item\'s date, shown to the users. Blank for unknown.',
             ],
         ]);
+        $builder->add('periodStart', EntityType::class, [
+            'label' => 'Earliest creation',
+            'class' => Period::class,
+            'query_builder' => function(EntityRepository $er) {
+                return $er->createQueryBuilder('p')->orderBy('p.sortableYear', 'ASC');
+            },
+            'choice_attr' => function(Period $period, $key, $value) {
+                return ['data-year' => $period->getSortableYear()];
+            },
+            'expanded' => false,
+            'multiple' => false,
+        ]);
+        $builder->add('periodEnd', EntityType::class, [
+            'label' => 'Latest creation',
+            'class' => Period::class,
+            'query_builder' => function(EntityRepository $er) {
+                return $er->createQueryBuilder('p')->orderBy('p.sortableYear', 'ASC');
+            },
+            'choice_attr' => function(Period $period, $key, $value) {
+                return ['data-year' => $period->getSortableYear()];
+            },
+            'expanded' => false,
+            'multiple' => false,
+        ]);
+
         $builder->add('provenance', Select2EntityType::class, [
             'label' => 'Provenance',
             'class' => Location::class,
@@ -215,7 +245,7 @@ class ItemType extends AbstractType {
             'required' => false,
             'attr' => [
                 'class' => 'tinymce',
-            ]
+            ],
         ]);
         $builder->add('subjects', Select2EntityType::class, [
             'label' => 'Subjects',

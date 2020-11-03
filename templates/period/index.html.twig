@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Period List{% endblock %}
+
+{% block pageheader %}
+    <h1>Period List</h1>
+    <p class="count">
+        Displaying {{ periods|length }} periods of {{ periods.getTotalItemCount }} total.
+    </p>
+ {% endblock %}
+
+{% block body %}
+
+    <div class='btn-toolbar pull-right'>
+        <div class='btn-group'>
+            {% if is_granted('ROLE_CONTENT_ADMIN') %}
+            <a href="{{ path('period_new') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus"></span> New
+            </a>
+            {% endif %}
+        </div>
+    </div>
+
+    {% embed 'period/partial/table.html.twig' %}
+    {% endembed %}
+
+    <div class="navigation">
+        {{ knp_pagination_render(periods) }}
+    </div>
+
+{% endblock %}

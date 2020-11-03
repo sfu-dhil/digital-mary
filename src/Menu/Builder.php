@@ -112,17 +112,10 @@ class Builder implements ContainerAwareInterface {
                 'role' => 'separator',
                 'class' => 'divider',
             ]);
-            $browse->addChild('Date', [
-                'route' => 'circa_date_index',
-            ]);
-            $browse->addChild('Image', [
-                'route' => 'image_index',
-            ]);
             $browse->addChild('Remote Image', [
                 'route' => 'remote_image_index',
             ]);
         }
-
         return $menu;
     }
 }

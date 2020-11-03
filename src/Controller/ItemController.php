@@ -270,7 +270,7 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
      * @Template()
      */
     public function deleteImage(Request $request, Item $item, Image $image, EntityManagerInterface $em) {
-        if ( ! $this->isCsrfTokenValid('delete' . $image->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $image->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($image);
             $entityManager->flush();

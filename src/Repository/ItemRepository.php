@@ -33,9 +33,12 @@ class ItemRepository extends ServiceEntityRepository {
      */
     public function indexQuery() {
         return $this->createQueryBuilder('item')
-            ->orderBy('item.id')
-            ->getQuery()
-        ;
+            ->leftJoin('item.periodStart', 'p1')
+            ->leftJoin('item.periodEnd', 'p2')
+            ->orderBy('p1.sortableYear')
+            ->addOrderBy('p2.sortableYear')
+            ->addOrderBy('item.name')
+            ->getQuery();
     }
 
     /**
