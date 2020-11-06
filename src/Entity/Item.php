@@ -576,5 +576,4 @@ class Item extends AbstractEntity {
 
         return $this;
     }
-
 }

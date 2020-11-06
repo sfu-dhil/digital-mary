@@ -23,7 +23,6 @@ use App\Entity\Technique;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -134,10 +133,10 @@ class ItemType extends AbstractType {
         $builder->add('periodStart', EntityType::class, [
             'label' => 'Earliest creation',
             'class' => Period::class,
-            'query_builder' => function(EntityRepository $er) {
+            'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('p')->orderBy('p.sortableYear', 'ASC');
             },
-            'choice_attr' => function(Period $period, $key, $value) {
+            'choice_attr' => function (Period $period, $key, $value) {
                 return ['data-year' => $period->getSortableYear()];
             },
             'expanded' => false,
@@ -146,10 +145,10 @@ class ItemType extends AbstractType {
         $builder->add('periodEnd', EntityType::class, [
             'label' => 'Latest creation',
             'class' => Period::class,
-            'query_builder' => function(EntityRepository $er) {
+            'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('p')->orderBy('p.sortableYear', 'ASC');
             },
-            'choice_attr' => function(Period $period, $key, $value) {
+            'choice_attr' => function (Period $period, $key, $value) {
                 return ['data-year' => $period->getSortableYear()];
             },
             'expanded' => false,

@@ -36,7 +36,7 @@ class ItemFixtures extends Fixture implements DependentFixtureInterface {
             $fixture->setDimensions('Dimensions ' . $i);
             $fixture->setReferences("<p>This is paragraph {$i}</p>");
             $fixture->setRevisions($revisions);
-            $fixture->setDisplayYear(($i+4) . "th century");
+            $fixture->setDisplayYear(($i + 4) . 'th century');
             $fixture->setPeriodStart($this->getReference('period.' . $i));
             $fixture->setPeriodEnd($this->getReference('period.' . $i));
             $fixture->addCategory($this->getReference('category.' . $i));

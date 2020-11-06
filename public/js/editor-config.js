@@ -20,6 +20,7 @@ function getTinyMceConfig(editorUploadPath) {
         image_title: true,
 
         style_formats_merge: true,
+        paste_as_text: true
     };
 
 }

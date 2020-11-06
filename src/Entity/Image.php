@@ -222,7 +222,7 @@ class Image extends AbstractEntity {
         return $this->license;
     }
 
-    public function setLicense(string $license) : self {
+    public function setLicense(?string $license) : self {
         $this->license = $license;
 
         return $this;
