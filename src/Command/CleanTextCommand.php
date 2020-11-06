@@ -38,12 +38,27 @@ class CleanTextCommand extends Command {
         if ( ! $string) {
             return null;
         }
+        // Remove HTML
         $s = strip_tags($string, self::ALLOWED);
-        $s = html_entity_decode($s, ENT_QUOTES | ENT_SUBSTITUTE | ENT_DISALLOWED | ENT_HTML5, 'UTF-8');
-        $s = Normalizer::normalize($s, Normalizer::NFC);
-        $s = preg_replace('/[^\S\r\n]+/u', ' ', $s);
 
-        return preg_replace('/^\s+|\s+$/u', '', $s);
+        // Decode entities
+        $s = html_entity_decode($s, ENT_QUOTES | ENT_SUBSTITUTE | ENT_DISALLOWED | ENT_HTML5, 'UTF-8');
+
+        // Normalize unicode
+        $s = Normalizer::normalize($s, Normalizer::NFC);
+
+        // Normalize the line endings
+        $s = str_replace(array("\r\n", "\r", "\n"), "\n", $s);
+
+        // Remove excess line endings
+        $s = preg_replace("/\n{3,}/", "\n\n", $s);
+
+        // Replace whitespace that isn't a new line with a space
+        $s = preg_replace('/[^\S\n]+/u', ' ', $s);
+
+        // Trim whitespace at the start and end
+        $s = preg_replace('/^\s+|\s+$/u', '', $s);
+        return $s;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) : int {
