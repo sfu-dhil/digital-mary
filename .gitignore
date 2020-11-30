@@ -28,3 +28,4 @@
 # Uploads and other data
 /data
 deploy.yaml
+src/.preload.php
