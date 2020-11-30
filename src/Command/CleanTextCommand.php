@@ -53,7 +53,7 @@ class CleanTextCommand extends Command {
         // Remove excess line endings
         $s = preg_replace("/\n{3,}/", "\n\n", $s);
 
-        // Replace whitespace that isn't a new line with a space
+        // Replace whitespace that is not a new line with a space
         $s = preg_replace('/[^\S\n]+/u', ' ', $s);
 
         // Trim whitespace at the start and end
