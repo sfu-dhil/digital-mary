@@ -24,12 +24,6 @@
     </div>
 {%  endblock %}
 
-{% block breadcrumb %}
-    {% include 'partial/breadcrumb.html.twig' with {
-        'content': [['Cultures', path('civilization_index')],
-                     [ civilization.label ]   ]
-    } %}
-{% endblock %}
 
 {% block body %}
 

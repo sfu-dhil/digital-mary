@@ -24,8 +24,16 @@
                 <p>Some sort of description here...</p>
             </div>
             <div class="home-search-input">
-                <input type="text"/>
-                <button>GO</button>
+                <form  id="indexSearch" method="GET">
+                    {% set searches = ['item', 'subject', 'technique', 'material', 'location', 'civilization'] %}
+                    <select>
+                        {% for search in searches %}
+                            <option value="{{ path(search~'_search') }}">{{ search|capitalize }}</option>
+                        {% endfor %}
+                    </select>
+                    <input name="q" type="text"/>
+                    <button>GO</button>
+                </form>
             </div>
             <div class="home-search-links">
                 <a>Advanced Search</a>

@@ -1,23 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{%  set display = 3 %}
-
 {% block title %}Subject List{% endblock %}
 
 {% block pageheader %}
-    <h1>Subject List</h1>
+    <h1>Subjects</h1>
     {% include 'partial/count.html.twig'
         with {'index': subjects, 'label': 'subjects'} %}
  {% endblock %}
 
-{% block breadcrumb %}
-    {% include 'partial/breadcrumb.html.twig' with {
-        'content':
-        [
-            ['Subjects']
-        ]
-    } %}
-{% endblock %}
 
 {% block admin %}
     <div class='btn-toolbar pull-right'>
@@ -25,41 +15,17 @@
                 <a href="{{ path('subject_new') }}" class="btn btn-default">
                     <span class="glyphicon glyphicon-plus"></span> New
                 </a>
-            <a href="{{ path('subject_search') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span> Search
-            </a>
         </div>
     </div>
 {% endblock %}
 
 
 {% block body %}
+
+    {% include('partial/search-form.html.twig') with {'path': path('subject_search')} %}
+
     <section>
-        {%  for subject in subjects %}
-            <div class="subject-item">
-                <h2><a href="{{ path('subject_show', { 'id': subject.id }) }}">{{ subject.label }}</a></h2>
-                <div class="subject-desc">
-                    {% if subject.description %}
-                        {{ subject.description|raw }}
-                    {% else  %}
-                        <p>No description available.</p>
-                    {%  endif %}
-                </div>
-                {% if subject.items|length > 0 %}
-                    {% set sorted = subject.items|sort((a,b) => a.images|length < b.images|length) %}
-                    {% set subset = sorted|slice(0, display) %}
-                    {%  embed 'item/partial/list.html.twig' with {'items': subset} %}
-                        {% block callback %}
-                            {% if subject.items|length > display %}
-                                {% include 'item/partial/gallery-item.html.twig'
-                                    with {'path': path('subject_show', { 'id': subject.id }),
-                                          'img': asset('images/plus.svg')} %}
-                            {% endif %}
-                        {% endblock %}
-                    {% endembed %}
-                {% endif %}
-            </div>
-        {%  endfor %}
+        {% include('subject/partial/list.html.twig') %}
     </section>
 
     <div class="navigation">

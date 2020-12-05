@@ -6,17 +6,6 @@
     <h1>Subject: {{  subject.label }}</h1>
  {% endblock %}
 
-{% block breadcrumb %}
-{% include 'partial/breadcrumb.html.twig' with {
-    'content':
-        [
-            ['Subjects', path('subject_index')],
-            [ subject.label ]
-        ]
-} %}
-{% endblock %}
-
-
 {% block admin %}
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
@@ -35,7 +24,6 @@
 {% endblock %}
 
 {% block body %}
-
     {% if is_granted('ROLE_ADMIN') %}
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>

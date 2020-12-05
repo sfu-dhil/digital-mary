@@ -1,0 +1,13 @@
+{% import 'dhil-macros.html.twig' as dhil %}
+
+{% set iconToUse = 'chevron-right'%}
+
+{% if icon is defined %}
+    {% set iconToUse = icon %}
+{% endif %}
+
+<details>
+    <summary>{% block summary %}{% endblock %} <span class="icon">{{ dhil.bs_icon(iconToUse) }}</span></summary>
+    {% block content %}
+    {% endblock %}
+</details>

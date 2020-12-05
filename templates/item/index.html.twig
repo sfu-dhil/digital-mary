@@ -10,13 +10,6 @@
     } %}
 {% endblock %}
 
-{% block breadcrumb %}
-    {% include 'partial/breadcrumb.html.twig' with {
-        'content': [['Items']]
-
-    } %}
-{% endblock %}
-
 {% block admin %}
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
@@ -32,8 +25,34 @@
 {%  endblock %}
 
 {% block body %}
+
+
     {% include 'item/partial/list.html.twig' %}
     <div class="navigation">
         {{ knp_pagination_render(items) }}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {#
+
+    <script>
+  $( function() {
+      $( "#slider-range" ).slider({
+          range: true,
+          min: 0,
+          max: 500,
+          values: [ 75, 300 ],
+          slide: function( event, ui ) {
+              $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+          }
+      });
+      $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
+          " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+  } );
+</script>
+
+
+    #}
+
 {% endblock %}

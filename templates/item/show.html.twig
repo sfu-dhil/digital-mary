@@ -1,22 +1,11 @@
 {% extends 'base.html.twig' %}
-{% import 'item/partial/detail.html.twig' as dl %}
+{% import 'item/partial/detail.html.twig' as  dl %}
 
 {% block title %}Item Details {% endblock %}
 
  {% block pageheader %}
      <h1 class="mobile-header">{{ item.name }}</h1>
  {% endblock %}
-
-{% block breadcrumb %}
-    {% include 'partial/breadcrumb.html.twig' with {
-        'content':
-       [
-           ['Items', path('item_index')],
-           [item.name]
-        ]
-    }
-   %}
-{% endblock %}
 
 {% block admin %}
         <div class='btn-toolbar pull-right'>
@@ -49,55 +38,152 @@
         <div class="full-view-header">
             <h1>{{ item.name }}</h1>
         </div>
-        <dl>
-            <!-- {{ dl.make(item.name, 'Name') }} -->
-            {{ dl.make(item.description, 'Description') }}
-            {{ dl.make(item.category, 'Category', 'category_show') }}
-            {{ dl.make(item.subjects, "Subjects", "subject_show") }}
-            {% set inscriptionAppend = item.inscriptionLanguage ? " (" ~ item.inscriptionLanguage ~ ")" : null %}
-            {{ dl.make(item.inscription, 'Inscription' ~ inscriptionAppend) }}
-            {{ dl.make(item.translatedInscription, 'Translated Inscription') }}
-            {{ dl.make(item.inscriptionStyle, "Style of Inscription", "inscription_style_show") }}
-            {{ dl.make(item.civilization, 'Culture', 'civilization_show') }}
-            {{ dl.make(item.techniques, "Techniques", "techique_show") }}
-            {{ dl.make(item.dimensions, 'Dimensions') }}
-            {{ dl.make(item.provenance, "Provenance", "location_show") }}
-            {{ dl.make(item.findSpot, "Find Spot", "location_show") }}
-            {{ dl.make(item.references, 'References') }}
-            {% if is_granted('ROLE_CONTENT_ADMIN') %}
-                <dt>Contributor</dt>
-                <dd>
-                    {% if item.revisions|length > 0 %}
-                        {% for revision in item.revisions %}
-                            {{ revision.date|date }} - {{ revision.initials }}<br />
-                        {% endfor %}
-                    {% else %}
-                        —
-                    {% endif %}
-                </dd>
+        <h2>
+            {{ item.category[0].label }}
+        </h2>
 
-                <dt>Created</dt>
-                <dd>{{ item.created|date }}</dd>
+        <h3>{{ item.civilization[0].label }}, {{ item.displayYear }}</h3>
 
-                <dt>Updated</dt>
-                <dd>{{ item.updated|date }}</dd>
+        <div>
+            {{ item.description|raw }}
+        </div>
 
-                <dt>Recommended Citation</dt>
-                <dd>
-                    {% include 'partial/citation.html.twig' with {'title': item.name, 'updated': item.updated} %}
-                </dd>
 
-            {% endif %}
-        </dl>
+        {{ dl.make(item.subjects, "Subjects", "subject_show") }}
+
+
+        {% if item.inscription  %}
+            {% embed 'partial/accordion.html.twig' %}
+                {% block summary %}Inscription{% endblock %}
+                {% block content %}
+                 <div class="item-inscription">
+                     <!--First column is information-->
+                     <div class="item-inscription__body">
+                        <div>
+                            <div class="item-inscription__header">
+                                <h4>Original</h4>
+                                {% if item.inscriptionStyle or item.inscriptionLanguage|length > 0 %}
+                                <ul class="list-inline">
+                                    {% if item.inscriptionStyle %}
+                                    <li class="item-inscription-style" data-caption="Style"><a href='{{ path("inscription_style_show", {"id": item.inscriptionStyle.id}) }}'>{{ item.inscriptionStyle }}</a>
+                                    </li>
+                                    {% endif %}
+                                    {% if item.inscriptionLanguage|length > 0 %}
+                                    <li class="item-inscription-language" data-caption="Language">
+                                        {% for language in item.inscriptionLanguage %}
+                                            <a href='{{ path("language_show", {"id": language.id}) }}'>{{ language }}</a>
+                                            {% if not loop.last %},{% endif %}
+                                        {% endfor %}
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                                {% endif %}
+                            </div>
+                            <div class="item-inscription__content{% if item.inscriptionLanguage|length %}{{' ' ~ item.inscriptionLanguage|map(lang => "#{lang.name}")|join(' ')}}{% endif %}">
+                                {{ item.inscription|raw }}
+                            </div>
+
+                        </div>
+                         {% if item.translatedInscription %}
+                             <div>
+                                 <div class="item-inscription__header">
+                                     <h4>Translation</h4>
+                                 </div>
+                                 <div class="item-inscription__content">
+                                     {{ item.translatedInscription|raw }}
+                                 </div>
+
+                             </div>
+                         {% endif %}
+                     </div>
+                 </div>
+                {% endblock %}
+            {% endembed %}
+        {% endif %}
+
+
+
+
+        {% if item.references %}
+            {% embed 'partial/accordion.html.twig' %}
+                {% block summary %}References{% endblock %}
+                {% block content %}
+                    {{ item.references|raw }}
+                {% endblock %}
+            {% endembed %}
+        {% endif %}
+
+
+        {% if is_granted('ROLE_CONTENT_ADMIN') %}
+            {% embed 'partial/accordion.html.twig' %}
+                {% block summary %}Administrative History{% endblock %}
+                {% block content %}
+                    <dl>
+                        <dt>Contributor</dt>
+                        <dd>
+                            {% if item.revisions|length > 0 %}
+                                {% for revision in item.revisions %}
+                                    {{ revision.date|date }} - {{ revision.initials }}<br />
+                                {% endfor %}
+                            {% else %}
+                                —
+                            {% endif %}
+                        </dd>
+
+                        <dt>Created</dt>
+                        <dd>{{ item.created|date }}</dd>
+
+                        <dt>Updated</dt>
+                        <dd>{{ item.updated|date }}</dd>
+
+                    </dl>
+                {% endblock %}
+            {% endembed %}
+        {% endif %}
+
+        <div class="item_bottom">
+            <div>
+                <!--Make a widget for the inscriptions-->
+                {#
+                {{ dl.make(item.inscription, 'Inscription' ~ inscriptionAppend) }}
+                {{ dl.make(item.translatedInscription, 'Translated Inscription') }}
+                {{ dl.make(item.inscriptionStyle, "Style of Inscription", "inscription_style_show") }} #}
+            </div>
+
+            <div>
+                <!--Another widget for locations-->
+                <!--Locations-->
+                {{ dl.make(item.provenance, "Provenance", "location_show") }}
+                {{ dl.make(item.findSpot, "Find Spot", "location_show") }}
+            </div>
+
+            <!--Maybe something for technique?-->
+            <div>
+                <!--Technique-->
+                {{ dl.make(item.techniques, "Techniques", "technique_show") }}
+                <!--Dimensions-->
+                {{ dl.make(item.dimensions, 'Dimensions') }}
+            </div>
+
+            {% include 'partial/citation.html.twig' with {'title': item.name, 'updated': item.updated} %}
+        </div>
     </section>
+
+
     {% if item.images|length > 0 %}
         <section class="images">
             <h2 class="sr-only">Images</h2>
-            <div class="img-content">
-                {% embed 'image/partial/carousel.html.twig' with {'images': item.images } %}
-                {% endembed %}
+            <div class="sticky">
+                <div class="img-content">
+                    {% embed 'image/partial/carousel.html.twig' with {'images': item.images } %}
+                    {% endembed %}
+                </div>
+                <div>
+
+                </div>
 
             </div>
+
         </section>
         <div id="ndm-viewer-container">
         </div>
@@ -112,4 +198,5 @@
 
 {%  block  javascripts %}
 <script src="{{ asset('yarn/viewerjs/dist/viewer.js') }}"></script>
+    <script src="{{ asset('yarn/roy/js/accordion.js') }}"></script>
 {% endblock %}

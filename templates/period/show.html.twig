@@ -7,7 +7,7 @@
  {% endblock %} 
 
 {% block body %}
-
+ {{ dump() }}
     {% if is_granted('ROLE_CONTENT_ADMIN') %}
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
@@ -27,5 +27,6 @@
 
     {% embed 'period/partial/detail.html.twig' %}
     {% endembed %}
+
 
 {% endblock %}
