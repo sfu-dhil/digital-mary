@@ -1,14 +1,17 @@
 $heading-font: 'Crimson Text';
 $body-font: "Nunito Sans";
+$greek-font: "Athena Ruby";
 $ms-base: 1rem;
 $ms-ratio: $phi;
 $modscale-start: 3;
 $ndm-gold: #C0B283;
 $ndm-light-gold: #E7DED1;
+$ndm-light-grey-gold: #FDFBF8;
 $ndm-grey: #E5E5E5;
-$ndm-black: black;
+$ndm-black: #333;
+$ndm-white: #fbfbfb;
+$nav-height: rem(50px);
 $ndm-white: #ffffff;
-$nav-height:50px;
 $ndm-img-height: 350;
 $ndm-img-width: 450;
 $ndm-nav-background-color: rgba-to-rgb(rgba($ndm-light-gold, .5));
@@ -40,4 +43,18 @@ $breadcrumb-current-background: $ndm-grey;
     color:inherit;
     border-bottom-color:rgba($ndm-gold, 0.8)
   }
+}
+
+// We generate the font module, but there are special fonts we need for handling variant languages
+
+@font-face {
+  font-family: 'Athena Ruby';
+  src: url('../assets/athena_ruby/athenaruby_b018-webfont.eot');
+  src: url('../assets/athena_ruby/athenaruby_b018-webfont.eot?#iefix') format('embedded-opentype'),
+  url('../assets/athena_ruby/athenaruby_b018-webfont.woff2') format('woff2'),
+  url('../assets/athena_ruby/athenaruby_b018-webfont.woff') format('woff'),
+  url('../assets/athena_ruby/athenaruby_b018-webfont.ttf') format('truetype'),
+  url('../assets/athena_ruby/athenaruby_b018-webfont.svg#athena_rubyregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }

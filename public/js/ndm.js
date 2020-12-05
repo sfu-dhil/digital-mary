@@ -4,15 +4,15 @@
 /* First thing to do is set up the images for the viewer thing */
 
 const toolbarOpts = ['zoomIn', 'zoomOut', 'oneToOne', 'reset', 'prev', 'next','rotateLeft','rotateRight'];
-let gallery;
+let gallery,  slider;
+let imgSlider = document.querySelector('.image-slider');
 let ndmViewerContainer = document.querySelector('#ndm-viewer-container');
 
-document.querySelector('body').classList.add('js');
-if (ndmViewerContainer){
-    resizeCarousel();
-    makeImageViewer();
-}
 
+// First add the JS class
+document.querySelector('body').classList.add('js');
+
+/* Make hamburger work */
 document.querySelectorAll('.hamburger').forEach(ham => {
     ham.addEventListener('click', e => {
         ham.classList.toggle('is-active');
@@ -20,32 +20,57 @@ document.querySelectorAll('.hamburger').forEach(ham => {
 })
 
 
-function resizeCarousel() {
-    let carousel = document.getElementById('carousel');
-    if (carousel) {
-        let imgs = carousel.querySelectorAll('img');
-        let srcs = Array.from(imgs).map(img => img.src);
-        let heights = [];
-        srcs.forEach(src => {
-            heights.push(new Promise((resolve, reject) => {
-                let tmpImg = new Image;
-                tmpImg.onload = function () {
-                    resolve(tmpImg.height);
-                }
-                tmpImg.src = src;
-            }))
+
+// Now make details
+document.querySelectorAll('details').forEach(el => {
+    let accordion = new Accordion(el);
+})
+
+
+
+
+/* Add special viewer stuff */
+if (ndmViewerContainer){
+    makeImageViewer();
+
+    if (imgSlider.querySelectorAll('.item').length > 1){
+        slider = new Glider(imgSlider, {
+            scrollLock: true,
+            arrows: {
+                prev: '.slider-btn-prev',
+                next: '.slider-btn-next'
+            },
+            duration: 1
+        });
+        /* Now make our custom dots */
+        let previewLinks = document.querySelectorAll('.image-preview a');
+        let active = 0;
+        const resetActive = function(n){
+            if (active !== n){
+                previewLinks[active].classList.remove('active');
+                previewLinks[n].classList.add('active');
+                active = n;
+            }
+        }
+
+        previewLinks.forEach((link, i) => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                slider.scrollItem(i);
+                resetActive(i);
+            })
         })
-        Promise.all(heights).then(hs => {
-            let maxHeight = Math.max(...hs);
-            let padding = (heights.length > 1) ? 100 : 0;
-            carousel.style.height = (maxHeight + padding) + "px";
+        imgSlider.addEventListener('glider-slide-visible', e=> {
+                let slide = e.detail.slide;
+                resetActive(slide);
         })
     }
 }
 
 
+
 function makeImageViewer(){
-    let imgCtr = document.querySelector('.images');
+    let imgCtr = document.querySelector('.image-slider');
     let images = imgCtr.querySelectorAll('a[data-img]');
     let toolbar = {};
     let show = 1;
@@ -62,8 +87,6 @@ function makeImageViewer(){
         to work a bit better: we don't want the image loading in, but we
         do want it in all other cases.
      */
-
-
     gallery = new Viewer(imgCtr, {
         url: function(img){
             let src = img.parentNode.getAttribute('data-img');
