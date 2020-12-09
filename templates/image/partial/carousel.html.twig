@@ -1,55 +1,53 @@
+{% import 'dhil-macros.html.twig' as dhil %}
+{% import 'partial/image.html.twig' as img %}
 
 {% if images|length > 1 %}
-    <ul class="image-preview">
-        {% for image in images %}
-            <li>
-                <a href="#item-{{ loop.index }}" class="preview-link{% if loop.first %} active{% endif %}"
-                   style="--img: url('{{ path('image_thumbnail', {'id': image.id}) }}')">
-                    <span class="sr-only">{{ image.originalName }}</span>
-                </a>
-            </li>
-        {% endfor %}
+    <ul class=" dots">
     </ul>
 {% endif %}
+
 <div class="image-slider-container">
+
     {% if images|length > 1 %}
         <button aria-label="Previous" class="slider-btn slider-btn-prev">
-            <img src="{{ asset('images/arrow.svg') }}" alt="Previous"/>
+            {{ dhil.bs_icon('chevron-left') }}
         </button>
         <button aria-label="Next" class="slider-btn slider-btn-next">
-            <img src="{{ asset('images/arrow.svg') }}" alt="Previous"/>
+            {{ dhil.bs_icon('chevron-right') }}
         </button>
     {% endif %}
     <div class="image-slider">
         {% for image in images %}
             <div id="item-{{ loop.index }}" class="item{% if loop.first %} active{% endif %}">
                 <div class="img-container">
-                    <a href="{{ path('image_view', {'id': image.id }) }}"
+                    <a data-aspect="image.imageWidth / image.imageHeight }}" href="{{ path('image_view', {'id': image.id }) }}"
                        data-date="{{ image.created|date }}" data-img="{{ path('image_view', {'id': image.id}) }}">
-                        <img src="{{ path('image_thumbnail', {'id': image.id}) }}"
-                             alt="{{  image.originalName }}">
+                        {% include 'partial/image.html.twig' %}
                     </a>
                 </div>
                 <div class="img-desc">
-                    {% if image.description %}
+                    {% if image.description or image.license %}
                         <div class="img-desc_item img-desc_description">
                             <div class="img-desc_content">
                                 {{ image.description|raw }}
+                                {% if image.license %}
+                                    <span class="img-license">
+                                        {{ dhil.bs_icon('info-circle') }}
+                                    </span>
+                                {% endif %}
                             </div>
                         </div>
                     {% endif %}
 
-                    {% if image.license %}
-                        <div class="img-desc_item image-desc_license">
-                            <h4>License</h4>
-                            <div class="img-desc_content">
-                                {{ image.license|raw }}
-                            </div>
-                        </div>
-                    {% endif %}
+
                 </div>
             </div>
         {% endfor %}
+
     </div>
 
 </div>
+
+
+
+

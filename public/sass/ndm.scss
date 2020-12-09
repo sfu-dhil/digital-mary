@@ -36,21 +36,24 @@ html, body, .dropdown-menu {
   font-family: $body-font;
 }
 
+body{
+  background-color: $ndm-white;
+}
+
 main{
   margin-top: ms(2);
 }
 
 /*Container override */
-
+/*
 @media (max-width: 992px){
   .container {
     width: calc(100vw - #{ms(2)});
   }
-}
+} */
 
 
 @include dhil-make-navbar($ndm-nav-background-color, $ndm-black){
-  text-transform:uppercase;
   .navbar-nav{
     & > li {
       & > a,
@@ -68,89 +71,294 @@ main{
 };
 
 
-
 @include dhil-body-nav() {
   margin-bottom: ms(1);
+  align-items:flex-end;
 };
 
 @include dhil-breadcrumb();
 
+
+
+
+
+
 /**************************** Page Header */
 
-.page-header{
-  border-bottom:none;
-  margin-top:0;
-  .item_show &{
-    margin:0;
-    padding-bottom:0;
-  }
-}
+.item_show{
 
-
-
-
-
-.mobile-header{
-  @media (min-width: 769px){
-    @include sr-only();
-  }
-}
-
-.full-view-header{
-  @media (max-width:768px){
+  .page-header{
     display:none;
   }
-}
 
-.item_show .content{
-  display:grid;
-  margin-top:ms(1);
-  h1{
-    margin-top:0;
-    margin-bottom: ms(1);
+  @media (min-width: 768px) {
+    .container {
+      width:unset;
+      padding-left: 45px;
+      padding-right:45px;
+
+    }
   }
-  &.imageless{
-    grid-template-columns: auto!important;
-    max-width: 45rem;
-    margin-left: auto;
-    margin-right: auto;
+
+
+  @media (min-width: 992px) {
+    .container {
+      width: 970px;
+    }
   }
-  @media (min-width: 768px){
-    //grid-template-columns: clamp(20rem, 50%, 45rem) minmax(ms(6), ms(7));
-    grid-template-columns: auto minmax(calc(var(--thumb-width) * 0.75), var(--thumb-width));
-    grid-column-gap: ms(2);
-  }
-  @media(max-width: 768px){
-    grid-row-gap: ms(1);
-    grid-template-columns: 1fr;
-    .images{
-      grid-row: 1;
-      display:flex;
-      padding: ms(0) 0;
-      width:100%;
-      overflow-x:hidden;
+
+  @media (min-width: 1200px) {
+    .container {
+      width:1170px;
+      padding-left: 15px;
+      padding-right:15px;
     }
   }
 }
 
+
+.item_show .content{
+  display:grid;
+  margin-top:ms(1);
+  grid-template-areas:
+          "header images"
+          "description images"
+          "metadata images";
+  grid-template-columns: auto minmax(calc(var(--thumb-width) * 0.5), var(--thumb-width));
+  grid-column-gap: ms(2);
+
+  &.imageless{
+    grid-template-areas:
+            "header"
+            "description"
+            "metadata";
+    grid-template-columns:100%;
+    max-width: 45rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  & > .header{
+    grid-area: header;
+  }
+  & > .description{
+    grid-area:description;
+  }
+  & > .images{
+    grid-area: images;
+  }
+  & > .metadata{
+    grid-area:metadata;
+  }
+
+  @media (max-width: 991px) {
+      grid-template-areas:
+        "header images"
+        "description images"
+        "metadata metadata";
+
+  }
+
+  @media (max-width: 767px){
+    grid-template-areas:
+      "header"
+      "images"
+      "description"
+      "metadata";
+    grid-template-columns:100%;
+  }
+}
+
+
+.item-header{
+  h1{
+    margin-top:0;
+  }
+  h1, h2, h3{
+    margin-bottom:0;
+  }
+
+  h2, h3{
+    margin-top: ms(-1);
+    color: lighten($ndm-black, 10%);
+  }
+
+  a{
+    @include ndm-removeLink;
+  }
+
+}
+
+.item-description{
+  margin-top: ms(1);
+  padding-right:2rem;
+  @media (max-width:768px){
+    padding-right:0;
+  }
+  p:last-child{
+    br:last-child{
+      display:none;
+    }
+  }
+}
+
+p + br{
+  display:none;
+}
+
+
 // Now the content
 
 
-@include dhil-details-accordion();
+/* Item details list */
 
-details{
-  margin-bottom: ms(1);
-  box-shadow: $tw-box-shadow;
+.item-details-list{
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  > * {
+    margin-right: ms(1);
+    margin-bottom: ms(0);
+    @media (max-width: 768px){
+      margin-top:0;
+    }
+  }
+  .details > &{
+    margin-top: 0;
+  }
 }
+
+
+/*
+ * Specific item details
+ *
+ */
+
+.item-details{
+  display:flex;
+  flex: 1 1 clamp(14.5rem, 40%, 100%);
+  flex-direction:column;
+  padding: ms(-1) ms(-1);
+  //Details header
+
+  &__header{
+    text-transform: uppercase;
+    font-variant: small-caps;
+    font-size: 0.9rem;
+    color:$ndm-dark-grey;
+    margin-bottom:ms(-2);
+    font-weight:bold;
+    letter-spacing:0px;
+    font-family: $body-font;
+    margin-top:0;
+    .accordion__content &{
+      margin-bottom: ms(-1);
+    }
+  }
+
+  //Details content
+  &__content {
+    ul {
+      @include dhil-tags();
+
+      li {
+        margin-bottom:ms(-2);
+        margin-right: ms(-1);
+        margin-top:0;
+        color: inherit;
+        border: none;
+        border: 1px solid $ndm-beige;
+        border-radius: 2px;
+        background: color.scale($ndm-beige, $lightness: 85%);
+        & > a {
+          color: $ndm-black;
+          text-decoration: none !important;
+          border-bottom: none;
+          padding: ms(-2) ms(-1);
+          border-radius:3px;
+          display:flex;
+          flex-direction:column;
+        }
+        .badge{
+          display:none;
+        }
+        &:hover {
+
+          background: color.scale($ndm-beige, $lightness: 50%);
+        }
+
+      }
+    }
+  }
+
+  &__note{
+    &:not(:first-child){
+      margin-top: 8px;
+      margin-right: ms(0);
+      font-size: 0.95rem;
+    }
+    p{
+      line-height: 1.3;
+    }
+    p:last-child{
+      margin-bottom:0;
+    }
+  }
+
+  /* Value specific listing */
+
+  //Subjects are tags
+  &__subjects{
+    border:none;
+    flex-basis: 100%;
+  }
+  &__dimensions{
+    p{
+      margin-bottom:0;
+    }
+  }
+
+  &__references{
+    p{
+      text-indent: -1rem;
+      margin-left: 1rem;
+      line-height:1.45;
+    }
+  }
+
+  //Condition based:
+
+  // Control how we display unfilled fields.
+  &.hasContent{
+    &-false{
+      display:none;
+      flex-basis: 100%;
+    }
+  }
+
+  //Control how items with notes span grid columns
+  &.hasNote{
+    &-true{
+    }
+  }
+}
+
+
+
+
+@include dhil-details-accordion();
 
 .accordion__content{
   margin:0 ms(-1);
 }
 
 summary{
-  @extend dt;
-  padding: ms(-1) ms(-1);
-  background-color: rgba($ndm-grey, 0.5);
+  padding: ms(0);
+  text-transform: uppercase;
+  font-variant:small-caps;
+  font-size: 1rem;
+  font-weight:500;
+  background-color: transparentize($ndm-grey, 0.2);
   transition: background-color 0.2s ease(in-out-quad);
   .icon{
     float:right;
@@ -167,12 +375,17 @@ summary{
 }
 
 details {
-
+  box-shadow: $tw-box-shadow;
+  flex-basis: 100%;
+  flex-shrink:0;
   &[aria-expanded='false'] {
     summary:hover {
-      background-color: rgba($ndm-grey, 0.75);
-      .icon {
-        transform: translate(4px, 0);
+      background-color: transparentize($ndm-grey, 0.1);
+      &:not(:focus) .icon {
+          animation: gesture-left;
+          animation-duration: 1s;
+          animation-timing-function: ease(in-out-quad);
+          animation-iteration-count: 1;
       }
     }
   }
@@ -182,39 +395,14 @@ details {
       background-color: $ndm-grey;
     }
     .icon{
-      transform: translate(4px, 0) rotate(-90deg);
+      transform: rotate(90deg);
     }
   }
-}
 
-details > div{
-  padding: ms(0) ms(-1);
-}
-
-
-
-dt{
-  text-transform: lowercase;
-  font-variant: small-caps;
-  font-size: ms(1);
-  margin-bottom:ms(-3);
-  font-weight:500;
-  letter-spacing:0px;
-}
-
-dd{
-  margin-bottom: ms(1);
-  p{
-    margin-right:ms(2);
+  > div {
+    padding: ms(0) ms(-1);
   }
 }
-
-.references p{
-  text-indent: -1rem;
-  margin-left: 1rem;
-  line-height:1.45;
-}
-
 
 .item-inscription__body{
   margin: 0 ms(-2);
@@ -228,9 +416,9 @@ dd{
 
     h4{
       font-family: $body-font;
-      font-size: ms(0) * 1.5;
+      font-size: ms(0);
       font-weight:bold;
-      text-transform:lowercase;
+      text-transform:uppercase;
       font-variant: small-caps;
       color: lighten($ndm-black, 30%);
       margin:0;
@@ -256,6 +444,9 @@ dd{
 .images{
   margin:0 auto;
   width:100%;
+  @media (max-width: 767px){
+    margin: ms(0) 0;
+  }
 }
 
 .sticky{
@@ -266,72 +457,42 @@ dd{
   position:sticky;
   margin:0 auto;
   padding:$padding-v $padding-h;
+  @media (max-width: 767px){
+    padding: 0 ms(-2);
+  }
 }
 
 .img-content{
-  background: $ndm-light-grey-gold;
-  border-radius: ms(-3);
-
+  border:1px solid $ndm-grey;
+  border-radius:2px;
   @media (max-width: 768px){
     position:static;
     overflow-x:hidden;
   }
 }
 
-.image-preview {
-  display: flex;
-  list-style-type: unset;
-  margin-left: 0;
-  height: 3rem;
-  overflow-y: hidden;
-  padding-left: 0;
 
-  > li {
-    flex: 1;
-    display: block;
-    border-right:2px solid  $ndm-light-grey-gold;
-    @each $pos in (first, last) {
-      &:#{$pos}-child {
-        & > a {
-          $dir: if($pos==first,'left','right');
-          border-top-#{$dir}-radius: ms(-4);
-          border-bottom-#{$dir}-radius: ms(-4);
-        }
-      }
-    }
+.img-license{
+  svg{
+    height:1rem;
+    width: 1rem;
   }
 }
 
-
-a.preview-link{
-  border:none;
-  display:block;
-  height:100%;
-  width:100%;
-  color:inherit;
-  background: var(--img) no-repeat center center;
-  transition: none;
-  /* Add a hover effect */
-  &:after{
-    content: "";
-    position:relative;
-    display:inline-block;
-    height:100%;
-    width:100%;
-    top:0;
-    opacity:0.3;
-    background: #1a1a1a;
-    transition: opacity 0.2s ease-in-out;
-  }
- &.active{
-    &:after{
-      opacity:0;
-    }
+.glider-dot{
+  color: $ndm-grey;
+  background:$ndm-grey;
+  &.active, &:hover, &:focus{
+    background: $ndm-beige;
   }
 }
 
 .image-slider-container{
   display:flex;
+}
+
+.image-slider:not(.glider){
+   margin:0 auto;
 }
 
 
@@ -340,32 +501,26 @@ a.preview-link{
   background: none;
   border: none;
   display:inline-block;
-  transition: opacity 0.2s ease-in-out;
-  opacity:0.9;
-  &:focus{
-    outline: $ndm-gold 1px auto;
+  svg{
+    width:ms(1);
+    height:ms(1);
+    fill: $ndm-gold;
+    stroke: $ndm-gold;
   }
   &:hover{
-    opacity:1;
-  }
-  &-prev{
-    padding-right:ms(0);
-    margin-right: ms(0);
+    svg{
+      fill:$ndm-gold;
+    }
   }
   &-next{
     // Re-order the next btn so that it follows the main image carousel
     order:3;
-    padding-left:ms(0);
-    margin-left: ms(0);
-    // We use the same chevron img, but just flip it here
-     & > img{
-       transform: scale(-1, 1);
-       transform-origin: center;
-     }
   }
   &.disabled{
     pointer-events:none;
-    opacity:0.3;
+    svg{
+      fill:$ndm-grey;
+    }
   }
 }
 
@@ -385,7 +540,6 @@ a.preview-link{
     img{
       cursor: zoom-in;
       background:inherit;
-      max-width:100%;
     }
   }
 }
@@ -410,33 +564,7 @@ a.preview-link{
   font-size: ms(0) * 0.8;
 }
 
-.subjects{
-    ul{
-      @include dhil-tags();
-      li{
-        background: $ndm-light-gold;
-        font-size:ms(0);
 
-        margin: ms(-4);
-        &:hover{
-          background: $ndm-gold;
-          & > a{
-            color:$ndm-white;
-            border-color: $ndm-light-gold;
-          }
-        }
-        & > a{
-          margin: ms(-3);
-          border:2px solid $ndm-white;
-          color:$ndm-black;
-          padding:ms(-3) ms(-2);
-
-        }
-      }
-
-    }
-
-  }
 
 body.viewer-open main{
   padding-right: 15px;
@@ -451,12 +579,13 @@ body.viewer-open main{
   text-align:center;
   margin-bottom: ms(0);
   box-shadow: $tw-box-shadow;
+}
 
-  img{
-    max-width:100%;
-    &.placeholder{
-      max-width: 6rem;
-    }
+img{
+  max-width:100%;
+  height:auto;
+  &.placeholder{
+    max-width:6rem;
   }
 }
 
@@ -519,7 +648,13 @@ body.viewer-open main{
 
 
 
+/* Badges */
+.badge{
 
+  font-size: 0.8rem;
+  background-color: $ndm-grey;
+  color: color.adjust($ndm-grey, $lightness: -50%);
+}
 
 
 /* Pagination */

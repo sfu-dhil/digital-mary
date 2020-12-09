@@ -9,8 +9,7 @@
     </p>
 {% endblock %}
 
-{% block body %}
-
+{% block admin %}
     <div class='btn-toolbar pull-right'>
         <div class='btn-group'>
             {% if is_granted('ROLE_CONTENT_ADMIN') %}
@@ -22,12 +21,8 @@
                 <span class="glyphicon glyphicon-search"></span> Search </a>
         </div>
     </div>
+{% endblock %}
 
-    {% embed 'language/partial/table.html.twig' %}
-    {% endembed %}
-
-    <div class="navigation">
-        {{ knp_pagination_render(languages) }}
-    </div>
-
+{% block body %}
+    {% include 'partial/term-table.html.twig' with {'items': languages} %}
 {% endblock %}

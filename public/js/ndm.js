@@ -21,10 +21,24 @@ document.querySelectorAll('.hamburger').forEach(ham => {
 
 
 
+
 // Now make details
 document.querySelectorAll('details').forEach(el => {
     let accordion = new Accordion(el);
 })
+
+// Clean up some descriptions, but this is a hack
+let nbspRex = /^\s*&nbsp;\s*$/
+document.querySelectorAll('.item-description').forEach(div => {
+    div.querySelectorAll('p').forEach(p => {
+        let text = p.innerHTML;
+        if (nbspRex.test(text)){
+            p.parentElement.removeChild(p);
+        }
+    })
+});
+
+
 
 
 
@@ -36,34 +50,20 @@ if (ndmViewerContainer){
     if (imgSlider.querySelectorAll('.item').length > 1){
         slider = new Glider(imgSlider, {
             scrollLock: true,
+            dots: '.dots',
             arrows: {
                 prev: '.slider-btn-prev',
                 next: '.slider-btn-next'
             },
             duration: 1
         });
-        /* Now make our custom dots */
-        let previewLinks = document.querySelectorAll('.image-preview a');
-        let active = 0;
-        const resetActive = function(n){
-            if (active !== n){
-                previewLinks[active].classList.remove('active');
-                previewLinks[n].classList.add('active');
-                active = n;
+        imgSlider.addEventListener('glider-refresh', e => {
+            console.log(slider);
+            if (slider.trackWidth > window.innerWidth){
+                slider.trackWidth = window.innerWidth;
+                slider.ele.style.width = slider.trackWidth + "px";
             }
-        }
-
-        previewLinks.forEach((link, i) => {
-            link.addEventListener('click', e => {
-                e.preventDefault();
-                slider.scrollItem(i);
-                resetActive(i);
-            })
-        })
-        imgSlider.addEventListener('glider-slide-visible', e=> {
-                let slide = e.detail.slide;
-                resetActive(slide);
-        })
+        });
     }
 }
 

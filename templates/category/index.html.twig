@@ -24,41 +24,5 @@
 
 
 {% block body %}
-    <table class="table table-bordered table-condensed table-hover table-striped">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Label</th>
-            <th>Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for category in categories %}
-            <tr>
-                <td>
-                    <a href="{{ path('category_show', { 'id': category.id }) }}">
-                        {{ category.id }}
-                    </a>
-                </td>
-                <td>
-                    {{ category.name }}
-                </td>
-            
-                <td>
-                    {{ category.label }}
-                </td>
-            
-                <td>
-                    {{ category.description }}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <div class="navigation">
-        {{ knp_pagination_render(categories) }}
-    </div>
-
+    {% include 'partial/item-table.html.twig' with {'items': categories} %}
 {% endblock %}

@@ -1,43 +1,90 @@
-{% macro make(value, name, path, force=false) %}
-    {% set process = value is iterable ? value|length > 0 : value is not null %}
-    {% if process or force %}
-        <dt>{{ name }}</dt>
-        <dd class="{{ name|u.snake }}">
-            {% if value is not null %}
-                {% if path is not null %}
-                    {{ _self.link(value, path) }}
-                {% else %}
-                    {{ value|raw }}
-                {% endif %}
-            {% else %}
-                {{ _self.default() }}
-            {% endif %}
-        </dd>
+
+
+{% macro make(context, key, name, path, itemsKey='items') %}
+    {% set value = attribute(context, key) %}
+    {% if attribute(context, key ~ 'Other') is defined %}
+        {% set note = attribute(context, key ~ 'Other') %}
     {% endif %}
+    {% set class = "item-details" %}
+    {% set itemClass = class ~ '__' ~ name|u.snake %}
+    {% set hasNote = note is defined and not(note is null or note is empty) %}
+    {% set content %}
+        {% if value is not null %}
+            {% if path is not null %}
+                {{ _self.makeLinks(value, path, itemsKey) }}
+            {% else %}
+                {{ value|raw }}
+            {% endif %}
+        {% endif %}
+        {% if hasNote %}
+            <div class="{{ class }}__note {{ itemClass }}">
+                {{ note|raw }}
+            </div>
+        {% endif %}
+    {% endset %}
+    {% set content = content|trim()|spaceless %}
+    {% set hasContent = content is not empty %}
+    {{ _self.render(_context) }}
 {% endmacro %}
 
-{% macro link(value, path) %}
-    {% if value is iterable %}
-        {% if value|length > 0 %}
+{% macro render(this) %}
+    {% set divClass = [this.class, this.itemClass, 'hasContent-' ~ _self.bool2Str(this.hasContent), 'hasNote-'~ _self.bool2Str(this.hasNote) ]|join(' ') %}
+
+    <div class="{{ divClass }}">
+        <h2 class="{{ this.class }}__header {{ this.itemClass }}">{{ this.name }}</h2>
+        <div class="{{ this.class }}__content {{ this.itemClass }}">
+            {%  if this.hasContent %}
+                {{ this.content|raw }}
+            {% else %}
+                {{ '—' }}
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+
+
+{% macro makeLinks(value, path, itemsKey) %}
+    {% set iterable = value is iterable %}
+    {# Cast the links to an array to make it easier to sort through them #}
+    {% set links = iterable ? value : [value] %}
+    {% if links|length > 0 %}
         <ul>
-            {% for val in value %}
+            {% for link in links %}
+                {% set items = attribute(link, itemsKey) %}
                 <li>
-                    <a href="{{ path(path, {'id': val.id}) }}">{{ val }}</a>
+                    <a href="{{ path(path, {'id': link.id}) }}">{{ link }}<span class="badge">{{ items|length }}</span></a>
                 </li>
             {% endfor %}
         </ul>
-        {% else %}
-            {{ _self.default() }}
-        {% endif %}
-    {% else %}
-        {% if value is not null %}
-             <a href="{{ path(path, {'id': value.id}) }}">{{ value }}</a>
-        {% else %}
-            {{ _self.default() }}
-        {% endif %}
     {% endif %}
 {% endmacro %}
 
-{% macro default() %}
-    —
+
+
+
+{% macro iterate(items, route) %}
+    {% set arr = [] %}
+    {% for item in items %}
+        {% set link %}
+            {% apply spaceless %}
+                <a href="{{ path(route, {'id': item.id}) }}">{{ item.label }}</a>
+            {% endapply %}
+        {% endset %}
+        {% set arr = arr|merge([link|trim]) %}
+    {% endfor %}
+    {{ arr|join(', ')|raw }}
+{% endmacro %}
+
+{% macro bool2Str(bool) %}
+    {{- bool ? 'true' : 'false' -}}
+{% endmacro %}
+
+{% macro firstParaString(text) %}
+    {% set paragraphs = text|split('</p>') %}
+    {% set firstParagraph = paragraphs|first ~ '</p>' %}
+    {% set string = firstParagraph|striptags|trim %}
+
+    {# Then remove spaces, and remove trailing period #}
+    {{- string|trim('.', side='right') -}}
 {% endmacro %}

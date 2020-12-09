@@ -9,6 +9,15 @@ fonts:
     crimson-text:
       styles: [ 'normal', 'italic' ]
       weights: ['400', '600', '700']
+    source-sans-pro:
+      styles: [ 'normal', 'italic' ]
+      weights: [ '100', '200', '300', '400', '500', '700', '800', '900' ]
+    source-serif-pro:
+      styles: [ 'normal', 'italic' ]
+      weights: [ '200', '300', '400', '500', '700', '800' ]
+    spectral:
+      styles: [ 'normal', 'italic' ]
+      weights: [ '200', '300', '400', '500', '700', '800' ]
   formats: [ 'woff2', 'woff' ]
   subsets: [ 'latin', 'latin-ext' ]
 

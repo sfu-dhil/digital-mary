@@ -1,0 +1,46 @@
+
+{# Set up some variables  #}
+{# set i = 0 #}
+{% if image is not null %}
+    {% set class = 'image' %}
+    {% set src = path('image_thumbnail', {'id': image.id}) %}
+    {% set alt = image.description is not null ? image.description|striptags : image.originalName %}
+    {% set ratio = image.imageWidth / image.imageHeight %}
+    {% set width = (ratio >= 1) ? dm_thumb_width : dm_thumb_height * ratio %}
+    {% set height = (ratio >= 1) ? dm_thumb_width / ratio : dm_thumb_height %}
+{% endif %}
+
+
+
+{#  Now make the image #}
+
+<img class="{{ class|default('placeholder') }}"
+     src="{{ src|default(asset('images/no-img.svg')) }}"
+     alt="{{ desc|default('No image available') }}"
+     {% if width is defined %}width="{{ width }}px"{% endif %}
+     {% if height is defined %}height="{{ height }}px"{% endif %}
+     loading="lazy"/>
+
+
+{#
+<img class="{{ imgClass|default('placeholder') }}"
+     src="{{ img|default(asset('images/no-img.svg')) }}"
+     alt="{{ desc|default('No image available') }}" class="lazy">
+
+    {% if item.images | length > 0 %}
+    {% set img = path('item_image_thumbnail', {'id': item.id, 'image_id': item.images[0].id})   %}
+    {% set imgClass = 'real' %}
+{% endif %}
+
+{% if image is defined %}
+    {% set path = path('item_image_thumbnail', {'id': item.id, 'image_id': }) %}
+{% endif %}
+    {% set width = dm_thumb_width %}
+    {% set height = dm_thumb_height %}
+
+    {% if ar >= 1 %}
+        {% set height = dm_thumb_width / ar %}
+    {% else %}
+        {% set width = dm_thumb_height * ar %}
+    {% endif %}
+#}

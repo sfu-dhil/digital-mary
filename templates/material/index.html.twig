@@ -24,42 +24,5 @@
 
 
 {% block body %}
-    <table class="table table-bordered table-condensed table-hover table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Label</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for material in materials %}
-            <tr>
-
-                <td>
-                    <a href="{{ path('material_show', { 'id': material.id }) }}">
-                        {{ material.id }}
-                    </a>
-                </td>
-                <td>
-                    {{ material.name }}
-                </td>
-            
-                <td>
-                    {{ material.label }}
-                </td>
-            
-                <td>
-                    {{ material.description }}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <div class="navigation">
-        {{ knp_pagination_render(materials) }}
-    </div>
-
+    {% include 'partial/term-table.html.twig' with {'items': materials} %}
 {% endblock %}

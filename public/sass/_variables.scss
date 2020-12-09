@@ -1,15 +1,17 @@
-$heading-font: 'Crimson Text';
-$body-font: "Nunito Sans";
-$greek-font: "Athena Ruby";
+$heading-font: 'Spectral';
+$body-font: "Source Sans Pro";
+$greek-font: "Athena Ruby", "Source Sans Pro", sans-serif;
 $ms-base: 1rem;
 $ms-ratio: $phi;
 $modscale-start: 3;
 $ndm-gold: #C0B283;
 $ndm-light-gold: #E7DED1;
 $ndm-light-grey-gold: #FDFBF8;
-$ndm-grey: #E5E5E5;
-$ndm-black: #333;
-$ndm-white: #fbfbfb;
+$ndm-grey: #F4F4F4;
+$ndm-black: #212125;
+$ndm-beige: #DCD0C0;
+$ndm-dark-grey: #373737;
+$ndm-off-white: #fbfbfb;
 $nav-height: rem(50px);
 $ndm-white: #ffffff;
 $ndm-img-height: 350;
@@ -45,6 +47,17 @@ $breadcrumb-current-background: $ndm-grey;
   }
 }
 
+@mixin ndm-removeLink{
+  text-decoration:none!important;
+  border-bottom:none;
+  transition:none;
+  color:inherit;
+  &:hover{
+    color:inherit;
+    border-bottom:none;
+  }
+}
+
 // We generate the font module, but there are special fonts we need for handling variant languages
 
 @font-face {
@@ -57,4 +70,13 @@ $breadcrumb-current-background: $ndm-grey;
   url('../assets/athena_ruby/athenaruby_b018-webfont.svg#athena_rubyregular') format('svg');
   font-weight: normal;
   font-style: normal;
+  // I think this works: just use a subset of the font and get a particular unicode range.
+  unicode-range: U+005B-0060, U+007B-007E, U+00A0, U+00B7, U+02C1, U+02CA, U+02CB, U+02D9, U+0300-03E1, U+1F00-1FFE, U+200C,
+  U+200D, U+2180, U+25CC, U+2627, U+2E09, U+2E0A, U+2E23, U+E100-E823, U+10182, U+10184;
+}
+
+@keyframes gesture-left{
+      0% {transform: translateX(0)}
+      50% {transform: translateX(5px)}
+      100% {transform:translateX(0)}
 }

@@ -25,31 +25,5 @@
 {% endblock %}
 
 {% block body %}
-    <table class="table table-bordered table-condensed table-hover table-striped">
-        <tbody>
-            <tr>
-                <th>Name</th>
-                <td>{{ inscriptionStyle.name }}</td>
-            </tr>
-        <tr>
-                <th>Label</th>
-                <td>{{ inscriptionStyle.label }}</td>
-            </tr>
-        <tr>
-                <th>Description</th>
-                <td>{{ inscriptionStyle.description }}</td>
-            </tr>
-                <tr>
-            <th>Created</th>
-            <td>{{ inscriptionStyle.created|date }}</td>
-        </tr>
-        <tr>
-            <th>Updated</th>
-            <td>{{ inscriptionStyle.updated|date }}</td>
-        </tr>
-        </tbody>
-    </table>
-
-    {% include 'item/partial/list.html.twig' with {'items': items} %}
-
+    {% include 'partial/basic-list.html.twig' %}
 {% endblock %}

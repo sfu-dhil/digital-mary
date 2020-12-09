@@ -6,9 +6,7 @@
      <h1>Language Details</h1>
  {% endblock %}
 
-{% block body %}
-
-    {% if is_granted('ROLE_CONTENT_ADMIN') %}
+{% block admin %}
         <div class='btn-toolbar pull-right'>
             <div class='btn-group'>
                 <a href="{{ path('language_edit', {'id': language.id }) }}" class="btn btn-default">
@@ -22,9 +20,8 @@
                 </form>
             </div>
         </div>
-    {% endif %}
+{% endblock %}
 
-    {% embed 'language/partial/detail.html.twig' %}
-    {% endembed %}
-
+{% block body %}
+    {% include 'partial/basic-list.html.twig' %}
 {% endblock %}
