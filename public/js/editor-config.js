@@ -18,7 +18,7 @@ function getTinyMceConfig(editorUploadPath) {
         images_upload_credentials: true,
         image_advtab: true,
         image_title: true,
-
+        browser_spellcheck: true,
         style_formats_merge: true,
     };
 
