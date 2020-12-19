@@ -16,9 +16,7 @@ $nav-height: rem(50px);
 $ndm-white: #ffffff;
 $ndm-img-height: 350;
 $ndm-img-width: 450;
-$ndm-nav-background-color: rgba-to-rgb(rgba($ndm-light-gold, .5));
-
-
+$ndm-nav-background-color: $ndm-light-grey-gold;
 $base-text-color: $ndm-black;
 
 /*Hamburger stuff */
@@ -58,6 +56,21 @@ $breadcrumb-current-background: $ndm-grey;
   }
 }
 
+@mixin ndm-linkButton{
+  margin-bottom:ms(-2);
+  margin-right: ms(-1);
+  margin-top:0;
+  color: inherit;
+  border: none;
+  border: 1px solid $ndm-beige;
+  border-radius: 2px;
+  background: color.scale($ndm-beige, $lightness: 85%);
+  transition: background 0.2s ease(in-out-quad);
+  &:hover {
+    background: color.scale($ndm-beige, $lightness: 50%);
+  }
+}
+
 // We generate the font module, but there are special fonts we need for handling variant languages
 
 @font-face {
@@ -80,3 +93,31 @@ $breadcrumb-current-background: $ndm-grey;
       50% {transform: translateX(5px)}
       100% {transform:translateX(0)}
 }
+
+@keyframes fade-in{
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity:1;
+  }
+}
+
+@keyframes bounce-downwards{
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  33%{
+    transform:translate3d(0, 10px, 0);
+  }
+
+  66%{
+    transform: translate3d(0,0,0);
+  }
+
+  100%{
+    transform:translate3d(0,0,0);
+  }
+}
+
+

@@ -1,18 +1,20 @@
 {% set route = app.request.attributes.get('_route') %}
 {% set isIndex = route ends with '_index' %}
 {% set isEdit = route ends with '_edit' %}
+{% set isNew = route ends with '_new' %}
+{% set isNines = route starts with 'nines' %}
 {% set isHomepage = route is same as('homepage') %}
 {% set base = route|split('_')|slice(0,-1)|join('_') %}
 {% set type = app.request.pathInfo|split('/')|slice(1,1)|join('') %}
 
 
-{% if not isHomepage %}
+{% if not isHomepage and not isNines and not isNew %}
     <ul class="breadcrumbs">
         <li>
             <a href="{{ path('homepage') }}">Home</a>
         </li>
         {% if not (route is same as('privacy') or route is same as('search')) %}
-        {% if not isIndex %}
+        {% if not isIndex%}
             <li>
                 <a href="{{ path(base ~ '_index') }}">Browse: {{ type|split('_')|join(' ')|capitalize }}</a>
             </li>

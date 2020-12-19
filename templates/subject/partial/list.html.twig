@@ -10,10 +10,10 @@
                 <p>No description available.</p>
             {%  endif %}
         </div>
-        {% if subject.items|length > 0 %}
+        {#        {% if subject.items|length > 0 %}
             {% set sorted = subject.items|sort((a,b) => a.images|length < b.images|length) %}
             {% set subset = sorted|slice(0, display) %}
-            {%  embed 'item/partial/list.html.twig' with {'items': subset} %}
+            {% embed 'item/partial/list.html.twig' with {'items': subset} %}
                 {% block callback %}
                     {% if subject.items|length > display %}
                         {% include 'item/partial/gallery-item.html.twig'
@@ -22,6 +22,7 @@
                     {% endif %}
                 {% endblock %}
             {% endembed %}
-        {% endif %}
+        {% endif %} #}
+
     </div>
 {%  endfor %}

@@ -7,7 +7,7 @@
  {% endblock %}
 
 {% block admin %}
-    <div class='btn-toolbar pull-right'>
+    <div class='btn-toolbar'>
         <div class='btn-group'>
             <a href="{{ path('subject_edit', {'id': subject.id }) }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-edit"></span> Edit
@@ -51,6 +51,6 @@
     </table>
     {% endif %}
 
-    {% include 'item/partial/list.html.twig' with {'items': subject.items} %}
+    {% include 'item/partial/list.html.twig' %}
 
 {% endblock %}

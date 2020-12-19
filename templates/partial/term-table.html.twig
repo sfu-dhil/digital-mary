@@ -5,18 +5,20 @@
     <thead>
         <tr>
             <th>Label</th>
-            <th>ID</th>
-            <th>Label</th>
+            <th class="admin">ID</th>
+            <th class="admin">Label</th>
             <th>Description</th>
+            <th>Items</th>
         </tr>
     </thead>
     <tbody>
         {% for item in items %}
             <tr>
                 <td><a href="{{ path(showRoute, {'id': item.id}) }}">{{ item.label }}</a></td>
-                <td>{{ item.id }}</td>
-                <td>{{ item.name }}</td>
+                <td class="admin">{{ item.id }}</td>
+                <td class="admin">{{ item.name }}</td>
                 <td>{{ item.description|raw }}</td>
+                <td>{{ item.items|length }}</td>
             </tr>
         {% endfor %}
     </tbody>

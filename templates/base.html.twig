@@ -22,12 +22,15 @@
     <script src="{{ asset('yarn/select2/dist/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('bundles/tetranzselect2entity/js/select2entity.js') }}"></script>
     <script src="{{ asset('yarn/symfony-collection/jquery.collection.js') }}"></script>
-
     <script src="{{ asset('js/form.js') }}"></script>
+    <script src="{{ asset('yarn/glider-js/glider.min.js') }}"></script>
+    <script src="{{ asset('yarn/roy/js/accordion.js') }}"></script>
+    <script src="{{ asset('yarn/viewerjs/dist/viewer.min.js') }}"></script>
     <style>
         :root {
             --thumb-height: {{ dm_thumb_height }}px;
             --thumb-width: {{ dm_thumb_width }}px;
+            --hero-image: url('{{ path('image_view', {'id': '10'}) }}');
         }
     </style>
     {% block styles %}
@@ -44,14 +47,6 @@
                             <span class="hamburger-inner"></span>
                         </span>
             </button>
-            <!-- <button type="button"
-                    class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button> -->
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             {{ knp_menu_render('main') }}
@@ -62,16 +57,17 @@
         </div><!--/.nav-collapse -->
     </div>
 </nav>
-<main class="container">
+<main class="{% block mainclass %}container{% endblock %}">
     <nav class="body-nav">
-        {%  if is_granted('ROLE_CONTENT_USER') %}
-            {% include 'partial/breadcrumb.html.twig' with {'title': block('title')} %}
-        {% endif %}
 
+        {% include 'partial/breadcrumb.html.twig' with {'title': block('title')} %}
         {% if is_granted('ROLE_CONTENT_ADMIN') %}
-            {% if block('admin') is defined and block('admin') is not empty %}
-                {{ block('admin') }}
-            {% endif %}
+            <div class="admin">
+                {% if block('admin') is defined and block('admin') is not empty %}
+                    {{ block('admin') }}
+                {% endif %}
+            </div>
+
         {% endif %}
     </nav>
 
@@ -114,6 +110,11 @@
             <a href="https://github.com/sfu-dhil/ndm">GitHub</a>
         </p>
     </div>
+    <div class="checkbox admin-toggle">
+        <label>
+            <input type="checkbox"> Toggle admin
+        </label>
+    </div>
 </footer>
 
 {% block javascripts %}
@@ -122,9 +123,6 @@
     let placeholder = "{{ asset('images/blur.jpg') }}";
 </script>
 
-<script src="{{ asset('yarn/glider-js/glider.js') }}"></script>
-<script src="{{ asset('yarn/roy/js/accordion.js') }}"></script>
-<script src="{{ asset('yarn/viewerjs/dist/viewer.min.js') }}"></script>
 <script src="{{ asset('js/ndm.js') }}"></script>
 </body>
 </html>

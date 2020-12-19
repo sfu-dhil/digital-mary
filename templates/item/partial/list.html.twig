@@ -1,11 +1,15 @@
-{% set headings_default = ['category', 'civilization', 'displayYear'] %}
 
 {% if items|length > 0 %}
-    <div class="gallery">
+    <div class="gallery{{ (app.request.get('page') is not null) ? ' noanimate' : ' animate' }}">
         {%  for item in items %}
-            {% include 'item/partial/gallery-item.html.twig'
-            %}
+            {% include 'item/partial/gallery-item.html.twig' %}
         {% endfor %}
         {% block callback %}{% endblock %}
     </div>
+
+    {% if items.currentPageNumber is defined %}
+        <div class="navigation">
+            {{ knp_pagination_render(items) }}
+        </div>
+    {% endif %}
 {% endif %}

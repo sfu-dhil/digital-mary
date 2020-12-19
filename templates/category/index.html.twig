@@ -10,7 +10,7 @@
 
 
 {% block admin %}
-    <div class='btn-toolbar pull-right'>
+    <div class='btn-toolbar'>
         <div class='btn-group'>
             <a href="{{ path('category_new') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-plus"></span> New
@@ -24,5 +24,5 @@
 
 
 {% block body %}
-    {% include 'partial/item-table.html.twig' with {'items': categories} %}
+    {% include 'partial/term-table.html.twig' with {'items': categories} %}
 {% endblock %}

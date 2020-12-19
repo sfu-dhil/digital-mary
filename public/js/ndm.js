@@ -8,9 +8,11 @@ let gallery,  slider;
 let imgSlider = document.querySelector('.image-slider');
 let ndmViewerContainer = document.querySelector('#ndm-viewer-container');
 
-
 // First add the JS class
 document.querySelector('body').classList.add('js');
+
+// Now enhance the lazy loading
+enhanceLazyLoad();
 
 /* Make hamburger work */
 document.querySelectorAll('.hamburger').forEach(ham => {
@@ -19,13 +21,18 @@ document.querySelectorAll('.hamburger').forEach(ham => {
     })
 })
 
-
-
-
 // Now make details
 document.querySelectorAll('details').forEach(el => {
     let accordion = new Accordion(el);
 })
+
+// Toggle for administrative stuff
+document.querySelector('.admin-toggle').addEventListener('change', e=>{
+    document.body.classList.toggle('hideAdmin');
+})
+
+
+// Hacks for fixing up the descriptions
 
 // Clean up some descriptions, but this is a hack
 let nbspRex = /^\s*&nbsp;\s*$/
@@ -39,16 +46,19 @@ document.querySelectorAll('.item-description').forEach(div => {
 });
 
 
-
-
-
-
 /* Add special viewer stuff */
 if (ndmViewerContainer){
     makeImageViewer();
+    makeGlider();
+    makeImageTools();
+}
 
-    if (imgSlider.querySelectorAll('.item').length > 1){
-        slider = new Glider(imgSlider, {
+
+function makeGlider(){
+    let slides = imgSlider.querySelectorAll('.item');
+    if (slides.length > 1){
+        // Set up a new glider
+        let glider = new Glider(imgSlider, {
             scrollLock: true,
             dots: '.dots',
             arrows: {
@@ -57,17 +67,25 @@ if (ndmViewerContainer){
             },
             duration: 1
         });
-        imgSlider.addEventListener('glider-refresh', e => {
-            console.log(slider);
-            if (slider.trackWidth > window.innerWidth){
-                slider.trackWidth = window.innerWidth;
-                slider.ele.style.width = slider.trackWidth + "px";
-            }
-        });
+
     }
 }
 
-
+function makeImageTools(){
+    imgSlider.querySelectorAll('.img-toolbar__tools a:not([href])').forEach(link => {
+            let div = link.closest('div[id]');
+            let i = Array.from(div.parentElement.children).indexOf(div);
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                if (link.classList.contains('img-tool-info')){
+                    imgSlider.querySelectorAll('details > summary').forEach(s => s.click());
+                } else if (link.classList.contains('img-tool-zoom')){
+                    gallery.view(i);
+                }
+            })
+        }
+    )
+}
 
 function makeImageViewer(){
     let imgCtr = document.querySelector('.image-slider');
@@ -104,7 +122,27 @@ function makeImageViewer(){
             imgCtr.focus();
         })
     })
+}
+
+
+// Let's do some browse lazy loading...
+
+function enhanceLazyLoad(){
+    if ('loading' in HTMLImageElement.prototype){
+        let lazyImages = document.querySelectorAll('img[loading="lazy"]');
+        lazyImages.forEach(img => {
+            let item = img.closest('.item');
+            if (!img.complete) {
+                item.classList.add('loading');
+                img.addEventListener('load',  e => {
+                    item.classList.add('loaded');
+                });
+            }
+        });
+    }
 
 }
+
+
 
 

@@ -44,22 +44,40 @@ main{
   margin-top: ms(2);
 }
 
-/*Container override */
-/*
-@media (max-width: 992px){
-  .container {
-    width: calc(100vw - #{ms(2)});
+@include dhil-make-navbar(rgba($ndm-nav-background-color, 0.95), $ndm-black, $remove-box-shadow: true){
+  backdrop-filter: blur(7px);
+  font-weight: 400;
+  text-transform:uppercase;
+  .navbar-right{
+    text-transform:none;
   }
-} */
-
-
-@include dhil-make-navbar($ndm-nav-background-color, $ndm-black){
   .navbar-nav{
-    & > li {
-      & > a,
-      & > a:hover{
+    & > li{
+      & > a{
+        border-bottom: 4px solid transparent;
+        transition: border-bottom-color ease(in-cubic) 0.3s;
         color: $ndm-black;
+        &:hover{
+          border-bottom-color: $ndm-gold;
+        }
       }
+      &.open{
+        & > a{
+          border-bottom-color: $ndm-gold;
+        }
+      }
+    }
+  }
+
+
+  .dropdown-menu{
+    font-weight: normal;
+    & > li > a{
+      padding-top: ms(-1);
+      padding-bottom: ms(-1);
+    }
+    & > li:not(:last-child){
+      border-bottom: 1px solid $ndm-grey;
     }
   }
   /* Have to add the min-width hiding again */
@@ -78,15 +96,42 @@ main{
 
 @include dhil-breadcrumb();
 
+// Add a small administrative toggler to help
+// proof things
+.admin-toggle{
+  padding: ms(-1);
+  border:1px dotted $ndm-dark-grey;
+  background: $ndm-grey;
+  position:absolute;
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  top: $nav-height;
+  right:0;
+  font-size:ms(-1);
+}
 
+// If the hideAdmin button is checked,
+// hide all the admin stuff
+body.hideAdmin{
+  .admin{
+    display:none!important;
+  }
+}
 
+// Tables
 
+.table{
+  tbody > tr:first-child{
+      th,td{
+        border-top:none;
+      }
+    }
+}
 
-
-/**************************** Page Header */
+/**************************** Item page */
 
 .item_show{
-
   .page-header{
     display:none;
   }
@@ -109,7 +154,8 @@ main{
 
   @media (min-width: 1200px) {
     .container {
-      width:1170px;
+      width:unset;
+      max-width:1200px;
       padding-left: 15px;
       padding-right:15px;
     }
@@ -123,8 +169,10 @@ main{
   grid-template-areas:
           "header images"
           "description images"
-          "metadata images";
-  grid-template-columns: auto minmax(calc(var(--thumb-width) * 0.5), var(--thumb-width));
+          "metadata images"
+          ". images"
+          ". images";
+  grid-template-columns: auto minmax(calc(var(--thumb-width) * 0.5), calc(var(--thumb-width) * 1.15));
   grid-column-gap: ms(2);
 
   &.imageless{
@@ -186,7 +234,6 @@ main{
   a{
     @include ndm-removeLink;
   }
-
 }
 
 .item-description{
@@ -262,14 +309,7 @@ p + br{
       @include dhil-tags();
 
       li {
-        margin-bottom:ms(-2);
-        margin-right: ms(-1);
-        margin-top:0;
-        color: inherit;
-        border: none;
-        border: 1px solid $ndm-beige;
-        border-radius: 2px;
-        background: color.scale($ndm-beige, $lightness: 85%);
+        @include ndm-linkButton;
         & > a {
           color: $ndm-black;
           text-decoration: none !important;
@@ -282,11 +322,6 @@ p + br{
         .badge{
           display:none;
         }
-        &:hover {
-
-          background: color.scale($ndm-beige, $lightness: 50%);
-        }
-
       }
     }
   }
@@ -318,13 +353,32 @@ p + br{
     }
   }
 
-  &__references{
+  &__references,
+  &__citation{
     p{
       text-indent: -1rem;
       margin-left: 1rem;
       line-height:1.45;
     }
   }
+
+  &__editHistory{
+      .item-details{
+        padding-bottom: ms(-2);
+        padding-top:ms(-2);
+        margin-bottom: ms(-1);
+        // These can be 3 to a bit, if they need to be
+        flex: clamp(10rem, 27%, 100%);
+        &__citation{
+          flex-basis:100%;
+        }
+      }
+  }
+
+
+
+
+
 
   //Condition based:
 
@@ -360,6 +414,7 @@ summary{
   font-weight:500;
   background-color: transparentize($ndm-grey, 0.2);
   transition: background-color 0.2s ease(in-out-quad);
+  cursor:pointer;
   .icon{
     float:right;
     clear:both;
@@ -374,10 +429,16 @@ summary{
   }
 }
 
+.metadata{
+  margin-top: 1rem;
+  details{
+    box-shadow: $tw-box-shadow;
+    flex-basis: 100%;
+    flex-shrink:0;
+  }
+}
+
 details {
-  box-shadow: $tw-box-shadow;
-  flex-basis: 100%;
-  flex-shrink:0;
   &[aria-expanded='false'] {
     summary:hover {
       background-color: transparentize($ndm-grey, 0.1);
@@ -449,6 +510,7 @@ details {
   }
 }
 
+
 .sticky{
   $top: $nav-height + ms(-1);
   $padding-v: ms(-1);
@@ -472,16 +534,14 @@ details {
 }
 
 
-.img-license{
-  svg{
-    height:1rem;
-    width: 1rem;
-  }
+ul.dots{
+  margin: ms(-1) 0;
 }
 
 .glider-dot{
   color: $ndm-grey;
   background:$ndm-grey;
+
   &.active, &:hover, &:focus{
     background: $ndm-beige;
   }
@@ -489,10 +549,6 @@ details {
 
 .image-slider-container{
   display:flex;
-}
-
-.image-slider:not(.glider){
-   margin:0 auto;
 }
 
 
@@ -519,49 +575,135 @@ details {
   &.disabled{
     pointer-events:none;
     svg{
-      fill:$ndm-grey;
+      opacity:0.1;
     }
   }
 }
 
-
-
-
-.image-slider{
+.image-slider {
   @include dhil-remove-scrollbar();
-  .item{
+  margin: 0 1rem;
+
+  &:not(.glider) {
     width:100%;
-    flex-shrink:0;
-    display:flex;
-    flex-direction:column;
-    > div{
-      margin:0 auto;
+  }
+
+  .item {
+    width: 100%;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    &:first-child{
+      animation: fade-in 0.4s;
     }
-    img{
+    img {
       cursor: zoom-in;
-      background:inherit;
+      background: inherit;
     }
   }
 }
 
-.img-thumbnail{
-  border:none;
-  box-shadow:none;
+
+
+.img-container {
+  margin: 0 auto;
+  a {
+    border: none;
+    transition: none;
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
 }
 
-
-.img-container{
-  a{
-    border:none;
-    transition:none;
-    display:block;
-    height:100%;
-    width:100%;
+.img-info {
+  margin: 0 auto;
+  width: 100%;
+  details {
+    font-size: 0.9rem;
   }
 }
 
 .img-desc{
   font-size: ms(0) * 0.8;
+}
+
+
+.js .summary__img-description{
+  @include sr-only();
+}
+
+.image-slider{
+  .accordion-content{
+    margin:0;
+    padding:0;
+  }
+  .item-details{
+    margin-bottom: ms(-3);
+    padding-bottom: ms(-3);
+    padding-top:ms(-3);
+    margin-right:0;
+    flex-basis:100%;
+  }
+}
+
+.img-toolbar{
+  display:flex;
+  flex-direction:column;
+  margin: ms(-1) 0;
+
+  > div{
+    display:flex;
+    justify-content: space-around;
+  }
+
+  &__tools{
+    padding: ms(-1) ms(1);
+    a{
+      @include ndm-removeLink;
+      cursor:pointer;
+      font-size: 1.125rem;
+      padding: ms(0);
+      display:flex;
+      align-content:center;
+      justify-content:center;
+      border:2px solid transparent;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s ease(in-out-quad);
+      &:hover{
+        border-color: $ndm-grey;
+        border-bottom: 2px solid $ndm-grey;
+      }
+    }
+  }
+
+  .btn-toolbar{
+    margin-top:ms(-1);
+    padding-top:ms(-1);
+    font-size:ms(-1);
+    display:flex;
+    flex-wrap:wrap;
+    border-top:2px solid $ndm-grey;
+    .btn{
+      flex: 1 1 40%;
+      margin: ms(-2);
+    }
+    @media (max-width:768px){
+      flex-direction:column;
+      justify-content:flex-end;
+      a{
+        margin-left:unset;
+      }
+    }
+  }
+
+  > .accordion {
+    border-top: 2px solid transparent;
+    &[aria-expanded='true'] {
+      border-color: $ndm-grey;
+    }
+  }
 }
 
 
@@ -572,20 +714,50 @@ body.viewer-open main{
 
 
 /* GALLERY STUFF */
-@include dhil-gallery('gallery', 3, ms(0), ms(0));
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(calc(var(--thumb-width) * 0.7), 1fr));
+  grid-column-gap: ms(0);
+  justify-content: space-between;
+}
+
+
+
+
 .gallery .item{
   display:flex;
   flex-direction:column;
   text-align:center;
   margin-bottom: ms(0);
+  max-width: var(--thumb-width);
+  @media (max-width: 767px){
+    max-width:unset;
+  }
   box-shadow: $tw-box-shadow;
 }
+
+.animate{
+  .item.loading{
+    opacity:0;
+    transform: translate3d(0, 1rem, 0);
+
+  }
+  .item.loaded{
+    transform: translate3d(0, 0, 0);
+    opacity:1;
+    transition: all ease(in-out-quad) 0.35s;
+  }
+}
+
+
 
 img{
   max-width:100%;
   height:auto;
   &.placeholder{
-    max-width:6rem;
+    max-width:3rem;
+    filter: grayscale(50%);
   }
 }
 
@@ -634,6 +806,8 @@ img{
 
     @include dhil-clamp-lines($this-max-lines, $this-font-size, $this-line-height, true);
 }
+
+
 
 
 
@@ -726,12 +900,6 @@ a[href ^= 'https://']::after {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-/* Menu bar styling */
-a.dropdown-toggle::after {
-  content: "▾";
-  padding-left: 0.3em;
-  font-size: small;
-}
 
 
 
@@ -750,3 +918,4 @@ label.required::after {
 .homepage{
   @include homepage();
 }
+

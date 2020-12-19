@@ -1,20 +1,36 @@
 {% extends 'base.html.twig' %}
+{% import 'dhil-macros.html.twig' as dhil %}
+
+{% block mainclass %}{% endblock %}
 
 {% block body %}
     <section class="home-main">
-        <div class="home-header">
-            <h1>The Digital Mary Project</h1>
-            <div class="home-desc">
-                <p>Something something something, lorem ipsum stuff
-                    Something something something, lorem ipsum stuff
-                    Something something something, lorem ipsum stuff
-                    Something something something, lorem ipsum stuff
-                    Something something something, lorem ipsum stuff</p>
+        <div class="home-main__container">
+            <div class="container">
+                <div class="home-header">
+                    <h1>
+                        <div>The</div>
+                        <div>Digital Mary</div>
+                        <div>Project</div>
+                    </h1>
+                </div>
+                <div class="home-desc">
+                    <p>The Digital Mary Project is a Mariological resource dedicated to the collection and curation of
+                        the material culture related to Virgin Mary. Our primary objective is to build a comprehensive
+                        open-access database that brings all of the artistic productions, artefacts, and built
+                        landscapes related to the early Cult of the Virgin in the Eastern Mediterranean together into
+                        an easily-searchable digital platform.</p>
+                </div>
             </div>
+
+            {#
+            <div class="home-img">
+                <img src="{{ asset('images/home.svg') }}"/>
+            </div>
+            #}
+
         </div>
-        <div class="home-img">
-            <img src="{{ asset('images/home.svg') }}"/>
-        </div>
+            <span class="scroll-down-btn">{{ dhil.bs_icon('chevron-down') }}</span>
     </section>
 
     <section class="home-search">
@@ -42,9 +58,31 @@
     </section>
 
     <section class="items">
-        <!--Maybe make a gallery or something-->
+        <div style="height: 100vh">
+            <h3>SOMEThing gOES HERE RIGHT</h3>
+            {% include 'item/partial/list.html.twig' %}
+        </div>
 
     </section>
 
+
+    <!--
+  -->
+
+
+
 {% endblock %}
 
+
+{% block javascripts %}
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script>
+        ScrollReveal().reveal('.home-search-container', {
+            distance: '100%',
+            origin: 'bottom',
+            opacity: 0,
+            delay: 200,
+            duration: 2000
+        });
+    </script>
+{% endblock %}

@@ -1,13 +1,22 @@
 
 {# Set up some variables  #}
 {# set i = 0 #}
+
+
+
 {% if image is not null %}
     {% set class = 'image' %}
     {% set src = path('image_thumbnail', {'id': image.id}) %}
     {% set alt = image.description is not null ? image.description|striptags : image.originalName %}
     {% set ratio = image.imageWidth / image.imageHeight %}
-    {% set width = (ratio >= 1) ? dm_thumb_width : dm_thumb_height * ratio %}
-    {% set height = (ratio >= 1) ? dm_thumb_width / ratio : dm_thumb_height %}
+    {# If the image was smaller than our minimums, keep the image values the same #}
+    {% if image.imageWidth < dm_thumb_width %}
+        {% set width = image.imageWidth %}
+        {% set height = image.imageHeight %}
+    {% else %}
+        {% set width = (ratio >= 1) ? dm_thumb_width : min(dm_thumb_height * ratio, image.imageWidth) %}
+        {% set height = (ratio >= 1) ? min(dm_thumb_width / ratio, image.imageHeight) : dm_thumb_height %}
+    {% endif %}
 {% endif %}
 
 
@@ -16,10 +25,10 @@
 
 <img class="{{ class|default('placeholder') }}"
      src="{{ src|default(asset('images/no-img.svg')) }}"
-     alt="{{ desc|default('No image available') }}"
+     alt="{{ alt|default('No image available') }}"
      {% if width is defined %}width="{{ width }}px"{% endif %}
      {% if height is defined %}height="{{ height }}px"{% endif %}
-     loading="lazy"/>
+     loading="{{ loading|default('lazy') }}"/>
 
 
 {#
