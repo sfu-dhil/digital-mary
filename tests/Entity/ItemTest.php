@@ -35,6 +35,7 @@ class ItemTest extends TestCase {
         ];
 
         $item = new Item();
+
         foreach ($data as $d) {
             $item->addRevision($d['date'], $d['initials']);
         }

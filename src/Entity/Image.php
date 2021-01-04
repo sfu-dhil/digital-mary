@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\File\File;
 /**
  * @ORM\Entity(repositoryClass=ImageRepository::class)
  * @ORM\Table(indexes={
- *   @ORM\Index(columns={"original_name", "description"}, flags={"fulltext"})
+ *     @ORM\Index(columns={"original_name", "description"}, flags={"fulltext"})
  * })
  */
 class Image extends AbstractEntity {

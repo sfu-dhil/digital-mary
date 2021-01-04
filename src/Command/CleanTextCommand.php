@@ -25,6 +25,7 @@ class CleanTextCommand extends Command {
      * @var EntityManagerInterface
      */
     private $em;
+
     protected static $defaultName = 'app:clean:text';
 
     protected function configure() : void {
@@ -48,7 +49,7 @@ class CleanTextCommand extends Command {
         $s = Normalizer::normalize($s, Normalizer::NFC);
 
         // Normalize the line endings
-        $s = str_replace(array("\r\n", "\r", "\n"), "\n", $s);
+        $s = str_replace(["\r\n", "\r", "\n"], "\n", $s);
 
         // Remove excess line endings
         $s = preg_replace("/\n{3,}/", "\n\n", $s);
@@ -57,8 +58,7 @@ class CleanTextCommand extends Command {
         $s = preg_replace('/[^\S\n]+/u', ' ', $s);
 
         // Trim whitespace at the start and end
-        $s = preg_replace('/^\s+|\s+$/u', '', $s);
-        return $s;
+        return preg_replace('/^\s+|\s+$/u', '', $s);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) : int {
