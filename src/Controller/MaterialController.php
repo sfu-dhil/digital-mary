@@ -32,7 +32,7 @@ class MaterialController extends AbstractController implements PaginatorAwareInt
     /**
      * @Route("/", name="material_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function index(Request $request, MaterialRepository $materialRepository) : array {
         $query = $materialRepository->indexQuery();
@@ -47,7 +47,7 @@ class MaterialController extends AbstractController implements PaginatorAwareInt
     /**
      * @Route("/search", name="material_search", methods={"GET"})
      *
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -77,6 +77,7 @@ class MaterialController extends AbstractController implements PaginatorAwareInt
             return new JsonResponse([]);
         }
         $data = [];
+
         foreach ($materialRepository->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
@@ -88,8 +89,8 @@ class MaterialController extends AbstractController implements PaginatorAwareInt
     }
 
     /**
-     * @Route("/new", name="material_new", methods={"GET","POST"})
-     * @Template()
+     * @Route("/new", name="material_new", methods={"GET", "POST"})
+     * @Template
      * @IsGranted("ROLE_CONTENT_ADMIN")
      *
      * @return array|RedirectResponse
@@ -115,8 +116,8 @@ class MaterialController extends AbstractController implements PaginatorAwareInt
     }
 
     /**
-     * @Route("/new_popup", name="material_new_popup", methods={"GET","POST"})
-     * @Template()
+     * @Route("/new_popup", name="material_new_popup", methods={"GET", "POST"})
+     * @Template
      * @IsGranted("ROLE_CONTENT_ADMIN")
      *
      * @return array|RedirectResponse
@@ -127,7 +128,7 @@ class MaterialController extends AbstractController implements PaginatorAwareInt
 
     /**
      * @Route("/{id}", name="material_show", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -139,9 +140,9 @@ class MaterialController extends AbstractController implements PaginatorAwareInt
 
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}/edit", name="material_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="material_edit", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      *
      * @return array|RedirectResponse
      */

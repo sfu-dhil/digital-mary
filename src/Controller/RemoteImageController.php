@@ -29,7 +29,7 @@ class RemoteImageController extends AbstractController implements PaginatorAware
     /**
      * @Route("/", name="remote_image_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function index(Request $request, RemoteImageRepository $remoteImageRepository) : array {
         $query = $remoteImageRepository->indexQuery();
@@ -44,7 +44,7 @@ class RemoteImageController extends AbstractController implements PaginatorAware
     /**
      * @Route("/search", name="remote_image_search", methods={"GET"})
      *
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -74,6 +74,7 @@ class RemoteImageController extends AbstractController implements PaginatorAware
             return new JsonResponse([]);
         }
         $data = [];
+
         foreach ($remoteImageRepository->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
@@ -86,7 +87,7 @@ class RemoteImageController extends AbstractController implements PaginatorAware
 
     /**
      * @Route("/{id}", name="remote_image_show", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */

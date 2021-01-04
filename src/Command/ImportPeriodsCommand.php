@@ -24,6 +24,7 @@ class ImportPeriodsCommand extends Command {
      * @var EntityManagerInterface
      */
     private $em;
+
     protected static $defaultName = 'app:import:periods';
 
     protected function configure() : void {
@@ -37,6 +38,7 @@ class ImportPeriodsCommand extends Command {
 
         $csv = Reader::createFromPath($file);
         $csv->setHeaderOffset(0);
+
         foreach ($csv->getRecords() as $index => $record) {
             $period = new Period();
             $period->setName($record['name']);

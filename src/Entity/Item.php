@@ -18,7 +18,7 @@ use Nines\UtilBundle\Entity\AbstractEntity;
 
 /**
  * @ORM\Table(indexes={
- *      @ORM\Index(columns={"name", "description", "inscription", "translated_inscription"}, flags={"fulltext"})
+ *     @ORM\Index(columns={"name", "description", "inscription", "translated_inscription"}, flags={"fulltext"})
  * })
  * @ORM\Entity(repositoryClass=ItemRepository::class)
  */

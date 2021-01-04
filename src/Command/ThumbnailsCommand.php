@@ -32,6 +32,7 @@ class ThumbnailsCommand extends Command {
      * @var Thumbnailer
      */
     private $thumbnailer;
+
     protected static $defaultName = 'app:thumbnails';
 
     protected function configure() : void {
@@ -42,6 +43,7 @@ class ThumbnailsCommand extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output) : int {
         $images = $this->repo->findAll();
+
         foreach ($images as $image) {
             $output->writeln($image->getImagePath());
             $this->thumbnailer->thumbnail($image);

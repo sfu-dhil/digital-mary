@@ -32,7 +32,7 @@ class CivilizationController extends AbstractController implements PaginatorAwar
     /**
      * @Route("/", name="civilization_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function index(Request $request, CivilizationRepository $civilizationRepository) : array {
         $query = $civilizationRepository->indexQuery();
@@ -47,7 +47,7 @@ class CivilizationController extends AbstractController implements PaginatorAwar
     /**
      * @Route("/search", name="civilization_search", methods={"GET"})
      *
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -77,6 +77,7 @@ class CivilizationController extends AbstractController implements PaginatorAwar
             return new JsonResponse([]);
         }
         $data = [];
+
         foreach ($civilizationRepository->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
@@ -88,8 +89,8 @@ class CivilizationController extends AbstractController implements PaginatorAwar
     }
 
     /**
-     * @Route("/new", name="civilization_new", methods={"GET","POST"})
-     * @Template()
+     * @Route("/new", name="civilization_new", methods={"GET", "POST"})
+     * @Template
      * @IsGranted("ROLE_CONTENT_ADMIN")
      *
      * @return array|RedirectResponse
@@ -115,8 +116,8 @@ class CivilizationController extends AbstractController implements PaginatorAwar
     }
 
     /**
-     * @Route("/new_popup", name="civilization_new_popup", methods={"GET","POST"})
-     * @Template()
+     * @Route("/new_popup", name="civilization_new_popup", methods={"GET", "POST"})
+     * @Template
      * @IsGranted("ROLE_CONTENT_ADMIN")
      *
      * @return array|RedirectResponse
@@ -127,7 +128,7 @@ class CivilizationController extends AbstractController implements PaginatorAwar
 
     /**
      * @Route("/{id}", name="civilization_show", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -142,9 +143,9 @@ class CivilizationController extends AbstractController implements PaginatorAwar
 
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}/edit", name="civilization_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="civilization_edit", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      *
      * @return array|RedirectResponse
      */

@@ -31,7 +31,7 @@ class PeriodController extends AbstractController implements PaginatorAwareInter
     /**
      * @Route("/", name="period_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function index(Request $request, PeriodRepository $periodRepository) : array {
         $query = $periodRepository->indexQuery();
@@ -44,8 +44,8 @@ class PeriodController extends AbstractController implements PaginatorAwareInter
     }
 
     /**
-     * @Route("/new", name="period_new", methods={"GET","POST"})
-     * @Template()
+     * @Route("/new", name="period_new", methods={"GET", "POST"})
+     * @Template
      * @IsGranted("ROLE_CONTENT_ADMIN")
      *
      * @return array|RedirectResponse
@@ -71,8 +71,8 @@ class PeriodController extends AbstractController implements PaginatorAwareInter
     }
 
     /**
-     * @Route("/new_popup", name="period_new_popup", methods={"GET","POST"})
-     * @Template()
+     * @Route("/new_popup", name="period_new_popup", methods={"GET", "POST"})
+     * @Template
      * @IsGranted("ROLE_CONTENT_ADMIN")
      *
      * @return array|RedirectResponse
@@ -83,7 +83,7 @@ class PeriodController extends AbstractController implements PaginatorAwareInter
 
     /**
      * @Route("/{id}", name="period_show", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -95,9 +95,9 @@ class PeriodController extends AbstractController implements PaginatorAwareInter
 
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}/edit", name="period_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="period_edit", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      *
      * @return array|RedirectResponse
      */
