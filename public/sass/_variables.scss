@@ -56,18 +56,18 @@ $breadcrumb-current-background: $ndm-grey;
   }
 }
 
-@mixin ndm-linkButton{
+@mixin ndm-linkButton($bg-color: $ndm-beige){
   margin-bottom:ms(-2);
   margin-right: ms(-1);
   margin-top:0;
   color: inherit;
   border: none;
-  border: 1px solid $ndm-beige;
+  border: 1px solid $bg-color;
   border-radius: 2px;
-  background: color.scale($ndm-beige, $lightness: 85%);
+  background: color.scale($bg-color, $lightness: 85%);
   transition: background 0.2s ease(in-out-quad);
   &:hover {
-    background: color.scale($ndm-beige, $lightness: 50%);
+    background: color.scale($bg-color, $lightness: 50%);
   }
 }
 
