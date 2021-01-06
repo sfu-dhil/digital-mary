@@ -69,4 +69,15 @@ class ItemRepository extends ServiceEntityRepository {
 
         return $qb->getQuery();
     }
+
+    /**
+     * @return Collection|Item[]
+     */
+    public function featuredItemsQuery(){
+        $qb = $this->createQueryBuilder('item');
+        $qb->where('item.images is not empty');
+        $qb->orderBy('item.created','DESC');
+        $qb->setMaxResults(5);
+        return $qb->getQuery()->execute();
+    }
 }
