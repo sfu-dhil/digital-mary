@@ -1,11 +1,10 @@
 {% extends 'base.html.twig' %}
 {% import 'item/partial/detail.html.twig' as  dl %}
-{% import 'dhil-macros.html.twig' as dhil %}
+{% import 'partial/icons.html.twig' as icons %}
 
 
 {% block title %}{{ item.name }}{% endblock %}
 
-{# TODO: Make better admin toolbar: make a default form for these #}
 {% block admin %}
         <div class='btn-toolbar'>
             <div class="btn-group">
@@ -37,7 +36,7 @@
             <h1>{{ item.name }}</h1>
             <div>
                 <h2>{{ dl.iterate(item.category, 'category_show')|striptags|trim }}</h2>
-                {# TODO: Need better handling for civilization (more sensitive to notes) #}
+
                 {% set subtitle = [] %}
 
                 {% if item.civilization|length > 0 %}
@@ -65,7 +64,6 @@
     </section>
 
     {% if item.images|length > 0 %}
-        {# TODO: Remove all of this to a partial and put the carousel in the DHIL yarn package #}
         <section class="images">
             <h2 class="sr-only">Images</h2>
             <div class="sticky">
@@ -74,7 +72,7 @@
                 </div>
             </div>
         </section>
-        {# TODO: Create this div in the Javascript #}
+        {# Div for image viewer #}
         <div id="ndm-viewer-container">
         </div>
     {% endif %}

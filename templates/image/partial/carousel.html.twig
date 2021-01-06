@@ -1,4 +1,4 @@
-{% import 'dhil-macros.html.twig' as dhil %}
+{% import 'partial/icons.html.twig' as icons %}
 {% import 'item/partial/detail.html.twig' as dl %}
 
 {# Create the dots if we need to, which are filled by Slider.js #}
@@ -14,10 +14,10 @@
 
     {% if images|length > 1 %}
         <button aria-label="Previous" class="slider-btn slider-btn-prev">
-            {{ dhil.bs_icon('chevron-left') }}
+            {{ icons.get('chevron_left') }}
         </button>
         <button aria-label="Next" class="slider-btn slider-btn-next">
-            {{ dhil.bs_icon('chevron-right') }}
+            {{ icons.get('chevron_right') }}
         </button>
     {% endif %}
 
@@ -41,11 +41,11 @@
                     <div class="img-toolbar">
                         {# Tools for interacting with the image #}
                         <div class="img-toolbar__tools">
-                            <a class="img-tool-info">{{ dhil.bs_icon('info-circle') }}</a>
+                            <a class="img-tool-info">{{ icons.get('info_circle') }}</a>
                             {% if is_granted('ROLE_CONTENT_ADMIN') %}
-                                <a class="admin" href="{{ path('image_view', {'id': image.id}) }}" target="_blank">{{ dhil.bs_icon('download') }}</a>
+                                <a class="admin" href="{{ path('image_view', {'id': image.id}) }}" target="_blank">{{ icons.get('download') }}</a>
                             {% endif %}
-                            <a class="img-tool-zoom">{{ dhil.bs_icon('arrows-fullscreen') }}</a>
+                            <a class="img-tool-zoom">{{ icons.get('arrows_fullscreen') }}</a>
                         </div>
 
                         {# Now make the image details, which is open by default, but should be closed if nojs exists,
