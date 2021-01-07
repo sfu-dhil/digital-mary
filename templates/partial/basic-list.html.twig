@@ -1,6 +1,6 @@
 {% set keys = app.request.attributes|keys %}
 {% set thisAtt = keys|filter(k =>  not(k starts with '_' or k =='id'))|first %}
-{% set this =  attribute(_context, thisAtt)%}
+{% set this =  attribute(_context, thisAtt) %}
 
 <table class="table table-condensed">
     <tbody>

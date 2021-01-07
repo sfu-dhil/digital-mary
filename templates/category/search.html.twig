@@ -2,19 +2,19 @@
 
 {% block title %}Category Search{% endblock %}
 
- {% block pageheader %} 
-    <h1>Category Search</h1>
-    {% if categories|length %}
-    <p class="count">
-        Displaying {{ categories|length }} categories of {{ categories.getTotalItemCount }} total.
-    </p>
-	{% endif %}
+ {% block pageheader %}
+     <h1>Category Search</h1>
+     {% if categories|length %}
+         <p class="count">
+             Displaying {{ categories|length }} categories of {{ categories.getTotalItemCount }} total.
+         </p>
+     {% endif %}
  {% endblock %} 
 
 {% block body %}
 
     {% include 'partial/search-form.html.twig' %}
-	{% if categories|length %}
+    {% if categories|length %}
         <table class="table table-bordered table-condensed table-hover table-striped">
             <thead>
             <tr>
@@ -51,10 +51,10 @@
         </table>
 
 
-    <div class="navigation">
-        {{ knp_pagination_render(categories) }}
-    </div>
-	{% endif %}
+        <div class="navigation">
+            {{ knp_pagination_render(categories) }}
+        </div>
+    {% endif %}
 
 {% endblock %}
 

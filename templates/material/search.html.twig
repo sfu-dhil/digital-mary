@@ -2,13 +2,13 @@
 
 {% block title %}Material Search{% endblock %}
 
- {% block pageheader %} 
-    <h1>Material Search</h1>
-    {% if materials|length %}
-    <p class="count">
-        Displaying {{ materials|length }} materials of {{ materials.getTotalItemCount }} total.
-    </p>
-	{% endif %}
+ {% block pageheader %}
+     <h1>Material Search</h1>
+     {% if materials|length %}
+         <p class="count">
+             Displaying {{ materials|length }} materials of {{ materials.getTotalItemCount }} total.
+         </p>
+     {% endif %}
  {% endblock %} 
 
 {% block body %}
@@ -30,7 +30,7 @@
                     </div>
                 </div>
             </div>
-            <p>	Full text searching options, if available:</p>
+            <p> Full text searching options, if available:</p>
             <ul>
                 <li><code>shakespeare</code> - shakespeare should be present, but might not be</li>
                 <li><code>shakes*</code> - words starting with shakes should be present</li>
@@ -42,47 +42,47 @@
         </fieldset>
     </form>
 
-	{% if materials|length %}
-<table class="table table-bordered table-condensed table-hover table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
+    {% if materials|length %}
+        <table class="table table-bordered table-condensed table-hover table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
                 <th>Name</th>
                 <th>Label</th>
                 <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for material in materials %}
-        <tr>
+            </tr>
+            </thead>
+            <tbody>
+            {% for material in materials %}
+                <tr>
 
-            <td>
-                <a href="{{ path('material_show', { 'id': material.id }) }}">
-                    {{ material.id }}
-                </a>
-            </td>
-                        <td>
-                            {{ material.name }}
-                        </td>
-                
-                        <td>
-                            {{ material.label }}
-                        </td>
-                
-                        <td>
-                            {{ material.description }}
-                        </td>
-                
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+                    <td>
+                        <a href="{{ path('material_show', { 'id': material.id }) }}">
+                            {{ material.id }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ material.name }}
+                    </td>
+
+                    <td>
+                        {{ material.label }}
+                    </td>
+
+                    <td>
+                        {{ material.description }}
+                    </td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
 
-    <div class="navigation">
-        {{ knp_pagination_render(materials) }}
-    </div>
-	{% endif %}
+        <div class="navigation">
+            {{ knp_pagination_render(materials) }}
+        </div>
+    {% endif %}
 
 {% endblock %}
 

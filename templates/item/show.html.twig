@@ -6,28 +6,28 @@
 {% block title %}{{ item.name }}{% endblock %}
 
 {% block admin %}
-        <div class='btn-toolbar'>
-            <div class="btn-group">
-                <a href="{{ path('item_add_image', {'id': item.id}) }}" class="btn btn-default">
-                    <span class='glyphicon glyphicon-plus'></span> Add Image </a>
-            </div>
-            <div class='btn-group'>
-                <a href="{{ path('item_edit', {'id': item.id }) }}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-edit"></span> Edit </a>
-            </div>
-            <div class='btn-group'>
-                <form class='delete-form' method="post" action="{{ path('item_delete', {'id': item.id }) }}"
-                      onsubmit="return confirm('Are you sure you want to delete this item?');">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <input type="hidden" name="_token" value="{{ csrf_token("delete" ~ item.id) }}">
-                    <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button>
-                </form>
-            </div>
+    <div class='btn-toolbar'>
+        <div class="btn-group">
+            <a href="{{ path('item_add_image', {'id': item.id}) }}" class="btn btn-default">
+                <span class='glyphicon glyphicon-plus'></span> Add Image </a>
         </div>
+        <div class='btn-group'>
+            <a href="{{ path('item_edit', {'id': item.id }) }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-edit"></span> Edit </a>
+        </div>
+        <div class='btn-group'>
+            <form class='delete-form' method="post" action="{{ path('item_delete', {'id': item.id }) }}"
+                  onsubmit="return confirm('Are you sure you want to delete this item?');">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_token" value="{{ csrf_token("delete" ~ item.id) }}">
+                <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+            </form>
+        </div>
+    </div>
 {% endblock %}
 
 {% block bodyclass %}
-{% if item.images|length == 0 %} imageless{% endif %}
+    {% if item.images|length == 0 %} imageless{% endif %}
 {% endblock %}
 
 {% block body %}
@@ -114,7 +114,7 @@
 
             {# TODO: Check with SH about the 'None' inscriptions #}
 
-            {% if item.inscription and item.translatedInscription  %}
+            {% if item.inscription and item.translatedInscription %}
                 {% embed 'partial/accordion.html.twig' %}
                     {% block class %}item-details__inscription{% endblock %}
                     {% block summary %}Inscription{% endblock %}
@@ -145,7 +145,7 @@
                                             </ul>
                                         {% endif %}
                                     </div>
-                                    <div class="item-inscription__content{% if item.inscriptionLanguage|length %}{{' ' ~ item.inscriptionLanguage|map(lang => "#{lang.name}")|join(' ')}}{% endif %}">
+                                    <div class="item-inscription__content{% if item.inscriptionLanguage|length %}{{ ' ' ~ item.inscriptionLanguage|map(lang => "#{lang.name}")|join(' ') }}{% endif %}">
                                         {{ item.inscription|raw }}
                                     </div>
                                 </div>
@@ -196,7 +196,7 @@
                             <div class="item-details item-details__revisions">
                                 <h2 class="item-details__header">Contributors</h2>
                                 <div class="item-details__content">
-                                    {% set contribs = []%}
+                                    {% set contribs = [] %}
                                     {% for revision in item.revisions %}
                                         {% if revision.initials not in contribs %}
                                             {% set contribs = contribs|merge([revision.initials]) %}
@@ -222,6 +222,6 @@
     </section>
 {% endblock %}
 
-{%  block styles %}
+{% block styles %}
     <link rel="stylesheet" type="text/css" href="{{ asset('yarn/viewerjs/dist/viewer.css') }}"/>
-{%  endblock %}
+{% endblock %}

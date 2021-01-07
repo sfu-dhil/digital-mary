@@ -11,47 +11,47 @@
     <img src='{{ path('item_image_thumbnail', {'id': image.item.id, 'image_id': image.id}) }}'/>
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tbody>
-            <tr>
-                <th>Item</th>
-                <td>
-                    <a href='{{ path('item_show', {'id': image.item.id}) }}'>
-                        {{ image.item }}
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <th>Original File Name</th>
-                <td>{{ image.originalName }}</td>
-            </tr>
-            <tr>
-                <th>Dimensions</th>
-                <td>{{ image.imageWidth }}x{{ image.imageHeight }} pixels</td>
-            </tr>
-            <tr>
-                <th>File Size</th>
-                <td>{{ image.imageSize }}</td>
-            </tr>
-            <tr>
-                <th>Public</th>
-                <td>{% if image.public %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ image.description|raw }}</td>
-            </tr>
-            <tr>
-                <th>License</th>
-                <td>{{ image.license|raw }}</td>
-            </tr>
-            <tr>
-                <th>Created</th>
-                <td>{{ image.created|date }}</td>
-            </tr>
+        <tr>
+            <th>Item</th>
+            <td>
+                <a href='{{ path('item_show', {'id': image.item.id}) }}'>
+                    {{ image.item }}
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <th>Original File Name</th>
+            <td>{{ image.originalName }}</td>
+        </tr>
+        <tr>
+            <th>Dimensions</th>
+            <td>{{ image.imageWidth }}x{{ image.imageHeight }} pixels</td>
+        </tr>
+        <tr>
+            <th>File Size</th>
+            <td>{{ image.imageSize }}</td>
+        </tr>
+        <tr>
+            <th>Public</th>
+            <td>{% if image.public %}Yes{% else %}No{% endif %}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ image.description|raw }}</td>
+        </tr>
+        <tr>
+            <th>License</th>
+            <td>{{ image.license|raw }}</td>
+        </tr>
+        <tr>
+            <th>Created</th>
+            <td>{{ image.created|date }}</td>
+        </tr>
 
-            <tr>
-                <th>Updated</th>
-                <td>{{ image.updated|date }}</td>
-            </tr>
+        <tr>
+            <th>Updated</th>
+            <td>{{ image.updated|date }}</td>
+        </tr>
         </tbody>
     </table>
 

@@ -3,7 +3,7 @@
 {% block title %}Material Details {% endblock %}
 
  {% block pageheader %}
-    <h1>Material Details</h1>
+     <h1>Material Details</h1>
  {% endblock %}
 
 {% block admin %}
@@ -14,7 +14,8 @@
             </a>
         </div>
         <div class='btn-group'>
-            <form class='delete-form' method="post" action="{{ path('material_delete', {'id': material.id }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+            <form class='delete-form' method="post" action="{{ path('material_delete', {'id': material.id }) }}"
+                  onsubmit="return confirm('Are you sure you want to delete this item?');">
                 <input type="hidden" name="_method" value="DELETE">
                 <input type="hidden" name="_token" value="{{ csrf_token("delete" ~ material.id) }}">
                 <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button>

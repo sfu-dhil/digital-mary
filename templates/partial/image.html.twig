@@ -11,17 +11,17 @@
     {% if image.imageWidth < thumb_width %}
         {% set width = image.imageWidth %}
         {% set height = image.imageHeight %}
-    {# Otherwise, figure out the height and width of the thumbnail #}
+        {# Otherwise, figure out the height and width of the thumbnail #}
     {% else %}
         {% set width = (ratio >= 1) ? thumb_width : min(thumb_height * ratio, image.imageWidth) %}
         {% set height = (ratio >= 1) ? min(thumb_width / ratio, image.imageHeight) : thumb_height %}
     {% endif %}
 {% endif %}
 
-{#  Now make the image #}
+{# Now make the image #}
 <img class="{{ class|default('placeholder') }}"
      src="{{ src|default(asset('images/no-img.svg')) }}"
      alt="{{ alt|default('No image available') }}"
      {% if width is defined %}width="{{ width }}px"{% endif %}
-     {% if height is defined %}height="{{ height }}px"{% endif %}
+        {% if height is defined %}height="{{ height }}px"{% endif %}
      loading="{{ loading|default('lazy') }}"/>

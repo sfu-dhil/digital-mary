@@ -31,47 +31,47 @@
 
     {% if is_granted('ROLE_ADMIN') %}
 
-    <section class="home-search">
+        <section class="home-search">
 
-        {#
-        <div class="home-search-container container">
-            <h2>Search the Archive</h2>
-            <div class="home-search-desc">
-                <p>Some sort of description here...</p>
-            </div>
-            <div class="home-search-input">
-                <form  id="indexSearch" method="GET">
-                    {% set searches = ['item', 'subject', 'technique', 'material', 'location', 'civilization'] %}
-                    <select>
-                        {% for search in searches %}
-                            <option value="{{ path(search~'_search') }}">{{ search|capitalize }}</option>
-                        {% endfor %}
-                    </select>
-                    <input name="q" type="text"/>
-                    <button>GO</button>
-                </form>
-            </div>
-            <div class="home-search-links">
-                <a>Advanced Search</a>
-            </div>
-        </div> #}
+            {#
+            <div class="home-search-container container">
+                <h2>Search the Archive</h2>
+                <div class="home-search-desc">
+                    <p>Some sort of description here...</p>
+                </div>
+                <div class="home-search-input">
+                    <form  id="indexSearch" method="GET">
+                        {% set searches = ['item', 'subject', 'technique', 'material', 'location', 'civilization'] %}
+                        <select>
+                            {% for search in searches %}
+                                <option value="{{ path(search~'_search') }}">{{ search|capitalize }}</option>
+                            {% endfor %}
+                        </select>
+                        <input name="q" type="text"/>
+                        <button>GO</button>
+                    </form>
+                </div>
+                <div class="home-search-links">
+                    <a>Advanced Search</a>
+                </div>
+            </div> #}
 
-        <div class="container">
-            <h2>Explore the Archive</h2>
-            <ul class="explore-list">
-                {% for item in knp_menu_get('main', ['browse'])|slice(0, -2) %}
-                    <li class="glass">
-                        <a href="{{ item.uri }}">{{ item.name }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+            <div class="container">
+                <h2>Explore the Archive</h2>
+                <ul class="explore-list">
+                    {% for item in knp_menu_get('main', ['browse'])|slice(0, -2) %}
+                        <li class="glass">
+                            <a href="{{ item.uri }}">{{ item.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
 
-        <div class="container">
-            <h2>Recently Added</h2>
-            {% include 'item/partial/list.html.twig' %}
-        </div>
-    </section>
+            <div class="container">
+                <h2>Recently Added</h2>
+                {% include 'item/partial/list.html.twig' %}
+            </div>
+        </section>
     {% endif %}
 
 {% endblock %}

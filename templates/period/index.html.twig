@@ -7,16 +7,16 @@
     <p class="count">
         Displaying {{ periods|length }} periods of {{ periods.getTotalItemCount }} total.
     </p>
- {% endblock %}
+{% endblock %}
 
 {% block body %}
 
     <div class='btn-toolbar'>
         <div class='btn-group'>
             {% if is_granted('ROLE_CONTENT_ADMIN') %}
-            <a href="{{ path('period_new') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-plus"></span> New
-            </a>
+                <a href="{{ path('period_new') }}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-plus"></span> New
+                </a>
             {% endif %}
         </div>
     </div>

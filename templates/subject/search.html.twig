@@ -4,16 +4,16 @@
 
 
  {% block pageheader %}
-    <h1>Subject Search</h1>
-    {% if subjects|length %}
-    <p class="count">
-        Displaying {{ subjects|length }} subjects of {{ subjects.getTotalItemCount }} total.
-    </p>
-	{% endif %}
+     <h1>Subject Search</h1>
+     {% if subjects|length %}
+         <p class="count">
+             Displaying {{ subjects|length }} subjects of {{ subjects.getTotalItemCount }} total.
+         </p>
+     {% endif %}
  {% endblock %}
 
 {% block body %}
-    {%  if subjects|length %}
+    {% if subjects|length %}
         {% include('subject/partial/list.html.twig') %}
     {% else %}
         <p>No results found.</p>

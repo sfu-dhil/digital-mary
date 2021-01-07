@@ -45,27 +45,27 @@
     {% if locations|length %}
         <table class="table table-bordered table-condensed table-hover table-striped">
             <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Country</th>
-                </tr>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Country</th>
+            </tr>
             </thead>
             <tbody>
-                {% for location in locations %}
-                    <tr>
+            {% for location in locations %}
+                <tr>
 
-                        <td>
-                            <a href="{{ path('location_show', { 'id': location.id }) }}">
-                                {{ location.id }}
-                            </a>
-                        </td>
-                        <td>
-                            {{ location }}
-                        </td>
-                        <td>{{ location.country }}</td>
-                    </tr>
-                {% endfor %}
+                    <td>
+                        <a href="{{ path('location_show', { 'id': location.id }) }}">
+                            {{ location.id }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ location }}
+                    </td>
+                    <td>{{ location.country }}</td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
 

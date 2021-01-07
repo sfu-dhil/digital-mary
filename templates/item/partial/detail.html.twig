@@ -1,5 +1,3 @@
-
-
 {% macro make(context, key, name, path, itemsKey='items') %}
     {% set value = attribute(context, key) %}
     {% if attribute(context, key ~ 'Other') is defined %}
@@ -33,7 +31,7 @@
     <div class="{{ divClass }}">
         <h2 class="{{ this.class }}__header {{ this.itemClass }}">{{ this.name }}</h2>
         <div class="{{ this.class }}__content {{ this.itemClass }}">
-            {%  if this.hasContent %}
+            {% if this.hasContent %}
                 {{ this.content|raw }}
             {% else %}
                 {{ '—' }}

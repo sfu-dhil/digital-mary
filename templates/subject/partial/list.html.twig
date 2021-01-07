@@ -1,16 +1,17 @@
-{%  set display = 3 %}
+{% set display = 3 %}
 
-{%  for subject in subjects %}
+{% for subject in subjects %}
     <div class="subject-item">
-        <h2 class="subject-item-header"><a href="{{ path('subject_show', { 'id': subject.id }) }}">{{ subject.label }}</a></h2>
+        <h2 class="subject-item-header"><a
+                    href="{{ path('subject_show', { 'id': subject.id }) }}">{{ subject.label }}</a></h2>
         <div class="subject-desc">
             {% if subject.description %}
                 {{ subject.description|raw }}
-            {% else  %}
+            {% else %}
                 <p>No description available.</p>
-            {%  endif %}
+            {% endif %}
         </div>
-        {#        {% if subject.items|length > 0 %}
+        {# {% if subject.items|length > 0 %}
             {% set sorted = subject.items|sort((a,b) => a.images|length < b.images|length) %}
             {% set subset = sorted|slice(0, display) %}
             {% embed 'item/partial/list.html.twig' with {'items': subset} %}
@@ -25,4 +26,4 @@
         {% endif %} #}
 
     </div>
-{%  endfor %}
+{% endfor %}

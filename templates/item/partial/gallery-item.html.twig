@@ -5,7 +5,7 @@
         <a class="item-card" href="{{ path('item_show', {'id': item.id}) }}">
             <div class="item-img-wrapper">
                 <div>
-                    {% include 'partial/image.html.twig' with {'image': item.images[0] ?? null}%}
+                    {% include 'partial/image.html.twig' with {'image': item.images[0] ?? null} %}
                 </div>
             </div>
             {% if item is defined and item.name is defined %}

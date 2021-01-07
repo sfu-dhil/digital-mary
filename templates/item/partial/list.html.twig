@@ -1,7 +1,6 @@
-
 {% if items|length > 0 %}
     <div class="gallery{{ (app.request.get('page') is not null) ? ' noanimate' : ' animate' }}">
-        {%  for item in items %}
+        {% for item in items %}
             {% include 'item/partial/gallery-item.html.twig' %}
         {% endfor %}
         {% block callback %}{% endblock %}

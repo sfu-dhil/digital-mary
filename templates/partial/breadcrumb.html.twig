@@ -14,16 +14,16 @@
             <a href="{{ path('homepage') }}">Home</a>
         </li>
         {% if not (route is same as('privacy') or route is same as('search')) %}
-        {% if not isIndex%}
-            <li>
-                <a href="{{ path(base ~ '_index') }}">Browse: {{ type|split('_')|join(' ')|capitalize }}</a>
-            </li>
-        {% endif %}
-        {% if isEdit %}
-            <li>
-                <a href="{{ path(base ~ '_show', {'id': app.request.attributes.get('id')}) }}">Entity</a>
-            </li>
-        {% endif %}
+            {% if not isIndex %}
+                <li>
+                    <a href="{{ path(base ~ '_index') }}">Browse: {{ type|split('_')|join(' ')|capitalize }}</a>
+                </li>
+            {% endif %}
+            {% if isEdit %}
+                <li>
+                    <a href="{{ path(base ~ '_show', {'id': app.request.attributes.get('id')}) }}">Entity</a>
+                </li>
+            {% endif %}
         {% endif %}
         <li>
             <span class="current">{{ title }}</span>
