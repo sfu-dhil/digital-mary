@@ -723,8 +723,6 @@ body.viewer-open main{
 }
 
 
-
-
 .gallery .item{
   display:flex;
   flex-direction:column;
@@ -736,6 +734,23 @@ body.viewer-open main{
   }
   box-shadow: $tw-box-shadow;
 }
+
+// Small adjustment to the image viewer (from viewerjs) to enable
+// tooltips for the buttons
+
+.viewer-title{
+  padding: .3rem .4rem;
+  border-radius: .4rem;
+  color: #fff;
+  background: rgba($ndm-black, 0.9);
+  opacity: 0.5;
+  font-size: 0.85rem;
+  &.btn-caption, &:hover{
+    opacity: 1;
+  }
+
+}
+
 
 .animate{
   .item.loading{
