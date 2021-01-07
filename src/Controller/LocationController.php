@@ -15,6 +15,7 @@ use App\Entity\Location;
 use App\Form\LocationType;
 use App\Repository\LocationRepository;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use GeoNames\Client as GeoNamesClient;
@@ -215,12 +216,16 @@ class LocationController extends AbstractController implements PaginatorAwareInt
      * @return array
      */
     public function show(Request $request, Location $location) {
-        $itemsFound = $this->paginator->paginate($location->getItemsFound(), $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
-        $itemsProvenanced = $this->paginator->paginate($location->getItemsProvenanced(), $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
+
+        $itemsFound = $location->getItemsFound();
+        $itemsProvenanced = $location->getItemsProvenanced();
+        $allItems = new ArrayCollection(
+            array_merge($itemsFound->toArray(), $itemsProvenanced->toArray())
+        );
+        $items = $this->paginator->paginate($allItems, $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
         return [
             'location' => $location,
-            'itemsFound' => $itemsFound,
-            'itemsProvenanced' => $itemsProvenanced
+            'items' => $items
         ];
     }
 
