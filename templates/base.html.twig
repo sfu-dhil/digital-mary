@@ -28,8 +28,8 @@
     <script src="{{ asset('yarn/viewerjs/dist/viewer.min.js') }}"></script>
     <style>
         :root {
-            --thumb-height: {{ dm_thumb_height }}px;
-            --thumb-width: {{ dm_thumb_width }}px;
+            --thumb-height: {{ thumb_height }}px;
+            --thumb-width: {{ thumb_width }}px;
             --hero-image: url('{{ path('image_view', {'id': '10'}) }}');
         }
     </style>
@@ -52,7 +52,6 @@
             {{ knp_menu_render('main') }}
             {{ knp_menu_render('nines_blog_pages') }}
             {{ knp_menu_render('nines_blog_posts') }}
-
             {{ knp_menu_render('nines_user_nav') }}
         </div><!--/.nav-collapse -->
     </div>

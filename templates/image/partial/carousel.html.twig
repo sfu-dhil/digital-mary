@@ -1,3 +1,5 @@
+{# image/partial/carousel.html.twig #}
+
 {% import 'partial/icons.html.twig' as icons %}
 {% import 'item/partial/detail.html.twig' as dl %}
 
@@ -11,7 +13,6 @@
 <div class="image-slider-container">
 
     {# If the slider has multiple images, create the next/previous buttons #}
-
     {% if images|length > 1 %}
         <button aria-label="Previous" class="slider-btn slider-btn-prev">
             {{ icons.get('chevron_left') }}
