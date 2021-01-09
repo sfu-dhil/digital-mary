@@ -77,7 +77,7 @@ class ItemRepository extends ServiceEntityRepository {
         $qb = $this->createQueryBuilder('item');
         $qb->where('item.images is not empty');
         $qb->orderBy('item.created','DESC');
-        $qb->setMaxResults(5);
+        $qb->setMaxResults(6);
         return $qb->getQuery()->execute();
     }
 }
