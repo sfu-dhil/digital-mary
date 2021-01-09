@@ -40,7 +40,7 @@
     {% endblock %}
 
 </head>
-<body class="{{ app.request.attributes.get('_route') }}">
+<body class="{{ app.request.attributes.get('_route') }}" data-ndm-no-img="{{ asset('images/no-img.svg') }}">
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -125,9 +125,6 @@
 
 {% block javascripts %}
 {% endblock %}
-<script>
-    let placeholder = "{{ asset('images/blur.jpg') }}";
-</script>
 
 <script src="{{ asset('js/ndm.js') }}"></script>
 </body>

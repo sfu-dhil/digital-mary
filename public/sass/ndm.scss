@@ -511,6 +511,8 @@ details {
 }
 
 
+
+
 .sticky{
   $top: $nav-height + ms(-1);
   $padding-v: ms(-1);
@@ -708,8 +710,18 @@ ul.dots{
 
 
 
-body.viewer-open main{
-  padding-right: 15px;
+body.viewer-open{
+  // Prevent scrollbar width stuff
+  main{
+    padding-right: 15px;
+  }
+  .image-slider{
+    pointer-events:none;
+    // Don't allow x to scroll
+    overflow-x:hidden;
+  }
+
+
 }
 
 
@@ -743,7 +755,7 @@ body.viewer-open main{
   border-radius: .4rem;
   color: #fff;
   background: rgba($ndm-black, 0.9);
-  opacity: 0.5;
+  opacity: 0.2;
   font-size: 0.85rem;
   &.btn-caption, &:hover{
     opacity: 1;
@@ -753,12 +765,12 @@ body.viewer-open main{
 
 
 .animate{
-  .item.loading{
+  .loading{
     opacity:0;
     transform: translate3d(0, 1rem, 0);
 
   }
-  .item.loaded{
+  .loaded{
     transform: translate3d(0, 0, 0);
     opacity:1;
     transition: all ease(in-out-quad) 0.35s;

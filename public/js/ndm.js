@@ -3,8 +3,7 @@
 
 /* First thing to do is set up the images for the viewer thing */
 
-const toolbarOpts = ['zoomIn', 'zoomOut', 'oneToOne', 'reset', 'prev', 'next','rotateLeft','rotateRight'];
-let gallery,  slider;
+let gallery, glider
 let imgSlider = document.querySelector('.image-slider');
 let ndmViewerContainer = document.querySelector('#ndm-viewer-container');
 
@@ -13,17 +12,18 @@ init();
 function init(){
     // First add the JS class
     document.querySelector('body').classList.add('js');
+    /* Add special viewer stuff */
+    if (ndmViewerContainer){
+        makeGlider();
+        makeImageTools();
+        makeImageViewer();
+    }
     enhanceLazyLoad();
     makeHamburgers();
     makeAccordions();
     makeAdminToggle();
     cleanupText();
-    /* Add special viewer stuff */
-    if (ndmViewerContainer){
-        makeImageViewer();
-        makeGlider();
-        makeImageTools();
-    }
+
 }
 
 function makeHamburgers(){
@@ -64,10 +64,16 @@ function cleanupText(){
 }
 
 function makeGlider(){
+    let imgSection = document.querySelector('.images');
+    let imgCtr = imgSection.querySelector('div');
     let slides = imgSlider.querySelectorAll('.item');
-    if (slides.length > 1){
+
+    if (slides.length > 1) {
+        imgSlider.addEventListener('glider-loaded', e => {
+            imgCtr.classList.add('loaded');
+        });
         // Set up a new glider
-        let glider = new Glider(imgSlider, {
+        glider = new Glider(imgSlider, {
             scrollLock: true,
             dots: '.dots',
             arrows: {
@@ -75,9 +81,11 @@ function makeGlider(){
                 next: '.slider-btn-next'
             },
             duration: 1
-        });
+        })
 
     }
+
+
 }
 
 function makeImageTools(){
@@ -97,12 +105,16 @@ function makeImageTools(){
 }
 
 function makeImageViewer(){
+
+    const toolbarOpts = ['prev',  'zoomOut', 'zoomIn', 'reset', 'rotateLeft','rotateRight', 'next'];
     let imgCtr = document.querySelector('.image-slider');
     let images = imgCtr.querySelectorAll('a[data-img]');
     let toolbar = {};
-    let show = 1;
 
+    // First make the toolbar options
     toolbarOpts.forEach(opt => {
+        let show = 1;
+        // Remove next|prev if we don't need them
         if ((opt === 'next' || opt === 'prev') && images.length < 2){
             show = 0;
         }
@@ -121,17 +133,23 @@ function makeImageViewer(){
             return img.parentNode.getAttribute('data-img');
         },
         title: (img) => {
+            //Set the current title for easy access later
             currTitle = img.alt;
             return currTitle;
         },
         transition: true,
         container: ndmViewerContainer,
         ready: function(e){
+            //Helpers
             let self = gallery;
-            let btns = self.toolbar.querySelectorAll('li[role="button"]');
             let title = self.title;
-            let orig;
+            let toolbarCtr = self.toolbar.querySelector('ul');
+            let btns = toolbarCtr.querySelectorAll('li[role="button"]');
+            toolbarCtr.addEventListener('mouseleave', e=>{
+                title.innerHTML = currTitle;
+            });
             btns.forEach(btn => {
+                //Get caption
                 let pseudo = window.getComputedStyle(btn, 'before');
                 let caption = pseudo.content.replaceAll('"','');
                 btn.addEventListener('mouseenter', e =>{
@@ -140,25 +158,16 @@ function makeImageViewer(){
                 });
                 btn.addEventListener('mouseleave', e => {
                     title.classList.remove('btn-caption');
-                    title.innerHTML = currTitle;
-                })
+                });
             });
         },
         toolbar
     });
 
-
-
-
-
-
-
-
     images.forEach( a => {
         a.classList.add('zoomable');
         a.addEventListener('click', e => {
             e.preventDefault();
-            imgCtr.focus();
         })
     });
 }
@@ -166,6 +175,8 @@ function makeImageViewer(){
 
 // Let's do some browse lazy loading...
 function enhanceLazyLoad(){
+    let noImg = document.body.dataset.ndmNoImg;
+    console.log(noImg);
     if ('loading' in HTMLImageElement.prototype){
         let lazyImages = document.querySelectorAll('img[loading="lazy"]');
         lazyImages.forEach(img => {
@@ -175,6 +186,13 @@ function enhanceLazyLoad(){
                 img.addEventListener('load',  e => {
                     item.classList.add('loaded');
                 });
+                img.addEventListener('error', e=> {
+                    console.log('Image ' + img.src + ' failed to load.');
+                    item.classList.add('loaded');
+                    item.classList.add('error');
+                    img.classList.add('placeholder');
+                    img.src = noImg;
+                })
             }
         });
     }

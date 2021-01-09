@@ -1,6 +1,7 @@
 {# partial/image.html.twig #}
 {# Partial for create images from items #}
 
+
 {% if image is not null %}
     {% set class = 'image' %}
     {% set src = path('image_thumbnail', {'id': image.id}) %}
