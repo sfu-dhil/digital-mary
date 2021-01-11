@@ -33,7 +33,7 @@ class InscriptionStyleController extends AbstractController implements Paginator
     /**
      * @Route("/", name="inscription_style_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function index(Request $request, InscriptionStyleRepository $inscriptionStyleRepository) : array {
         $query = $inscriptionStyleRepository->indexQuery();
@@ -48,7 +48,7 @@ class InscriptionStyleController extends AbstractController implements Paginator
     /**
      * @Route("/search", name="inscription_style_search", methods={"GET"})
      *
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -78,7 +78,8 @@ class InscriptionStyleController extends AbstractController implements Paginator
             return new JsonResponse([]);
         }
         $data = [];
-        foreach ($inscriptionStyleRepository->typeaheadSearch($q) as $result) {
+
+        foreach ($inscriptionStyleRepository->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => (string) $result,
@@ -89,8 +90,8 @@ class InscriptionStyleController extends AbstractController implements Paginator
     }
 
     /**
-     * @Route("/new", name="inscription_style_new", methods={"GET","POST"})
-     * @Template()
+     * @Route("/new", name="inscription_style_new", methods={"GET", "POST"})
+     * @Template
      * @IsGranted("ROLE_CONTENT_ADMIN")
      *
      * @return array|RedirectResponse
@@ -116,8 +117,8 @@ class InscriptionStyleController extends AbstractController implements Paginator
     }
 
     /**
-     * @Route("/new_popup", name="inscription_style_new_popup", methods={"GET","POST"})
-     * @Template()
+     * @Route("/new_popup", name="inscription_style_new_popup", methods={"GET", "POST"})
+     * @Template
      * @IsGranted("ROLE_CONTENT_ADMIN")
      *
      * @return array|RedirectResponse
@@ -128,7 +129,7 @@ class InscriptionStyleController extends AbstractController implements Paginator
 
     /**
      * @Route("/{id}", name="inscription_style_show", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -142,9 +143,9 @@ class InscriptionStyleController extends AbstractController implements Paginator
 
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}/edit", name="inscription_style_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="inscription_style_edit", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      *
      * @return array|RedirectResponse
      */

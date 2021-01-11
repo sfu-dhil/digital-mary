@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity(repositoryClass=ImageRepository::class)
+ * @ORM\Table(indexes={
+ *     @ORM\Index(columns={"original_name", "description"}, flags={"fulltext"})
+ * })
  */
 class Image extends AbstractEntity {
 
@@ -230,8 +233,7 @@ class Image extends AbstractEntity {
         return $this->license;
     }
 
-    public function setLicense(string $license): self
-    {
+    public function setLicense(?string $license) : self {
         $this->license = $license;
 
         return $this;

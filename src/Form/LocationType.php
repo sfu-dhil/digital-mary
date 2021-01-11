@@ -36,6 +36,7 @@ class LocationType extends TermType {
         $builder->add('country');
         $builder->add('alternateNames', CollectionType::class, [
             'label' => 'Alternate Names',
+            'required' => false,
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => true,

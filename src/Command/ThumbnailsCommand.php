@@ -31,6 +31,25 @@ class ThumbnailsCommand extends Command
      */
     private $thumbnailer;
 
+    protected static $defaultName = 'app:thumbnails';
+
+    protected function configure() : void {
+        $this
+            ->setDescription('Generate thumbnails for the images.')
+        ;
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output) : int {
+        $images = $this->repo->findAll();
+
+        foreach ($images as $image) {
+            $output->writeln($image->getImagePath());
+            $this->thumbnailer->thumbnail($image);
+        }
+
+        return 0;
+    }
+
     /**
      * @param EntityManagerInterface $em
      * @required

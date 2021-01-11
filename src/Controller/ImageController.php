@@ -35,7 +35,7 @@ class ImageController extends AbstractController implements PaginatorAwareInterf
     /**
      * @Route("/", name="image_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function index(Request $request, ImageRepository $imageRepository) : array {
         $query = $imageRepository->indexQuery();
@@ -50,7 +50,7 @@ class ImageController extends AbstractController implements PaginatorAwareInterf
     /**
      * @Route("/search", name="image_search", methods={"GET"})
      *
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -80,7 +80,8 @@ class ImageController extends AbstractController implements PaginatorAwareInterf
             return new JsonResponse([]);
         }
         $data = [];
-        foreach ($imageRepository->typeaheadSearch($q) as $result) {
+
+        foreach ($imageRepository->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => (string) $result,
@@ -92,7 +93,7 @@ class ImageController extends AbstractController implements PaginatorAwareInterf
 
     /**
      * @Route("/{id}", name="image_show", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */

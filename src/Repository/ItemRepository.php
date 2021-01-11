@@ -38,7 +38,8 @@ class ItemRepository extends ServiceEntityRepository {
             ->orderBy('p1.sortableYear')
             ->addOrderBy('p2.sortableYear')
             ->addOrderBy('item.name')
-            ->getQuery();
+            ->getQuery()
+        ;
     }
 
     /**

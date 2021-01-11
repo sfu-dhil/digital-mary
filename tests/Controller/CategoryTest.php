@@ -10,19 +10,21 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\PeriodFixtures;
-use App\Repository\PeriodRepository;
+use App\DataFixtures\CategoryFixtures;
+use App\Repository\CategoryRepository;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\Tests\ControllerBaseCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class PeriodTest extends ControllerBaseCase {
+class CategoryTest extends ControllerBaseCase {
     // Change this to HTTP_OK when the site is public.
     private const ANON_RESPONSE_CODE = Response::HTTP_FOUND;
 
+    private const TYPEAHEAD_QUERY = 'label';
+
     protected function fixtures() : array {
         return [
-            PeriodFixtures::class,
+            CategoryFixtures::class,
             UserFixtures::class,
         ];
     }
@@ -32,7 +34,7 @@ class PeriodTest extends ControllerBaseCase {
      * @group index
      */
     public function testAnonIndex() : void {
-        $crawler = $this->client->request('GET', '/period/');
+        $crawler = $this->client->request('GET', '/category/');
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('New')->count());
     }
@@ -43,7 +45,7 @@ class PeriodTest extends ControllerBaseCase {
      */
     public function testUserIndex() : void {
         $this->login('user.user');
-        $crawler = $this->client->request('GET', '/period/');
+        $crawler = $this->client->request('GET', '/category/');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('New')->count());
     }
@@ -54,7 +56,7 @@ class PeriodTest extends ControllerBaseCase {
      */
     public function testAdminIndex() : void {
         $this->login('user.admin');
-        $crawler = $this->client->request('GET', '/period/');
+        $crawler = $this->client->request('GET', '/category/');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame(1, $crawler->selectLink('New')->count());
     }
@@ -64,7 +66,7 @@ class PeriodTest extends ControllerBaseCase {
      * @group show
      */
     public function testAnonShow() : void {
-        $crawler = $this->client->request('GET', '/period/1');
+        $crawler = $this->client->request('GET', '/category/1');
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Edit')->count());
     }
@@ -75,7 +77,7 @@ class PeriodTest extends ControllerBaseCase {
      */
     public function testUserShow() : void {
         $this->login('user.user');
-        $crawler = $this->client->request('GET', '/period/1');
+        $crawler = $this->client->request('GET', '/category/1');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Edit')->count());
     }
@@ -86,9 +88,112 @@ class PeriodTest extends ControllerBaseCase {
      */
     public function testAdminShow() : void {
         $this->login('user.admin');
-        $crawler = $this->client->request('GET', '/period/1');
+        $crawler = $this->client->request('GET', '/category/1');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame(1, $crawler->selectLink('Edit')->count());
+    }
+
+    /**
+     * @group anon
+     * @group typeahead
+     */
+    public function testAnonTypeahead() : void {
+        $this->client->request('GET', '/category/typeahead?q=' . self::TYPEAHEAD_QUERY);
+        $response = $this->client->getResponse();
+        $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
+        if (self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
+            // If authentication is required stop here.
+            return;
+        }
+        $this->assertSame('application/json', $response->headers->get('content-type'));
+        $json = json_decode($response->getContent());
+        $this->assertCount(4, $json);
+    }
+
+    /**
+     * @group user
+     * @group typeahead
+     */
+    public function testUserTypeahead() : void {
+        $this->login('user.user');
+        $this->client->request('GET', '/category/typeahead?q=' . self::TYPEAHEAD_QUERY);
+        $response = $this->client->getResponse();
+        $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+        $this->assertSame('application/json', $response->headers->get('content-type'));
+        $json = json_decode($response->getContent());
+        $this->assertCount(4, $json);
+    }
+
+    /**
+     * @group admin
+     * @group typeahead
+     */
+    public function testAdminTypeahead() : void {
+        $this->login('user.admin');
+        $this->client->request('GET', '/category/typeahead?q=' . self::TYPEAHEAD_QUERY);
+        $response = $this->client->getResponse();
+        $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+        $this->assertSame('application/json', $response->headers->get('content-type'));
+        $json = json_decode($response->getContent());
+        $this->assertCount(4, $json);
+    }
+
+    public function testAnonSearch() : void {
+        $repo = $this->createMock(CategoryRepository::class);
+        $repo->method('searchQuery')->willReturn([$this->getReference('category.1')]);
+        $this->client->disableReboot();
+        $this->client->getContainer()->set('test.' . CategoryRepository::class, $repo);
+
+        $crawler = $this->client->request('GET', '/category/search');
+        $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
+        if (self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
+            // If authentication is required stop here.
+            return;
+        }
+
+        $form = $crawler->selectButton('btn-search')->form([
+            'q' => 'category',
+        ]);
+
+        $responseCrawler = $this->client->submit($form);
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testUserSearch() : void {
+        $repo = $this->createMock(CategoryRepository::class);
+        $repo->disableOriginalConstructor();
+        $repo->method('searchQuery')->willReturn([$this->getReference('category.1')]);
+        $this->client->disableReboot();
+        self::$container->set('test.' . CategoryRepository::class, $repo);
+
+        $this->login('user.user');
+        $crawler = $this->client->request('GET', '/category/search');
+        $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
+        $form = $crawler->selectButton('btn-search')->form([
+            'q' => 'category',
+        ]);
+
+        $responseCrawler = $this->client->submit($form);
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testAdminSearch() : void {
+        $repo = $this->createMock(CategoryRepository::class);
+        $repo->method('searchQuery')->willReturn([$this->getReference('category.1')]);
+        $this->client->disableReboot();
+        $this->client->getContainer()->set('test.' . CategoryRepository::class, $repo);
+
+        $this->login('user.admin');
+        $crawler = $this->client->request('GET', '/category/search');
+        $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
+        $form = $crawler->selectButton('btn-search')->form([
+            'q' => 'category',
+        ]);
+
+        $responseCrawler = $this->client->submit($form);
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
     }
 
     /**
@@ -96,7 +201,7 @@ class PeriodTest extends ControllerBaseCase {
      * @group edit
      */
     public function testAnonEdit() : void {
-        $crawler = $this->client->request('GET', '/period/1/edit');
+        $crawler = $this->client->request('GET', '/category/1/edit');
         $this->assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
     }
@@ -107,7 +212,7 @@ class PeriodTest extends ControllerBaseCase {
      */
     public function testUserEdit() : void {
         $this->login('user.user');
-        $crawler = $this->client->request('GET', '/period/1/edit');
+        $crawler = $this->client->request('GET', '/category/1/edit');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
 
@@ -117,19 +222,19 @@ class PeriodTest extends ControllerBaseCase {
      */
     public function testAdminEdit() : void {
         $this->login('user.admin');
-        $formCrawler = $this->client->request('GET', '/period/1/edit');
+        $formCrawler = $this->client->request('GET', '/category/1/edit');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Save')->form([
-            'period[label]' => 'Updated Label',
-            'period[description]' => 'Updated Description',
-            'period[sortableYear]' => '2020',
+            'category[label]' => 'Updated Label',
+            'category[description]' => 'Updated Description',
         ]);
 
         $this->client->submit($form);
-        $this->assertTrue($this->client->getResponse()->isRedirect('/period/1'));
+        $this->assertTrue($this->client->getResponse()->isRedirect('/category/1'));
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
         $this->assertSame(1, $responseCrawler->filter('td:contains("Updated Label")')->count());
         $this->assertSame(1, $responseCrawler->filter('td:contains("Updated Description")')->count());
     }
@@ -139,7 +244,7 @@ class PeriodTest extends ControllerBaseCase {
      * @group new
      */
     public function testAnonNew() : void {
-        $crawler = $this->client->request('GET', '/period/new');
+        $crawler = $this->client->request('GET', '/category/new');
         $this->assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
     }
@@ -149,7 +254,7 @@ class PeriodTest extends ControllerBaseCase {
      * @group new
      */
     public function testAnonNewPopup() : void {
-        $crawler = $this->client->request('GET', '/period/new_popup');
+        $crawler = $this->client->request('GET', '/category/new_popup');
         $this->assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
     }
@@ -160,7 +265,7 @@ class PeriodTest extends ControllerBaseCase {
      */
     public function testUserNew() : void {
         $this->login('user.user');
-        $crawler = $this->client->request('GET', '/period/new');
+        $crawler = $this->client->request('GET', '/category/new');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
 
@@ -170,7 +275,7 @@ class PeriodTest extends ControllerBaseCase {
      */
     public function testUserNewPopup() : void {
         $this->login('user.user');
-        $crawler = $this->client->request('GET', '/period/new_popup');
+        $crawler = $this->client->request('GET', '/category/new_popup');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
 
@@ -180,19 +285,19 @@ class PeriodTest extends ControllerBaseCase {
      */
     public function testAdminNew() : void {
         $this->login('user.admin');
-        $formCrawler = $this->client->request('GET', '/period/new');
+        $formCrawler = $this->client->request('GET', '/category/new');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Save')->form([
-            'period[label]' => 'New Label',
-            'period[description]' => 'New Description',
-            'period[sortableYear]' => '123',
+            'category[label]' => 'New Label',
+            'category[description]' => 'New Description',
         ]);
 
         $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
         $this->assertSame(1, $responseCrawler->filter('td:contains("New Label")')->count());
         $this->assertSame(1, $responseCrawler->filter('td:contains("New Description")')->count());
     }
@@ -203,13 +308,12 @@ class PeriodTest extends ControllerBaseCase {
      */
     public function testAdminNewPopup() : void {
         $this->login('user.admin');
-        $formCrawler = $this->client->request('GET', '/period/new_popup');
+        $formCrawler = $this->client->request('GET', '/category/new_popup');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Save')->form([
-            'period[label]' => 'New Label',
-            'period[description]' => 'New Description',
-            'period[sortableYear]' => '123',
+            'category[label]' => 'New Label',
+            'category[description]' => 'New Description',
         ]);
 
         $this->client->submit($form);
@@ -225,11 +329,11 @@ class PeriodTest extends ControllerBaseCase {
      * @group delete
      */
     public function testAdminDelete() : void {
-        $repo = self::$container->get(PeriodRepository::class);
+        $repo = self::$container->get(CategoryRepository::class);
         $preCount = count($repo->findAll());
 
         $this->login('user.admin');
-        $crawler = $this->client->request('GET', '/period/1');
+        $crawler = $this->client->request('GET', '/category/1');
         $form = $crawler->selectButton('Delete')->form();
         $this->client->submit($form);
 

@@ -10,13 +10,13 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\LanguageFixtures;
-use App\Repository\LanguageRepository;
+use App\DataFixtures\LocationFixtures;
+use App\Repository\LocationRepository;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\Tests\ControllerBaseCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class LanguageTest extends ControllerBaseCase {
+class LocationTest extends ControllerBaseCase {
     // Change this to HTTP_OK when the site is public.
     private const ANON_RESPONSE_CODE = Response::HTTP_FOUND;
 
@@ -24,7 +24,7 @@ class LanguageTest extends ControllerBaseCase {
 
     protected function fixtures() : array {
         return [
-            LanguageFixtures::class,
+            LocationFixtures::class,
             UserFixtures::class,
         ];
     }
@@ -34,7 +34,7 @@ class LanguageTest extends ControllerBaseCase {
      * @group index
      */
     public function testAnonIndex() : void {
-        $crawler = $this->client->request('GET', '/language/');
+        $crawler = $this->client->request('GET', '/location/');
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('New')->count());
     }
@@ -45,7 +45,7 @@ class LanguageTest extends ControllerBaseCase {
      */
     public function testUserIndex() : void {
         $this->login('user.user');
-        $crawler = $this->client->request('GET', '/language/');
+        $crawler = $this->client->request('GET', '/location/');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('New')->count());
     }
@@ -56,7 +56,7 @@ class LanguageTest extends ControllerBaseCase {
      */
     public function testAdminIndex() : void {
         $this->login('user.admin');
-        $crawler = $this->client->request('GET', '/language/');
+        $crawler = $this->client->request('GET', '/location/');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame(1, $crawler->selectLink('New')->count());
     }
@@ -66,7 +66,7 @@ class LanguageTest extends ControllerBaseCase {
      * @group show
      */
     public function testAnonShow() : void {
-        $crawler = $this->client->request('GET', '/language/1');
+        $crawler = $this->client->request('GET', '/location/1');
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Edit')->count());
     }
@@ -77,7 +77,7 @@ class LanguageTest extends ControllerBaseCase {
      */
     public function testUserShow() : void {
         $this->login('user.user');
-        $crawler = $this->client->request('GET', '/language/1');
+        $crawler = $this->client->request('GET', '/location/1');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Edit')->count());
     }
@@ -88,7 +88,7 @@ class LanguageTest extends ControllerBaseCase {
      */
     public function testAdminShow() : void {
         $this->login('user.admin');
-        $crawler = $this->client->request('GET', '/language/1');
+        $crawler = $this->client->request('GET', '/location/1');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame(1, $crawler->selectLink('Edit')->count());
     }
@@ -98,7 +98,7 @@ class LanguageTest extends ControllerBaseCase {
      * @group typeahead
      */
     public function testAnonTypeahead() : void {
-        $this->client->request('GET', '/language/typeahead?q=' . self::TYPEAHEAD_QUERY);
+        $this->client->request('GET', '/location/typeahead?q=' . self::TYPEAHEAD_QUERY);
         $response = $this->client->getResponse();
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
         if (self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
@@ -116,7 +116,7 @@ class LanguageTest extends ControllerBaseCase {
      */
     public function testUserTypeahead() : void {
         $this->login('user.user');
-        $this->client->request('GET', '/language/typeahead?q=' . self::TYPEAHEAD_QUERY);
+        $this->client->request('GET', '/location/typeahead?q=' . self::TYPEAHEAD_QUERY);
         $response = $this->client->getResponse();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame('application/json', $response->headers->get('content-type'));
@@ -130,7 +130,7 @@ class LanguageTest extends ControllerBaseCase {
      */
     public function testAdminTypeahead() : void {
         $this->login('user.admin');
-        $this->client->request('GET', '/language/typeahead?q=' . self::TYPEAHEAD_QUERY);
+        $this->client->request('GET', '/location/typeahead?q=' . self::TYPEAHEAD_QUERY);
         $response = $this->client->getResponse();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame('application/json', $response->headers->get('content-type'));
@@ -139,12 +139,12 @@ class LanguageTest extends ControllerBaseCase {
     }
 
     public function testAnonSearch() : void {
-        $repo = $this->createMock(LanguageRepository::class);
-        $repo->method('searchQuery')->willReturn([$this->getReference('language.1')]);
+        $repo = $this->createMock(LocationRepository::class);
+        $repo->method('searchQuery')->willReturn([$this->getReference('location.1')]);
         $this->client->disableReboot();
-        $this->client->getContainer()->set('test.' . LanguageRepository::class, $repo);
+        $this->client->getContainer()->set('test.' . LocationRepository::class, $repo);
 
-        $crawler = $this->client->request('GET', '/language/search');
+        $crawler = $this->client->request('GET', '/location/search');
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
         if (self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
             // If authentication is required stop here.
@@ -152,7 +152,7 @@ class LanguageTest extends ControllerBaseCase {
         }
 
         $form = $crawler->selectButton('btn-search')->form([
-            'q' => 'language',
+            'q' => 'location',
         ]);
 
         $responseCrawler = $this->client->submit($form);
@@ -160,17 +160,17 @@ class LanguageTest extends ControllerBaseCase {
     }
 
     public function testUserSearch() : void {
-        $repo = $this->createMock(LanguageRepository::class);
-        $repo->method('searchQuery')->willReturn([$this->getReference('language.1')]);
+        $repo = $this->createMock(LocationRepository::class);
+        $repo->method('searchQuery')->willReturn([$this->getReference('location.1')]);
         $this->client->disableReboot();
-        $this->client->getContainer()->set('test.' . LanguageRepository::class, $repo);
+        $this->client->getContainer()->set('test.' . LocationRepository::class, $repo);
 
         $this->login('user.user');
-        $crawler = $this->client->request('GET', '/language/search');
+        $crawler = $this->client->request('GET', '/location/search');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $form = $crawler->selectButton('btn-search')->form([
-            'q' => 'language',
+            'q' => 'location',
         ]);
 
         $responseCrawler = $this->client->submit($form);
@@ -178,17 +178,17 @@ class LanguageTest extends ControllerBaseCase {
     }
 
     public function testAdminSearch() : void {
-        $repo = $this->createMock(LanguageRepository::class);
-        $repo->method('searchQuery')->willReturn([$this->getReference('language.1')]);
+        $repo = $this->createMock(LocationRepository::class);
+        $repo->method('searchQuery')->willReturn([$this->getReference('location.1')]);
         $this->client->disableReboot();
-        $this->client->getContainer()->set('test.' . LanguageRepository::class, $repo);
+        $this->client->getContainer()->set('test.' . LocationRepository::class, $repo);
 
         $this->login('user.admin');
-        $crawler = $this->client->request('GET', '/language/search');
+        $crawler = $this->client->request('GET', '/location/search');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $form = $crawler->selectButton('btn-search')->form([
-            'q' => 'language',
+            'q' => 'location',
         ]);
 
         $responseCrawler = $this->client->submit($form);
@@ -200,7 +200,7 @@ class LanguageTest extends ControllerBaseCase {
      * @group edit
      */
     public function testAnonEdit() : void {
-        $crawler = $this->client->request('GET', '/language/1/edit');
+        $crawler = $this->client->request('GET', '/location/1/edit');
         $this->assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
     }
@@ -211,7 +211,7 @@ class LanguageTest extends ControllerBaseCase {
      */
     public function testUserEdit() : void {
         $this->login('user.user');
-        $crawler = $this->client->request('GET', '/language/1/edit');
+        $crawler = $this->client->request('GET', '/location/1/edit');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
 
@@ -221,20 +221,29 @@ class LanguageTest extends ControllerBaseCase {
      */
     public function testAdminEdit() : void {
         $this->login('user.admin');
-        $formCrawler = $this->client->request('GET', '/language/1/edit');
+        $formCrawler = $this->client->request('GET', '/location/1/edit');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Save')->form([
-            'language[label]' => 'Updated Label',
-            'language[description]' => 'Updated Description',
+            'location[label]' => 'Updated Label',
+            'location[description]' => 'Updated Description',
+            'location[latitude]' => 123.456,
+            'location[longitude]' => 46.321,
+            'location[country]' => 'Updated Country',
+            'location[alternateNames][0]' => 'Updated AlternateNames',
         ]);
 
         $this->client->submit($form);
-        $this->assertTrue($this->client->getResponse()->isRedirect('/language/1'));
+        $this->assertTrue($this->client->getResponse()->isRedirect('/location/1'));
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
         $this->assertSame(1, $responseCrawler->filter('td:contains("Updated Label")')->count());
         $this->assertSame(1, $responseCrawler->filter('td:contains("Updated Description")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("123.456")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("46.321")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("Updated Country")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("Updated AlternateNames")')->count());
     }
 
     /**
@@ -242,7 +251,7 @@ class LanguageTest extends ControllerBaseCase {
      * @group new
      */
     public function testAnonNew() : void {
-        $crawler = $this->client->request('GET', '/language/new');
+        $crawler = $this->client->request('GET', '/location/new');
         $this->assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
     }
@@ -252,7 +261,7 @@ class LanguageTest extends ControllerBaseCase {
      * @group new
      */
     public function testAnonNewPopup() : void {
-        $crawler = $this->client->request('GET', '/language/new_popup');
+        $crawler = $this->client->request('GET', '/location/new_popup');
         $this->assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
     }
@@ -263,7 +272,7 @@ class LanguageTest extends ControllerBaseCase {
      */
     public function testUserNew() : void {
         $this->login('user.user');
-        $crawler = $this->client->request('GET', '/language/new');
+        $crawler = $this->client->request('GET', '/location/new');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
 
@@ -273,7 +282,7 @@ class LanguageTest extends ControllerBaseCase {
      */
     public function testUserNewPopup() : void {
         $this->login('user.user');
-        $crawler = $this->client->request('GET', '/language/new_popup');
+        $crawler = $this->client->request('GET', '/location/new_popup');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
 
@@ -283,20 +292,27 @@ class LanguageTest extends ControllerBaseCase {
      */
     public function testAdminNew() : void {
         $this->login('user.admin');
-        $formCrawler = $this->client->request('GET', '/language/new');
+        $formCrawler = $this->client->request('GET', '/location/new');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Save')->form([
-            'language[label]' => 'New Label',
-            'language[description]' => 'New Description',
+            'location[label]' => 'New Label',
+            'location[description]' => 'New Description',
+            'location[latitude]' => 123.456,
+            'location[longitude]' => 45.1234,
+            'location[country]' => 'New Country',
         ]);
 
         $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
         $this->assertSame(1, $responseCrawler->filter('td:contains("New Label")')->count());
         $this->assertSame(1, $responseCrawler->filter('td:contains("New Description")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("123.456")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("45.1234")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("New Country")')->count());
     }
 
     /**
@@ -305,12 +321,15 @@ class LanguageTest extends ControllerBaseCase {
      */
     public function testAdminNewPopup() : void {
         $this->login('user.admin');
-        $formCrawler = $this->client->request('GET', '/language/new_popup');
+        $formCrawler = $this->client->request('GET', '/location/new_popup');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $form = $formCrawler->selectButton('Save')->form([
-            'language[label]' => 'New Label',
-            'language[description]' => 'New Description',
+            'location[label]' => 'New Label',
+            'location[description]' => 'New Description',
+            'location[latitude]' => 123.456,
+            'location[longitude]' => 45.1234,
+            'location[country]' => 'New Country',
         ]);
 
         $this->client->submit($form);
@@ -319,6 +338,9 @@ class LanguageTest extends ControllerBaseCase {
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame(1, $responseCrawler->filter('td:contains("New Label")')->count());
         $this->assertSame(1, $responseCrawler->filter('td:contains("New Description")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("123.456")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("45.1234")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("New Country")')->count());
     }
 
     /**
@@ -326,11 +348,11 @@ class LanguageTest extends ControllerBaseCase {
      * @group delete
      */
     public function testAdminDelete() : void {
-        $repo = self::$container->get(LanguageRepository::class);
+        $repo = self::$container->get(LocationRepository::class);
         $preCount = count($repo->findAll());
 
         $this->login('user.admin');
-        $crawler = $this->client->request('GET', '/language/1');
+        $crawler = $this->client->request('GET', '/location/1');
         $form = $crawler->selectButton('Delete')->form();
         $this->client->submit($form);
 

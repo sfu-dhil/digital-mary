@@ -39,7 +39,7 @@ class LocationController extends AbstractController implements PaginatorAwareInt
     /**
      * @Route("/", name="location_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function index(Request $request, LocationRepository $locationRepository) : array {
         $query = $locationRepository->indexQuery();
@@ -54,7 +54,7 @@ class LocationController extends AbstractController implements PaginatorAwareInt
     /**
      * @Route("/search", name="location_search", methods={"GET"})
      *
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -84,7 +84,8 @@ class LocationController extends AbstractController implements PaginatorAwareInt
             return new JsonResponse([]);
         }
         $data = [];
-        foreach ($locationRepository->typeaheadSearch($q) as $result) {
+
+        foreach ($locationRepository->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => (string) $result,
@@ -95,8 +96,8 @@ class LocationController extends AbstractController implements PaginatorAwareInt
     }
 
     /**
-     * @Route("/new", name="location_new", methods={"GET","POST"})
-     * @Template()
+     * @Route("/new", name="location_new", methods={"GET", "POST"})
+     * @Template
      * @IsGranted("ROLE_CONTENT_ADMIN")
      *
      * @return array|RedirectResponse
@@ -122,8 +123,8 @@ class LocationController extends AbstractController implements PaginatorAwareInt
     }
 
     /**
-     * @Route("/new_popup", name="location_new_popup", methods={"GET","POST"})
-     * @Template()
+     * @Route("/new_popup", name="location_new_popup", methods={"GET", "POST"})
+     * @Template
      * @IsGranted("ROLE_CONTENT_ADMIN")
      *
      * @return array|RedirectResponse
@@ -211,7 +212,7 @@ class LocationController extends AbstractController implements PaginatorAwareInt
 
     /**
      * @Route("/{id}", name="location_show", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -231,9 +232,9 @@ class LocationController extends AbstractController implements PaginatorAwareInt
 
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}/edit", name="location_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="location_edit", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      *
      * @return array|RedirectResponse
      */

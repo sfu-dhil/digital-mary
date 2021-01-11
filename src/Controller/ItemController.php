@@ -18,7 +18,7 @@ use App\Form\ItemType;
 use App\Form\RemoteImageType;
 use App\Repository\ItemRepository;
 use App\Services\FileUploader;
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
@@ -44,7 +44,7 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
     /**
      * @Route("/", name="item_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function index(Request $request, ItemRepository $itemRepository) : array {
         $query = $itemRepository->indexQuery();
@@ -59,7 +59,7 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
     /**
      * @Route("/search", name="item_search", methods={"GET"})
      *
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -89,6 +89,7 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
             return new JsonResponse([]);
         }
         $data = [];
+
         foreach ($itemRepository->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
@@ -100,8 +101,8 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
     }
 
     /**
-     * @Route("/new", name="item_new", methods={"GET","POST"})
-     * @Template()
+     * @Route("/new", name="item_new", methods={"GET", "POST"})
+     * @Template
      * @IsGranted("ROLE_CONTENT_ADMIN")
      *
      * @return array|RedirectResponse
@@ -112,7 +113,7 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $item->addRevision(new DateTime(), $user->getFullname());
+            $item->addRevision(new DateTimeImmutable(), $user->getFullname());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($item);
             $entityManager->flush();
@@ -128,8 +129,8 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
     }
 
     /**
-     * @Route("/new_popup", name="item_new_popup", methods={"GET","POST"})
-     * @Template()
+     * @Route("/new_popup", name="item_new_popup", methods={"GET", "POST"})
+     * @Template
      * @IsGranted("ROLE_CONTENT_ADMIN")
      *
      * @return array|RedirectResponse
@@ -140,7 +141,7 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
 
     /**
      * @Route("/{id}", name="item_show", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -152,9 +153,9 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
 
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}/edit", name="item_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="item_edit", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      *
      * @return array|RedirectResponse
      */
@@ -163,7 +164,7 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $item->addRevision(new DateTime(), $user->getFullname());
+            $item->addRevision(new DateTimeImmutable(), $user->getFullname());
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'The updated item has been saved.');
 
@@ -197,8 +198,8 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
      * Add an image to an item.
      *
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}/add_image", name="item_add_image", methods={"GET","POST"})
-     * @Template()
+     * @Route("/{id}/add_image", name="item_add_image", methods={"GET", "POST"})
+     * @Template
      */
     public function addImage(Request $request, Item $item, EntityManagerInterface $em) {
         $image = new Image();
@@ -224,9 +225,9 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
      * Edit an image.
      *
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}/edit_image/{image_id}", name="item_edit_image", methods={"GET","POST"})
-     * @ParamConverter("image", options={"id" = "image_id"})
-     * @Template()
+     * @Route("/{id}/edit_image/{image_id}", name="item_edit_image", methods={"GET", "POST"})
+     * @ParamConverter("image", options={"id": "image_id"})
+     * @Template
      */
     public function editImage(Request $request, Item $item, Image $image, FileUploader $fileUploader, EntityManagerInterface $em) {
         $form = $this->createForm(ImageType::class, $image);
@@ -266,8 +267,8 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
      *
      * @IsGranted("ROLE_CONTENT_ADMIN")
      * @Route("/{id}/delete_image/{image_id}", name="item_delete_image", methods={"DELETE"})
-     * @ParamConverter("image", options={"id" = "image_id"})
-     * @Template()
+     * @ParamConverter("image", options={"id": "image_id"})
+     * @Template
      */
     public function deleteImage(Request $request, Item $item, Image $image, EntityManagerInterface $em) {
         if ($this->isCsrfTokenValid('delete' . $image->getId(), $request->request->get('_token'))) {
@@ -286,7 +287,7 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
      * Finds and returns a raw image file.
      *
      * @Route("/{id}/image/{image_id}", name="item_image_view", methods={"GET"})
-     * @ParamConverter("image", options={"id" = "image_id"})
+     * @ParamConverter("image", options={"id": "image_id"})
      *
      * @return BinaryFileResponse
      */
@@ -302,7 +303,7 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
      * Finds and returns a raw image file.
      *
      * @Route("/{id}/tn/{image_id}", name="item_image_thumbnail", methods={"GET"})
-     * @ParamConverter("image", options={"id" = "image_id"})
+     * @ParamConverter("image", options={"id": "image_id"})
      *
      * @return BinaryFileResponse
      */
@@ -315,8 +316,8 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
     }
 
     /**
-     * @Route("/{id}/add_remote_image", name="item_add_remote_image", methods={"GET","POST"})
-     * @Template()
+     * @Route("/{id}/add_remote_image", name="item_add_remote_image", methods={"GET", "POST"})
+     * @Template
      * @IsGranted("ROLE_CONTENT_ADMIN")
      *
      * @return array|RedirectResponse
@@ -344,10 +345,10 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
 
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}/edit_remote_image/{remote_image_id}", name="item_edit_remote_image", methods={"GET","POST"})
-     * @ParamConverter("remoteImage", options={"id" = "remote_image_id"})
+     * @Route("/{id}/edit_remote_image/{remote_image_id}", name="item_edit_remote_image", methods={"GET", "POST"})
+     * @ParamConverter("remoteImage", options={"id": "remote_image_id"})
      *
-     * @Template()
+     * @Template
      *
      * @return array|RedirectResponse
      */
@@ -371,7 +372,7 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
      * @Route("/{id}/delete_remote_image/{remote_image_id}", name="item_delete_remote_image", methods={"DELETE"})
-     * @ParamConverter("remoteImage", options={"id" = "remote_image_id"})
+     * @ParamConverter("remoteImage", options={"id": "remote_image_id"})
      *
      * @return RedirectResponse
      */

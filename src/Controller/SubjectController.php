@@ -33,7 +33,7 @@ class SubjectController extends AbstractController implements PaginatorAwareInte
     /**
      * @Route("/", name="subject_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function index(Request $request, SubjectRepository $subjectRepository) : array {
         $query = $subjectRepository->indexQuery();
@@ -48,7 +48,7 @@ class SubjectController extends AbstractController implements PaginatorAwareInte
     /**
      * @Route("/search", name="subject_search", methods={"GET"})
      *
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -78,7 +78,8 @@ class SubjectController extends AbstractController implements PaginatorAwareInte
             return new JsonResponse([]);
         }
         $data = [];
-        foreach ($subjectRepository->typeaheadSearch($q) as $result) {
+
+        foreach ($subjectRepository->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => (string) $result,
@@ -89,8 +90,8 @@ class SubjectController extends AbstractController implements PaginatorAwareInte
     }
 
     /**
-     * @Route("/new", name="subject_new", methods={"GET","POST"})
-     * @Template()
+     * @Route("/new", name="subject_new", methods={"GET", "POST"})
+     * @Template
      * @IsGranted("ROLE_CONTENT_ADMIN")
      *
      * @return array|RedirectResponse
@@ -116,8 +117,8 @@ class SubjectController extends AbstractController implements PaginatorAwareInte
     }
 
     /**
-     * @Route("/new_popup", name="subject_new_popup", methods={"GET","POST"})
-     * @Template()
+     * @Route("/new_popup", name="subject_new_popup", methods={"GET", "POST"})
+     * @Template
      * @IsGranted("ROLE_CONTENT_ADMIN")
      *
      * @return array|RedirectResponse
@@ -128,7 +129,7 @@ class SubjectController extends AbstractController implements PaginatorAwareInte
 
     /**
      * @Route("/{id}", name="subject_show", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -142,9 +143,9 @@ class SubjectController extends AbstractController implements PaginatorAwareInte
 
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}/edit", name="subject_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="subject_edit", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      *
      * @return array|RedirectResponse
      */

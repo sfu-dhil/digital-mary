@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace App\DataFixtures;
 
 use App\Entity\Item;
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -22,9 +22,9 @@ class ItemFixtures extends Fixture implements DependentFixtureInterface {
      */
     public function load(ObjectManager $em) : void {
         $revisions = [
-            ['date' => new DateTime('2020-03-07'), 'initials' => 'RC'],
-            ['date' => new DateTime('2020-01-01'), 'initials' => 'MJ'],
-            ['date' => new DateTime('2020-03-07'), 'initials' => 'MJ'],
+            ['date' => new DateTimeImmutable('2020-03-07'), 'initials' => 'RC'],
+            ['date' => new DateTimeImmutable('2020-01-01'), 'initials' => 'MJ'],
+            ['date' => new DateTimeImmutable('2020-03-07'), 'initials' => 'MJ'],
         ];
 
         for ($i = 0; $i < 4; $i++) {
@@ -36,7 +36,7 @@ class ItemFixtures extends Fixture implements DependentFixtureInterface {
             $fixture->setDimensions('Dimensions ' . $i);
             $fixture->setReferences("<p>This is paragraph {$i}</p>");
             $fixture->setRevisions($revisions);
-            $fixture->setDisplayYear(($i+4) . "th century");
+            $fixture->setDisplayYear(($i + 4) . 'th century');
             $fixture->setPeriodStart($this->getReference('period.' . $i));
             $fixture->setPeriodEnd($this->getReference('period.' . $i));
             $fixture->addCategory($this->getReference('category.' . $i));

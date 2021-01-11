@@ -33,7 +33,7 @@ class TechniqueController extends AbstractController implements PaginatorAwareIn
     /**
      * @Route("/", name="technique_index", methods={"GET"})
      *
-     * @Template()
+     * @Template
      */
     public function index(Request $request, TechniqueRepository $techniqueRepository) : array {
         $query = $techniqueRepository->indexQuery();
@@ -48,7 +48,7 @@ class TechniqueController extends AbstractController implements PaginatorAwareIn
     /**
      * @Route("/search", name="technique_search", methods={"GET"})
      *
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -78,7 +78,8 @@ class TechniqueController extends AbstractController implements PaginatorAwareIn
             return new JsonResponse([]);
         }
         $data = [];
-        foreach ($techniqueRepository->typeaheadSearch($q) as $result) {
+
+        foreach ($techniqueRepository->typeaheadQuery($q) as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => (string) $result,
@@ -89,8 +90,8 @@ class TechniqueController extends AbstractController implements PaginatorAwareIn
     }
 
     /**
-     * @Route("/new", name="technique_new", methods={"GET","POST"})
-     * @Template()
+     * @Route("/new", name="technique_new", methods={"GET", "POST"})
+     * @Template
      * @IsGranted("ROLE_CONTENT_ADMIN")
      *
      * @return array|RedirectResponse
@@ -116,8 +117,8 @@ class TechniqueController extends AbstractController implements PaginatorAwareIn
     }
 
     /**
-     * @Route("/new_popup", name="technique_new_popup", methods={"GET","POST"})
-     * @Template()
+     * @Route("/new_popup", name="technique_new_popup", methods={"GET", "POST"})
+     * @Template
      * @IsGranted("ROLE_CONTENT_ADMIN")
      *
      * @return array|RedirectResponse
@@ -128,7 +129,7 @@ class TechniqueController extends AbstractController implements PaginatorAwareIn
 
     /**
      * @Route("/{id}", name="technique_show", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -142,9 +143,9 @@ class TechniqueController extends AbstractController implements PaginatorAwareIn
 
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}/edit", name="technique_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="technique_edit", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      *
      * @return array|RedirectResponse
      */

@@ -1,41 +1,39 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * This source file is subject to the GPL v2, bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Period;
 use App\Form\PeriodType;
 use App\Repository\PeriodRepository;
-
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/period")
  */
-class PeriodController extends AbstractController implements PaginatorAwareInterface
-{
+class PeriodController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
      * @Route("/", name="period_index", methods={"GET"})
-     * @param Request $request
-     * @param PeriodRepository $periodRepository
      *
-     * @Template()
-     *
-     * @return array
+     * @Template
      */
-    public function index(Request $request, PeriodRepository $periodRepository) : array
-    {
+    public function index(Request $request, PeriodRepository $periodRepository) : array {
         $query = $periodRepository->indexQuery();
         $pageSize = $this->getParameter('page_size');
         $page = $request->query->getint('page', 1);
@@ -46,10 +44,9 @@ class PeriodController extends AbstractController implements PaginatorAwareInter
     }
 
     /**
-     * @Route("/new", name="period_new", methods={"GET","POST"})
-     * @Template()
+     * @Route("/new", name="period_new", methods={"GET", "POST"})
+     * @Template
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @param Request $request
      *
      * @return array|RedirectResponse
      */
@@ -74,10 +71,9 @@ class PeriodController extends AbstractController implements PaginatorAwareInter
     }
 
     /**
-     * @Route("/new_popup", name="period_new_popup", methods={"GET","POST"})
-     * @Template()
+     * @Route("/new_popup", name="period_new_popup", methods={"GET", "POST"})
+     * @Template
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @param Request $request
      *
      * @return array|RedirectResponse
      */
@@ -87,8 +83,7 @@ class PeriodController extends AbstractController implements PaginatorAwareInter
 
     /**
      * @Route("/{id}", name="period_show", methods={"GET"})
-     * @Template()
-     * @param Period $period
+     * @Template
      *
      * @return array
      */
@@ -100,11 +95,9 @@ class PeriodController extends AbstractController implements PaginatorAwareInter
 
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}/edit", name="period_edit", methods={"GET","POST"})
-     * @param Request $request
-     * @param Period $period
+     * @Route("/{id}/edit", name="period_edit", methods={"GET", "POST"})
      *
-     * @Template()
+     * @Template
      *
      * @return array|RedirectResponse
      */
@@ -121,15 +114,13 @@ class PeriodController extends AbstractController implements PaginatorAwareInter
 
         return [
             'period' => $period,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ];
     }
 
     /**
      * @IsGranted("ROLE_CONTENT_ADMIN")
      * @Route("/{id}", name="period_delete", methods={"DELETE"})
-     * @param Request $request
-     * @param Period $period
      *
      * @return RedirectResponse
      */

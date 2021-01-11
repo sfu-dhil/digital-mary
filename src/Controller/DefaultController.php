@@ -26,7 +26,7 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
      * Show the home page.
      *
      * @Route("/", name="homepage", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
@@ -40,7 +40,7 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
      * Show the privacy page.
      *
      * @Route("/privacy", name="privacy", methods={"GET"})
-     * @Template()
+     * @Template
      *
      * @return array
      */
