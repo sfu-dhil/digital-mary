@@ -62,7 +62,7 @@ class ItemRepository extends ServiceEntityRepository {
      */
     public function searchQuery($q) {
         $qb = $this->createQueryBuilder('item');
-        $qb->addSelect('MATCH (item.name, item.description, item.inscription, item.translated_inscription) AGAINST(:q BOOLEAN) as HIDDEN score');
+        $qb->addSelect('MATCH (item.name, item.description, item.inscription, item.translatedInscription) AGAINST(:q BOOLEAN) as HIDDEN score');
         $qb->andHaving('score > 0');
         $qb->orderBy('score', 'DESC');
         $qb->setParameter('q', $q);
