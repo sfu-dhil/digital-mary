@@ -2,9 +2,9 @@
     "type": "project",
     "name": "sfu_dhil/digital-mary",
     "description": "Digital Mary Archives",
-    "license": "gpl",
+    "license": "GPL-2.0-or-later",
     "require": {
-        "php": "^7.2",
+        "php": "^7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-imagick": "*",
