@@ -30,16 +30,24 @@ class LocationType extends TermType {
 
         $builder->add('latitude', NumberType::class, [
             'label' => 'Latitude',
+            'html5' => true,
+            'input' => 'number',
+            'scale' => 8,
             'required' => false,
             'attr' => [
                 'help_block' => '',
+                'step' => 'any',
             ],
         ]);
         $builder->add('longitude', NumberType::class, [
             'label' => 'Longitude',
+            'html5' => true,
+            'input' => 'number',
+            'scale' => 8,
             'required' => false,
             'attr' => [
                 'help_block' => '',
+                'step' => 'any',
             ],
         ]);
         $builder->add('country', TextType::class, [
