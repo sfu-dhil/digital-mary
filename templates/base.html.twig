@@ -63,6 +63,7 @@
     <nav class="body-nav">
 
         {% include 'partial/breadcrumb.html.twig' with {'title': block('title')} %}
+
         {% if is_granted('ROLE_CONTENT_ADMIN') %}
             <div class="admin">
                 {% if block('admin') is defined and block('admin') is not empty %}
@@ -115,11 +116,13 @@
             <a href="https://github.com/sfu-dhil/ndm">GitHub</a>
         </p>
     </div>
-    <div class="checkbox admin-toggle">
-        <label>
-            <input type="checkbox"> Toggle admin
-        </label>
-    </div>
+    {%  if is_granted('ROLE_CONTENT_ADMIN') %}
+        <div class="checkbox admin-toggle">
+            <label>
+                <input type="checkbox"> Toggle admin
+            </label>
+        </div>
+    {% endif %}
 </footer>
 
 {% block javascripts %}

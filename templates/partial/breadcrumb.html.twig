@@ -1,32 +1,25 @@
-{% set route = app.request.attributes.get('_route') %}
-{% set isIndex = route ends with '_index' %}
-{% set isEdit = route ends with '_edit' %}
-{% set isNew = route ends with '_new' %}
-{% set isNines = route starts with 'nines' %}
-{% set isHomepage = route is same as('homepage') %}
-{% set base = route|split('_')|slice(0,-1)|join('_') %}
-{% set type = app.request.pathInfo|split('/')|slice(1,1)|join('') %}
+{# breadcrumb.html.twig #}
+{# This is a crude breadcrumb creation mechanism, which is meant to be a temporary
+   solution until we use KNP breadcrumb menu #}
+{# Requires: title #}
 
+{% set isHomepage = app.request.attributes.get('_route') is same as('homepage') %}
+{% set tokens = app.request.pathInfo|split('/')|filter(t => t not in ['','blog','admin'] ) %}
 
-{% if not isHomepage and not isNines and not isNew %}
+{% if not isHomepage %}
     <ul class="breadcrumbs">
         <li>
             <a href="{{ path('homepage') }}">Home</a>
         </li>
-        {% if not (route is same as('privacy') or route is same as('search')) %}
-            {% if not isIndex %}
-                <li>
-                    <a href="{{ path(base ~ '_index') }}">Browse: {{ type|split('_')|join(' ')|capitalize }}</a>
-                </li>
-            {% endif %}
-            {% if isEdit %}
-                <li>
-                    <a href="{{ path(base ~ '_show', {'id': app.request.attributes.get('id')}) }}">Entity</a>
-                </li>
-            {% endif %}
-        {% endif %}
-        <li>
-            <span class="current">{{ title }}</span>
-        </li>
+        {% for token in tokens %}
+            <li>
+                {% if loop.last %}
+                    <span class="current">{{ title }}</span>
+                {% else %}
+                    {% set href = app.request.basePath ~ '/' ~ tokens|slice(0,loop.index)|join('/') %}
+                    <a href="{{ href }}">{{ token|replace({'_':' '})|title }}</a>
+               {% endif %}
+            </li>
+        {% endfor %}
     </ul>
 {% endif %}
