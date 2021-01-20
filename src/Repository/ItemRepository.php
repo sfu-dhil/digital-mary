@@ -15,7 +15,6 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
-use RuntimeException;
 
 /**
  * @method null|Item find($id, $lockMode = null, $lockVersion = null)
@@ -39,7 +38,7 @@ class ItemRepository extends ServiceEntityRepository {
             ->addOrderBy('p2.sortableYear')
             ->addOrderBy('item.name')
             ->getQuery()
-        ;
+            ;
     }
 
     /**
@@ -47,7 +46,7 @@ class ItemRepository extends ServiceEntityRepository {
      *
      * @return Collection|Item[]
      */
-    public function typeaheadSearch($q) {
+    public function typeaheadQuery($q) {
         $qb = $this->createQueryBuilder('item');
         $qb->andWhere('item.name LIKE :q');
         $qb->orderBy('item.name', 'ASC');
@@ -63,22 +62,11 @@ class ItemRepository extends ServiceEntityRepository {
      */
     public function searchQuery($q) {
         $qb = $this->createQueryBuilder('item');
-        $qb->addSelect('MATCH(item.name,item.description,item.inscription,item.translatedInscription) AGAINST(:q) AS HIDDEN relevance');
-        $qb->andHaving('relevance > 0');
-        $qb->orderBy('relevance', 'DESC');
+        $qb->addSelect('MATCH (item.name, item.description, item.inscription, item.translatedInscription) AGAINST(:q BOOLEAN) as HIDDEN score');
+        $qb->andHaving('score > 0');
+        $qb->orderBy('score', 'DESC');
         $qb->setParameter('q', $q);
 
         return $qb->getQuery();
-    }
-
-    /**
-     * @return Collection|Item[]
-     */
-    public function featuredItemsQuery(){
-        $qb = $this->createQueryBuilder('item');
-        $qb->where('item.images is not empty');
-        $qb->orderBy('item.created','DESC');
-        $qb->setMaxResults(6);
-        return $qb->getQuery()->execute();
     }
 }

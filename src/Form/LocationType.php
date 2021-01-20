@@ -12,8 +12,8 @@ namespace App\Form;
 
 use App\Entity\Location;
 use Nines\UtilBundle\Form\TermType;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,25 +27,50 @@ class LocationType extends TermType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) : void {
         parent::buildForm($builder, $options);
-        $builder->add('geonameid', TextType::class, [
-            'label' => 'Geonames ID',
+
+        $builder->add('latitude', NumberType::class, [
+            'label' => 'Latitude',
+            'html5' => true,
+            'input' => 'number',
+            'scale' => 8,
             'required' => false,
+            'attr' => [
+                'help_block' => '',
+                'step' => 'any',
+            ],
         ]);
-        $builder->add('latitude');
-        $builder->add('longitude');
-        $builder->add('country');
+        $builder->add('longitude', NumberType::class, [
+            'label' => 'Longitude',
+            'html5' => true,
+            'input' => 'number',
+            'scale' => 8,
+            'required' => false,
+            'attr' => [
+                'help_block' => '',
+                'step' => 'any',
+            ],
+        ]);
+        $builder->add('country', TextType::class, [
+            'label' => 'Country',
+            'required' => false,
+            'attr' => [
+                'help_block' => '',
+            ],
+        ]);
         $builder->add('alternateNames', CollectionType::class, [
             'label' => 'Alternate Names',
             'required' => false,
             'allow_add' => true,
             'allow_delete' => true,
-            'prototype' => true,
+            'delete_empty' => true,
             'entry_type' => TextType::class,
-            'entry_options' => ['label' => false],
-            'required' => false,
+            'entry_options' => [
+                'label' => false,
+            ],
+            'by_reference' => false,
             'attr' => [
-                'help_block' => '',
                 'class' => 'collection collection-simple',
+                'help_block' => '',
             ],
         ]);
     }
