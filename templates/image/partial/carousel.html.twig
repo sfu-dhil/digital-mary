@@ -43,10 +43,6 @@
                         {# Tools for interacting with the image #}
                         <div class="img-toolbar__tools">
                             <a class="img-tool-info">{{ icons.get('info_circle') }}</a>
-                            {% if is_granted('ROLE_CONTENT_ADMIN') %}
-                                <a class="admin" href="{{ path('image_view', {'id': image.id}) }}"
-                                   target="_blank">{{ icons.get('download') }}</a>
-                            {% endif %}
                             <a class="img-tool-zoom">{{ icons.get('arrows_fullscreen') }}</a>
                         </div>
 

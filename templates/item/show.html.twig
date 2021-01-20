@@ -33,7 +33,7 @@
 {% block body %}
     <section class="header">
         <div class="item-header item-header__full">
-            <h1 tabindex="0">{{ item.name }}</h1>
+            <h1>{{ item.name }}</h1>
             <div>
                 <h2>{{ dl.iterate(item.category, 'category_show')|striptags|trim }}</h2>
 

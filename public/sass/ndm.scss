@@ -31,13 +31,17 @@
 @include dhil-headers;
 @include dhil-reset;
 
+:root{
+  --body-background: #{$body-background};
+  --footer-background: #{$ndm-grey};
+}
 
 html, body, .dropdown-menu {
   font-family: $body-font;
 }
 
 body{
-  background-color: $ndm-white;
+  background-color: var(--body-background);
 }
 
 main{
@@ -830,7 +834,6 @@ img{
     line-height: $this-line-height;
     text-align:center;
     height: $this-font-size * $this-line-height * $this-max-lines;
-
     @include dhil-clamp-lines($this-max-lines, $this-font-size, $this-line-height, true);
 }
 
@@ -860,7 +863,11 @@ img{
 
 /* Pagination */
 
-@include dhil-pagination('circular');
+@include dhil-pagination('circular'){
+  li{
+    width: max-content;
+  }
+}
 
 
 /* Footer */
@@ -868,15 +875,16 @@ img{
 footer{
   margin-top:ms(1);
   position:relative;
-  background:#F3F4F5;
+  background: var(--footer-background);
   .wave {
     height: clamp(5vw, 10vw, 100px);
     overflow-y: hidden;
     > svg {
       position: relative;
       top: -8vw;
+      background-color: var(--body-background);
       path{
-        fill: #F3F4F5;
+        fill: var(--footer-background);
       }
 
     }
@@ -943,6 +951,7 @@ label.required::after {
 /* Now include the homepage */
 
 .homepage{
+  $body-background: $ndm-nav-background-color;
   @include homepage();
 }
 

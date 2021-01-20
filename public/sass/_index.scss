@@ -4,6 +4,8 @@
 @mixin homepage(){
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
+  --body-background: #{$ndm-nav-background-color};
+  --footer-background: #e4e4e4;
   main{
     margin:0;
   }
@@ -24,10 +26,6 @@
     display:flex;
     flex-direction:column;
     justify-content:center;
-    background: $ndm-nav-background-color;
-    &.full{
-      height:100vh;
-    }
     //background: linear-gradient(to bottom, $ndm-nav-background-color 80%, $ndm-off-white 100%);
   }
 
@@ -116,6 +114,14 @@
     display:none;
   }
 
+  .container > h2{
+      font-size: ms(2);
+      margin-bottom: ms(1);
+      padding-bottom: ms(-1);
+      border-bottom: 1px solid $ndm-black;
+
+  }
+
 
   .home-search {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), var(--hero-image);
@@ -125,27 +131,19 @@
     background-repeat: no-repeat;
     padding-top: ms(1);
     padding-bottom: 10vh;
-    min-height: 80vh;
     display: flex;
     flex-direction: column;
     align-content: center;
-
     & > .container {
       padding: ms(0) minmax(2vw, ms(0));
       color: $ndm-white;
       border-radius: 8px;
-
-      & + .container {
-        margin-top: ms(3);
+      h2{
+        border-bottom-color: $ndm-white;
       }
-
-      & > h2 {
-        font-size: ms(2) * 1.25;
-        border-bottom: 1px solid white;
-        margin-bottom: ms(1);
-        padding-bottom: ms(-1);
-      }
-
+    }
+    & + section {
+      margin-top: ms(1);
     }
   }
 
