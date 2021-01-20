@@ -25,7 +25,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/category")
- * @IsGranted("ROLE_USER")
  */
 class CategoryController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
@@ -135,6 +134,7 @@ class CategoryController extends AbstractController implements PaginatorAwareInt
      */
     public function show(Request $request, Category $category) {
         $items = $this->paginator->paginate($category->getItems(), $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
+
         return [
             'category' => $category,
             'items' => $items,

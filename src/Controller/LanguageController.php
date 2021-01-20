@@ -132,11 +132,9 @@ class LanguageController extends AbstractController implements PaginatorAwareInt
      *
      * @return array
      */
-    public function show(Language $language, Request $request) {
-        $items = $this->paginator->paginate($language->getItems(), $request->query->getInt('page', 1), $this->getParameter('page_size'), ['wrap-queries' => true]);
+    public function show(Language $language) {
         return [
             'language' => $language,
-            'items' => $items
         ];
     }
 

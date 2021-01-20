@@ -12,9 +12,9 @@ namespace App\Repository;
 
 use App\Entity\Image;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
-use RuntimeException;
 
 /**
  * @method null|Image find($id, $lockMode = null, $lockVersion = null)
@@ -42,12 +42,26 @@ class ImageRepository extends ServiceEntityRepository {
      *
      * @return Collection|Image[]
      */
-    public function typeaheadSearch($q) {
-        throw new RuntimeException('Not implemented yet.');
+    public function typeaheadQuery($q) {
         $qb = $this->createQueryBuilder('image');
-        $qb->andWhere('image.column LIKE :q');
-        $qb->orderBy('image.column', 'ASC');
+        $qb->andWhere('image.originalName LIKE :q');
+        $qb->orderBy('image.originalName', 'ASC');
         $qb->setParameter('q', "{$q}%");
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param string $q
+     *
+     * @return Collection|Image[]
+     */
+    public function searchQuery($q) {
+        $qb = $this->createQueryBuilder('image');
+        $qb->addSelect('MATCH(image.original_name, image.description) AGAINST(:q) AS HIDDEN score');
+        $qb->andHaving('score > 0');
+        $qb->orderBy('score', 'DESC');
+        $qb->setParameter('q', $q);
 
         return $qb->getQuery()->execute();
     }

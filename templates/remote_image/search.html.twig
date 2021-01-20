@@ -2,13 +2,13 @@
 
 {% block title %}Remote Image Search{% endblock %}
 
- {% block pageheader %}
-     <h1>Remote Image Search</h1>
-     {% if remote_images|length %}
-         <p class="count">
-             Displaying {{ remote_images|length }} remote_images of {{ remote_images.getTotalItemCount }} total.
-         </p>
-     {% endif %}
+ {% block pageheader %} 
+    <h1>Remote Image Search</h1>
+    {% if remote_images|length %}
+    <p class="count">
+        Displaying {{ remote_images|length }} remote_images of {{ remote_images.getTotalItemCount }} total.
+    </p>
+	{% endif %}
  {% endblock %} 
 
 {% block body %}
@@ -22,7 +22,7 @@
                     <div class='input-group'>
                         <input type='text' name='q' id='q' class='form-control' value='{{ q }}'>
                         <span class="input-group-btn">
-                            <button class="btn btn-primary" type="submit">
+                            <button class="btn btn-primary" id='btn-search' type="submit">
                                 <span class='glyphicon glyphicon-search'></span>
                                 Search
                             </button>
@@ -30,7 +30,7 @@
                     </div>
                 </div>
             </div>
-            <p> Full text searching options, if available:</p>
+            <p>	Full text searching options, if available:</p>
             <ul>
                 <li><code>shakespeare</code> - shakespeare should be present, but might not be</li>
                 <li><code>shakes*</code> - words starting with shakes should be present</li>
@@ -42,47 +42,15 @@
         </fieldset>
     </form>
 
-    {% if remote_images|length %}
-        <table class="table table-bordered table-condensed table-hover table-striped">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Url</th>
-                <th>Title</th>
-                <th>Description</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for remote_image in remote_images %}
-                <tr>
+	{% if remote_images|length %}
 
-                    <td>
-                        <a href="{{ path('remote_image_show', { 'id': remote_image.id }) }}">
-                            {{ remote_image.id }}
-                        </a>
-                    </td>
-                    <td>
-                        {{ remote_image.url }}
-                    </td>
+  {% embed 'remote_image/partial/table.html.twig' %}
+  {% endembed %}
 
-                    <td>
-                        {{ remote_image.title }}
-                    </td>
-
-                    <td>
-                        {{ remote_image.description }}
-                    </td>
-
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
-
-        <div class="navigation">
-            {{ knp_pagination_render(remote_images) }}
-        </div>
-    {% endif %}
+    <div class="navigation">
+        {{ knp_pagination_render(remote_images) }}
+    </div>
+	{% endif %}
 
 {% endblock %}
 

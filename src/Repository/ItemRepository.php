@@ -38,7 +38,7 @@ class ItemRepository extends ServiceEntityRepository {
             ->addOrderBy('p2.sortableYear')
             ->addOrderBy('item.name')
             ->getQuery()
-            ;
+        ;
     }
 
     /**
@@ -69,4 +69,6 @@ class ItemRepository extends ServiceEntityRepository {
 
         return $qb->getQuery();
     }
+
+    
 }

@@ -10,36 +10,24 @@ declare(strict_types=1);
 
 namespace App\DataFixtures;
 
-use App\Entity\Image;
+use App\Entity\RemoteImage;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Imagick;
-use ImagickPixel;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class ImageFixtures extends Fixture implements DependentFixtureInterface {
+class RemoteImageFixtures extends Fixture implements DependentFixtureInterface {
     /**
      * {@inheritdoc}
      */
     public function load(ObjectManager $em) : void {
         for ($i = 0; $i < 4; $i++) {
-            $image = new Imagick();
-            $hue = $i * 20;
-            $image->newImage(640, 480, new ImagickPixel("hsb({$hue}%, 100%,  75%)"));
-            $image->setImageFormat('png');
-            $tmp = tmpfile();
-            fwrite($tmp, $image->getImageBlob());
-            $upload = new UploadedFile(stream_get_meta_data($tmp)['uri'], "image_{$i}.png", 'image/png', null, true);
-
-            $fixture = new Image();
-            $fixture->setImageFile($upload);
-            $fixture->setPublic(0 === $i % 2);
+            $fixture = new RemoteImage();
+            $fixture->setUrl('http://example.com/image/' . $i);
+            $fixture->setTitle('Title ' . $i);
             $fixture->setDescription("<p>This is paragraph {$i}</p>");
-            $fixture->setLicense("<p>This is paragraph {$i}</p>");
             $fixture->setItem($this->getReference('item.1'));
             $em->persist($fixture);
-            $this->setReference('image.' . $i, $fixture);
+            $this->setReference('remoteimage.' . $i, $fixture);
         }
         $em->flush();
     }

@@ -11,23 +11,19 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Image;
-use App\Form\ImageType;
 use App\Repository\ImageRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/image")
- * @IsGranted("ROLE_USER")
  */
 class ImageController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
@@ -132,6 +128,4 @@ class ImageController extends AbstractController implements PaginatorAwareInterf
 
         return new BinaryFileResponse($image->getThumbFile());
     }
-
-
 }

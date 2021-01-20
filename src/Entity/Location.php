@@ -14,14 +14,12 @@ use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Nines\UtilBundle\Entity\AbstractEntity;
 use Nines\UtilBundle\Entity\AbstractTerm;
 
 /**
  * @ORM\Entity(repositoryClass=LocationRepository::class)
  */
 class Location extends AbstractTerm {
-
     /**
      * @var int
      *
@@ -131,61 +129,51 @@ class Location extends AbstractTerm {
         return $this;
     }
 
-    public function getGeonameid(): ?int
-    {
+    public function getGeonameid() : ?int {
         return $this->geonameid;
     }
 
-    public function setGeonameid(?int $geonameid): self
-    {
+    public function setGeonameid(?int $geonameid) : self {
         $this->geonameid = $geonameid;
 
         return $this;
     }
 
-    public function getLatitude(): ?float
-    {
-        return (float)$this->latitude;
+    public function getLatitude() : ?float {
+        return (float) $this->latitude;
     }
 
-    public function setLatitude(?float $latitude): self
-    {
+    public function setLatitude(?float $latitude) : self {
         $this->latitude = $latitude;
 
         return $this;
     }
 
-    public function getLongitude(): ?float
-    {
-        return (float)$this->longitude;
+    public function getLongitude() : ?float {
+        return (float) $this->longitude;
     }
 
-    public function setLongitude(?float $longitude): self
-    {
+    public function setLongitude(?float $longitude) : self {
         $this->longitude = $longitude;
 
         return $this;
     }
 
-    public function getCountry(): ?string
-    {
+    public function getCountry() : ?string {
         return $this->country;
     }
 
-    public function setCountry(?string $country): self
-    {
+    public function setCountry(?string $country) : self {
         $this->country = $country;
 
         return $this;
     }
 
-    public function getAlternateNames(): ?array
-    {
+    public function getAlternateNames() : ?array {
         return $this->alternateNames;
     }
 
-    public function setAlternateNames(array $alternateNames): self
-    {
+    public function setAlternateNames(array $alternateNames) : self {
         $this->alternateNames = $alternateNames;
 
         return $this;

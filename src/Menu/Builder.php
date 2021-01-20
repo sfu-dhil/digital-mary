@@ -88,6 +88,9 @@ class Builder implements ContainerAwareInterface {
         $browse->addChild('Inscription Style', [
             'route' => 'inscription_style_index',
         ]);
+        $browse->addChild('Image', [
+            'route' => 'image_index',
+        ]);
         $browse->addChild('Language', [
             'route' => 'language_index',
         ]);
@@ -116,6 +119,7 @@ class Builder implements ContainerAwareInterface {
                 'route' => 'remote_image_index',
             ]);
         }
+
         return $menu;
     }
 }
