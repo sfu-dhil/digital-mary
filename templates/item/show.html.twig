@@ -2,6 +2,7 @@
 {% import 'item/partial/detail.html.twig' as  dl %}
 {% import 'partial/icons.html.twig' as icons %}
 
+{% set hasImages = item.images|length + item.remoteImages|length > 0 %}
 
 {% block title %}{{ item.name }}{% endblock %}
 
@@ -11,6 +12,13 @@
             <a href="{{ path('item_add_image', {'id': item.id}) }}" class="btn btn-default">
                 <span class='glyphicon glyphicon-plus'></span> Add Image </a>
         </div>
+        {% if item.images|length == 0 %}
+            <div class="btn-group">
+                <a href="{{ path('item_add_remote_image', {'id': item.id}) }}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-plus"></span> Add Remote Image
+                </a>
+            </div>
+        {% endif %}
         <div class='btn-group'>
             <a href="{{ path('item_edit', {'id': item.id }) }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-edit"></span> Edit </a>
@@ -27,7 +35,7 @@
 {% endblock %}
 
 {% block bodyclass %}
-    {% if item.images|length == 0 %} imageless{% endif %}
+    {% if not(hasImages) %} imageless{% endif %}
 {% endblock %}
 
 {% block body %}
@@ -63,12 +71,39 @@
         </div>
     </section>
 
-    {% if item.images|length > 0 %}
+    {% if hasImages %}
         <section class="images">
             <h2 class="sr-only">Images</h2>
             <div class="sticky">
                 <div class="img-content">
-                    {% include 'image/partial/carousel.html.twig' with {'images': item.images} %}
+                    {% if item.images|length > 0 %}
+                        {% include 'image/partial/carousel.html.twig' with {'images': item.images} %}
+                    {% else %}
+                        {% embed 'partial/accordion.html.twig' with {'open': true} %}
+                            {% block class %}item-details-remoteImg{% endblock %}
+                            {% block summary %}Remote Images{% endblock %}
+                            {% block content %}
+                                <div class="item-details__content">
+                                    <ul>
+                                        {% for image in item.remoteImages %}
+                                            {% set text = image.url %}
+                                            {% if 'britishmuseum.org' in text %}
+                                                {% set text = 'British Museum' %}
+                                            {% endif %}
+                                        <li>
+                                            <a href="{{ image.url }}">
+                                                <div>
+                                                    <div>{{ image.title }}</div>
+                                                    <div>{{ text }}</div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endblock %}
+                        {% endembed %}
+                    {% endif %}
                 </div>
             </div>
         </section>
@@ -129,11 +164,7 @@
                                         {# TODO: Refactor this fairly significantly using the details macro #}
                                         {% if item.inscriptionStyle or item.inscriptionLanguage|length > 0 %}
                                             <ul class="list-inline">
-                                                {% if item.inscriptionStyle %}
-                                                    <li class="item-inscription-style" data-caption="Style">
-                                                        <a href='{{ path("inscription_style_show", {"id": item.inscriptionStyle.id}) }}'>{{ item.inscriptionStyle }}</a>
-                                                    </li>
-                                                {% endif %}
+                                                
                                                 {% if item.inscriptionLanguage|length > 0 %}
                                                     <li class="item-inscription-language" data-caption="Language">
                                                         {% for language in item.inscriptionLanguage %}
@@ -142,6 +173,13 @@
                                                         {% endfor %}
                                                     </li>
                                                 {% endif %}
+
+                                                {% if item.inscriptionStyle %}
+                                                    <li class="item-inscription-style" data-caption="Style">
+                                                        <a href='{{ path("inscription_style_show", {"id": item.inscriptionStyle.id}) }}'>{{ item.inscriptionStyle }}</a>
+                                                    </li>
+                                                {% endif %}
+
                                             </ul>
                                         {% endif %}
                                     </div>

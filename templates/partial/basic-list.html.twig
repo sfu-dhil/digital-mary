@@ -1,6 +1,8 @@
-{% set keys = app.request.attributes|keys %}
-{% set thisAtt = keys|filter(k =>  not(k starts with '_' or k =='id'))|first %}
-{% set this =  attribute(_context, thisAtt) %}
+{% if this is not defined %}
+    {% set keys = app.request.attributes|keys %}
+    {% set thisAtt = keys|filter(k =>  not(k starts with '_' or k =='id'))|first %}
+    {% set this =  attribute(_context, thisAtt) ?? attribute(_context, thisAtt|u.snake) %}
+{% endif %}
 
 <table class="table table-condensed">
     <tbody>
@@ -28,6 +30,10 @@
 </table>
 
 
+
 {% if items is defined %}
     {% include 'item/partial/list.html.twig' %}
+{% elseif this.items is defined %}
+    {% include 'item/partial/list.html.twig' with {'items': this.items} %}
+
 {% endif %}

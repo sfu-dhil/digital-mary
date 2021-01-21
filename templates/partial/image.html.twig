@@ -2,12 +2,12 @@
 {# Partial for create images from items #}
 
 
-{% if image is not null %}
+{% if image is defined and image is not null %}
     {% set class = 'image' %}
     {% set src = path('image_thumbnail', {'id': image.id}) %}
     {% set alt = image.description is not null ? image.description|striptags : image.originalName %}
     {# Get the aspect ratio to determine the image dimension #}
-    {% set ratio = image.imageWidth / image.imageHeight %}
+    {% set ratio = image.imageWidth / (image.imageHeight ?? 1) %}
     {# If the full-sized is smaller than our minimums, keep the image values the same #}
     {% if image.imageWidth < thumb_width %}
         {% set width = image.imageWidth %}

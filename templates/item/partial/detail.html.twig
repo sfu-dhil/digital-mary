@@ -9,7 +9,11 @@
     {% set content %}
         {% if value is not null %}
             {% if path is not null %}
-                {{ _self.makeLinks(value, path, itemsKey) }}
+                {% if key == 'url' %}
+                    <a href="{{ value }}">{{ path }}</a>
+                {% else  %}
+                    {{ _self.makeLinks(value, path, itemsKey) }}
+                {% endif %}
             {% else %}
                 {{ value|raw }}
             {% endif %}

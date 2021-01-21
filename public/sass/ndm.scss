@@ -378,12 +378,6 @@ p + br{
         }
       }
   }
-
-
-
-
-
-
   //Condition based:
 
   // Control how we display unfilled fields.
@@ -398,6 +392,12 @@ p + br{
   &.hasNote{
     &-true{
     }
+  }
+}
+
+li[data-caption]{
+  &:before{
+    content: attr(data-caption) ": "
   }
 }
 
@@ -490,9 +490,15 @@ details {
     }
     ul{
       display:flex;
-      justify-content:space-between;
       font-size: 0.95em;
       margin-top:ms(-2);
+      & > li{
+        padding-right: ms(-1);
+        & + li{
+          padding: 0 ms(-1);
+          border-left: 1px solid $ndm-grey;
+        }
+      }
     }
   }
 
@@ -654,6 +660,8 @@ ul.dots{
   }
 }
 
+
+
 .img-toolbar{
   display:flex;
   flex-direction:column;
@@ -725,6 +733,34 @@ body.viewer-open{
     overflow-x:hidden;
   }
 
+
+}
+
+
+//Special handling for remote images
+
+.item-details-remoteImg{
+  .item-details__content ul > li > a{
+    flex-direction:row-reverse;
+    align-items:center;
+    column-gap: ms(-2);
+    div{
+      line-height: 1.2;
+      font-size:ms(0);
+      max-width: 12.5rem;
+    }
+    div + div{
+      margin-top: ms(-2);
+    }
+    &:after{
+      opacity:0.5;
+      padding-right: ms(-1);
+      transition: opacity 0.2s ease-in-out;
+    }
+    &:hover:after{
+      opacity:1;
+    }
+  }
 
 }
 
@@ -837,11 +873,6 @@ img{
     @include dhil-clamp-lines($this-max-lines, $this-font-size, $this-line-height, true);
 }
 
-
-
-
-
-
 .subject-item{
   margin-bottom: ms(1);
 }
@@ -920,6 +951,7 @@ a[href ^= 'mailto:']::after {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 
 a[href ^= 'http://']::after,
 a[href ^= 'https://']::after {

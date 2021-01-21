@@ -5,7 +5,7 @@
 {% block pageheader %}
     <h1>Inscription Styles</h1>
     <p class="count">
-        Displaying {{ epigraphies|length }} epigraphies of {{ epigraphies.getTotalItemCount }} total.
+        Displaying {{ inscription_styles|length }} inscription_styles of {{ inscription_styles.getTotalItemCount }} total.
     </p>
 {% endblock %}
 
@@ -26,5 +26,5 @@
 {% endblock %}
 
 {% block body %}
-    {% include 'partial/term-table.html.twig' with {'items': epigraphies} %}
+    {% include 'partial/term-table.html.twig' with {'items': inscription_styles} %}
 {% endblock %}
