@@ -76,10 +76,11 @@
             <td>{{ location.updated|date }}</td>
         </tr>
         </tbody>
-    </table>
+    </table
 
-    {% include 'item/partial/list.html.twig' %}
-
+    {% if items is defined %}
+        {% include 'item/partial/list.html.twig' %}
+    {% endif %}
 
 
 {% endblock %}

@@ -891,6 +891,24 @@ img{
   color: color.adjust($ndm-grey, $lightness: -50%);
 }
 
+/* Search widget */
+
+details.search-help{
+  border:1px solid #efefef;
+  &[open]{
+    summary{
+      border-bottom:1px solid #efefef;
+    }
+  }
+  summary{
+    background: inherit;
+    padding: ms(-1);
+    font-size: ms(0);
+    text-transform:none;
+    font-variant:normal;
+  }
+}
+
 
 /* Pagination */
 
