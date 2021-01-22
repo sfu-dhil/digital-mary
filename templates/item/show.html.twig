@@ -147,8 +147,6 @@
                      since there are many instances of inscriptions that just
                      say "None". #}
 
-            {# TODO: Check with SH about the 'None' inscriptions #}
-
             {% if item.inscription and item.translatedInscription %}
                 {% embed 'partial/accordion.html.twig' %}
                     {% block class %}item-details__inscription{% endblock %}
@@ -164,7 +162,7 @@
                                         {# TODO: Refactor this fairly significantly using the details macro #}
                                         {% if item.inscriptionStyle or item.inscriptionLanguage|length > 0 %}
                                             <ul class="list-inline">
-                                                
+
                                                 {% if item.inscriptionLanguage|length > 0 %}
                                                     <li class="item-inscription-language" data-caption="Language">
                                                         {% for language in item.inscriptionLanguage %}

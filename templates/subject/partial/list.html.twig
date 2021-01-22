@@ -11,19 +11,5 @@
                 <p>No description available.</p>
             {% endif %}
         </div>
-        {# {% if subject.items|length > 0 %}
-            {% set sorted = subject.items|sort((a,b) => a.images|length < b.images|length) %}
-            {% set subset = sorted|slice(0, display) %}
-            {% embed 'item/partial/list.html.twig' with {'items': subset} %}
-                {% block callback %}
-                    {% if subject.items|length > display %}
-                        {% include 'item/partial/gallery-item.html.twig'
-                            with {'path': path('subject_show', { 'id': subject.id }),
-                            'img': asset('images/plus.svg')} %}
-                    {% endif %}
-                {% endblock %}
-            {% endembed %}
-        {% endif %} #}
-
     </div>
 {% endfor %}
