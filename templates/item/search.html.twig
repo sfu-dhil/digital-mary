@@ -15,14 +15,14 @@
 
     <form method="get" action="{{ path('item_search') }}" class="form-horizontal">
         <fieldset>
-            <legend>Search</legend>
+            <legend class="sr-only">Search</legend>
             <div class='form-group'>
                 <label class='col-sm-2 control-label' for='q'>Search term</label>
                 <div class='col-sm-10'>
                     <div class='input-group'>
                         <input type='text' name='q' id='q' class='form-control' value='{{ q }}'>
                         <span class="input-group-btn">
-                            <button class="btn btn-primary" id='btn-search' type="submit">
+                            <button class="btn btn-primary" type="submit">
                                 <span class='glyphicon glyphicon-search'></span>
                                 Search
                             </button>
@@ -42,14 +42,8 @@
         </fieldset>
     </form>
 
-    {% if items|length %}
-
-        {% embed 'item/partial/table.html.twig' %}
-        {% endembed %}
-
-        <div class="navigation">
-            {{ knp_pagination_render(items) }}
-        </div>
+    {% if items|length > 0 %}
+        {% include ('item/partial/list.html.twig') %}
     {% endif %}
 
 {% endblock %}

@@ -1,31 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Location List{% endblock %}
+{% block title %}Locations{% endblock %}
 
 {% block pageheader %}
-    <h1>Location List</h1>
+    <h1>Locations</h1>
     <p class="count">
         Displaying {{ locations|length }} locations of {{ locations.getTotalItemCount }} total.
     </p>
 {% endblock %}
 
-{% block body %}
-
-    <div class='btn-toolbar pull-right'>
+{% block admin %}
+    <div class='btn-toolbar'>
         <div class='btn-group'>
-            {% if is_granted('ROLE_CONTENT_ADMIN') %}
             <a href="{{ path('location_new') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-plus"></span> New
             </a>
-            {% endif %}
-
             <a href="{{ path('location_search') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span> Search </a>
+                <span class="glyphicon glyphicon-search"></span> Search
+            </a>
         </div>
     </div>
+{% endblock %}
 
-    {% embed 'location/partial/table.html.twig' %}
-    {% endembed %}
+{% block body %}
+
+    <table class="table table-condensed">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>ID</th>
+            <th>Country</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for location in locations %}
+            <tr>
+                <td>
+                    <a href="{{ path('location_show', { 'id': location.id }) }}">
+                        {{ location.label }}
+                    </a>
+                </td>
+                <td>{{ location.id }}</td>
+                <td>{{ location.country }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
     <div class="navigation">
         {{ knp_pagination_render(locations) }}

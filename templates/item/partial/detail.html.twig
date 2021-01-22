@@ -1,184 +1,92 @@
-<table class='table table-bordered table-condensed table-hover table-striped'>
-    <tbody>
-        <tr>
-            <th>Name</th>
-            <td>
-                {{ item.name }}
-            </td>
-        </tr>
-        <tr>
-            <th>Category</th>
-            <td>
-                {% for category in item.category %}
-                    <a href='{{ path("category_show", {"id": category.id}) }}'>{{ category }}</a><br/>
-                {% endfor %}
-            </td>
-        </tr>
-        <tr>
-            <th>Description</th>
-            <td>
-                {{ item.description|raw }}
-            </td>
-        </tr>
-        <tr>
-            <th>Inscription</th>
-            <td>
-                {{ item.inscription|raw }}
-            </td>
-        </tr>
-        <tr>
-            <th>Inscription Translation</th>
-            <td>
-                {{ item.translatedInscription|raw }}
-            </td>
-        </tr>
-        <tr>
-            <th>Inscription Language</th>
-            <td>
-                {% for language in item.inscriptionLanguage %}
-                    <a href='{{ path("language_show", {"id": language.id}) }}'>{{ language }}</a>
-                {% endfor %}
-            </td>
-        </tr>
-        <tr>
-            <th>Inscription Style</th>
-            <td>
-                {% if item.inscriptionStyle %}
-                    <a href='{{ path("inscription_style_show", {"id": item.inscriptionStyle.id}) }}'>{{ item.inscriptionStyle }}</a>
+{% macro make(context, key, name, path, itemsKey='items') %}
+    {% set value = attribute(context, key) %}
+    {% if attribute(context, key ~ 'Other') is defined %}
+        {% set note = attribute(context, key ~ 'Other') %}
+    {% endif %}
+    {% set class = "item-details" %}
+    {% set itemClass = class ~ '__' ~ name|u.snake %}
+    {% set hasNote = note is defined and not(note is null or note is empty) %}
+    {% set content %}
+        {% if value is not null %}
+            {% if path is not null %}
+                {% if key == 'url' %}
+                    <a href="{{ value }}">{{ path }}</a>
+                {% else  %}
+                    {{ _self.makeLinks(value, path, itemsKey) }}
                 {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <th>Culture</th>
-            <td>
-                {% for civilization in item.civilization %}
-                    <a href='{{ path("civilization_show", {"id": civilization.id}) }}'>{{ civilization }}</a><br/>
-                {% endfor %}
-                {% if item.civilizationOther %}
-                    {{ item.civilizationOther|raw }}
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <th>Date</th>
-            <td>
-                {% if item.displayYear %}
-                    {{ item.displayYear }}
-                    {% if is_granted('ROLE_CONTENT_ADMIN') %}
-                        {% if item.periodStart or item.periodEnd%}<br/>
-                            <i>{{ item.periodStart }}-{{ item.periodEnd }}</i>
-                        {% else %}
-                            <i>No sortable date</i>
-                        {% endif %}
-                    {% endif %}
-                {% else %}
-                    Unknown
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <th>Provenance</th>
-            <td>
-                {% if item.provenance %}
-                    <a href='{{ path("location_show", {"id": item.provenance.id}) }}'>{{ item.provenance }}</a>
-                {% endif %}
-                {% if item.provenanceOther %}
-                    {{ item.provenanceOther|raw }}
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <th>Findspot</th>
-            <td>
-                {% if item.findspot %}
-                    <a href='{{ path("location_show", {"id": item.findspot.id}) }}'>{{ item.findspot }}</a>
-                {% endif %}
-                {% if item.findspotOther %}
-                    {{ item.findspotOther|raw }}
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <th>Material</th>
-            <td>
-                {% if item.materials|length > 0 %}
-                    <ul>
-                        {% for material in item.materials %}
-                            <li>
-                                <a href='{{ path("material_show", {"id":material.id }) }}'>
-                                    {{ material }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <th>Technique</th>
-            <td>
-                {% if item.techniques|length > 0 %}
-                    <ul>
-                        {% for technique in item.techniques %}
-                            <li>
-                                <a href='{{ path("technique_show", {"id":technique.id }) }}'>
-                                    {{ technique }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <th>Dimensions</th>
-            <td>
-                {{ item.dimensions|raw }}
-            </td>
-        </tr>
-        <tr>
-            <th>Bibliographic References</th>
-            <td>
-                {{ item.references|raw }}
-            </td>
-        </tr>
-        <tr>
-            <th>Location</th>
-            <td>
-                {{ item.location|raw }}
-            </td>
-        </tr>
-        <tr>
-            <th>Subject</th>
-            <td>
-                {% if item.subjects|length > 0 %}
-                    <ul>
-                        {% for subject in item.subjects %}
-                            <li>
-                                <a href='{{ path("subject_show", {"id":subject.id }) }}'>
-                                    {{ subject }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <th>Contributor</th>
-            <td>
-                {% for revision in item.revisions %}
-                    {{ revision.date|date('Y-m-d') }} - {{ revision.initials }}<br />
-                {% endfor %}
-            </td>
-        </tr>
-        <tr>
-            <th>Created</th>
-            <td>{{ item.created|date }}</td>
-        </tr>
-        <tr>
-            <th>Updated</th>
-            <td>{{ item.updated|date }}</td>
-        </tr>
-    </tbody>
-</table>
+            {% else %}
+                {{ value|raw }}
+            {% endif %}
+        {% endif %}
+        {% if hasNote %}
+            <div class="{{ class }}__note {{ itemClass }}">
+                {{ note|raw }}
+            </div>
+        {% endif %}
+    {% endset %}
+    {% set content = content|trim()|spaceless %}
+    {% set hasContent = content is not empty %}
+    {{ _self.render(_context) }}
+{% endmacro %}
+
+{% macro render(this) %}
+    {% set divClass = [this.class, this.itemClass, 'hasContent-' ~ _self.bool2Str(this.hasContent), 'hasNote-'~ _self.bool2Str(this.hasNote) ]|join(' ') %}
+
+    <div class="{{ divClass }}">
+        <h2 class="{{ this.class }}__header {{ this.itemClass }}">{{ this.name }}</h2>
+        <div class="{{ this.class }}__content {{ this.itemClass }}">
+            {% if this.hasContent %}
+                {{ this.content|raw }}
+            {% else %}
+                {{ '—' }}
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+
+
+{% macro makeLinks(value, path, itemsKey) %}
+    {% set iterable = value is iterable %}
+    {# Cast the links to an array to make it easier to sort through them #}
+    {% set links = iterable ? value : [value] %}
+    {% if links|length > 0 %}
+        <ul>
+            {% for link in links %}
+                {% set items = attribute(link, itemsKey) %}
+                <li>
+                    <a href="{{ path(path, {'id': link.id}) }}">{{ link }}<span class="badge">{{ items|length }}</span></a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endmacro %}
+
+
+
+
+{% macro iterate(items, route) %}
+    {% set arr = [] %}
+    {% for item in items %}
+        {% set link %}
+            {% apply spaceless %}
+                <a href="{{ path(route, {'id': item.id}) }}">{{ item.label }}</a>
+            {% endapply %}
+        {% endset %}
+        {% set arr = arr|merge([link|trim]) %}
+    {% endfor %}
+    {{ arr|join(', ')|raw }}
+{% endmacro %}
+
+{% macro bool2Str(bool) %}
+    {{- bool ? 'true' : 'false' -}}
+{% endmacro %}
+
+{% macro firstParaString(text) %}
+    {% set paragraphs = text|split('</p>') %}
+    {% set firstParagraph = paragraphs|first ~ '</p>' %}
+    {% set string = firstParagraph|striptags|trim %}
+
+    {# Then remove spaces, and remove trailing period #}
+    {{- string|trim('.', side='right') -}}
+{% endmacro %}

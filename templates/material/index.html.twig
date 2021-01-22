@@ -1,66 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Material List{% endblock %}
+{% block title %}Materials{% endblock %}
 
 {% block pageheader %}
-    <h1>Material List</h1>
+    <h1>Materials</h1>
     <p class="count">
         Displaying {{ materials|length }} materials of {{ materials.getTotalItemCount }} total.
     </p>
- {% endblock %}
+{% endblock %}
 
-{% block body %}
-
-    <div class='btn-toolbar pull-right'>
+{% block admin %}
+    <div class='btn-toolbar'>
         <div class='btn-group'>
-            {% if is_granted('ROLE_CONTENT_ADMIN') %}
             <a href="{{ path('material_new') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-plus"></span> New
             </a>
-            {% endif %}
-
             <a href="{{ path('material_search') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span> Search </a>
+                <span class="glyphicon glyphicon-search"></span> Search
+            </a>
         </div>
     </div>
+{% endblock %}
 
-    <table class="table table-bordered table-condensed table-hover table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>                                           <th>Name</th>
-                                                               <th>Label</th>
-                                                               <th>Description</th>
-
-            </tr>
-        </thead>
-        <tbody>
-        {% for material in materials %}
-            <tr>
-
-                <td>
-                    <a href="{{ path('material_show', { 'id': material.id }) }}">
-                        {{ material.id }}
-                    </a>
-                </td>
-                <td>
-                    {{ material.name }}
-                </td>
-
-                <td>
-                    {{ material.label }}
-                </td>
-
-                <td>
-                    {{ material.description }}
-                </td>
-
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <div class="navigation">
-        {{ knp_pagination_render(materials) }}
-    </div>
-
+{% block body %}
+    {% include 'partial/term-table.html.twig' with {'items': materials} %}
 {% endblock %}

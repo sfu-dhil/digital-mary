@@ -29,11 +29,11 @@
         <form method="post" class="form-horizontal" action="{{ path('location_import') }}">
             <fieldset>
                 <legend>Select one or more records to import</legend>
-                <input type="hidden" name="q" value="{{ q }}" />
+                <input type="hidden" name="q" value="{{ q }}"/>
                 <table class="table table-bordered table-condensed table-hover table-striped">
                     {% for result in results %}
                         <tr>
-                            <td><input type="checkbox" name="geonameid[]" value="{{ result.geonameId }}" /></td>
+                            <td><input type="checkbox" name="geonameid[]" value="{{ result.geonameId }}"/></td>
                             <td>{{ result.geonameId }}</td>
                             <td>{{ result.name }}</td>
                             <td>{{ result.toponymName }}</td>

@@ -1,0 +1,25 @@
+{# breadcrumb.html.twig #}
+{# This is a crude breadcrumb creation mechanism, which is meant to be a temporary
+   solution until we use KNP breadcrumb menu #}
+{# Requires: title #}
+
+{% set isHomepage = app.request.attributes.get('_route') is same as('homepage') %}
+{% set tokens = app.request.pathInfo|split('/')|filter(t => t not in ['','blog','admin'] ) %}
+
+{% if not isHomepage %}
+    <ul class="breadcrumbs">
+        <li>
+            <a href="{{ path('homepage') }}">Home</a>
+        </li>
+        {% for token in tokens %}
+            <li>
+                {% if loop.last %}
+                    <span class="current">{{ title }}</span>
+                {% else %}
+                    {% set href = app.request.basePath ~ '/' ~ tokens|slice(0,loop.index)|join('/') %}
+                    <a href="{{ href }}">{{ token|humanize|u.title }}</a>
+               {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

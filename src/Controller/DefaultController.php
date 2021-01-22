@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Repository\ItemRepository;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -28,8 +29,10 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
      *
      * @return array
      */
-    public function indexAction(Request $request) {
-        return [];
+    public function indexAction(Request $request, ItemRepository $itemRepository) {
+        return [
+            'items' => $itemRepository->getFeaturedItems()
+        ];
     }
 
     /**

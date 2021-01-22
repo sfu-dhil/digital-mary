@@ -22,7 +22,7 @@
                     <div class='input-group'>
                         <input type='text' name='q' id='q' class='form-control' value='{{ q }}'>
                         <span class="input-group-btn">
-                            <button class="btn btn-primary" id='btn-search' type="submit">
+                            <button class="btn btn-primary" type="submit">
                                 <span class='glyphicon glyphicon-search'></span>
                                 Search
                             </button>
@@ -43,9 +43,31 @@
     </form>
 
     {% if locations|length %}
+        <table class="table table-bordered table-condensed table-hover table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Country</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for location in locations %}
+                <tr>
 
-        {% embed 'location/partial/table.html.twig' %}
-        {% endembed %}
+                    <td>
+                        <a href="{{ path('location_show', { 'id': location.id }) }}">
+                            {{ location.id }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ location }}
+                    </td>
+                    <td>{{ location.country }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
         <div class="navigation">
             {{ knp_pagination_render(locations) }}

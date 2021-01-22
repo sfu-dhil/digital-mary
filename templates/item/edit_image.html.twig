@@ -8,12 +8,20 @@
     <div class='panel panel-default'>
         <div class='panel-heading'>Current Image</div>
         <div class='panel-body'>
-            <img src="{{ path('image_thumbnail', {'id': image.id}) }}" class="img-thumbnail img-responsive center-block" />
+            <img src='{{ path('item_image_thumbnail', {'id': image.item.id, 'image_id': image.id}) }}'/>
         </div>
     </div>
 
-    {% embed 'image/partial/form.html.twig' %}
-    {% endembed %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="form-group">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-10">
+            <input type="submit" value="Update" class="btn btn-primary"/>
+            <a href="{{ path('image_index') }}" class="btn btn-warning">Cancel</a>
+        </div>
+    </div>
+    {{ form_end(form) }}
 
 {% endblock %}
 

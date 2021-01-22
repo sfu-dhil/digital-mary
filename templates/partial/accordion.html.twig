@@ -1,0 +1,13 @@
+{% import 'partial/icons.html.twig' as icons %}
+
+{% set iconToUse = 'chevron-right' %}
+
+{% if icon is defined %}
+    {% set iconToUse = icon %}
+{% endif %}
+
+<details class="details {% block class %}{% endblock %}"{%- if open is defined and open %} open="open"{% endif %}>
+    <summary>{% block summary %}{% endblock %} <span class="icon">{{ icons.get('chevron_right') }}</span></summary>
+    {% block content %}
+    {% endblock %}
+</details>

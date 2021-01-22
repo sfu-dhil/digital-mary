@@ -1,35 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscription Style List{% endblock %}
+{% block title %}Inscription Styles{% endblock %}
 
 {% block pageheader %}
-    <h1>Inscription Style List</h1>
+    <h1>Inscription Styles</h1>
     <p class="count">
-        Displaying {{ inscription_styles|length }} inscription_styles of {{ inscription_styles.getTotalItemCount }}
-        total.
+        Displaying {{ inscription_styles|length }} styles of {{ inscription_styles.getTotalItemCount }} total.
     </p>
 {% endblock %}
 
-{% block body %}
-
-    <div class='btn-toolbar pull-right'>
+{% block admin %}
+    <div class='btn-toolbar'>
         <div class='btn-group'>
             {% if is_granted('ROLE_CONTENT_ADMIN') %}
-            <a href="{{ path('inscription_style_new') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-plus"></span> New
-            </a>
+                <a href="{{ path('inscription_style_new') }}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-plus"></span> New
+                </a>
             {% endif %}
 
             <a href="{{ path('inscription_style_search') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span> Search </a>
+                <span class="glyphicon glyphicon-search"></span> Search
+            </a>
         </div>
     </div>
+{% endblock %}
 
-    {% embed 'inscription_style/partial/table.html.twig' %}
-    {% endembed %}
-
-    <div class="navigation">
-        {{ knp_pagination_render(inscription_styles) }}
-    </div>
-
+{% block body %}
+    {% include 'partial/term-table.html.twig' with {'items': inscription_styles} %}
 {% endblock %}

@@ -1,66 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Technique List{% endblock %}
+{% block title %}Techniques{% endblock %}
 
 {% block pageheader %}
-    <h1>Technique List</h1>
+    <h1>Techniques</h1>
     <p class="count">
         Displaying {{ techniques|length }} techniques of {{ techniques.getTotalItemCount }} total.
     </p>
- {% endblock %}
+{% endblock %}
 
-{% block body %}
-
-    <div class='btn-toolbar pull-right'>
+{% block admin %}
+    <div class='btn-toolbar'>
         <div class='btn-group'>
-            {% if is_granted('ROLE_CONTENT_ADMIN') %}
             <a href="{{ path('technique_new') }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-plus"></span> New
             </a>
-            {% endif %}
-
             <a href="{{ path('technique_search') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span> Search </a>
+                <span class="glyphicon glyphicon-search"></span> Search
+            </a>
         </div>
     </div>
+{% endblock %}
 
-    <table class="table table-bordered table-condensed table-hover table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>                                           <th>Name</th>
-                                                               <th>Label</th>
-                                                               <th>Description</th>
-
-            </tr>
-        </thead>
-        <tbody>
-        {% for technique in techniques %}
-            <tr>
-
-                <td>
-                    <a href="{{ path('technique_show', { 'id': technique.id }) }}">
-                        {{ technique.id }}
-                    </a>
-                </td>
-                <td>
-                    {{ technique.name }}
-                </td>
-
-                <td>
-                    {{ technique.label }}
-                </td>
-
-                <td>
-                    {{ technique.description }}
-                </td>
-
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <div class="navigation">
-        {{ knp_pagination_render(techniques) }}
-    </div>
-
+{% block body %}
+    {% include 'partial/term-table.html.twig' with {'items': techniques} %}
 {% endblock %}

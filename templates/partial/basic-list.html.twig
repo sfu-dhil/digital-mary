@@ -1,0 +1,39 @@
+{% if this is not defined %}
+    {% set keys = app.request.attributes|keys %}
+    {% set thisAtt = keys|filter(k =>  not(k starts with '_' or k =='id'))|first %}
+    {% set this =  attribute(_context, thisAtt) ?? attribute(_context, thisAtt|u.snake) %}
+{% endif %}
+
+<table class="table table-condensed">
+    <tbody>
+    <tr>
+        <th>Name</th>
+        <td>{{ this.name }}</td>
+    </tr>
+    <tr>
+        <th>Label</th>
+        <td>{{ this.label }}</td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td>{{ this.description|raw }}</td>
+    </tr>
+    <tr>
+        <th>Created</th>
+        <td>{{ this.created|date }}</td>
+    </tr>
+    <tr>
+        <th>Updated</th>
+        <td>{{ this.updated|date }}</td>
+    </tr>
+    </tbody>
+</table>
+
+
+
+{% if items is defined %}
+    {% include 'item/partial/list.html.twig' %}
+{% elseif this.items is defined %}
+    {% include 'item/partial/list.html.twig' with {'items': this.items} %}
+
+{% endif %}

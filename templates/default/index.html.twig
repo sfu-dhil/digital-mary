@@ -1,5 +1,59 @@
 {% extends 'base.html.twig' %}
+{% import 'partial/icons.html.twig' as icons %}
+
+{% block mainclass %}{% endblock %}
 
 {% block body %}
-    <p>New Digital Mary</p>
+    <section class="home-main{% if not(is_granted('ROLE_CONTENT_ADMIN')) %} full{% endif %}">
+        <div class="home-main__container">
+            <div class="container">
+                <div class="home-header">
+                    <h1>
+                        <div>The</div>
+                        <div>Digital Mary</div>
+                        <div>Project</div>
+                    </h1>
+                </div>
+                <div class="home-desc">
+                    <p>The Digital Mary Project is a Mariological resource dedicated to the collection and curation of
+                        the material culture related to Virgin Mary. Our primary objective is to build a comprehensive
+                        open-access database that brings all of the artistic productions, artefacts, and built
+                        landscapes related to the early Cult of the Virgin in the Eastern Mediterranean together into
+                        an easily-searchable digital platform.</p>
+                </div>
+            </div>
+
+        </div>
+        {% if is_granted('ROLE_CONTENT_ADMIN') %}
+            <span class="scroll-down-btn">{{ icons.get('chevron_down') }}</span>
+        {% endif %}
+    </section>
+
+    {% if is_granted('ROLE_CONTENT_ADMIN') %}
+
+        <section class="home-search">
+            <div class="container">
+                <h2>Explore the Archive</h2>
+                <ul class="explore-list">
+                    {% for item in knp_menu_get('main', ['browse'])|slice(0, -3) %}
+                        <li class="glass">
+                            <a href="{{ item.uri }}">{{ item.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
+        <section>
+            <div class="container">
+                <h2>Recently Added</h2>
+                {% include 'item/partial/list.html.twig' %}
+            </div>
+        </section>
+
+    {% endif %}
+
+{% endblock %}
+
+
+{% block javascripts %}
 {% endblock %}

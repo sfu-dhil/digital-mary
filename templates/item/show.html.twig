@@ -1,58 +1,261 @@
 {% extends 'base.html.twig' %}
+{% import 'item/partial/detail.html.twig' as  dl %}
+{% import 'partial/icons.html.twig' as icons %}
 
-{% block title %}Item Details {% endblock %}
+{% set hasImages = item.images|length + item.remoteImages|length > 0 %}
 
- {% block pageheader %}
-     <h1>Item Details</h1>
- {% endblock %}
+{% block title %}{{ item.name }}{% endblock %}
+
+{% block admin %}
+    <div class='btn-toolbar'>
+        <div class="btn-group">
+            <a href="{{ path('item_add_image', {'id': item.id}) }}" class="btn btn-default">
+                <span class='glyphicon glyphicon-plus'></span> Add Image </a>
+        </div>
+        {% if item.images|length == 0 %}
+            <div class="btn-group">
+                <a href="{{ path('item_add_remote_image', {'id': item.id}) }}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-plus"></span> Add Remote Image
+                </a>
+            </div>
+        {% endif %}
+        <div class='btn-group'>
+            <a href="{{ path('item_edit', {'id': item.id }) }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-edit"></span> Edit </a>
+        </div>
+        <div class='btn-group'>
+            <form class='delete-form' method="post" action="{{ path('item_delete', {'id': item.id }) }}"
+                  onsubmit="return confirm('Are you sure you want to delete this item?');">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_token" value="{{ csrf_token("delete" ~ item.id) }}">
+                <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block bodyclass %}
+    {% if not(hasImages) %} imageless{% endif %}
+{% endblock %}
 
 {% block body %}
+    <section class="header">
+        <div class="item-header item-header__full">
+            <h1>{{ item.name }}</h1>
+            <div>
+                <h2>{{ dl.iterate(item.category, 'category_show')|striptags|trim }}</h2>
 
-    {% if is_granted('ROLE_CONTENT_ADMIN') %}
-        <div class='btn-toolbar pull-right'>
-            <div class='btn-group'>
-                <a href="{{ path('item_edit', {'id': item.id }) }}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-edit"></span> Edit </a>
+                {% set subtitle = [] %}
+
+                {% if item.civilization|length > 0 %}
+                    {% set subtitle = subtitle|merge([dl.iterate(item.civilization, 'civilization_show')|striptags|trim]) %}
+                {% elseif item.civilizationOther is not null %}
+                    {% set subtitle = subtitle|merge([dl.firstParaString(item.civilizationOther)]) %}
+                {% endif %}
+
+                {% if item.displayYear %}
+                    {% set subtitle = subtitle|merge([item.displayYear]) %}
+                {% endif %}
+
+                {% if subtitle|length > 0 %}
+                    <h3>{{ subtitle|join(', ')|raw }}</h3>
+                {% endif %}
             </div>
-            <div class='btn-group'>
-                <form class='delete-form' method="post" action="{{ path('item_delete', {'id': item.id }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <input type="hidden" name="_token" value="{{ csrf_token("delete" ~ item.id) }}">
-                    <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button>
-                </form>
+        </div>
+    </section>
+
+
+    <section class="description">
+        <div class="item-description">
+            {{ item.description|raw }}
+        </div>
+    </section>
+
+    {% if hasImages %}
+        <section class="images">
+            <h2 class="sr-only">Images</h2>
+            <div class="sticky">
+                <div class="img-content">
+                    {% if item.images|length > 0 %}
+                        {% include 'image/partial/carousel.html.twig' with {'images': item.images} %}
+                    {% else %}
+                        {% embed 'partial/accordion.html.twig' with {'open': true} %}
+                            {% block class %}item-details-remoteImg{% endblock %}
+                            {% block summary %}Remote Images{% endblock %}
+                            {% block content %}
+                                <div class="item-details__content">
+                                    <ul>
+                                        {% for image in item.remoteImages %}
+                                            {% set text = image.url %}
+                                            {% if 'britishmuseum.org' in text %}
+                                                {% set text = 'British Museum' %}
+                                            {% endif %}
+                                        <li>
+                                            <a href="{{ image.url }}">
+                                                <div>
+                                                    <div>{{ image.title }}</div>
+                                                    <div>{{ text }}</div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endblock %}
+                        {% endembed %}
+                    {% endif %}
+                </div>
             </div>
+        </section>
+        {# Div for image viewer #}
+        <div id="ndm-viewer-container">
         </div>
     {% endif %}
 
-    {% embed 'item/partial/detail.html.twig' %}
-    {% endembed %}
 
-    <h2>Images</h2>
-    {% if is_granted('ROLE_CONTENT_ADMIN') %}
-        <div class="btn-toolbar">
-            <div class="btn-group pull-right">
-                <a href="{{ path('item_add_image', {'id': item.id}) }}" class="btn btn-default">
-                    <span class='glyphicon glyphicon-plus'></span> Add Image </a>
-            </div>
+
+    <section class="metadata">
+        <div class="item-details-list">
+            {% set dc %}
+                {{ dl.make(item, 'category', 'Categories', 'category_show') }}
+                {{ dl.make(item, 'provenance', "Provenance", "location_show", "itemsProvenanced") }}
+                {{ dl.make(item, 'findSpot', "Find Spot", "location_show", "itemsFound") }}
+                {{ dl.make(item, 'materials', "Materials", "material_show") }}
+                {{ dl.make(item, 'techniques', "Techniques", "technique_show") }}
+                {{ dl.make(item, 'dimensions', 'Dimensions') }}
+                {{ dl.make(item, 'location', 'Location') }}
+                {{ dl.make(item, 'civilization', 'Culture', 'civilization_show') }}
+                {% set displayPeriod = [item.periodStart] %}
+                {% if not(item.periodEnd is same as(item.periodStart)) %}
+                    {% set displayPeriod = displayPeriod|merge([item.periodEnd]) %}
+                {% endif %}
+                {{ dl.make({'display': displayPeriod|join('-')|lower}, 'display', "Period") }}
+                {{ dl.make(item, 'subjects', "Subjects", "subject_show") }}
+            {% endset %}
+
+            {% embed 'partial/accordion.html.twig' with {'open': true} %}
+                {% block class %}item-details-main{% endblock %}
+                {% block summary %}Item Information{% endblock %}
+                {% block content %}
+                    <div class="item-details-list">
+                        {{ dc }}
+                    </div>
+                {% endblock %}
+            {% endembed %}
+
+            {# NOTE: We test for both inscription and translatedInscription
+                     since there are many instances of inscriptions that just
+                     say "None". #}
+
+            {# TODO: Check with SH about the 'None' inscriptions #}
+
+            {% if item.inscription and item.translatedInscription %}
+                {% embed 'partial/accordion.html.twig' %}
+                    {% block class %}item-details__inscription{% endblock %}
+                    {% block summary %}Inscription{% endblock %}
+                    {% block content %}
+                        <div class="item-inscription">
+                            <!--First column is information-->
+                            <div class="item-inscription__body">
+                                <div>
+
+                                    <div class="item-inscription__header">
+                                        <h4>Original</h4>
+                                        {# TODO: Refactor this fairly significantly using the details macro #}
+                                        {% if item.inscriptionStyle or item.inscriptionLanguage|length > 0 %}
+                                            <ul class="list-inline">
+                                                
+                                                {% if item.inscriptionLanguage|length > 0 %}
+                                                    <li class="item-inscription-language" data-caption="Language">
+                                                        {% for language in item.inscriptionLanguage %}
+                                                            <a href='{{ path("language_show", {"id": language.id}) }}'>{{ language }}</a>
+                                                            {% if not loop.last %},{% endif %}
+                                                        {% endfor %}
+                                                    </li>
+                                                {% endif %}
+
+                                                {% if item.inscriptionStyle %}
+                                                    <li class="item-inscription-style" data-caption="Style">
+                                                        <a href='{{ path("inscription_style_show", {"id": item.inscriptionStyle.id}) }}'>{{ item.inscriptionStyle }}</a>
+                                                    </li>
+                                                {% endif %}
+
+                                            </ul>
+                                        {% endif %}
+                                    </div>
+                                    <div class="item-inscription__content{% if item.inscriptionLanguage|length %}{{ ' ' ~ item.inscriptionLanguage|map(lang => "#{lang.name}")|join(' ') }}{% endif %}">
+                                        {{ item.inscription|raw }}
+                                    </div>
+                                </div>
+                                {% if item.translatedInscription %}
+                                    <div>
+                                        <div class="item-inscription__header">
+                                            <h4>Translation</h4>
+                                        </div>
+                                        <div class="item-inscription__content">
+                                            {{ item.translatedInscription|raw }}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endblock %}
+                {% endembed %}
+            {% endif %}
+
+
+            {% if item.references %}
+                {% embed 'partial/accordion.html.twig' %}
+                    {% block class %}item-details__references{% endblock %}
+                    {% block summary %}References{% endblock %}
+                    {% block content %}
+                        {{ item.references|raw|nl2br }}
+                    {% endblock %}
+                {% endembed %}
+            {% endif %}
+
+            {# Now hack together a citation block #}
+
+            {% embed 'partial/accordion.html.twig' %}
+                {% block class %}item-details__editHistory{% endblock %}
+                {% block summary %}Credits and Citations{% endblock %}
+                {% block content %}
+                    <div class="item-details-list">
+                        <div class="item-details item-details__citation">
+                            <h2 class="item-details__header">Cite this Page</h2>
+                            <div class="item-details__content">
+                                <p>
+                                    {% include 'partial/citation.html.twig' with {'title': item.name, 'updated': item.updated} %}
+                                </p>
+                            </div>
+                        </div>
+
+                        {% if item.revisions|length > 0 %}
+                            <div class="item-details item-details__revisions">
+                                <h2 class="item-details__header">Contributors</h2>
+                                <div class="item-details__content">
+                                    {% set contribs = [] %}
+                                    {% for revision in item.revisions %}
+                                        {% if revision.initials not in contribs %}
+                                            {% set contribs = contribs|merge([revision.initials]) %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    <p>{{ contribs|join(', ') }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% for field in ['updated', 'created'] %}
+                            <div class="item-details item-details__item{{ field|capitalize }}">
+                                <h2 class="item-details__header">{{ field|capitalize }}</h2>
+                                <div class="item-details__content">
+                                    <p>{{ attribute(item, field)|date('F j, Y') }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endblock %}
+            {% endembed %}
         </div>
-    {% endif %}
-    {% embed 'image/partial/list.html.twig' with {'images': item.images} %}
-    {% endembed %}
-
-    <h2>Remote Images</h2>
-    {% if is_granted('ROLE_CONTENT_ADMIN') %}
-        <div class="btn-toolbar">
-            <div class="btn-group pull-right">
-                <a href="{{ path('item_add_remote_image', {'id': item.id}) }}" class="btn btn-default">
-                    <span class='glyphicon glyphicon-plus'></span> Add Remote Image </a>
-            </div>
-        </div>
-    {% endif %}
-
-    {% embed 'remote_image/partial/table.html.twig' with {'remote_images': item.remoteImages} %}
-    {% endembed %}
-
-    {% include 'partial/citation.html.twig' with {'title': item.name, 'updated': item.updated} %}
-
-
+    </section>
 {% endblock %}

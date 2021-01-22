@@ -22,7 +22,7 @@ parameters:
     dm.geonames.username: '%env(string:DM_GEONAMES_USERNAME)%'
 
     # pagination
-    page_size: 25
+    page_size: 24
 services:
     # default configuration for services in *this* file
     _defaults:

@@ -1,17 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Language List{% endblock %}
+{% block title %}Languages{% endblock %}
 
 {% block pageheader %}
-    <h1>Language List</h1>
+    <h1>Languages</h1>
     <p class="count">
         Displaying {{ languages|length }} languages of {{ languages.getTotalItemCount }} total.
     </p>
 {% endblock %}
 
-{% block body %}
-
-    <div class='btn-toolbar pull-right'>
+{% block admin %}
+    <div class='btn-toolbar'>
         <div class='btn-group'>
             {% if is_granted('ROLE_CONTENT_ADMIN') %}
                 <a href="{{ path('language_new') }}" class="btn btn-default">
@@ -22,12 +21,8 @@
                 <span class="glyphicon glyphicon-search"></span> Search </a>
         </div>
     </div>
+{% endblock %}
 
-    {% embed 'language/partial/table.html.twig' %}
-    {% endembed %}
-
-    <div class="navigation">
-        {{ knp_pagination_render(languages) }}
-    </div>
-
+{% block body %}
+    {% include 'partial/term-table.html.twig' with {'items': languages} %}
 {% endblock %}

@@ -9,7 +9,7 @@
              Displaying {{ images|length }} images of {{ images.getTotalItemCount }} total.
          </p>
      {% endif %}
- {% endblock %}
+ {% endblock %} 
 
 {% block body %}
 
@@ -22,7 +22,7 @@
                     <div class='input-group'>
                         <input type='text' name='q' id='q' class='form-control' value='{{ q }}'>
                         <span class="input-group-btn">
-                            <button class="btn btn-primary" id='btn-search' type="submit">
+                            <button class="btn btn-primary" type="submit">
                                 <span class='glyphicon glyphicon-search'></span>
                                 Search
                             </button>
@@ -43,9 +43,26 @@
     </form>
 
     {% if images|length %}
+        <table class="table table-bordered table-condensed table-hover table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for image in images %}
+                <tr>
 
-        {% embed 'image/partial/table.html.twig' %}
-        {% endembed %}
+                    <td>
+                        <a href="{{ path('image_show', { 'id': image.id }) }}">
+                            {{ image.id }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
 
         <div class="navigation">
             {{ knp_pagination_render(images) }}
