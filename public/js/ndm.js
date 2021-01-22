@@ -1,6 +1,8 @@
 /* Basic scripts for the Digital Mary Project
  */
 
+import Accordion from '../yarn/dhilux/js/accordion.js';
+
 /* First thing to do is set up the images for the viewer thing */
 
 let gallery, glider
