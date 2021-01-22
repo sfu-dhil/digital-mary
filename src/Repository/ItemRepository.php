@@ -71,13 +71,11 @@ class ItemRepository extends ServiceEntityRepository {
     }
 
     /**
-     * @param string $q
-     *
      * @return Collection|Item[]
      */
     public function getFeaturedItems(){
         $qb = $this->createQueryBuilder('item');
-        $qb->andHaving('SIZE(item.images) > 0');
+        $qb->andWhere('SIZE(item.images) > 0');
         $qb->orderBy('item.id','DESC');
         $qb->setMaxResults(5);
         return $qb->getQuery()->execute();
