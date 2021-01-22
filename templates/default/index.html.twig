@@ -4,7 +4,7 @@
 {% block mainclass %}{% endblock %}
 
 {% block body %}
-    <section class="home-main{% if not(is_granted('ROLE_ADMIN')) %} full{% endif %}">
+    <section class="home-main{% if not(is_granted('ROLE_CONTENT_ADMIN')) %} full{% endif %}">
         <div class="home-main__container">
             <div class="container">
                 <div class="home-header">
@@ -24,12 +24,12 @@
             </div>
 
         </div>
-        {% if is_granted('ROLE_ADMIN') %}
+        {% if is_granted('ROLE_CONTENT_ADMIN') %}
             <span class="scroll-down-btn">{{ icons.get('chevron_down') }}</span>
         {% endif %}
     </section>
 
-    {% if is_granted('ROLE_ADMIN') %}
+    {% if is_granted('ROLE_CONTENT_ADMIN') %}
 
         <section class="home-search">
             <div class="container">
