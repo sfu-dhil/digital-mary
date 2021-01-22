@@ -35,7 +35,7 @@
             <div class="container">
                 <h2>Explore the Archive</h2>
                 <ul class="explore-list">
-                    {% for item in knp_menu_get('main', ['browse'])|slice(0, -2) %}
+                    {% for item in knp_menu_get('main', ['browse'])|slice(0, -3) %}
                         <li class="glass">
                             <a href="{{ item.uri }}">{{ item.name }}</a>
                         </li>
