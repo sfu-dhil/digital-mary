@@ -58,7 +58,7 @@ class ImageRepository extends ServiceEntityRepository {
      */
     public function searchQuery($q) {
         $qb = $this->createQueryBuilder('image');
-        $qb->addSelect('MATCH(image.original_name, image.description) AGAINST(:q) AS HIDDEN score');
+        $qb->addSelect('MATCH(image.originalName, image.description) AGAINST(:q) AS HIDDEN score');
         $qb->andHaving('score > 0');
         $qb->orderBy('score', 'DESC');
         $qb->setParameter('q', $q);
