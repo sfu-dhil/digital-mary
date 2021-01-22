@@ -2,7 +2,7 @@
  */
 
 import Accordion from '../yarn/dhilux/js/accordion.js';
-
+import LazyLoad from '../yarn/dhilux/js/lazyload.js';
 /* First thing to do is set up the images for the viewer thing */
 
 let gallery, glider
@@ -177,26 +177,8 @@ function makeImageViewer(){
 
 // Let's do some browse lazy loading...
 function enhanceLazyLoad(){
-    let noImg = document.body.dataset.ndmNoImg;
-    if ('loading' in HTMLImageElement.prototype) {
-        let images = document.querySelectorAll('img[loading="lazy"]');
-        images.forEach(img => {
-            let item = img.closest('.item');
-            if (!img.complete) {
-                item.classList.add('loading');
-                img.addEventListener('load', e => {
-                    item.classList.add('loaded');
-                });
-                img.addEventListener('error', e => {
-                    console.log('Image ' + img.src + ' failed to load.');
-                    item.classList.add('loaded');
-                    item.classList.add('error');
-                    img.classList.add('placeholder');
-                    img.src = noImg;
-                })
-            }
-        })
-    };
+    let lazy = new LazyLoad();
+    lazy.noImg = document.body.dataset.ndmNoImg;
 }
 
 
