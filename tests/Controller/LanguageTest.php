@@ -286,7 +286,7 @@ class LanguageTest extends ControllerBaseCase {
         $formCrawler = $this->client->request('GET', '/language/new');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Save')->form([
+        $form = $formCrawler->selectButton('Create')->form([
             'language[label]' => 'New Label',
             'language[description]' => 'New Description',
         ]);
@@ -308,7 +308,7 @@ class LanguageTest extends ControllerBaseCase {
         $formCrawler = $this->client->request('GET', '/language/new_popup');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Save')->form([
+        $form = $formCrawler->selectButton('Create')->form([
             'language[label]' => 'New Label',
             'language[description]' => 'New Description',
         ]);

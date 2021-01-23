@@ -287,7 +287,7 @@ class InscriptionStyleTest extends ControllerBaseCase {
         $formCrawler = $this->client->request('GET', '/inscription_style/new');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Save')->form([
+        $form = $formCrawler->selectButton('Create')->form([
             'inscription_style[label]' => 'New Label',
             'inscription_style[description]' => 'New Description',
         ]);
@@ -310,7 +310,7 @@ class InscriptionStyleTest extends ControllerBaseCase {
         $formCrawler = $this->client->request('GET', '/inscription_style/new_popup');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Save')->form([
+        $form = $formCrawler->selectButton('Create')->form([
             'inscription_style[label]' => 'New Label',
             'inscription_style[description]' => 'New Description',
         ]);

@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Item;
+use App\Entity\Period;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Query;
@@ -78,6 +79,15 @@ class ItemRepository extends ServiceEntityRepository {
         $qb->andWhere('SIZE(item.images) > 0');
         $qb->orderBy('item.id','DESC');
         $qb->setMaxResults(5);
+        return $qb->getQuery()->execute();
+    }
+
+    public function findItemsByPeriod(Period $period) {
+        $qb = $this->createQueryBuilder('item');
+        $qb->andWhere("item.periodStart <= :period");
+        $qb->andWhere(":period <= item.periodEnd");
+        $qb->orderBy('item.name', 'ASC');
+        $qb->setParameter('period', $period);
         return $qb->getQuery()->execute();
     }
 

@@ -50,6 +50,10 @@ services:
             - { name: doctrine.event_listener, event: preUpdate }
             - { name: doctrine.event_listener, event: postLoad }
 
+    App\EventListener\PeriodListener:
+        tags:
+            - { name: doctrine.event_listener, event: postLoad }
+
     App\Menu\Builder:
         tags:
             - { name: knp_menu.menu_builder, method: mainMenu, alias: main}

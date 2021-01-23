@@ -287,7 +287,7 @@ class CivilizationTest extends ControllerBaseCase {
         $formCrawler = $this->client->request('GET', '/civilization/new');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Save')->form([
+        $form = $formCrawler->selectButton('Create')->form([
             'civilization[label]' => 'New Label',
             'civilization[description]' => 'New Description',
         ]);
@@ -310,7 +310,7 @@ class CivilizationTest extends ControllerBaseCase {
         $formCrawler = $this->client->request('GET', '/civilization/new_popup');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Save')->form([
+        $form = $formCrawler->selectButton('Create')->form([
             'civilization[label]' => 'New Label',
             'civilization[description]' => 'New Description',
         ]);

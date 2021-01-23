@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category Search{% endblock %}
+{% block title %}period Search{% endblock %}
 
  {% block pageheader %}
-     <h1>Category Search</h1>
-     {% if categories|length %}
+     <h1>period Search</h1>
+     {% if periods|length %}
          <p class="count">
-             Displaying {{ categories|length }} categories of {{ categories.getTotalItemCount }} total.
+             Displaying {{ periods|length }} periods of {{ periods.getTotalItemCount }} total.
          </p>
      {% endif %}
  {% endblock %}
@@ -14,7 +14,7 @@
 {% block body %}
 
     {% include 'partial/search-form.html.twig' %}
-    {% if categories|length %}
+    {% if periods|length %}
         <table class="table table-bordered table-condensed table-hover table-striped">
             <thead>
             <tr>
@@ -25,24 +25,24 @@
             </tr>
             </thead>
             <tbody>
-            {% for category in categories %}
+            {% for period in periods %}
                 <tr>
 
                     <td>
-                        <a href="{{ path('category_show', { 'id': category.id }) }}">
-                            {{ category.id }}
+                        <a href="{{ path('period_show', { 'id': period.id }) }}">
+                            {{ period.id }}
                         </a>
                     </td>
                     <td>
-                        {{ category.name }}
+                        {{ period.name }}
                     </td>
 
                     <td>
-                        {{ category.label }}
+                        {{ period.label }}
                     </td>
 
                     <td>
-                        {{ category.description }}
+                        {{ period.description }}
                     </td>
 
                 </tr>
@@ -52,7 +52,7 @@
 
 
         <div class="navigation">
-            {{ knp_pagination_render(categories) }}
+            {{ knp_pagination_render(periods) }}
         </div>
     {% endif %}
 

@@ -287,7 +287,7 @@ class SubjectTest extends ControllerBaseCase {
         $formCrawler = $this->client->request('GET', '/subject/new');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Save')->form([
+        $form = $formCrawler->selectButton('Create')->form([
             'subject[label]' => 'New Label',
             'subject[description]' => 'New Description',
         ]);
@@ -310,7 +310,7 @@ class SubjectTest extends ControllerBaseCase {
         $formCrawler = $this->client->request('GET', '/subject/new_popup');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Save')->form([
+        $form = $formCrawler->selectButton('Create')->form([
             'subject[label]' => 'New Label',
             'subject[description]' => 'New Description',
         ]);

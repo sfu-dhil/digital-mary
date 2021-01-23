@@ -2,7 +2,6 @@
 
 {% block title %}Subject Search{% endblock %}
 
-
  {% block pageheader %}
      <h1>Subject Search</h1>
      {% if subjects|length %}
@@ -13,13 +12,13 @@
  {% endblock %}
 
 {% block body %}
-    {% if subjects|length %}
-        {% include('subject/partial/list.html.twig') %}
-    {% else %}
-        <p>No results found.</p>
+
+    {% include 'partial/search-form.html.twig' %}
+
+        <div class="navigation">
+            {{ knp_pagination_render(subjects) }}
+        </div>
     {% endif %}
-    <div class="navigation">
-        {{ knp_pagination_render(subjects) }}
-    </div>
+
 {% endblock %}
 

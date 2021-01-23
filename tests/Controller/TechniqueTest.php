@@ -287,7 +287,7 @@ class TechniqueTest extends ControllerBaseCase {
         $formCrawler = $this->client->request('GET', '/technique/new');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Save')->form([
+        $form = $formCrawler->selectButton('Create')->form([
             'technique[label]' => 'New Label',
             'technique[description]' => 'New Description',
         ]);
@@ -310,7 +310,7 @@ class TechniqueTest extends ControllerBaseCase {
         $formCrawler = $this->client->request('GET', '/technique/new_popup');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Save')->form([
+        $form = $formCrawler->selectButton('Create')->form([
             'technique[label]' => 'New Label',
             'technique[description]' => 'New Description',
         ]);
