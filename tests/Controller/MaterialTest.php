@@ -287,7 +287,7 @@ class MaterialTest extends ControllerBaseCase {
         $formCrawler = $this->client->request('GET', '/material/new');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Save')->form([
+        $form = $formCrawler->selectButton('Create')->form([
             'material[label]' => 'New Label',
             'material[description]' => 'New Description',
         ]);
@@ -310,7 +310,7 @@ class MaterialTest extends ControllerBaseCase {
         $formCrawler = $this->client->request('GET', '/material/new_popup');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Save')->form([
+        $form = $formCrawler->selectButton('Create')->form([
             'material[label]' => 'New Label',
             'material[description]' => 'New Description',
         ]);

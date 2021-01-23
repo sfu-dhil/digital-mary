@@ -183,7 +183,7 @@ class PeriodTest extends ControllerBaseCase {
         $formCrawler = $this->client->request('GET', '/period/new');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Save')->form([
+        $form = $formCrawler->selectButton('Create')->form([
             'period[label]' => 'New Label',
             'period[description]' => 'New Description',
             'period[sortableYear]' => '123',
@@ -206,7 +206,7 @@ class PeriodTest extends ControllerBaseCase {
         $formCrawler = $this->client->request('GET', '/period/new_popup');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Save')->form([
+        $form = $formCrawler->selectButton('Create')->form([
             'period[label]' => 'New Label',
             'period[description]' => 'New Description',
             'period[sortableYear]' => '123',

@@ -241,11 +241,7 @@ class ItemTest extends ControllerBaseCase {
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Updated Description")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Updated Inscription")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Updated TranslatedInscription")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Updated Dimensions")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Updated Bibliography")')->count());
+        $this->assertSame(1, $responseCrawler->filter('div:contains("Updated Description")')->count());
     }
 
     /**
@@ -297,7 +293,7 @@ class ItemTest extends ControllerBaseCase {
         $formCrawler = $this->client->request('GET', '/item/new');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Save')->form([
+        $form = $formCrawler->selectButton('Create')->form([
             'item[name]' => 'New Name',
             'item[description]' => 'New Description',
             'item[inscription]' => 'New Inscription',
@@ -311,12 +307,8 @@ class ItemTest extends ControllerBaseCase {
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $this->assertSame(1, $responseCrawler->filter('td:contains("New Name")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("New Description")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("New Inscription")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("New TranslatedInscription")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("New Dimensions")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("New Bibliography")')->count());
+        $this->assertSame(1, $responseCrawler->filter('h1:contains("New Name")')->count());
+        $this->assertSame(1, $responseCrawler->filter('div:contains("New Description")')->count());
     }
 
     /**
@@ -328,7 +320,7 @@ class ItemTest extends ControllerBaseCase {
         $formCrawler = $this->client->request('GET', '/item/new_popup');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Save')->form([
+        $form = $formCrawler->selectButton('Create')->form([
             'item[name]' => 'New Name',
             'item[description]' => 'New Description',
             'item[inscription]' => 'New Inscription',
@@ -341,13 +333,8 @@ class ItemTest extends ControllerBaseCase {
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("New Name")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Description")')->count());
-        // One for inscription, one for translated inscription
-        $this->assertSame(2, $responseCrawler->filter('td:contains("Inscription")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("TranslatedInscription")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Dimensions")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Bibliography")')->count());
+        $this->assertSame(1, $responseCrawler->filter('h1:contains("New Name")')->count());
+        $this->assertSame(1, $responseCrawler->filter('div:contains("Description")')->count());
     }
 
     /**
@@ -391,7 +378,7 @@ class ItemTest extends ControllerBaseCase {
 
         $formCrawler = $this->client->request('GET', '/item/1/add_image');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $form = $formCrawler->selectButton('Save')->form([
+        $form = $formCrawler->selectButton('Create')->form([
             'image[imageFile]' => $upload,
             'image[public]' => 1,
         ]);
@@ -399,7 +386,7 @@ class ItemTest extends ControllerBaseCase {
 
         $this->assertTrue($this->client->getResponse()->isRedirect('/item/1'));
         $responseCrawler = $this->client->followRedirect();
-        $this->assertSame(2, $responseCrawler->filter('div:contains("The image has been added to the item")')->count());
+        $this->assertSame(1, $responseCrawler->filter('div:contains("The image has been added to the item")')->count());
 
         $this->entityManager->clear();
         $item = $this->entityManager->find(Item::class, 1);
@@ -422,7 +409,7 @@ class ItemTest extends ControllerBaseCase {
 
         $formCrawler = $this->client->request('GET', '/item/1/add_image');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $form = $formCrawler->selectButton('Save')->form([
+        $form = $formCrawler->selectButton('Create')->form([
             'image[imageFile]' => $upload,
             'image[public]' => 1,
         ]);
@@ -430,7 +417,7 @@ class ItemTest extends ControllerBaseCase {
 
         $this->assertTrue($this->client->getResponse()->isRedirect('/item/1'));
         $responseCrawler = $this->client->followRedirect();
-        $this->assertSame(2, $responseCrawler->filter('div:contains("The image has been added to the item")')->count());
+        $this->assertSame(1, $responseCrawler->filter('div:contains("The image has been added to the item")')->count());
 
         $this->entityManager->clear();
         $item = $this->entityManager->find(Item::class, 1);
@@ -451,7 +438,7 @@ class ItemTest extends ControllerBaseCase {
 
         $formCrawler = $this->client->request('GET', '/item/1/add_image');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $form = $formCrawler->selectButton('Save')->form([
+        $form = $formCrawler->selectButton('Create')->form([
             'image[imageFile]' => $upload,
             'image[public]' => 1,
         ]);
@@ -459,7 +446,7 @@ class ItemTest extends ControllerBaseCase {
 
         $this->assertTrue($this->client->getResponse()->isRedirect('/item/1'));
         $responseCrawler = $this->client->followRedirect();
-        $this->assertSame(2, $responseCrawler->filter('div:contains("The image has been added to the item")')->count());
+        $this->assertSame(1, $responseCrawler->filter('div:contains("The image has been added to the item")')->count());
 
         $this->entityManager->clear();
         $item = $this->entityManager->find(Item::class, 1);
@@ -480,7 +467,7 @@ class ItemTest extends ControllerBaseCase {
 
         $this->assertTrue($this->client->getResponse()->isRedirect('/item/1'));
         $responseCrawler = $this->client->followRedirect();
-        $this->assertSame(2, $responseCrawler->filter('div:contains("The image has been updated")')->count());
+        $this->assertSame(1, $responseCrawler->filter('div:contains("The image has been updated")')->count());
 
         $this->entityManager->clear();
         $item = $this->entityManager->find(Item::class, 1);
@@ -530,9 +517,7 @@ class ItemTest extends ControllerBaseCase {
         $this->assertTrue($this->client->getResponse()->isRedirect('/item/2'));
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("http://example.com/new/url")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Updated Title")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Updated Description")')->count());
+        $this->assertSame(5, $responseCrawler->filter('div:contains("Updated Title")')->count());
     }
 
     /**
@@ -574,8 +559,6 @@ class ItemTest extends ControllerBaseCase {
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("http://example.com/new/url")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("New Title")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("New Description")')->count());
+        $this->assertSame(5, $responseCrawler->filter('div:contains("New Title")')->count());
     }
 }

@@ -288,7 +288,7 @@ class CategoryTest extends ControllerBaseCase {
         $formCrawler = $this->client->request('GET', '/category/new');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Save')->form([
+        $form = $formCrawler->selectButton('Create')->form([
             'category[label]' => 'New Label',
             'category[description]' => 'New Description',
         ]);
@@ -311,7 +311,7 @@ class CategoryTest extends ControllerBaseCase {
         $formCrawler = $this->client->request('GET', '/category/new_popup');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Save')->form([
+        $form = $formCrawler->selectButton('Create')->form([
             'category[label]' => 'New Label',
             'category[description]' => 'New Description',
         ]);

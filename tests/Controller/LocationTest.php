@@ -295,7 +295,7 @@ class LocationTest extends ControllerBaseCase {
         $formCrawler = $this->client->request('GET', '/location/new');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Save')->form([
+        $form = $formCrawler->selectButton('Create')->form([
             'location[label]' => 'New Label',
             'location[description]' => 'New Description',
             'location[latitude]' => 123.456,
@@ -324,7 +324,7 @@ class LocationTest extends ControllerBaseCase {
         $formCrawler = $this->client->request('GET', '/location/new_popup');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $form = $formCrawler->selectButton('Save')->form([
+        $form = $formCrawler->selectButton('Create')->form([
             'location[label]' => 'New Label',
             'location[description]' => 'New Description',
             'location[latitude]' => 123.456,
