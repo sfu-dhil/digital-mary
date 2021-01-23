@@ -11,6 +11,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\PeriodRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractTerm;
 
@@ -25,6 +27,18 @@ class Period extends AbstractTerm {
     private $sortableYear;
 
     /**
+     * Not ORM defined, because the entity relationship is too complex.
+     *
+     * @var Collection|Item[]
+     */
+    private $items;
+
+    public function __construct() {
+        parent::__construct();
+        $this->items = new ArrayCollection();
+    }
+
+    /**
      * There aren't ManyToOne fields in this entity. Use a Repository method
      * instead.
      */
@@ -36,5 +50,15 @@ class Period extends AbstractTerm {
         $this->sortableYear = $sortableYear;
 
         return $this;
+    }
+
+    public function setItems($items) {
+        $this->items = $items;
+
+        return $this;
+    }
+
+    public function getItems() {
+        return $this->items;
     }
 }
