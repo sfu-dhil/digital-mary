@@ -138,62 +138,63 @@ class SubjectTest extends ControllerBaseCase {
         $this->assertCount(4, $json);
     }
 
-    public function testAnonSearch() : void {
-        $repo = $this->createMock(SubjectRepository::class);
-        $repo->method('searchQuery')->willReturn([$this->getReference('subject.1')]);
-        $this->client->disableReboot();
-        $this->client->getContainer()->set('test.' . SubjectRepository::class, $repo);
-
-        $crawler = $this->client->request('GET', '/subject/search');
-        $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
-        if (self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
-            // If authentication is required stop here.
-            return;
-        }
-
-        $form = $crawler->selectButton('btn-search')->form([
-            'q' => 'subject',
-        ]);
-
-        $responseCrawler = $this->client->submit($form);
-        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-    }
-
-    public function testUserSearch() : void {
-        $repo = $this->createMock(SubjectRepository::class);
-        $repo->method('searchQuery')->willReturn([$this->getReference('subject.1')]);
-        $this->client->disableReboot();
-        $this->client->getContainer()->set('test.' . SubjectRepository::class, $repo);
-
-        $this->login('user.user');
-        $crawler = $this->client->request('GET', '/subject/search');
-        $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-
-        $form = $crawler->selectButton('btn-search')->form([
-            'q' => 'subject',
-        ]);
-
-        $responseCrawler = $this->client->submit($form);
-        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-    }
-
-    public function testAdminSearch() : void {
-        $repo = $this->createMock(SubjectRepository::class);
-        $repo->method('searchQuery')->willReturn([$this->getReference('subject.1')]);
-        $this->client->disableReboot();
-        $this->client->getContainer()->set('test.' . SubjectRepository::class, $repo);
-
-        $this->login('user.admin');
-        $crawler = $this->client->request('GET', '/subject/search');
-        $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-
-        $form = $crawler->selectButton('btn-search')->form([
-            'q' => 'subject',
-        ]);
-
-        $responseCrawler = $this->client->submit($form);
-        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-    }
+// Subject search is temporarily disabled.
+//    public function testAnonSearch() : void {
+//        $repo = $this->createMock(SubjectRepository::class);
+//        $repo->method('searchQuery')->willReturn([$this->getReference('subject.1')]);
+//        $this->client->disableReboot();
+//        $this->client->getContainer()->set('test.' . SubjectRepository::class, $repo);
+//
+//        $crawler = $this->client->request('GET', '/subject/search');
+//        $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
+//        if (self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
+//            // If authentication is required stop here.
+//            return;
+//        }
+//
+//        $form = $crawler->selectButton('btn-search')->form([
+//            'q' => 'subject',
+//        ]);
+//
+//        $responseCrawler = $this->client->submit($form);
+//        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+//    }
+//
+//    public function testUserSearch() : void {
+//        $repo = $this->createMock(SubjectRepository::class);
+//        $repo->method('searchQuery')->willReturn([$this->getReference('subject.1')]);
+//        $this->client->disableReboot();
+//        $this->client->getContainer()->set('test.' . SubjectRepository::class, $repo);
+//
+//        $this->login('user.user');
+//        $crawler = $this->client->request('GET', '/subject/search');
+//        $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+//
+//        $form = $crawler->selectButton('btn-search')->form([
+//            'q' => 'subject',
+//        ]);
+//
+//        $responseCrawler = $this->client->submit($form);
+//        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+//    }
+//
+//    public function testAdminSearch() : void {
+//        $repo = $this->createMock(SubjectRepository::class);
+//        $repo->method('searchQuery')->willReturn([$this->getReference('subject.1')]);
+//        $this->client->disableReboot();
+//        $this->client->getContainer()->set('test.' . SubjectRepository::class, $repo);
+//
+//        $this->login('user.admin');
+//        $crawler = $this->client->request('GET', '/subject/search');
+//        $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+//
+//        $form = $crawler->selectButton('btn-search')->form([
+//            'q' => 'subject',
+//        ]);
+//
+//        $responseCrawler = $this->client->submit($form);
+//        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+//    }
 
     /**
      * @group anon
