@@ -31,7 +31,7 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
      */
     public function indexAction(Request $request, ItemRepository $itemRepository) {
         return [
-            'items' => $itemRepository->getFeaturedItems()
+            'items' => $itemRepository->getFeaturedItems(),
         ];
     }
 

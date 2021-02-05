@@ -74,21 +74,22 @@ class ItemRepository extends ServiceEntityRepository {
     /**
      * @return Collection|Item[]
      */
-    public function getFeaturedItems(){
+    public function getFeaturedItems() {
         $qb = $this->createQueryBuilder('item');
         $qb->andWhere('SIZE(item.images) > 0');
-        $qb->orderBy('item.id','DESC');
+        $qb->orderBy('item.id', 'DESC');
         $qb->setMaxResults(5);
+
         return $qb->getQuery()->execute();
     }
 
     public function findItemsByPeriod(Period $period) {
         $qb = $this->createQueryBuilder('item');
-        $qb->andWhere("item.periodStart <= :period");
-        $qb->andWhere(":period <= item.periodEnd");
+        $qb->andWhere('item.periodStart <= :period');
+        $qb->andWhere(':period <= item.periodEnd');
         $qb->orderBy('item.name', 'ASC');
         $qb->setParameter('period', $period);
+
         return $qb->getQuery()->execute();
     }
-
 }
