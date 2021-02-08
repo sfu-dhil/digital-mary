@@ -8,8 +8,8 @@ bootstrap3@^3.3:
   integrity sha1-SWpO9sCHIU+paDgZbWDeZF6CWRo=
 
 "dhilux@https://github.com/joeytakeda/dhilux":
-  version "0.1.0"
-  resolved "https://github.com/joeytakeda/dhilux#c3353ef3b34c5077dea77c6e991af92d3c57c9b6"
+  version "0.2.0"
+  resolved "https://github.com/joeytakeda/dhilux#3a926decde14ac7cc4cf85b9d3fd4a3f4a9f4e43"
   dependencies:
     modularscale-sass "^3.0.10"
 

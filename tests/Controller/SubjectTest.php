@@ -138,7 +138,7 @@ class SubjectTest extends ControllerBaseCase {
         $this->assertCount(4, $json);
     }
 
-// Subject search is temporarily disabled.
+    // Subject search is temporarily disabled.
 //    public function testAnonSearch() : void {
 //        $repo = $this->createMock(SubjectRepository::class);
 //        $repo->method('searchQuery')->willReturn([$this->getReference('subject.1')]);
