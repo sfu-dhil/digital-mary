@@ -23,7 +23,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Item[]    findAll()
  * @method Item[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ItemRepository extends ServiceEntityRepository {
+class ItemRepository extends ServiceEntityRepository
+{
     public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Item::class);
     }

@@ -14,7 +14,8 @@ use App\Entity\InscriptionStyle;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class InscriptionStyleFixtures extends Fixture {
+class InscriptionStyleFixtures extends Fixture
+{
     /**
      * {@inheritdoc}
      */

@@ -14,7 +14,8 @@ use App\Entity\Technique;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class TechniqueFixtures extends Fixture {
+class TechniqueFixtures extends Fixture
+{
     /**
      * {@inheritdoc}
      */

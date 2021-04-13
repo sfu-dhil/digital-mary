@@ -19,7 +19,8 @@ use Nines\UtilBundle\Entity\AbstractTerm;
 /**
  * @ORM\Entity(repositoryClass=LocationRepository::class)
  */
-class Location extends AbstractTerm {
+class Location extends AbstractTerm
+{
     /**
      * @var int
      *
