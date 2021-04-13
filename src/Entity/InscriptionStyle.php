@@ -21,7 +21,8 @@ use Nines\UtilBundle\Entity\AbstractTerm;
  *
  * @ORM\Entity(repositoryClass=InscriptionStyleRepository::class)
  */
-class InscriptionStyle extends AbstractTerm {
+class InscriptionStyle extends AbstractTerm
+{
     /**
      * @var Collection|Item[]
      * @ORM\OneToMany(targetEntity="App\Entity\Item", mappedBy="inscriptionStyle")

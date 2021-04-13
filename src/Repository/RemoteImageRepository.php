@@ -22,7 +22,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method RemoteImage[]    findAll()
  * @method RemoteImage[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class RemoteImageRepository extends ServiceEntityRepository {
+class RemoteImageRepository extends ServiceEntityRepository
+{
     public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, RemoteImage::class);
     }

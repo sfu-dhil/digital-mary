@@ -18,7 +18,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * InscriptionStyle form.
  */
-class InscriptionStyleType extends TermType {
+class InscriptionStyleType extends TermType
+{
     /**
      * Add form fields to $builder.
      */

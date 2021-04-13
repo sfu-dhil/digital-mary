@@ -32,7 +32,8 @@ use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 /**
  * Item form.
  */
-class ItemType extends AbstractType {
+class ItemType extends AbstractType
+{
     /**
      * Add form fields to $builder.
      */

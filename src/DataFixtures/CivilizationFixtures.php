@@ -14,7 +14,8 @@ use App\Entity\Civilization;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class CivilizationFixtures extends Fixture {
+class CivilizationFixtures extends Fixture
+{
     /**
      * {@inheritdoc}
      */

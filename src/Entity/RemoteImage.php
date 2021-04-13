@@ -21,7 +21,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     @ORM\Index(columns={"url", "title", "description"}, flags={"fulltext"})
  * })
  */
-class RemoteImage extends AbstractEntity {
+class RemoteImage extends AbstractEntity
+{
     /**
      * @var string
      * @ORM\Column(type="string", nullable=false)

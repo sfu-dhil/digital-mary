@@ -21,7 +21,8 @@ use Nines\UtilBundle\Repository\TermRepository;
  * @method Period[]    findAll()
  * @method Period[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PeriodRepository extends TermRepository {
+class PeriodRepository extends TermRepository
+{
     public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Period::class);
     }

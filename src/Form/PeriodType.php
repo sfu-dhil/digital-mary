@@ -19,7 +19,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Period form.
  */
-class PeriodType extends TermType {
+class PeriodType extends TermType
+{
     /**
      * Add form fields to $builder.
      */

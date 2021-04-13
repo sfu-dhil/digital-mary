@@ -22,7 +22,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * RemoteImage form.
  */
-class RemoteImageType extends AbstractType {
+class RemoteImageType extends AbstractType
+{
     /**
      * Add form fields to $builder.
      */

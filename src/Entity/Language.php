@@ -19,7 +19,8 @@ use Nines\UtilBundle\Entity\AbstractTerm;
 /**
  * @ORM\Entity(repositoryClass=LanguageRepository::class)
  */
-class Language extends AbstractTerm {
+class Language extends AbstractTerm
+{
     /**
      * @var Collection|Item[]
      * @ORM\ManyToMany(targetEntity="App\Entity\Item", mappedBy="inscriptionLanguage")

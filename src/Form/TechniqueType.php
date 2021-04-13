@@ -18,7 +18,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Technique form.
  */
-class TechniqueType extends TermType {
+class TechniqueType extends TermType
+{
     /**
      * Add form fields to $builder.
      */

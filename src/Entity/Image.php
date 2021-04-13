@@ -21,7 +21,8 @@ use Symfony\Component\HttpFoundation\File\File;
  *     @ORM\Index(columns={"original_name", "description"}, flags={"fulltext"})
  * })
  */
-class Image extends AbstractEntity {
+class Image extends AbstractEntity
+{
     /**
      * @var File
      */

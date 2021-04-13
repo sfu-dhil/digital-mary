@@ -26,7 +26,8 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/inscription_style")
  */
-class InscriptionStyleController extends AbstractController implements PaginatorAwareInterface {
+class InscriptionStyleController extends AbstractController implements PaginatorAwareInterface
+{
     use PaginatorTrait;
 
     /**
