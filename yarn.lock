@@ -9,14 +9,14 @@ bootstrap3@^3.3:
 
 "dhilux@https://github.com/joeytakeda/dhilux":
   version "0.2.0"
-  resolved "https://github.com/joeytakeda/dhilux#3a926decde14ac7cc4cf85b9d3fd4a3f4a9f4e43"
+  resolved "https://github.com/joeytakeda/dhilux#3b07676a507a5675a9f431fdf86263b763b61f4b"
   dependencies:
     modularscale-sass "^3.0.10"
 
 glider-js@^1.7.3:
-  version "1.7.6"
-  resolved "https://registry.yarnpkg.com/glider-js/-/glider-js-1.7.6.tgz#0285436ab13c6895914caa285c6bca4c729c05d0"
-  integrity sha512-m2QiQl5bE10DvFBmJoL7Vkjjq26Ylq+OzABIfqD2l//A2WUuqr+NkoxEqJlcGxh5od0d0y943U7A0nd1GASwrg==
+  version "1.7.7"
+  resolved "https://registry.yarnpkg.com/glider-js/-/glider-js-1.7.7.tgz#24508efecf6f20fd32b08b2940e4762e1c35fa23"
+  integrity sha512-jowNSpd/38EG0Kw83NgTo4F9YSAcpWQxBw0SFZcc2FysZD+dUuW/AcSeFU27rwGJilqdocKbw12IHOKi+DtpZw==
 
 hamburgers@^1.1.3:
   version "1.1.3"
@@ -62,9 +62,9 @@ symfony-collection@^2.1:
     jquery-ui ">=1.0"
 
 tinymce@^5.4:
-  version "5.7.0"
-  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-5.7.0.tgz#bc565877e4041db83848a330dfa7916993110cba"
-  integrity sha512-WikgMpJbqYPaucV3lfstCj+Y4NquZlK61gyuJ2eqDUBlSU+4fFh6rpwnelVTxuvtEyJsAVOl8HZmbzBfDJiLsQ==
+  version "5.7.1"
+  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-5.7.1.tgz#658a6fb4c7d53a8496cc00f8da33f4b8290da06d"
+  integrity sha512-1gY8RClc734srSlkYwY0MQzmkS1j73PuPC+nYtNtrrQVPY9VNcZ4bOiRwzTbdjPPD8GOtv6BAk8Ww/H2RiqKpA==
 
 viewerjs@^1.6.1:
   version "1.9.0"
