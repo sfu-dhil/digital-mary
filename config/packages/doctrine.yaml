@@ -1,16 +1,11 @@
 doctrine:
     dbal:
+        url: '%env(resolve:DATABASE_URL)%'
         override_url: true
-        connections:
-            default:
-                url: '%env(resolve:DATABASE_URL)%'
-                charset: utf8mb4
-                logging: false
-                profiling: false
-                default_table_options:
-                    charset: utf8mb4
-                    collate: utf8mb4_unicode_ci
-
+        charset: utf8mb4
+        default_table_options:
+            charset: utf8mb4
+            collate: utf8mb4_unicode_ci
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
