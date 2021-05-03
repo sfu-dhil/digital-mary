@@ -19,8 +19,7 @@ use Nines\UtilBundle\Entity\AbstractTerm;
 /**
  * @ORM\Entity(repositoryClass=PeriodRepository::class)
  */
-class Period extends AbstractTerm
-{
+class Period extends AbstractTerm {
     /**
      * @var int
      * @ORM\Column(type="integer", nullable=false)

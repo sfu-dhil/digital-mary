@@ -18,8 +18,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CleanTextCommand extends Command
-{
+class CleanTextCommand extends Command {
     public const ALLOWED = '<a><b><blockquote><br><dd><del><dl><dt><em><h1><h2><h3><h4><h5><h6><hr><i><img><ins><kbd><li><mark><ol><p><pre><q><s><small><strong><sub><sup><u><ul>';
 
     /**

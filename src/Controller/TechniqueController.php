@@ -26,8 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/technique")
  */
-class TechniqueController extends AbstractController implements PaginatorAwareInterface
-{
+class TechniqueController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**

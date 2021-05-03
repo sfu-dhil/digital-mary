@@ -21,8 +21,7 @@ use Nines\UtilBundle\Entity\AbstractTerm;
  *
  * @ORM\Entity(repositoryClass=SubjectRepository::class)
  */
-class Subject extends AbstractTerm
-{
+class Subject extends AbstractTerm {
     /**
      * @var array
      * @ORM\Column(type="array", nullable=false)

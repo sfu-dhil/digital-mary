@@ -20,8 +20,7 @@ use Nines\UtilBundle\Repository\TermRepository;
  * @method InscriptionStyle[]    findAll()
  * @method InscriptionStyle[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class InscriptionStyleRepository extends TermRepository
-{
+class InscriptionStyleRepository extends TermRepository {
     public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, InscriptionStyle::class);
     }

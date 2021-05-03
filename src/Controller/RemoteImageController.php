@@ -23,8 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/remote_image")
  */
-class RemoteImageController extends AbstractController implements PaginatorAwareInterface
-{
+class RemoteImageController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**

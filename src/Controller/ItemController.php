@@ -38,8 +38,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @Route("/item")
  */
-class ItemController extends AbstractController implements PaginatorAwareInterface
-{
+class ItemController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**

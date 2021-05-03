@@ -18,8 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Civilization form.
  */
-class CivilizationType extends TermType
-{
+class CivilizationType extends TermType {
     /**
      * Add form fields to $builder.
      */
