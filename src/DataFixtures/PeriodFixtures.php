@@ -14,8 +14,7 @@ use App\Entity\Period;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class PeriodFixtures extends Fixture
-{
+class PeriodFixtures extends Fixture {
     /**
      * {@inheritdoc}
      */

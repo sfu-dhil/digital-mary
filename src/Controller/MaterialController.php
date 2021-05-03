@@ -26,8 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/material")
  */
-class MaterialController extends AbstractController implements PaginatorAwareInterface
-{
+class MaterialController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**

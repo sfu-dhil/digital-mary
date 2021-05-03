@@ -18,8 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Material form.
  */
-class MaterialType extends TermType
-{
+class MaterialType extends TermType {
     /**
      * Add form fields to $builder.
      */

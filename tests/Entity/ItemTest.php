@@ -13,8 +13,7 @@ namespace App\Tests\Entity;
 use App\Entity\Item;
 use PHPUnit\Framework\TestCase;
 
-class ItemTest extends TestCase
-{
+class ItemTest extends TestCase {
     public function testAddDuplicateRevision() : void {
         $item = new Item();
         $item->addRevision('2020-02-02', 'MJ');

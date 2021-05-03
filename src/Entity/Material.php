@@ -22,8 +22,7 @@ use Nines\UtilBundle\Entity\AbstractTerm;
  *
  * @ORM\Entity(repositoryClass=MaterialRepository::class)
  */
-class Material extends AbstractTerm
-{
+class Material extends AbstractTerm {
     /**
      * @var Collection|Item[]
      * @ORM\ManyToMany(targetEntity="App\Entity\Item", mappedBy="materials")

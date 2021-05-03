@@ -14,8 +14,7 @@ use App\Entity\Material;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class MaterialFixtures extends Fixture
-{
+class MaterialFixtures extends Fixture {
     /**
      * {@inheritdoc}
      */

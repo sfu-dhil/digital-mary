@@ -25,8 +25,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/period")
  */
-class PeriodController extends AbstractController implements PaginatorAwareInterface
-{
+class PeriodController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
     /**
