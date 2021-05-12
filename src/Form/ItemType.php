@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * (c) 2020 Michael Joyce <mjoyce@sfu.ca>
+ * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
  * This source file is subject to the GPL v2, bundled
  * with this source code in the file LICENSE.
  */
@@ -133,24 +133,16 @@ class ItemType extends AbstractType {
         $builder->add('periodStart', EntityType::class, [
             'label' => 'Earliest creation',
             'class' => Period::class,
-            'query_builder' => function (EntityRepository $er) {
-                return $er->createQueryBuilder('p')->orderBy('p.sortableYear', 'ASC');
-            },
-            'choice_attr' => function (Period $period, $key, $value) {
-                return ['data-year' => $period->getSortableYear()];
-            },
+            'query_builder' => fn (EntityRepository $er) => $er->createQueryBuilder('p')->orderBy('p.sortableYear', 'ASC'),
+            'choice_attr' => fn (Period $period, $key, $value) => ['data-year' => $period->getSortableYear()],
             'expanded' => false,
             'multiple' => false,
         ]);
         $builder->add('periodEnd', EntityType::class, [
             'label' => 'Latest creation',
             'class' => Period::class,
-            'query_builder' => function (EntityRepository $er) {
-                return $er->createQueryBuilder('p')->orderBy('p.sortableYear', 'ASC');
-            },
-            'choice_attr' => function (Period $period, $key, $value) {
-                return ['data-year' => $period->getSortableYear()];
-            },
+            'query_builder' => fn (EntityRepository $er) => $er->createQueryBuilder('p')->orderBy('p.sortableYear', 'ASC'),
+            'choice_attr' => fn (Period $period, $key, $value) => ['data-year' => $period->getSortableYear()],
             'expanded' => false,
             'multiple' => false,
         ]);
