@@ -30,3 +30,8 @@
 /data
 deploy.yaml
 src/.preload.php
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
