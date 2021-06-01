@@ -67,6 +67,6 @@ tinymce@^5.4:
   integrity sha512-1zGXdZplWQafstlC7sri0ttCgMagsiXDc9N3I8JNrPOsWAeTfq4AAJWZoxsQBYn8gYcuPu/WzMKG5SoJjxI1VA==
 
 viewerjs@^1.6.1:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/viewerjs/-/viewerjs-1.9.0.tgz#6dfaf54440c3b2f7691b85666ba6d27708ed9592"
-  integrity sha512-2D1OdGatb5aCZbZvaCdbJYuoDObjD9ITe7GZp0SoG7rgw3arOIZoIO1ygmfG+I4+RvEuDo+aZ75kNgwmYS9j3w==
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/viewerjs/-/viewerjs-1.9.2.tgz#42b9e5f4c4d3f136478d53e7d564e8b2ba9b5c7e"
+  integrity sha512-08Jz4SOsJ4cNIY9R1fRa1i/CiuZYBfserur7pFPUeOEi/ncrmft0UPKdNBXT3JtHPq9gHU4G9le1Nd5dlvTWKg==
