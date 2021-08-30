@@ -9,7 +9,7 @@ bootstrap3@^3.3:
 
 "dhilux@https://github.com/joeytakeda/dhilux":
   version "0.2.0"
-  resolved "https://github.com/joeytakeda/dhilux#3b07676a507a5675a9f431fdf86263b763b61f4b"
+  resolved "https://github.com/joeytakeda/dhilux#116e14933751584cb333c5d37497b456c0d28029"
   dependencies:
     modularscale-sass "^3.0.10"
 
@@ -62,11 +62,11 @@ symfony-collection@^2.1:
     jquery-ui ">=1.0"
 
 tinymce@^5.4:
-  version "5.8.2"
-  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-5.8.2.tgz#54eb8160b697796c3b52282e648d9d12b1a7399a"
-  integrity sha512-qfWThBrSzbj4DoUk+lgGeDoP2GzLDSWrfvVUxf40HZhTzsG15X2nZ4N49IFqwaVgRl5AyFDtuWiEH/lCmiAcRA==
+  version "5.9.1"
+  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-5.9.1.tgz#95100cd6748bbe5a5dfaaf8353f129756a0a5372"
+  integrity sha512-GaG15OhQB1zR2L63fywhEAViTxkAlhX5JbA+48+O0zCo1FwDuQ8iUVi/FzaOX9Uo7ULp+Y2gu4r3P4ZNueDVPQ==
 
 viewerjs@^1.6.1:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/viewerjs/-/viewerjs-1.10.0.tgz#6dcd693b548dd6d7c8371b193136d1eae180621f"
-  integrity sha512-013z8sU9tnAFDfJo4p8z38sqnj1GwRXzlawwbY4oXQMr6lCRMG9TXJ7fyXgVL1jFXyCwkb6xGVJRj6+gfQ2o8A==
+  version "1.10.1"
+  resolved "https://registry.yarnpkg.com/viewerjs/-/viewerjs-1.10.1.tgz#07499ed043d0a29e3002b90f55c5b228bd1a742c"
+  integrity sha512-Oyzd3JP9dDSd+bBulfnQ+UTfHoobFwkmcT/uKSnQXjmPz7rZU0HJIiKudxPaMsiv17dr4Sm1cHnASJcDlFw1PA==
