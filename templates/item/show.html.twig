@@ -97,18 +97,20 @@
                                                     <div>{{ text }}</div>
                                                 </div>
                                             </a>
+                                            {% if is_granted('ROLE_CONTENT_ADMIN') %}
                                             <div class="img-toolbar">
                                                 <div class="btn-toolbar admin">
                                                     <a href="{{ path('item_edit_remote_image', {'id': item.id, 'remote_image_id': image.id }) }}" class="btn btn-default">
-                                                        <span class="glyphicon glyphicon-edit"></span>Edit remote image</a>
+                                                        <span class="glyphicon glyphicon-edit"></span> Edit remote image</a>
                                                     <form class='delete-form' method="post" action="{{ path('item_delete_remote_image', {'id': item.id, 'remote_image_id': image.id }) }}"
                                                           onsubmit="return confirm('Are you sure you want to delete this item?');">
                                                         <input type="hidden" name="_method" value="DELETE">
                                                         <input type="hidden" name="_token" value="{{ csrf_token("delete" ~ image.id) }}">
-                                                        <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>Delete remote image</button>
+                                                        <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete remote image</button>
                                                     </form>
                                                 </div>
                                             </div>
+                                            {% endif %}
 
                                         </div>
                                         {% endfor %}
