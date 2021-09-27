@@ -517,7 +517,7 @@ class ItemTest extends ControllerBaseCase {
         $this->assertTrue($this->client->getResponse()->isRedirect('/item/2'));
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(5, $responseCrawler->filter('div:contains("Updated Title")')->count());
+        $this->assertSame(7, $responseCrawler->filter('div:contains("Updated Title")')->count());
     }
 
     /**
@@ -559,6 +559,6 @@ class ItemTest extends ControllerBaseCase {
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(5, $responseCrawler->filter('div:contains("New Title")')->count());
+        $this->assertSame(7, $responseCrawler->filter('div:contains("New Title")')->count());
     }
 }
