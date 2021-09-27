@@ -15,7 +15,7 @@ function init(){
     // First add the JS class
     document.querySelector('body').classList.add('js');
     /* Add special viewer stuff */
-    if (ndmViewerContainer){
+    if (ndmViewerContainer && imgSlider){
         makeGlider();
         makeImageTools();
         makeImageViewer();
