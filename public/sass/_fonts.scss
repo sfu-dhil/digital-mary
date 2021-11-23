@@ -9,16 +9,6 @@
     url('../fonts/nunito-sans-normal-200.woff') format('woff');
 }
 
-/* 'Nunito Sans' normal 300*/
-@font-face {
-    font-family: 'Nunito Sans';
-    font-style: normal;
-    font-weight: 300;
-    src: 
-    url('../fonts/nunito-sans-normal-300.woff2') format('woff2'),
-    url('../fonts/nunito-sans-normal-300.woff') format('woff');
-}
-
 /* 'Nunito Sans' italic 200*/
 @font-face {
     font-family: 'Nunito Sans';
@@ -27,6 +17,16 @@
     src: 
     url('../fonts/nunito-sans-italic-200.woff2') format('woff2'),
     url('../fonts/nunito-sans-italic-200.woff') format('woff');
+}
+
+/* 'Nunito Sans' normal 300*/
+@font-face {
+    font-family: 'Nunito Sans';
+    font-style: normal;
+    font-weight: 300;
+    src: 
+    url('../fonts/nunito-sans-normal-300.woff2') format('woff2'),
+    url('../fonts/nunito-sans-normal-300.woff') format('woff');
 }
 
 /* 'Nunito Sans' italic 300*/
@@ -69,16 +69,6 @@
     url('../fonts/nunito-sans-normal-700.woff') format('woff');
 }
 
-/* 'Nunito Sans' normal 800*/
-@font-face {
-    font-family: 'Nunito Sans';
-    font-style: normal;
-    font-weight: 800;
-    src: 
-    url('../fonts/nunito-sans-normal-800.woff2') format('woff2'),
-    url('../fonts/nunito-sans-normal-800.woff') format('woff');
-}
-
 /* 'Nunito Sans' italic 700*/
 @font-face {
     font-family: 'Nunito Sans';
@@ -87,6 +77,16 @@
     src: 
     url('../fonts/nunito-sans-italic-700.woff2') format('woff2'),
     url('../fonts/nunito-sans-italic-700.woff') format('woff');
+}
+
+/* 'Nunito Sans' normal 800*/
+@font-face {
+    font-family: 'Nunito Sans';
+    font-style: normal;
+    font-weight: 800;
+    src: 
+    url('../fonts/nunito-sans-normal-800.woff2') format('woff2'),
+    url('../fonts/nunito-sans-normal-800.woff') format('woff');
 }
 
 /* 'Nunito Sans' italic 800*/
@@ -119,64 +119,64 @@
     url('../fonts/nunito-sans-italic-900.woff') format('woff');
 }
 
-/* 'Crimson Text' normal 400*/
+/* 'Crimson Pro' normal 400*/
 @font-face {
-    font-family: 'Crimson Text';
+    font-family: 'Crimson Pro';
     font-style: normal;
     font-weight: 400;
     src: 
-    url('../fonts/crimson-text-normal-400.woff2') format('woff2'),
-    url('../fonts/crimson-text-normal-400.woff') format('woff');
+    url('../fonts/crimson-pro-normal-400.woff2') format('woff2'),
+    url('../fonts/crimson-pro-normal-400.woff') format('woff');
 }
 
-/* 'Crimson Text' italic 400*/
+/* 'Crimson Pro' normal 600*/
 @font-face {
-    font-family: 'Crimson Text';
+    font-family: 'Crimson Pro';
+    font-style: normal;
+    font-weight: 600;
+    src: 
+    url('../fonts/crimson-pro-normal-600.woff2') format('woff2'),
+    url('../fonts/crimson-pro-normal-600.woff') format('woff');
+}
+
+/* 'Crimson Pro' normal 700*/
+@font-face {
+    font-family: 'Crimson Pro';
+    font-style: normal;
+    font-weight: 700;
+    src: 
+    url('../fonts/crimson-pro-normal-700.woff2') format('woff2'),
+    url('../fonts/crimson-pro-normal-700.woff') format('woff');
+}
+
+/* 'Crimson Pro' italic 400*/
+@font-face {
+    font-family: 'Crimson Pro';
     font-style: italic;
     font-weight: 400;
     src: 
-    url('../fonts/crimson-text-italic-400.woff2') format('woff2'),
-    url('../fonts/crimson-text-italic-400.woff') format('woff');
+    url('../fonts/crimson-pro-italic-400.woff2') format('woff2'),
+    url('../fonts/crimson-pro-italic-400.woff') format('woff');
 }
 
-/* 'Crimson Text' normal 600*/
+/* 'Crimson Pro' italic 600*/
 @font-face {
-    font-family: 'Crimson Text';
-    font-style: normal;
-    font-weight: 600;
-    src: 
-    url('../fonts/crimson-text-normal-600.woff2') format('woff2'),
-    url('../fonts/crimson-text-normal-600.woff') format('woff');
-}
-
-/* 'Crimson Text' italic 600*/
-@font-face {
-    font-family: 'Crimson Text';
+    font-family: 'Crimson Pro';
     font-style: italic;
     font-weight: 600;
     src: 
-    url('../fonts/crimson-text-italic-600.woff2') format('woff2'),
-    url('../fonts/crimson-text-italic-600.woff') format('woff');
+    url('../fonts/crimson-pro-italic-600.woff2') format('woff2'),
+    url('../fonts/crimson-pro-italic-600.woff') format('woff');
 }
 
-/* 'Crimson Text' italic 700*/
+/* 'Crimson Pro' italic 700*/
 @font-face {
-    font-family: 'Crimson Text';
+    font-family: 'Crimson Pro';
     font-style: italic;
     font-weight: 700;
     src: 
-    url('../fonts/crimson-text-italic-700.woff2') format('woff2'),
-    url('../fonts/crimson-text-italic-700.woff') format('woff');
-}
-
-/* 'Crimson Text' normal 700*/
-@font-face {
-    font-family: 'Crimson Text';
-    font-style: normal;
-    font-weight: 700;
-    src: 
-    url('../fonts/crimson-text-normal-700.woff2') format('woff2'),
-    url('../fonts/crimson-text-normal-700.woff') format('woff');
+    url('../fonts/crimson-pro-italic-700.woff2') format('woff2'),
+    url('../fonts/crimson-pro-italic-700.woff') format('woff');
 }
 
 /* 'Source Sans Pro' normal 200*/
@@ -209,16 +209,6 @@
     url('../fonts/source-sans-pro-italic-200.woff') format('woff');
 }
 
-/* 'Source Sans Pro' italic 300*/
-@font-face {
-    font-family: 'Source Sans Pro';
-    font-style: italic;
-    font-weight: 300;
-    src: 
-    url('../fonts/source-sans-pro-italic-300.woff2') format('woff2'),
-    url('../fonts/source-sans-pro-italic-300.woff') format('woff');
-}
-
 /* 'Source Sans Pro' normal 400*/
 @font-face {
     font-family: 'Source Sans Pro';
@@ -227,6 +217,16 @@
     src: 
     url('../fonts/source-sans-pro-normal-400.woff2') format('woff2'),
     url('../fonts/source-sans-pro-normal-400.woff') format('woff');
+}
+
+/* 'Source Sans Pro' italic 300*/
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: italic;
+    font-weight: 300;
+    src: 
+    url('../fonts/source-sans-pro-italic-300.woff2') format('woff2'),
+    url('../fonts/source-sans-pro-italic-300.woff') format('woff');
 }
 
 /* 'Source Sans Pro' italic 400*/
@@ -369,16 +369,6 @@
     url('../fonts/spectral-normal-200.woff') format('woff');
 }
 
-/* 'Spectral' italic 200*/
-@font-face {
-    font-family: 'Spectral';
-    font-style: italic;
-    font-weight: 200;
-    src: 
-    url('../fonts/spectral-italic-200.woff2') format('woff2'),
-    url('../fonts/spectral-italic-200.woff') format('woff');
-}
-
 /* 'Spectral' normal 300*/
 @font-face {
     font-family: 'Spectral';
@@ -399,6 +389,16 @@
     url('../fonts/spectral-italic-300.woff') format('woff');
 }
 
+/* 'Spectral' italic 200*/
+@font-face {
+    font-family: 'Spectral';
+    font-style: italic;
+    font-weight: 200;
+    src: 
+    url('../fonts/spectral-italic-200.woff2') format('woff2'),
+    url('../fonts/spectral-italic-200.woff') format('woff');
+}
+
 /* 'Spectral' normal 400*/
 @font-face {
     font-family: 'Spectral';
@@ -407,16 +407,6 @@
     src: 
     url('../fonts/spectral-normal-400.woff2') format('woff2'),
     url('../fonts/spectral-normal-400.woff') format('woff');
-}
-
-/* 'Spectral' italic 400*/
-@font-face {
-    font-family: 'Spectral';
-    font-style: italic;
-    font-weight: 400;
-    src: 
-    url('../fonts/spectral-italic-400.woff2') format('woff2'),
-    url('../fonts/spectral-italic-400.woff') format('woff');
 }
 
 /* 'Spectral' normal 500*/
@@ -437,6 +427,16 @@
     src: 
     url('../fonts/spectral-italic-500.woff2') format('woff2'),
     url('../fonts/spectral-italic-500.woff') format('woff');
+}
+
+/* 'Spectral' italic 400*/
+@font-face {
+    font-family: 'Spectral';
+    font-style: italic;
+    font-weight: 400;
+    src: 
+    url('../fonts/spectral-italic-400.woff2') format('woff2'),
+    url('../fonts/spectral-italic-400.woff') format('woff');
 }
 
 /* 'Spectral' normal 700*/
