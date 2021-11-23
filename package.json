@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "New Digital Mary",
   "author": "Michael Joyce <ubermichael@gmail.com>",
-  "license": "GPL-v2-or-later",
+  "license": "GPL-2.0-or-later",
   "private": true,
   "dependencies": {
     "bootstrap3": "^3.3",
