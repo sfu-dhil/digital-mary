@@ -12,7 +12,7 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "aternus/geonames-client": "^1.0",
-        "composer/package-versions-deprecated": "1.11.99.3",
+        "composer/package-versions-deprecated": "1.11.99.*",
         "doctrine/annotations": "^1.0",
         "doctrine/common": "^2.13",
         "doctrine/doctrine-bundle": "^2.3",
@@ -111,8 +111,7 @@
         ]
     },
     "conflict": {
-        "symfony/symfony": "*",
-        "symfony/thanks": "*"
+        "symfony/symfony": "*"
     },
     "extra": {
         "symfony": {
