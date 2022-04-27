@@ -1,8 +1,8 @@
 # Silence output slightly
 # .SILENT:
 
-DB := dhil_btd
-PROJECT := btd
+DB := dhil_dm
+PROJECT := dm
 
 include etc/Makefile.legacy
 
