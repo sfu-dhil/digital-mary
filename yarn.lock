@@ -19,9 +19,9 @@ glider-js@^1.7.3:
   integrity sha512-jowNSpd/38EG0Kw83NgTo4F9YSAcpWQxBw0SFZcc2FysZD+dUuW/AcSeFU27rwGJilqdocKbw12IHOKi+DtpZw==
 
 hamburgers@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/hamburgers/-/hamburgers-1.1.3.tgz#eb583ede269d3a774aa5f613442b17ea13952b84"
-  integrity sha512-qpfnJwZq6ATAGJEriwuyfVNgT++GG+o+3bBfPYF7F3WY452cYKbaYGUuqwhp+3kHLI6CL4VIBfj8bfbp90Lp1A==
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/hamburgers/-/hamburgers-1.2.1.tgz#0649907688335dee3d3d248c4c7ac88351527eb0"
+  integrity sha512-uFuVVF7/MeUtRWrA+S1FGGo4iVi7RgPzZAmljBnSeDh4snOZzaQ+oB6CI1m4vKD5RGz9s70ufgiJLxgivqA26Q==
 
 jquery-ui-dist@^1.12:
   version "1.13.1"
@@ -66,11 +66,11 @@ symfony-collection@^2.1:
     jquery-ui ">=1.0"
 
 tinymce@^5.4:
-  version "5.10.3"
-  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-5.10.3.tgz#9485cf00159fd70c4948cb5e9dd49bce2a775899"
-  integrity sha512-O59ssHNnujWvSk5Gt8hIGrdNCMKVWVQv9F8siAgLTRgTh0t3NDHrP1UlLtCxArUi9DPWZvlBeUz8D5fJTu7vnA==
+  version "5.10.4"
+  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-5.10.4.tgz#24ee843c7648ade708605dec15d8dad07809f7db"
+  integrity sha512-L0ivAhGu7bEo6cUBrCzhtKlkIQqG2sTcL+uu7soMSxrECQIC5VwUnzp9HCEf+fRl36q6zavLV48lf8jelj+gXA==
 
 viewerjs@^1.6.1:
-  version "1.10.4"
-  resolved "https://registry.yarnpkg.com/viewerjs/-/viewerjs-1.10.4.tgz#34ced11cc55a203d570fcfc5cac030b0179e5d53"
-  integrity sha512-CjMt64yC9D+XUx2t3F0TPbh/Yt5+/ke8/s3IizXa6NtksdJUFDoCcNxi/KRZ9eiZPR/D77pHnnQzAtCoLDaGIw==
+  version "1.10.5"
+  resolved "https://registry.yarnpkg.com/viewerjs/-/viewerjs-1.10.5.tgz#a0f52fe7c15fa27003099af8e7552378ed5fc94d"
+  integrity sha512-QwKrmXlSfKg5x4y74F/jicpHIRqBMMfHXyboOxHDi5n4XAaejjpalphPq4/HW6venQAoMiD57HpVwBk0JvqpSA==
