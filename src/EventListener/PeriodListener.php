@@ -15,7 +15,7 @@ use App\Repository\ItemRepository;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 
 class PeriodListener {
-    private ItemRepository $itemRepository;
+    private ?ItemRepository $itemRepository = null;
 
     public function postLoad(LifecycleEventArgs $args) : void {
         $entity = $args->getEntity();

@@ -54,7 +54,7 @@ class ImageRepository extends ServiceEntityRepository {
     /**
      * @param string $q
      *
-     * @return Collection|Image[]
+     * @return Query
      */
     public function searchQuery($q) {
         $qb = $this->createQueryBuilder('image');

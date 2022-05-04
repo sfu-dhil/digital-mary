@@ -23,12 +23,12 @@ use Symfony\Component\HttpFoundation\File\File;
  */
 class Image extends AbstractEntity {
     /**
-     * @var File
+     * @var ?File
      */
     private $imageFile;
 
     /**
-     * @var File
+     * @var ?File
      */
     private $thumbFile;
 

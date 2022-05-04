@@ -19,5 +19,16 @@ parameters:
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
     checkMissingCallableSignature: true
-#     dynamicConstantNames:
-#         - App\Tests\Controller\CategoryTest::ANON_RESPONSE_CODE
+    dynamicConstantNames:
+        - App\Tests\Controller\CategoryTest::ANON_RESPONSE_CODE
+        - App\Tests\Controller\CivilizationTest::ANON_RESPONSE_CODE
+        - App\Tests\Controller\ImageTest::ANON_RESPONSE_CODE
+        - App\Tests\Controller\InscriptionStyleTest::ANON_RESPONSE_CODE
+        - App\Tests\Controller\ItemTest::ANON_RESPONSE_CODE
+        - App\Tests\Controller\LanguageTest::ANON_RESPONSE_CODE
+        - App\Tests\Controller\LocationTest::ANON_RESPONSE_CODE
+        - App\Tests\Controller\MaterialTest::ANON_RESPONSE_CODE
+        - App\Tests\Controller\PeriodTest::ANON_RESPONSE_CODE
+        - App\Tests\Controller\RemoveImageTest::ANON_RESPONSE_CODE
+        - App\Tests\Controller\SubjectTest::ANON_RESPONSE_CODE
+        - App\Tests\Controller\TechniqueTest::ANON_RESPONSE_CODE

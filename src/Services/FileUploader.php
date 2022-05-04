@@ -22,10 +22,8 @@ class FileUploader {
     public const FORBIDDEN = '/[^a-z0-9_. -]/i';
 
     /**
-     * @var LoggerInterface
+     * @var string
      */
-    private $logger;
-
     private $root;
 
     /**
@@ -33,12 +31,11 @@ class FileUploader {
      */
     private $uploadDir;
 
-    public function __construct(LoggerInterface $logger, $root) {
-        $this->logger = $logger;
+    public function __construct(string $root) {
         $this->root = $root;
     }
 
-    public function setUploadDir($dir) : void {
+    public function setUploadDir(string $dir) : void {
         if ('/' !== $dir[0]) {
             $this->uploadDir = $this->root . '/' . $dir;
         } else {
@@ -46,7 +43,7 @@ class FileUploader {
         }
     }
 
-    public function upload(UploadedFile $file) {
+    public function upload(UploadedFile $file) : string {
         $basename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $filename = implode('.', [
             preg_replace(self::FORBIDDEN, '_', $basename),
@@ -68,6 +65,11 @@ class FileUploader {
         return $this->uploadDir;
     }
 
+    /**
+     * @param bool $asBytes
+     *
+     * @return float|int|string
+     */
     public function getMaxUploadSize($asBytes = true) {
         static $maxBytes = -1;
 
@@ -92,9 +94,14 @@ class FileUploader {
         return $est . $units[$exp];
     }
 
+    /**
+     * @param string $size
+     *
+     * @return float
+     */
     public function parseSize($size) {
         $unit = preg_replace('/[^bkmgtpezy]/i', '', $size); // Remove the non-unit characters from the size.
-        $bytes = preg_replace('/[^0-9\.]/', '', $size); // Remove the non-numeric characters from the size.
+        $bytes = (float) preg_replace('/[^\d\.]/', '', $size); // Remove the non-numeric characters from the size.
         if ($unit) {
             // Find the position of the unit in the ordered string which is the power of magnitude to multiply a kilobyte by.
             return round($bytes * 1024 ** mb_stripos('bkmgtpezy', $unit[0]));

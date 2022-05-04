@@ -43,7 +43,7 @@ class Category extends AbstractTerm {
     public function addItem(Item $item) : self {
         if ( ! $this->items->contains($item)) {
             $this->items[] = $item;
-            $item->setCategory($this);
+            $item->addCategory($this);
         }
 
         return $this;
@@ -53,8 +53,8 @@ class Category extends AbstractTerm {
         if ($this->items->contains($item)) {
             $this->items->removeElement($item);
             // set the owning side to null (unless already changed)
-            if ($item->getCategory() === $this) {
-                $item->setCategory(null);
+            if ($item->getCategory()->contains($this)) {
+                $item->removeCategory($this);
             }
         }
 

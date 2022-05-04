@@ -34,25 +34,9 @@ class ImageListener {
      */
     private $thumbnailer;
 
-    /**
-     * @var int
-     */
-    private $thumbWidth;
-
-    /**
-     * @var int
-     */
-    private $thumbHeight;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    public function __construct(FileUploader $uploader, Thumbnailer $thumbnailer, LoggerInterface $logger) {
+    public function __construct(FileUploader $uploader, Thumbnailer $thumbnailer) {
         $this->uploader = $uploader;
         $this->thumbnailer = $thumbnailer;
-        $this->logger = $logger;
     }
 
     private function uploadFile(Image $image) : void {
@@ -74,14 +58,6 @@ class ImageListener {
         $image->setImageFile($clippingFile);
         $image->setImagePath($filename);
         $image->setThumbPath($this->thumbnailer->thumbnail($image));
-    }
-
-    public function setThumbWidth($width) : void {
-        $this->thumbWidth = $width;
-    }
-
-    public function setThumbHeight($height) : void {
-        $this->thumbHeight = $height;
     }
 
     public function prePersist(LifecycleEventArgs $args) : void {
