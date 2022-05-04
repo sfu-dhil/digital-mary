@@ -75,7 +75,7 @@ class RemoteImageController extends AbstractController implements PaginatorAware
         }
         $data = [];
 
-        foreach ($remoteImageRepository->typeaheadQuery($q) as $result) {
+        foreach ($remoteImageRepository->typeaheadQuery($q)->execute() as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => (string) $result,

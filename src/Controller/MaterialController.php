@@ -78,7 +78,7 @@ class MaterialController extends AbstractController implements PaginatorAwareInt
         }
         $data = [];
 
-        foreach ($materialRepository->typeaheadQuery($q) as $result) {
+        foreach ($materialRepository->typeaheadQuery($q)->execute() as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => (string) $result,

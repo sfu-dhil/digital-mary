@@ -77,7 +77,7 @@ class ImageController extends AbstractController implements PaginatorAwareInterf
         }
         $data = [];
 
-        foreach ($imageRepository->typeaheadQuery($q) as $result) {
+        foreach ($imageRepository->typeaheadQuery($q)->execute() as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => (string) $result,

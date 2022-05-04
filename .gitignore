@@ -36,3 +36,8 @@ src/.preload.php
 .phpunit.result.cache
 ###< phpunit/phpunit ###
 *.sql
+
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###

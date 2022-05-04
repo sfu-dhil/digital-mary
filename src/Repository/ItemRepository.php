@@ -53,7 +53,7 @@ class ItemRepository extends ServiceEntityRepository {
         $qb->orderBy('item.name', 'ASC');
         $qb->setParameter('q', "{$q}%");
 
-        return $qb->getQuery()->execute();
+        return $qb->getQuery();
     }
 
     /**
@@ -80,7 +80,7 @@ class ItemRepository extends ServiceEntityRepository {
         $qb->orderBy('item.id', 'DESC');
         $qb->setMaxResults(5);
 
-        return $qb->getQuery()->execute();
+        return $qb->getQuery();
     }
 
     public function findItemsByPeriod(Period $period) {
@@ -90,6 +90,6 @@ class ItemRepository extends ServiceEntityRepository {
         $qb->orderBy('item.name', 'ASC');
         $qb->setParameter('period', $period);
 
-        return $qb->getQuery()->execute();
+        return $qb->getQuery();
     }
 }

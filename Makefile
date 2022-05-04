@@ -4,7 +4,7 @@
 DB := dhil_dm
 PROJECT := dm
 
-include etc/Makefile.legacy
+include etc/Makefile
 
 ## Local make file
 

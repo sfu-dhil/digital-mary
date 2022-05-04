@@ -48,7 +48,7 @@ class RemoteImageRepository extends ServiceEntityRepository {
         $qb->orderBy('remoteImage.url', 'ASC');
         $qb->setParameter('q', "{$q}%");
 
-        return $qb->getQuery()->execute();
+        return $qb->getQuery();
     }
 
     /**

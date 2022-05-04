@@ -90,7 +90,7 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
         }
         $data = [];
 
-        foreach ($itemRepository->typeaheadQuery($q) as $result) {
+        foreach ($itemRepository->typeaheadQuery($q)->execute() as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => (string) $result,

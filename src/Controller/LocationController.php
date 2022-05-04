@@ -78,7 +78,7 @@ class LocationController extends AbstractController implements PaginatorAwareInt
         }
         $data = [];
 
-        foreach ($locationRepository->typeaheadQuery($q) as $result) {
+        foreach ($locationRepository->typeaheadQuery($q)->execute() as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => (string) $result,

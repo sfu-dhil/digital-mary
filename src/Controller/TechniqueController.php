@@ -78,7 +78,7 @@ class TechniqueController extends AbstractController implements PaginatorAwareIn
         }
         $data = [];
 
-        foreach ($techniqueRepository->typeaheadQuery($q) as $result) {
+        foreach ($techniqueRepository->typeaheadQuery($q)->execute() as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => (string) $result,
