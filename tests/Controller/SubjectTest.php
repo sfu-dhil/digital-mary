@@ -223,7 +223,7 @@ class SubjectTest extends ControllerTestCase {
         ]);
 
         $this->client->submit($form);
-        $this->assertTrue($this->client->getResponse()->isRedirect('/subject/1'));
+        $this->assertResponseRedirects('/subject/1');
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 

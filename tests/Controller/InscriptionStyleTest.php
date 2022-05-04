@@ -208,7 +208,7 @@ class InscriptionStyleTest extends ControllerTestCase {
         ]);
 
         $this->client->submit($form);
-        $this->assertTrue($this->client->getResponse()->isRedirect('/inscription_style/1'));
+        $this->assertResponseRedirects('/inscription_style/1');
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 

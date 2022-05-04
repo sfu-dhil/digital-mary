@@ -207,7 +207,7 @@ class MaterialTest extends ControllerTestCase {
         ]);
 
         $this->client->submit($form);
-        $this->assertTrue($this->client->getResponse()->isRedirect('/material/1'));
+        $this->assertResponseRedirects('/material/1');
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 

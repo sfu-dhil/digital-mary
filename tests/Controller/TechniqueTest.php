@@ -207,7 +207,7 @@ class TechniqueTest extends ControllerTestCase {
         ]);
 
         $this->client->submit($form);
-        $this->assertTrue($this->client->getResponse()->isRedirect('/technique/1'));
+        $this->assertResponseRedirects('/technique/1');
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 

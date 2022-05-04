@@ -207,7 +207,7 @@ class CivilizationTest extends ControllerTestCase {
         ]);
 
         $this->client->submit($form);
-        $this->assertTrue($this->client->getResponse()->isRedirect('/civilization/1'));
+        $this->assertResponseRedirects('/civilization/1');
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 

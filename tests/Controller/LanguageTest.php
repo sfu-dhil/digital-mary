@@ -207,7 +207,7 @@ class LanguageTest extends ControllerTestCase {
         ]);
 
         $this->client->submit($form);
-        $this->assertTrue($this->client->getResponse()->isRedirect('/language/1'));
+        $this->assertResponseRedirects('/language/1');
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame(1, $responseCrawler->filter('td:contains("Updated Label")')->count());

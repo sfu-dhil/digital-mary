@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
+use App\Entity\Item;
 use App\Repository\PeriodRepository;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\TestCase\ControllerTestCase;
@@ -119,7 +120,7 @@ class PeriodTest extends ControllerTestCase {
         ]);
 
         $this->client->submit($form);
-        $this->assertTrue($this->client->getResponse()->isRedirect('/period/1'));
+        $this->assertResponseRedirects('/period/1');
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame(1, $responseCrawler->filter('td:contains("Updated Label")')->count());
@@ -217,6 +218,11 @@ class PeriodTest extends ControllerTestCase {
      * @group delete
      */
     public function testAdminDelete() : void {
+        $item = $this->em->find(Item::class, 1);
+        $this->em->remove($item);
+        $this->em->flush();
+        $this->em->clear();
+
         $repo = self::$container->get(PeriodRepository::class);
         $preCount = count($repo->findAll());
 
@@ -233,5 +239,6 @@ class PeriodTest extends ControllerTestCase {
         $this->em->clear();
         $postCount = count($repo->findAll());
         $this->assertSame($preCount - 1, $postCount);
+        $this->reset();
     }
 }

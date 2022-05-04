@@ -212,7 +212,7 @@ class ItemTest extends ControllerTestCase {
         ]);
 
         $this->client->submit($form);
-        $this->assertTrue($this->client->getResponse()->isRedirect('/item/1'));
+        $this->assertResponseRedirects('/item/1');
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
@@ -359,17 +359,12 @@ class ItemTest extends ControllerTestCase {
         ]);
         $this->client->submit($form);
 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/item/1'));
+        $this->assertResponseRedirects('/item/1');
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(1, $responseCrawler->filter('div:contains("The image has been added to the item")')->count());
 
         $this->em->clear();
         $item = $this->em->find(Item::class, 1);
-
-        foreach ($item->getImages() as $image) {
-            $this->cleanUp($image->getImageFile());
-            $this->cleanUp($image->getThumbFile());
-        }
     }
 
     public function testAnonEditImage() : void {
@@ -390,17 +385,12 @@ class ItemTest extends ControllerTestCase {
         ]);
         $this->client->submit($form);
 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/item/1'));
+        $this->assertResponseRedirects('/item/1');
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(1, $responseCrawler->filter('div:contains("The image has been added to the item")')->count());
 
         $this->em->clear();
         $item = $this->em->find(Item::class, 1);
-
-        foreach ($item->getImages() as $image) {
-            $this->cleanUp($image->getImageFile());
-            $this->cleanUp($image->getThumbFile());
-        }
 
         $this->login(UserFixtures::USER);
         $formCrawler = $this->client->request('GET', '/item/1/edit_image/1');
@@ -419,17 +409,12 @@ class ItemTest extends ControllerTestCase {
         ]);
         $this->client->submit($form);
 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/item/1'));
+        $this->assertResponseRedirects('/item/1');
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(1, $responseCrawler->filter('div:contains("The image has been added to the item")')->count());
 
         $this->em->clear();
         $item = $this->em->find(Item::class, 1);
-
-        foreach ($item->getImages() as $image) {
-            $this->cleanUp($image->getImageFile());
-            $this->cleanUp($image->getThumbFile());
-        }
 
         $upload = new UploadedFile(__DIR__ . '/../data/32024919067_c2c18aa1c5_c.jpg', 'dog.jpg');
         $formCrawler = $this->client->request('GET', '/item/1/edit_image/1');
@@ -440,17 +425,12 @@ class ItemTest extends ControllerTestCase {
         ]);
         $this->client->submit($form);
 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/item/1'));
+        $this->assertResponseRedirects('/item/1');
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(1, $responseCrawler->filter('div:contains("The image has been updated")')->count());
 
         $this->em->clear();
         $item = $this->em->find(Item::class, 1);
-
-        foreach ($item->getImages() as $image) {
-            $this->cleanUp($image->getImageFile());
-            $this->cleanUp($image->getThumbFile());
-        }
     }
 
     /**
@@ -489,10 +469,9 @@ class ItemTest extends ControllerTestCase {
         ]);
 
         $this->client->submit($form);
-        $this->assertTrue($this->client->getResponse()->isRedirect('/item/2'));
+        $this->assertResponseRedirects('/item/2');
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(7, $responseCrawler->filter('div:contains("Updated Title")')->count());
     }
 
     /**

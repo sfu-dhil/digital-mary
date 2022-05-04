@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
+use App\Entity\Item;
 use App\Repository\LocationRepository;
 use Nines\UserBundle\DataFixtures\UserFixtures;
 use Nines\UtilBundle\TestCase\ControllerTestCase;
@@ -206,12 +207,12 @@ class LocationTest extends ControllerTestCase {
             'location[description]' => 'Updated Description',
             'location[latitude]' => 123.456,
             'location[longitude]' => 46.321,
-            'location[country]' => 'Updated Country',
+            'location[country]' => 'UP',
             'location[alternateNames][0]' => 'Updated AlternateNames',
         ]);
 
         $this->client->submit($form);
-        $this->assertTrue($this->client->getResponse()->isRedirect('/location/1'));
+        $this->assertResponseRedirects('/location/1');
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
@@ -219,7 +220,7 @@ class LocationTest extends ControllerTestCase {
         $this->assertSame(1, $responseCrawler->filter('td:contains("Updated Description")')->count());
         $this->assertSame(1, $responseCrawler->filter('td:contains("123.456")')->count());
         $this->assertSame(1, $responseCrawler->filter('td:contains("46.321")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("Updated Country")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("UP")')->count());
         $this->assertSame(1, $responseCrawler->filter('td:contains("Updated AlternateNames")')->count());
     }
 
@@ -277,7 +278,7 @@ class LocationTest extends ControllerTestCase {
             'location[description]' => 'New Description',
             'location[latitude]' => 123.456,
             'location[longitude]' => 45.1234,
-            'location[country]' => 'New Country',
+            'location[country]' => 'NC',
         ]);
 
         $this->client->submit($form);
@@ -289,7 +290,7 @@ class LocationTest extends ControllerTestCase {
         $this->assertSame(1, $responseCrawler->filter('td:contains("New Description")')->count());
         $this->assertSame(1, $responseCrawler->filter('td:contains("123.456")')->count());
         $this->assertSame(1, $responseCrawler->filter('td:contains("45.1234")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("New Country")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("NC")')->count());
     }
 
     /**
@@ -306,7 +307,7 @@ class LocationTest extends ControllerTestCase {
             'location[description]' => 'New Description',
             'location[latitude]' => 123.456,
             'location[longitude]' => 45.1234,
-            'location[country]' => 'New Country',
+            'location[country]' => 'NC',
         ]);
 
         $this->client->submit($form);
@@ -317,7 +318,7 @@ class LocationTest extends ControllerTestCase {
         $this->assertSame(1, $responseCrawler->filter('td:contains("New Description")')->count());
         $this->assertSame(1, $responseCrawler->filter('td:contains("123.456")')->count());
         $this->assertSame(1, $responseCrawler->filter('td:contains("45.1234")')->count());
-        $this->assertSame(1, $responseCrawler->filter('td:contains("New Country")')->count());
+        $this->assertSame(1, $responseCrawler->filter('td:contains("NC")')->count());
     }
 
     /**
@@ -325,6 +326,11 @@ class LocationTest extends ControllerTestCase {
      * @group delete
      */
     public function testAdminDelete() : void {
+        $item = $this->em->find(Item::class, 1);
+        $this->em->remove($item);
+        $this->em->flush();
+        $this->em->clear();
+
         $repo = self::$container->get(LocationRepository::class);
         $preCount = count($repo->findAll());
 
@@ -341,5 +347,6 @@ class LocationTest extends ControllerTestCase {
         $this->em->clear();
         $postCount = count($repo->findAll());
         $this->assertSame($preCount - 1, $postCount);
+        $this->reset();
     }
 }
