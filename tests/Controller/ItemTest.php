@@ -10,28 +10,18 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\ItemFixtures;
-use App\DataFixtures\RemoteImageFixtures;
 use App\Entity\Item;
 use App\Repository\ItemRepository;
 use Nines\UserBundle\DataFixtures\UserFixtures;
-use Nines\UtilBundle\Tests\ControllerBaseCase;
+use Nines\UtilBundle\TestCase\ControllerTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 
-class ItemTest extends ControllerBaseCase {
+class ItemTest extends ControllerTestCase {
     // Change this to HTTP_OK when the site is public.
     private const ANON_RESPONSE_CODE = Response::HTTP_FOUND;
 
     private const TYPEAHEAD_QUERY = 'name';
-
-    protected function fixtures() : array {
-        return [
-            ItemFixtures::class,
-            UserFixtures::class,
-            RemoteImageFixtures::class,
-        ];
-    }
 
     /**
      * @group anon
@@ -48,7 +38,7 @@ class ItemTest extends ControllerBaseCase {
      * @group index
      */
     public function testUserIndex() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/item/');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('New')->count());
@@ -59,7 +49,7 @@ class ItemTest extends ControllerBaseCase {
      * @group index
      */
     public function testAdminIndex() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/item/');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame(1, $crawler->selectLink('New')->count());
@@ -80,7 +70,7 @@ class ItemTest extends ControllerBaseCase {
      * @group show
      */
     public function testUserShow() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/item/1');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame(0, $crawler->selectLink('Edit')->count());
@@ -91,7 +81,7 @@ class ItemTest extends ControllerBaseCase {
      * @group show
      */
     public function testAdminShow() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/item/1');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertSame(1, $crawler->selectLink('Edit')->count());
@@ -119,7 +109,7 @@ class ItemTest extends ControllerBaseCase {
      * @group typeahead
      */
     public function testUserTypeahead() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $this->client->request('GET', '/item/typeahead?q=' . self::TYPEAHEAD_QUERY);
         $response = $this->client->getResponse();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
@@ -133,7 +123,7 @@ class ItemTest extends ControllerBaseCase {
      * @group typeahead
      */
     public function testAdminTypeahead() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $this->client->request('GET', '/item/typeahead?q=' . self::TYPEAHEAD_QUERY);
         $response = $this->client->getResponse();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
@@ -143,11 +133,6 @@ class ItemTest extends ControllerBaseCase {
     }
 
     public function testAnonSearch() : void {
-        $repo = $this->createMock(ItemRepository::class);
-        $repo->method('searchQuery')->willReturn([$this->getReference('item.1')]);
-        $this->client->disableReboot();
-        $this->client->getContainer()->set('test.' . ItemRepository::class, $repo);
-
         $crawler = $this->client->request('GET', '/item/search');
         $this->assertSame(self::ANON_RESPONSE_CODE, $this->client->getResponse()->getStatusCode());
         if (self::ANON_RESPONSE_CODE === Response::HTTP_FOUND) {
@@ -164,12 +149,7 @@ class ItemTest extends ControllerBaseCase {
     }
 
     public function testUserSearch() : void {
-        $repo = $this->createMock(ItemRepository::class);
-        $repo->method('searchQuery')->willReturn([$this->getReference('item.1')]);
-        $this->client->disableReboot();
-        $this->client->getContainer()->set('test.' . ItemRepository::class, $repo);
-
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/item/search');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
@@ -182,12 +162,7 @@ class ItemTest extends ControllerBaseCase {
     }
 
     public function testAdminSearch() : void {
-        $repo = $this->createMock(ItemRepository::class);
-        $repo->method('searchQuery')->willReturn([$this->getReference('item.1')]);
-        $this->client->disableReboot();
-        $this->client->getContainer()->set('test.' . ItemRepository::class, $repo);
-
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/item/search');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
@@ -214,7 +189,7 @@ class ItemTest extends ControllerBaseCase {
      * @group edit
      */
     public function testUserEdit() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/item/1/edit');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
@@ -224,7 +199,7 @@ class ItemTest extends ControllerBaseCase {
      * @group edit
      */
     public function testAdminEdit() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $formCrawler = $this->client->request('GET', '/item/1/edit');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
@@ -237,7 +212,7 @@ class ItemTest extends ControllerBaseCase {
         ]);
 
         $this->client->submit($form);
-        $this->assertTrue($this->client->getResponse()->isRedirect('/item/1'));
+        $this->assertResponseRedirects('/item/1');
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
@@ -269,7 +244,7 @@ class ItemTest extends ControllerBaseCase {
      * @group new
      */
     public function testUserNew() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/item/new');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
@@ -279,7 +254,7 @@ class ItemTest extends ControllerBaseCase {
      * @group new
      */
     public function testUserNewPopup() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/item/new_popup');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
@@ -289,7 +264,7 @@ class ItemTest extends ControllerBaseCase {
      * @group new
      */
     public function testAdminNew() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $formCrawler = $this->client->request('GET', '/item/new');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
@@ -316,7 +291,7 @@ class ItemTest extends ControllerBaseCase {
      * @group new
      */
     public function testAdminNewPopup() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $formCrawler = $this->client->request('GET', '/item/new_popup');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
@@ -345,7 +320,7 @@ class ItemTest extends ControllerBaseCase {
         $repo = self::$container->get(ItemRepository::class);
         $preCount = count($repo->findAll());
 
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $crawler = $this->client->request('GET', '/item/1');
         $form = $crawler->selectButton('Delete')->form();
         $this->client->submit($form);
@@ -355,7 +330,7 @@ class ItemTest extends ControllerBaseCase {
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $this->entityManager->clear();
+        $this->em->clear();
         $postCount = count($repo->findAll());
         $this->assertSame($preCount - 1, $postCount);
     }
@@ -367,13 +342,13 @@ class ItemTest extends ControllerBaseCase {
     }
 
     public function testUserNewImage() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $formCrawler = $this->client->request('GET', '/item/1/add_image');
         $this->assertSame(Response::HTTP_FORBIDDEN, $this->client->getResponse()->getStatusCode());
     }
 
     public function testAdminNewImage() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $upload = new UploadedFile(__DIR__ . '/../data/35597651312_a188de382c_c.jpg', 'chicken.jpg');
 
         $formCrawler = $this->client->request('GET', '/item/1/add_image');
@@ -384,17 +359,12 @@ class ItemTest extends ControllerBaseCase {
         ]);
         $this->client->submit($form);
 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/item/1'));
+        $this->assertResponseRedirects('/item/1');
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(1, $responseCrawler->filter('div:contains("The image has been added to the item")')->count());
 
-        $this->entityManager->clear();
-        $item = $this->entityManager->find(Item::class, 1);
-
-        foreach ($item->getImages() as $image) {
-            $this->cleanUp($image->getImageFile());
-            $this->cleanUp($image->getThumbFile());
-        }
+        $this->em->clear();
+        $item = $this->em->find(Item::class, 1);
     }
 
     public function testAnonEditImage() : void {
@@ -404,7 +374,7 @@ class ItemTest extends ControllerBaseCase {
     }
 
     public function testUserEditImage() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $upload = new UploadedFile(__DIR__ . '/../data/35597651312_a188de382c_c.jpg', 'chicken.jpg');
 
         $formCrawler = $this->client->request('GET', '/item/1/add_image');
@@ -415,25 +385,20 @@ class ItemTest extends ControllerBaseCase {
         ]);
         $this->client->submit($form);
 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/item/1'));
+        $this->assertResponseRedirects('/item/1');
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(1, $responseCrawler->filter('div:contains("The image has been added to the item")')->count());
 
-        $this->entityManager->clear();
-        $item = $this->entityManager->find(Item::class, 1);
+        $this->em->clear();
+        $item = $this->em->find(Item::class, 1);
 
-        foreach ($item->getImages() as $image) {
-            $this->cleanUp($image->getImageFile());
-            $this->cleanUp($image->getThumbFile());
-        }
-
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $formCrawler = $this->client->request('GET', '/item/1/edit_image/1');
         $this->assertSame(Response::HTTP_FORBIDDEN, $this->client->getResponse()->getStatusCode());
     }
 
     public function testAdminEditImage() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $upload = new UploadedFile(__DIR__ . '/../data/24708385605_c5387e7743_c.jpg', 'cat.jpg');
 
         $formCrawler = $this->client->request('GET', '/item/1/add_image');
@@ -444,17 +409,12 @@ class ItemTest extends ControllerBaseCase {
         ]);
         $this->client->submit($form);
 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/item/1'));
+        $this->assertResponseRedirects('/item/1');
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(1, $responseCrawler->filter('div:contains("The image has been added to the item")')->count());
 
-        $this->entityManager->clear();
-        $item = $this->entityManager->find(Item::class, 1);
-
-        foreach ($item->getImages() as $image) {
-            $this->cleanUp($image->getImageFile());
-            $this->cleanUp($image->getThumbFile());
-        }
+        $this->em->clear();
+        $item = $this->em->find(Item::class, 1);
 
         $upload = new UploadedFile(__DIR__ . '/../data/32024919067_c2c18aa1c5_c.jpg', 'dog.jpg');
         $formCrawler = $this->client->request('GET', '/item/1/edit_image/1');
@@ -465,17 +425,12 @@ class ItemTest extends ControllerBaseCase {
         ]);
         $this->client->submit($form);
 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/item/1'));
+        $this->assertResponseRedirects('/item/1');
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(1, $responseCrawler->filter('div:contains("The image has been updated")')->count());
 
-        $this->entityManager->clear();
-        $item = $this->entityManager->find(Item::class, 1);
-
-        foreach ($item->getImages() as $image) {
-            $this->cleanUp($image->getImageFile());
-            $this->cleanUp($image->getThumbFile());
-        }
+        $this->em->clear();
+        $item = $this->em->find(Item::class, 1);
     }
 
     /**
@@ -493,7 +448,7 @@ class ItemTest extends ControllerBaseCase {
      * @group edit
      */
     public function testUserEditRemoteImage() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/item/2/edit_remote_image/1');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
@@ -503,7 +458,7 @@ class ItemTest extends ControllerBaseCase {
      * @group edit
      */
     public function testAdminEditRemoteImage() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $formCrawler = $this->client->request('GET', '/item/2/edit_remote_image/1');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
@@ -514,10 +469,9 @@ class ItemTest extends ControllerBaseCase {
         ]);
 
         $this->client->submit($form);
-        $this->assertTrue($this->client->getResponse()->isRedirect('/item/2'));
+        $this->assertResponseRedirects('/item/2');
         $responseCrawler = $this->client->followRedirect();
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(7, $responseCrawler->filter('div:contains("Updated Title")')->count());
     }
 
     /**
@@ -535,7 +489,7 @@ class ItemTest extends ControllerBaseCase {
      * @group new
      */
     public function testUserNewRemoteImage() : void {
-        $this->login('user.user');
+        $this->login(UserFixtures::USER);
         $crawler = $this->client->request('GET', '/item/1/add_remote_image');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
     }
@@ -545,7 +499,7 @@ class ItemTest extends ControllerBaseCase {
      * @group new
      */
     public function testAdminNewRemoteImage() : void {
-        $this->login('user.admin');
+        $this->login(UserFixtures::ADMIN);
         $formCrawler = $this->client->request('GET', '/item/1/add_remote_image');
         $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 

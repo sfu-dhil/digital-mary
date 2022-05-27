@@ -90,7 +90,7 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
         }
         $data = [];
 
-        foreach ($itemRepository->typeaheadQuery($q) as $result) {
+        foreach ($itemRepository->typeaheadQuery($q)->execute() as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => (string) $result,
@@ -200,6 +200,8 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
      * @IsGranted("ROLE_CONTENT_ADMIN")
      * @Route("/{id}/add_image", name="item_add_image", methods={"GET", "POST"})
      * @Template
+     *
+     * @return array|RedirectResponse
      */
     public function addImage(Request $request, Item $item, EntityManagerInterface $em) {
         $image = new Image();
@@ -228,6 +230,7 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
      * @Route("/{id}/edit_image/{image_id}", name="item_edit_image", methods={"GET", "POST"})
      * @ParamConverter("image", options={"id": "image_id"})
      * @Template
+     * @return array|RedirectResponse
      */
     public function editImage(Request $request, Item $item, Image $image, FileUploader $fileUploader, EntityManagerInterface $em) {
         $form = $this->createForm(ImageType::class, $image);
@@ -269,6 +272,7 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
      * @Route("/{id}/delete_image/{image_id}", name="item_delete_image", methods={"DELETE"})
      * @ParamConverter("image", options={"id": "image_id"})
      * @Template
+     * @return RedirectResponse
      */
     public function deleteImage(Request $request, Item $item, Image $image, EntityManagerInterface $em) {
         if ($this->isCsrfTokenValid('delete' . $image->getId(), $request->request->get('_token'))) {

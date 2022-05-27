@@ -40,7 +40,7 @@ class ImageRepository extends ServiceEntityRepository {
     /**
      * @param string $q
      *
-     * @return Collection|Image[]
+     * @return Query
      */
     public function typeaheadQuery($q) {
         $qb = $this->createQueryBuilder('image');
@@ -48,13 +48,13 @@ class ImageRepository extends ServiceEntityRepository {
         $qb->orderBy('image.originalName', 'ASC');
         $qb->setParameter('q', "{$q}%");
 
-        return $qb->getQuery()->execute();
+        return $qb->getQuery();
     }
 
     /**
      * @param string $q
      *
-     * @return Collection|Image[]
+     * @return Query
      */
     public function searchQuery($q) {
         $qb = $this->createQueryBuilder('image');
@@ -63,6 +63,6 @@ class ImageRepository extends ServiceEntityRepository {
         $qb->orderBy('score', 'DESC');
         $qb->setParameter('q', $q);
 
-        return $qb->getQuery()->execute();
+        return $qb->getQuery();
     }
 }

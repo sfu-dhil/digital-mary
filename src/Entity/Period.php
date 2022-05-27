@@ -46,18 +46,29 @@ class Period extends AbstractTerm {
         return $this->sortableYear;
     }
 
+    /**
+     * @return self
+     */
     public function setSortableYear(int $sortableYear) : self {
         $this->sortableYear = $sortableYear;
 
         return $this;
     }
 
+    /**
+     * @param Collection|Item[] $items
+     *
+     * @return self
+     */
     public function setItems($items) {
         $this->items = $items;
 
         return $this;
     }
 
+    /**
+     * @return Item[]|Collection
+     */
     public function getItems() {
         return $this->items;
     }

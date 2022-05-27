@@ -40,7 +40,7 @@ class RemoteImageRepository extends ServiceEntityRepository {
     /**
      * @param string $q
      *
-     * @return Collection|RemoteImage[]
+     * @return Query
      */
     public function typeaheadQuery($q) {
         $qb = $this->createQueryBuilder('remoteImage');
@@ -48,7 +48,7 @@ class RemoteImageRepository extends ServiceEntityRepository {
         $qb->orderBy('remoteImage.url', 'ASC');
         $qb->setParameter('q', "{$q}%");
 
-        return $qb->getQuery()->execute();
+        return $qb->getQuery();
     }
 
     /**

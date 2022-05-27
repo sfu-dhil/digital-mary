@@ -13,6 +13,7 @@ namespace App\Services;
 use App\Entity\Image;
 use Exception;
 use Imagick;
+use ImagickException;
 use ImagickPixel;
 use Psr\Log\LoggerInterface;
 
@@ -22,27 +23,23 @@ use Psr\Log\LoggerInterface;
  * @author mjoyce
  */
 class Thumbnailer {
-    private $width;
+    private ?int $width = null;
 
-    private $height;
+    private ?int $height = null;
 
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    public function __construct(LoggerInterface $logger) {
-        $this->logger = $logger;
-    }
-
-    public function setWidth($width) : void {
+    public function setWidth(int $width) : void {
         $this->width = $width;
     }
 
-    public function setHeight($height) : void {
+    public function setHeight(int $height) : void {
         $this->height = $height;
     }
 
+    /**
+     * @return string
+     * @throws ImagickException
+     * @throws Exception
+     */
     public function thumbnail(Image $image) {
         $file = $image->getImageFile();
         $thumbname = $file->getBasename('.' . $file->getExtension()) . '_tn.png';

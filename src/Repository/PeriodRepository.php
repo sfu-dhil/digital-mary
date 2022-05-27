@@ -26,10 +26,7 @@ class PeriodRepository extends TermRepository {
         parent::__construct($registry, Period::class);
     }
 
-    /**
-     * @return Query
-     */
-    public function indexQuery() {
+    public function indexQuery() : Query {
         return $this->createQueryBuilder('v')->orderBy('v.sortableYear')->getQuery();
     }
 }

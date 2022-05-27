@@ -11,6 +11,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\ItemRepository;
+use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -92,13 +94,13 @@ class Item extends AbstractEntity {
     private $periodEnd;
 
     /**
-     * @var Category
+     * @var Category[]|Collection
      * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="items")
      */
     private $category;
 
     /**
-     * @var Civilization
+     * @var Civilization[]|Collection
      * @ORM\ManyToMany(targetEntity="App\Entity\Civilization", inversedBy="items")
      */
     private $civilization;
@@ -116,7 +118,7 @@ class Item extends AbstractEntity {
     private $inscriptionStyle;
 
     /**
-     * @var Language
+     * @var Language[]|Collection
      * @ORM\ManyToMany(targetEntity="App\Entity\Language", inversedBy="items")
      */
     private $inscriptionLanguage;
@@ -274,7 +276,16 @@ class Item extends AbstractEntity {
         return $this;
     }
 
-    public function addRevision($date, $initials) : void {
+    /**
+     * @param string|DateTimeInterface $date
+     * @param string $initials
+     *
+     * @return void
+     */
+    public function addRevision($date, string $initials) : void {
+        if($date instanceof DateTimeInterface) {
+            $date = $date->format('Y-m-d');
+        }
         foreach ($this->revisions as $revision) {
             if ($revision['date'] === $date && $revision['initials'] === $initials) {
                 return;

@@ -78,7 +78,7 @@ class CivilizationController extends AbstractController implements PaginatorAwar
         }
         $data = [];
 
-        foreach ($civilizationRepository->typeaheadQuery($q) as $result) {
+        foreach ($civilizationRepository->typeaheadQuery($q)->execute() as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => (string) $result,

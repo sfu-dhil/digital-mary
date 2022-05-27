@@ -75,7 +75,7 @@ class Subject extends AbstractTerm {
         return $this;
     }
 
-    public function addAlternateName($alternateName) {
+    public function addAlternateName(string $alternateName) : self {
         $this->alternateNames[] = $alternateName;
 
         return $this;

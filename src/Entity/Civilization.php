@@ -43,7 +43,7 @@ class Civilization extends AbstractTerm {
     public function addItem(Item $item) : self {
         if ( ! $this->items->contains($item)) {
             $this->items[] = $item;
-            $item->setCivilization($this);
+            $item->addCivilization($this);
         }
 
         return $this;
@@ -53,8 +53,8 @@ class Civilization extends AbstractTerm {
         if ($this->items->contains($item)) {
             $this->items->removeElement($item);
             // set the owning side to null (unless already changed)
-            if ($item->getCivilization() === $this) {
-                $item->setCivilization(null);
+            if ($item->getCivilization()->contains($this)) {
+                $item->removeCivilization($this);
             }
         }
 

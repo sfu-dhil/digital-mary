@@ -41,7 +41,7 @@ class Language extends AbstractTerm {
     public function addItem(Item $item) : self {
         if ( ! $this->items->contains($item)) {
             $this->items[] = $item;
-            $item->setInscriptionLanguage($this);
+            $item->addInscriptionLanguage($this);
         }
 
         return $this;
@@ -51,8 +51,8 @@ class Language extends AbstractTerm {
         if ($this->items->contains($item)) {
             $this->items->removeElement($item);
             // set the owning side to null (unless already changed)
-            if ($item->getInscriptionLanguage() === $this) {
-                $item->setInscriptionLanguage(null);
+            if ($item->getInscriptionLanguage()->contains($this)) {
+                $item->removeInscriptionLanguage($this);
             }
         }
 

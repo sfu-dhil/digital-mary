@@ -78,7 +78,7 @@ class InscriptionStyleController extends AbstractController implements Paginator
         }
         $data = [];
 
-        foreach ($inscriptionStyleRepository->typeaheadQuery($q) as $result) {
+        foreach ($inscriptionStyleRepository->typeaheadQuery($q)->execute() as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => (string) $result,

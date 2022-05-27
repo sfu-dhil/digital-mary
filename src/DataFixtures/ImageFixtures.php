@@ -12,13 +12,18 @@ namespace App\DataFixtures;
 
 use App\Entity\Image;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Imagick;
 use ImagickPixel;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class ImageFixtures extends Fixture implements DependentFixtureInterface {
+class ImageFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface {
+    public static function getGroups() : array {
+        return ['dev', 'test'];
+    }
+
     /**
      * {@inheritdoc}
      */

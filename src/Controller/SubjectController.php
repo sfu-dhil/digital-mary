@@ -78,7 +78,7 @@ class SubjectController extends AbstractController implements PaginatorAwareInte
         }
         $data = [];
 
-        foreach ($subjectRepository->typeaheadQuery($q) as $result) {
+        foreach ($subjectRepository->typeaheadQuery($q)->execute() as $result) {
             $data[] = [
                 'id' => $result->getId(),
                 'text' => (string) $result,
