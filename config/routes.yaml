@@ -5,8 +5,5 @@ nines_editor:
   resource: '@NinesEditorBundle/config/routes.yaml'
   prefix: editor
 
-nines_media:
-  resource: '@NinesMediaBundle/config/routes.yaml'
-
 nines_user:
   resource: '@NinesUserBundle/config/routes.yaml'
