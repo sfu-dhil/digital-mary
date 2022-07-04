@@ -18,7 +18,6 @@ return [
     Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
     Nines\BlogBundle\NinesBlogBundle::class => ['all' => true],
     Nines\EditorBundle\NinesEditorBundle::class => ['all' => true],
-    Nines\MediaBundle\NinesMediaBundle::class => ['all' => true],
     Nines\MakerBundle\NinesMakerBundle::class => ['dev' => true],
     Nines\UserBundle\NinesUserBundle::class => ['all' => true],
     Nines\UtilBundle\NinesUtilBundle::class => ['all' => true],
