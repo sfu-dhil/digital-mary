@@ -189,16 +189,6 @@
     url('../fonts/source-sans-pro-normal-200.woff') format('woff');
 }
 
-/* 'Source Sans Pro' normal 300*/
-@font-face {
-    font-family: 'Source Sans Pro';
-    font-style: normal;
-    font-weight: 300;
-    src: 
-    url('../fonts/source-sans-pro-normal-300.woff2') format('woff2'),
-    url('../fonts/source-sans-pro-normal-300.woff') format('woff');
-}
-
 /* 'Source Sans Pro' italic 200*/
 @font-face {
     font-family: 'Source Sans Pro';
@@ -209,14 +199,14 @@
     url('../fonts/source-sans-pro-italic-200.woff') format('woff');
 }
 
-/* 'Source Sans Pro' normal 400*/
+/* 'Source Sans Pro' normal 300*/
 @font-face {
     font-family: 'Source Sans Pro';
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     src: 
-    url('../fonts/source-sans-pro-normal-400.woff2') format('woff2'),
-    url('../fonts/source-sans-pro-normal-400.woff') format('woff');
+    url('../fonts/source-sans-pro-normal-300.woff2') format('woff2'),
+    url('../fonts/source-sans-pro-normal-300.woff') format('woff');
 }
 
 /* 'Source Sans Pro' italic 300*/
@@ -227,6 +217,16 @@
     src: 
     url('../fonts/source-sans-pro-italic-300.woff2') format('woff2'),
     url('../fonts/source-sans-pro-italic-300.woff') format('woff');
+}
+
+/* 'Source Sans Pro' normal 400*/
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    src: 
+    url('../fonts/source-sans-pro-normal-400.woff2') format('woff2'),
+    url('../fonts/source-sans-pro-normal-400.woff') format('woff');
 }
 
 /* 'Source Sans Pro' italic 400*/
@@ -369,6 +369,16 @@
     url('../fonts/spectral-normal-200.woff') format('woff');
 }
 
+/* 'Spectral' italic 200*/
+@font-face {
+    font-family: 'Spectral';
+    font-style: italic;
+    font-weight: 200;
+    src: 
+    url('../fonts/spectral-italic-200.woff2') format('woff2'),
+    url('../fonts/spectral-italic-200.woff') format('woff');
+}
+
 /* 'Spectral' normal 300*/
 @font-face {
     font-family: 'Spectral';
@@ -389,16 +399,6 @@
     url('../fonts/spectral-italic-300.woff') format('woff');
 }
 
-/* 'Spectral' italic 200*/
-@font-face {
-    font-family: 'Spectral';
-    font-style: italic;
-    font-weight: 200;
-    src: 
-    url('../fonts/spectral-italic-200.woff2') format('woff2'),
-    url('../fonts/spectral-italic-200.woff') format('woff');
-}
-
 /* 'Spectral' normal 400*/
 @font-face {
     font-family: 'Spectral';
@@ -407,6 +407,16 @@
     src: 
     url('../fonts/spectral-normal-400.woff2') format('woff2'),
     url('../fonts/spectral-normal-400.woff') format('woff');
+}
+
+/* 'Spectral' italic 400*/
+@font-face {
+    font-family: 'Spectral';
+    font-style: italic;
+    font-weight: 400;
+    src: 
+    url('../fonts/spectral-italic-400.woff2') format('woff2'),
+    url('../fonts/spectral-italic-400.woff') format('woff');
 }
 
 /* 'Spectral' normal 500*/
@@ -427,16 +437,6 @@
     src: 
     url('../fonts/spectral-italic-500.woff2') format('woff2'),
     url('../fonts/spectral-italic-500.woff') format('woff');
-}
-
-/* 'Spectral' italic 400*/
-@font-face {
-    font-family: 'Spectral';
-    font-style: italic;
-    font-weight: 400;
-    src: 
-    url('../fonts/spectral-italic-400.woff2') format('woff2'),
-    url('../fonts/spectral-italic-400.woff') format('woff');
 }
 
 /* 'Spectral' normal 700*/
