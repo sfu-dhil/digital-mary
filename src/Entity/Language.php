@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
 use App\Repository\LanguageRepository;
@@ -16,15 +10,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractTerm;
 
-/**
- * @ORM\Entity(repositoryClass=LanguageRepository::class)
- */
+#[ORM\Entity(repositoryClass: LanguageRepository::class)]
 class Language extends AbstractTerm {
     /**
-     * @var Collection|Item[]
-     * @ORM\ManyToMany(targetEntity="App\Entity\Item", mappedBy="inscriptionLanguage")
+     * @var Collection<Item>
      */
-    private $items;
+    #[ORM\ManyToMany(targetEntity: Item::class, mappedBy: 'inscriptionLanguage')]
+    private Collection $items;
 
     public function __construct() {
         parent::__construct();

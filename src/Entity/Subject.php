@@ -2,37 +2,28 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
 use App\Repository\SubjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractTerm;
 
 /**
  * A subject of a painting eg. Mary, Joseph, baby Jesus, etc.
- *
- * @ORM\Entity(repositoryClass=SubjectRepository::class)
  */
+#[ORM\Entity(repositoryClass: SubjectRepository::class)]
 class Subject extends AbstractTerm {
-    /**
-     * @var array
-     * @ORM\Column(type="array", nullable=false)
-     */
-    private $alternateNames;
+    #[ORM\Column(type: Types::ARRAY, nullable: false)]
+    private array $alternateNames;
 
     /**
-     * @var Collection|Item[]
-     * @ORM\ManyToMany(targetEntity="App\Entity\Item", mappedBy="subjects")
+     * @var Collection<Item>
      */
-    private $items;
+    #[ORM\ManyToMany(targetEntity: Item::class, mappedBy: 'subjects')]
+    private Collection $items;
 
     public function __construct() {
         parent::__construct();

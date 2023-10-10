@@ -9,20 +9,13 @@
     </p>
 {% endblock %}
 
-{% block admin %}
-    <div class='btn-toolbar'>
-        <div class='btn-group'>
-            {% if is_granted('ROLE_CONTENT_ADMIN') %}
-                <a href="{{ path('inscription_style_new') }}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-plus"></span> New
-                </a>
-            {% endif %}
-
-            <a href="{{ path('inscription_style_search') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span> Search
-            </a>
-        </div>
-    </div>
+{% block action_buttons %}
+    <a href="{{ path('inscription_style_new') }}" class="btn btn-light">
+        <span class="bi bi-plus-lg"></span> New
+    </a>
+    <a href="{{ path('inscription_style_search') }}" class="btn btn-light">
+        <span class="bi bi-search"></span> Search
+    </a>
 {% endblock %}
 
 {% block body %}

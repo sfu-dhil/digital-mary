@@ -4,19 +4,14 @@
 
 {% block pageheader %}
     <h1>All Periods</h1>
-    {% include 'partial/count.html.twig'
-        with {'index': periods, 'label': 'periods'} %}
+    {% include 'partial/count.html.twig' with {'index': periods, 'label': 'periods'} %}
 {% endblock %}
 
 
-{% block admin %}
-    <div class='btn-toolbar'>
-        <div class='btn-group'>
-            <a href="{{ path('period_new') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-plus"></span> New
-            </a>
-        </div>
-    </div>
+{% block action_buttons %}
+    <a href="{{ path('period_new') }}" class="btn btn-light">
+        <span class="bi bi-plus-lg"></span> New
+    </a>
 {% endblock %}
 
 

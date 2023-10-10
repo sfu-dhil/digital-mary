@@ -5,22 +5,18 @@
 {% block pageheader %}
     <h1>All Items</h1>
     {% include 'partial/count.html.twig' with {
-        'index':items,
+        'index': items,
         'label': 'items'
     } %}
 {% endblock %}
 
-{% block admin %}
-    <div class='btn-toolbar'>
-        <div class='btn-group'>
-            {% if is_granted('ROLE_CONTENT_ADMIN') %}
-                <a href="{{ path('item_new') }}" class="btn btn-default"> <span class="glyphicon glyphicon-plus"></span>
-                    New </a>
-            {% endif %}
-            <a href="{{ path('item_search') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span> Search </a>
-        </div>
-    </div>
+{% block action_buttons %}
+    {% if is_granted('ROLE_CONTENT_ADMIN') %}
+        <a href="{{ path('item_new') }}" class="btn btn-light"> <span class="bi bi-plus-lg"></span>
+            New </a>
+    {% endif %}
+    <a href="{{ path('item_search') }}" class="btn btn-light">
+        <span class="bi bi-search"></span> Search </a>
 {% endblock %}
 
 

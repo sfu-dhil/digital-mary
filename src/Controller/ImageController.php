@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Controller;
 
 use App\Entity\Image;
@@ -22,17 +16,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/image")
- */
+#[Route(path: '/image')]
 class ImageController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
-    /**
-     * @Route("/", name="image_index", methods={"GET"})
-     *
-     * @Template
-     */
+    #[Route(path: '/', name: 'image_index', methods: ['GET'])]
+    #[Template]
     public function index(Request $request, ImageRepository $imageRepository) : array {
         $query = $imageRepository->indexQuery();
         $pageSize = $this->getParameter('page_size');
@@ -43,14 +32,9 @@ class ImageController extends AbstractController implements PaginatorAwareInterf
         ];
     }
 
-    /**
-     * @Route("/search", name="image_search", methods={"GET"})
-     *
-     * @Template
-     *
-     * @return array
-     */
-    public function search(Request $request, ImageRepository $imageRepository) {
+    #[Route(path: '/search', name: 'image_search', methods: ['GET'])]
+    #[Template]
+    public function search(Request $request, ImageRepository $imageRepository) : array {
         $q = $request->query->get('q');
         if ($q) {
             $query = $imageRepository->searchQuery($q);
@@ -65,12 +49,8 @@ class ImageController extends AbstractController implements PaginatorAwareInterf
         ];
     }
 
-    /**
-     * @Route("/typeahead", name="image_typeahead", methods={"GET"})
-     *
-     * @return JsonResponse
-     */
-    public function typeahead(Request $request, ImageRepository $imageRepository) {
+    #[Route(path: '/typeahead', name: 'image_typeahead', methods: ['GET'])]
+    public function typeahead(Request $request, ImageRepository $imageRepository) : JsonResponse {
         $q = $request->query->get('q');
         if ( ! $q) {
             return new JsonResponse([]);
@@ -87,26 +67,16 @@ class ImageController extends AbstractController implements PaginatorAwareInterf
         return new JsonResponse($data);
     }
 
-    /**
-     * @Route("/{id}", name="image_show", methods={"GET"})
-     * @Template
-     *
-     * @return array
-     */
-    public function show(Image $image) {
+    #[Route(path: '/{id}', name: 'image_show', methods: ['GET'])]
+    #[Template]
+    public function show(Image $image) : array {
         return [
             'image' => $image,
         ];
     }
 
-    /**
-     * Finds and returns a raw image file.
-     *
-     * @Route("/{id}/view", name="image_view", methods={"GET"})
-     *
-     * @return BinaryFileResponse
-     */
-    public function imageAction(Image $image) {
+    #[Route(path: '/{id}/view', name: 'image_view', methods: ['GET'])]
+    public function image(Image $image) : BinaryFileResponse {
         if ( ! $image->getPublic() && ! $this->getUser()) {
             throw new AccessDeniedHttpException();
         }
@@ -114,14 +84,8 @@ class ImageController extends AbstractController implements PaginatorAwareInterf
         return new BinaryFileResponse($image->getImageFile());
     }
 
-    /**
-     * Finds and returns a raw image file.
-     *
-     * @Route("/{id}/tn", name="image_thumbnail", methods={"GET"})
-     *
-     * @return BinaryFileResponse
-     */
-    public function thumbnailAction(Image $image) {
+    #[Route(path: '/{id}/tn', name: 'image_thumbnail', methods: ['GET'])]
+    public function thumbnail(Image $image) : BinaryFileResponse {
         if ( ! $image->getPublic() && ! $this->getUser()) {
             throw new AccessDeniedHttpException();
         }

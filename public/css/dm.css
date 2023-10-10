@@ -1,0 +1,1946 @@
+/*
+ * Base SCSS stylesheet for the Manuscript Verse Miscellanies
+ * Database.
+ *
+ * @author: Joey Takeda (DHIL)
+ * @date: 2020
+ */
+/**
+* Namespaces
+*
+**/
+/**
+* Imports
+*
+* Note that it's necessary to call the mixins _scss first. When we do put this into production,
+* we'll have a yarn package for the DHIL mixins that we can download using yarn.
+**/
+/* Mixins file, which we should try and use globally across DHIL projects,
+since there's stuff I tend to do quite a bit.
+ */
+/**
+* Namespaces
+*
+**/
+/* Make sure to import the modularscale-sass library */
+/* Take, with thanks, from:
+https://css-tricks.com/snippets/sass/px-to-em-functions/
+ */
+/* Taken, with thanks, from:
+https://makandracards.com/makandra/42500-sass-how-to-convert-an-rgba-color-to-its-rgb-look-alike
+ */
+/*
+Take with thanks from:
+https://css-tricks.com/snippets/sass/easing-map-get-function/
+ */
+/* DEFAULTS */
+/* Note to be called directly, but just to reset everything */
+/* Styles for modals, which includes the polyfilled CSS from Google */
+/* @dhil-headers
+ *
+ * Standard header creation from a typescale
+ */
+/* @dhil-reset
+ *
+ * Adds a number of resets that are common across the dhil
+ */
+/* @dhil-make-navbar
+ *
+ * Resets and customizes the navbar
+ */
+/* @dhil-gallery
+ *
+ * Creates a standard gallery view (note that we used to do this with flex,
+ * but grid is much better for handling variable numbers of objects)
+ */
+/* @dhil-clamp-lines
+ *
+ * Clamps lines at a particular vertical line length with a fallback for unsupported
+ * browsers.
+ */
+/* @dhil-lazyload
+ *
+ * Basic adjustments for images that are loaded lazily.
+ *
+ */
+/* 'Nunito Sans' normal 200*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 200;
+  src: url(.././fonts/nunito-sans-normal-200.woff2) format("woff2"), url(.././fonts/nunito-sans-normal-200.woff) format("woff");
+}
+/* 'Nunito Sans' italic 200*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: italic;
+  font-weight: 200;
+  src: url(.././fonts/nunito-sans-italic-200.woff2) format("woff2"), url(.././fonts/nunito-sans-italic-200.woff) format("woff");
+}
+/* 'Nunito Sans' normal 300*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 300;
+  src: url(.././fonts/nunito-sans-normal-300.woff2) format("woff2"), url(.././fonts/nunito-sans-normal-300.woff) format("woff");
+}
+/* 'Nunito Sans' italic 300*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: italic;
+  font-weight: 300;
+  src: url(.././fonts/nunito-sans-italic-300.woff2) format("woff2"), url(.././fonts/nunito-sans-italic-300.woff) format("woff");
+}
+/* 'Nunito Sans' normal 400*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: url(.././fonts/nunito-sans-normal-400.woff2) format("woff2"), url(.././fonts/nunito-sans-normal-400.woff) format("woff");
+}
+/* 'Nunito Sans' italic 400*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: italic;
+  font-weight: 400;
+  src: url(.././fonts/nunito-sans-italic-400.woff2) format("woff2"), url(.././fonts/nunito-sans-italic-400.woff) format("woff");
+}
+/* 'Nunito Sans' normal 500*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 500;
+  src: url(.././fonts/nunito-sans-normal-500.woff2) format("woff2"), url(.././fonts/nunito-sans-normal-500.woff) format("woff");
+}
+/* 'Nunito Sans' italic 500*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: italic;
+  font-weight: 500;
+  src: url(.././fonts/nunito-sans-italic-500.woff2) format("woff2"), url(.././fonts/nunito-sans-italic-500.woff) format("woff");
+}
+/* 'Nunito Sans' normal 700*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 700;
+  src: url(.././fonts/nunito-sans-normal-700.woff2) format("woff2"), url(.././fonts/nunito-sans-normal-700.woff) format("woff");
+}
+/* 'Nunito Sans' italic 700*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: italic;
+  font-weight: 700;
+  src: url(.././fonts/nunito-sans-italic-700.woff2) format("woff2"), url(.././fonts/nunito-sans-italic-700.woff) format("woff");
+}
+/* 'Nunito Sans' normal 800*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 800;
+  src: url(.././fonts/nunito-sans-normal-800.woff2) format("woff2"), url(.././fonts/nunito-sans-normal-800.woff) format("woff");
+}
+/* 'Nunito Sans' italic 800*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: italic;
+  font-weight: 800;
+  src: url(.././fonts/nunito-sans-italic-800.woff2) format("woff2"), url(.././fonts/nunito-sans-italic-800.woff) format("woff");
+}
+/* 'Nunito Sans' normal 900*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 900;
+  src: url(.././fonts/nunito-sans-normal-900.woff2) format("woff2"), url(.././fonts/nunito-sans-normal-900.woff) format("woff");
+}
+/* 'Nunito Sans' italic 900*/
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: italic;
+  font-weight: 900;
+  src: url(.././fonts/nunito-sans-italic-900.woff2) format("woff2"), url(.././fonts/nunito-sans-italic-900.woff) format("woff");
+}
+/* 'Crimson Pro' normal 400*/
+@font-face {
+  font-family: "Crimson Pro";
+  font-style: normal;
+  font-weight: 400;
+  src: url(.././fonts/crimson-pro-normal-400.woff2) format("woff2"), url(.././fonts/crimson-pro-normal-400.woff) format("woff");
+}
+/* 'Crimson Pro' italic 400*/
+@font-face {
+  font-family: "Crimson Pro";
+  font-style: italic;
+  font-weight: 400;
+  src: url(.././fonts/crimson-pro-italic-400.woff2) format("woff2"), url(.././fonts/crimson-pro-italic-400.woff) format("woff");
+}
+/* 'Crimson Pro' normal 600*/
+@font-face {
+  font-family: "Crimson Pro";
+  font-style: normal;
+  font-weight: 600;
+  src: url(.././fonts/crimson-pro-normal-600.woff2) format("woff2"), url(.././fonts/crimson-pro-normal-600.woff) format("woff");
+}
+/* 'Crimson Pro' italic 600*/
+@font-face {
+  font-family: "Crimson Pro";
+  font-style: italic;
+  font-weight: 600;
+  src: url(.././fonts/crimson-pro-italic-600.woff2) format("woff2"), url(.././fonts/crimson-pro-italic-600.woff) format("woff");
+}
+/* 'Crimson Pro' normal 700*/
+@font-face {
+  font-family: "Crimson Pro";
+  font-style: normal;
+  font-weight: 700;
+  src: url(.././fonts/crimson-pro-normal-700.woff2) format("woff2"), url(.././fonts/crimson-pro-normal-700.woff) format("woff");
+}
+/* 'Crimson Pro' italic 700*/
+@font-face {
+  font-family: "Crimson Pro";
+  font-style: italic;
+  font-weight: 700;
+  src: url(.././fonts/crimson-pro-italic-700.woff2) format("woff2"), url(.././fonts/crimson-pro-italic-700.woff) format("woff");
+}
+/* 'Source Sans 3' normal 200*/
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: normal;
+  font-weight: 200;
+  src: url(.././fonts/source-sans-3-normal-200.woff2) format("woff2"), url(.././fonts/source-sans-3-normal-200.woff) format("woff");
+}
+/* 'Source Sans 3' italic 200*/
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: italic;
+  font-weight: 200;
+  src: url(.././fonts/source-sans-3-italic-200.woff2) format("woff2"), url(.././fonts/source-sans-3-italic-200.woff) format("woff");
+}
+/* 'Source Sans 3' normal 300*/
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: normal;
+  font-weight: 300;
+  src: url(.././fonts/source-sans-3-normal-300.woff2) format("woff2"), url(.././fonts/source-sans-3-normal-300.woff) format("woff");
+}
+/* 'Source Sans 3' italic 300*/
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: italic;
+  font-weight: 300;
+  src: url(.././fonts/source-sans-3-italic-300.woff2) format("woff2"), url(.././fonts/source-sans-3-italic-300.woff) format("woff");
+}
+/* 'Source Sans 3' normal 400*/
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: normal;
+  font-weight: 400;
+  src: url(.././fonts/source-sans-3-normal-400.woff2) format("woff2"), url(.././fonts/source-sans-3-normal-400.woff) format("woff");
+}
+/* 'Source Sans 3' italic 400*/
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: italic;
+  font-weight: 400;
+  src: url(.././fonts/source-sans-3-italic-400.woff2) format("woff2"), url(.././fonts/source-sans-3-italic-400.woff) format("woff");
+}
+/* 'Source Sans 3' normal 500*/
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: normal;
+  font-weight: 500;
+  src: url(.././fonts/source-sans-3-normal-500.woff2) format("woff2"), url(.././fonts/source-sans-3-normal-500.woff) format("woff");
+}
+/* 'Source Sans 3' italic 500*/
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: italic;
+  font-weight: 500;
+  src: url(.././fonts/source-sans-3-italic-500.woff2) format("woff2"), url(.././fonts/source-sans-3-italic-500.woff) format("woff");
+}
+/* 'Source Sans 3' normal 700*/
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: normal;
+  font-weight: 700;
+  src: url(.././fonts/source-sans-3-normal-700.woff2) format("woff2"), url(.././fonts/source-sans-3-normal-700.woff) format("woff");
+}
+/* 'Source Sans 3' italic 700*/
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: italic;
+  font-weight: 700;
+  src: url(.././fonts/source-sans-3-italic-700.woff2) format("woff2"), url(.././fonts/source-sans-3-italic-700.woff) format("woff");
+}
+/* 'Source Sans 3' normal 800*/
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: normal;
+  font-weight: 800;
+  src: url(.././fonts/source-sans-3-normal-800.woff2) format("woff2"), url(.././fonts/source-sans-3-normal-800.woff) format("woff");
+}
+/* 'Source Sans 3' italic 800*/
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: italic;
+  font-weight: 800;
+  src: url(.././fonts/source-sans-3-italic-800.woff2) format("woff2"), url(.././fonts/source-sans-3-italic-800.woff) format("woff");
+}
+/* 'Source Sans 3' normal 900*/
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: normal;
+  font-weight: 900;
+  src: url(.././fonts/source-sans-3-normal-900.woff2) format("woff2"), url(.././fonts/source-sans-3-normal-900.woff) format("woff");
+}
+/* 'Source Sans 3' italic 900*/
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: italic;
+  font-weight: 900;
+  src: url(.././fonts/source-sans-3-italic-900.woff2) format("woff2"), url(.././fonts/source-sans-3-italic-900.woff) format("woff");
+}
+/* 'Source Serif 4' normal 200*/
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: normal;
+  font-weight: 200;
+  src: url(.././fonts/source-serif-4-normal-200.woff2) format("woff2"), url(.././fonts/source-serif-4-normal-200.woff) format("woff");
+}
+/* 'Source Serif 4' italic 200*/
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: italic;
+  font-weight: 200;
+  src: url(.././fonts/source-serif-4-italic-200.woff2) format("woff2"), url(.././fonts/source-serif-4-italic-200.woff) format("woff");
+}
+/* 'Source Serif 4' normal 300*/
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: normal;
+  font-weight: 300;
+  src: url(.././fonts/source-serif-4-normal-300.woff2) format("woff2"), url(.././fonts/source-serif-4-normal-300.woff) format("woff");
+}
+/* 'Source Serif 4' italic 300*/
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: italic;
+  font-weight: 300;
+  src: url(.././fonts/source-serif-4-italic-300.woff2) format("woff2"), url(.././fonts/source-serif-4-italic-300.woff) format("woff");
+}
+/* 'Source Serif 4' normal 400*/
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: normal;
+  font-weight: 400;
+  src: url(.././fonts/source-serif-4-normal-400.woff2) format("woff2"), url(.././fonts/source-serif-4-normal-400.woff) format("woff");
+}
+/* 'Source Serif 4' italic 400*/
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: italic;
+  font-weight: 400;
+  src: url(.././fonts/source-serif-4-italic-400.woff2) format("woff2"), url(.././fonts/source-serif-4-italic-400.woff) format("woff");
+}
+/* 'Source Serif 4' normal 500*/
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: normal;
+  font-weight: 500;
+  src: url(.././fonts/source-serif-4-normal-500.woff2) format("woff2"), url(.././fonts/source-serif-4-normal-500.woff) format("woff");
+}
+/* 'Source Serif 4' italic 500*/
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: italic;
+  font-weight: 500;
+  src: url(.././fonts/source-serif-4-italic-500.woff2) format("woff2"), url(.././fonts/source-serif-4-italic-500.woff) format("woff");
+}
+/* 'Source Serif 4' normal 700*/
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: normal;
+  font-weight: 700;
+  src: url(.././fonts/source-serif-4-normal-700.woff2) format("woff2"), url(.././fonts/source-serif-4-normal-700.woff) format("woff");
+}
+/* 'Source Serif 4' italic 700*/
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: italic;
+  font-weight: 700;
+  src: url(.././fonts/source-serif-4-italic-700.woff2) format("woff2"), url(.././fonts/source-serif-4-italic-700.woff) format("woff");
+}
+/* 'Source Serif 4' normal 800*/
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: normal;
+  font-weight: 800;
+  src: url(.././fonts/source-serif-4-normal-800.woff2) format("woff2"), url(.././fonts/source-serif-4-normal-800.woff) format("woff");
+}
+/* 'Source Serif 4' italic 800*/
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: italic;
+  font-weight: 800;
+  src: url(.././fonts/source-serif-4-italic-800.woff2) format("woff2"), url(.././fonts/source-serif-4-italic-800.woff) format("woff");
+}
+/* 'Spectral' normal 200*/
+@font-face {
+  font-family: "Spectral";
+  font-style: normal;
+  font-weight: 200;
+  src: url(.././fonts/spectral-normal-200.woff2) format("woff2"), url(.././fonts/spectral-normal-200.woff) format("woff");
+}
+/* 'Spectral' italic 200*/
+@font-face {
+  font-family: "Spectral";
+  font-style: italic;
+  font-weight: 200;
+  src: url(.././fonts/spectral-italic-200.woff2) format("woff2"), url(.././fonts/spectral-italic-200.woff) format("woff");
+}
+/* 'Spectral' normal 300*/
+@font-face {
+  font-family: "Spectral";
+  font-style: normal;
+  font-weight: 300;
+  src: url(.././fonts/spectral-normal-300.woff2) format("woff2"), url(.././fonts/spectral-normal-300.woff) format("woff");
+}
+/* 'Spectral' italic 300*/
+@font-face {
+  font-family: "Spectral";
+  font-style: italic;
+  font-weight: 300;
+  src: url(.././fonts/spectral-italic-300.woff2) format("woff2"), url(.././fonts/spectral-italic-300.woff) format("woff");
+}
+/* 'Spectral' normal 400*/
+@font-face {
+  font-family: "Spectral";
+  font-style: normal;
+  font-weight: 400;
+  src: url(.././fonts/spectral-normal-400.woff2) format("woff2"), url(.././fonts/spectral-normal-400.woff) format("woff");
+}
+/* 'Spectral' italic 400*/
+@font-face {
+  font-family: "Spectral";
+  font-style: italic;
+  font-weight: 400;
+  src: url(.././fonts/spectral-italic-400.woff2) format("woff2"), url(.././fonts/spectral-italic-400.woff) format("woff");
+}
+/* 'Spectral' normal 500*/
+@font-face {
+  font-family: "Spectral";
+  font-style: normal;
+  font-weight: 500;
+  src: url(.././fonts/spectral-normal-500.woff2) format("woff2"), url(.././fonts/spectral-normal-500.woff) format("woff");
+}
+/* 'Spectral' italic 500*/
+@font-face {
+  font-family: "Spectral";
+  font-style: italic;
+  font-weight: 500;
+  src: url(.././fonts/spectral-italic-500.woff2) format("woff2"), url(.././fonts/spectral-italic-500.woff) format("woff");
+}
+/* 'Spectral' normal 700*/
+@font-face {
+  font-family: "Spectral";
+  font-style: normal;
+  font-weight: 700;
+  src: url(.././fonts/spectral-normal-700.woff2) format("woff2"), url(.././fonts/spectral-normal-700.woff) format("woff");
+}
+/* 'Spectral' italic 700*/
+@font-face {
+  font-family: "Spectral";
+  font-style: italic;
+  font-weight: 700;
+  src: url(.././fonts/spectral-italic-700.woff2) format("woff2"), url(.././fonts/spectral-italic-700.woff) format("woff");
+}
+/* 'Spectral' normal 800*/
+@font-face {
+  font-family: "Spectral";
+  font-style: normal;
+  font-weight: 800;
+  src: url(.././fonts/spectral-normal-800.woff2) format("woff2"), url(.././fonts/spectral-normal-800.woff) format("woff");
+}
+/* 'Spectral' italic 800*/
+@font-face {
+  font-family: "Spectral";
+  font-style: italic;
+  font-weight: 800;
+  src: url(.././fonts/spectral-italic-800.woff2) format("woff2"), url(.././fonts/spectral-italic-800.woff) format("woff");
+}
+/*Hamburger stuff */
+/*Breadcrumb stuff */
+@font-face {
+  font-family: "Athena Ruby";
+  src: url(.././fonts/athenaruby_b018-webfont.eot);
+  src: url(.././fonts/athenaruby_b018-webfont.eot?#iefix) format("embedded-opentype"), url(.././fonts/athenaruby_b018-webfont.woff2) format("woff2"), url(.././fonts/athenaruby_b018-webfont.woff) format("woff"), url(.././fonts/athenaruby_b018-webfont.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  unicode-range: U+005B-0060, U+007B-007E, U+00A0, U+00B7, U+02C1, U+02CA, U+02CB, U+02D9, U+0300-03E1, U+1F00-1FFE, U+200C, U+200D, U+2180, U+25CC, U+2627, U+2E09, U+2E0A, U+2E23, U+E100-E823, U+10182, U+10184;
+}
+@keyframes gesture-left {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes bounce-downwards {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  33% {
+    transform: translate3d(0, 10px, 0);
+  }
+  66% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+/*!
+ * Hamburgers
+ * @description Tasty CSS-animated hamburgers
+ * @author Jonathan Suh @jonsuh
+ * @site https://jonsuh.com/hamburgers
+ * @link https://github.com/jonsuh/hamburgers
+ */
+.hamburger {
+  padding: 15px 15px;
+  display: inline-block;
+  cursor: pointer;
+  transition-property: opacity, filter;
+  transition-duration: 0.15s;
+  transition-timing-function: linear;
+  font: inherit;
+  color: inherit;
+  text-transform: none;
+  background-color: transparent;
+  border: 0;
+  margin: 0;
+  overflow: visible;
+}
+.hamburger:hover {
+  opacity: 0.7;
+}
+.hamburger.is-active:hover {
+  opacity: 0.7;
+}
+.hamburger.is-active .hamburger-inner,
+.hamburger.is-active .hamburger-inner::before,
+.hamburger.is-active .hamburger-inner::after {
+  background-color: #797879;
+}
+
+.hamburger-box {
+  width: 40px;
+  height: 1.5024038462rem;
+  display: inline-block;
+  position: relative;
+}
+
+.hamburger-inner {
+  display: block;
+  top: 50%;
+  margin-top: -0.1201923077rem;
+}
+.hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
+  width: 40px;
+  height: 0.2403846154rem;
+  background-color: #797879;
+  border-radius: 4px;
+  position: absolute;
+  transition-property: transform;
+  transition-duration: 0.15s;
+  transition-timing-function: ease;
+}
+.hamburger-inner::before, .hamburger-inner::after {
+  content: "";
+  display: block;
+}
+.hamburger-inner::before {
+  top: -0.6310096154rem;
+}
+.hamburger-inner::after {
+  bottom: -0.6310096154rem;
+}
+
+/*
+ * Collapse
+ */
+.hamburger--collapse .hamburger-inner {
+  top: auto;
+  bottom: 0;
+  transition-duration: 0.13s;
+  transition-delay: 0.13s;
+  transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+.hamburger--collapse .hamburger-inner::after {
+  top: -1.2620192308rem;
+  transition: top 0.2s 0.2s cubic-bezier(0.33333, 0.66667, 0.66667, 1), opacity 0.1s linear;
+}
+.hamburger--collapse .hamburger-inner::before {
+  transition: top 0.12s 0.2s cubic-bezier(0.33333, 0.66667, 0.66667, 1), transform 0.13s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+.hamburger--collapse.is-active .hamburger-inner {
+  transform: translate3d(0, -0.6310096154rem, 0) rotate(-45deg);
+  transition-delay: 0.22s;
+  transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.hamburger--collapse.is-active .hamburger-inner::after {
+  top: 0;
+  opacity: 0;
+  transition: top 0.2s cubic-bezier(0.33333, 0, 0.66667, 0.33333), opacity 0.1s 0.22s linear;
+}
+.hamburger--collapse.is-active .hamburger-inner::before {
+  top: 0;
+  transform: rotate(-90deg);
+  transition: top 0.1s 0.16s cubic-bezier(0.33333, 0, 0.66667, 0.33333), transform 0.13s 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+/* Some basic index styles */
+h1 {
+  /* It'd be nice to use scss:max() here, but
+  PHP storm raises an erroneously raises an error.
+   */
+  font-size: 2.6180340252rem;
+  font-family: "Spectral";
+  letter-spacing: -2px;
+}
+h1 > a {
+  line-height: 1.4;
+}
+
+h2 {
+  /* It'd be nice to use scss:max() here, but
+  PHP storm raises an erroneously raises an error.
+   */
+  font-size: 1.618034rem;
+  font-family: "Spectral";
+}
+h2 > a {
+  line-height: 1.4;
+}
+
+h3 {
+  /* It'd be nice to use scss:max() here, but
+  PHP storm raises an erroneously raises an error.
+   */
+  font-size: 1rem;
+  font-family: "Spectral";
+}
+h3 > a {
+  line-height: 1.4;
+}
+
+h4 {
+  /* It'd be nice to use scss:max() here, but
+  PHP storm raises an erroneously raises an error.
+   */
+  font-size: 1rem;
+  font-family: "Spectral";
+}
+h4 > a {
+  line-height: 1.4;
+}
+
+h5 {
+  /* It'd be nice to use scss:max() here, but
+  PHP storm raises an erroneously raises an error.
+   */
+  font-size: 1rem;
+  font-family: "Spectral";
+}
+h5 > a {
+  line-height: 1.4;
+}
+
+html, body {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/*Always hide x overflow */
+body {
+  overflow-x: hidden;
+}
+
+main {
+  min-height: calc(90vh - 3.125rem);
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  line-height: 1.6;
+}
+
+:root {
+  --body-background: #ffffff;
+  --footer-background: #F4F4F4;
+}
+
+html, body, .dropdown-menu {
+  font-family: "Source Sans 3";
+}
+
+body {
+  background-color: var(--body-background);
+}
+
+main {
+  margin-top: 2.6180340252rem;
+}
+
+.navbar-default {
+  min-height: 3.125rem;
+  /* Change the width to 100vw rather than 100%, since 100% causes
+     jump behaviour when overflow-y on the body is set to hidden
+   */
+  width: 100vw;
+  padding-right: 10px;
+  /* Set the background colour */
+  background: rgba(253, 251, 248, 0.95);
+  box-shadow: none !important;
+  border: none !important;
+  backdrop-filter: blur(7px);
+  font-weight: 400;
+  text-transform: uppercase;
+  /* Have to add the min-width hiding again */
+  /* Switch the text colour */
+}
+.navbar-default .navbar-right {
+  text-transform: none;
+}
+.navbar-default .navbar-nav > li > a {
+  border-bottom: 4px solid transparent;
+  transition: border-bottom-color cubic-bezier(0.55, 0.055, 0.675, 0.19) 0.3s;
+  color: #212125;
+}
+.navbar-default .navbar-nav > li > a:hover {
+  border-bottom-color: #C0B283;
+}
+.navbar-default .navbar-nav > li > a:after {
+  content: none;
+}
+.navbar-default .navbar-nav > li.open > a {
+  border-bottom-color: #C0B283;
+}
+.navbar-default .dropdown-menu {
+  font-weight: normal;
+}
+.navbar-default .dropdown-menu > li > a {
+  padding-top: 0.6180339845rem;
+  padding-bottom: 0.6180339845rem;
+}
+.navbar-default .dropdown-menu > li:not(:last-child) {
+  border-bottom: 1px solid #F4F4F4;
+}
+.navbar-default .dropdown-menu > li hr.dropdown-divider {
+  border: none;
+  margin: 0.3rem 0;
+}
+@media (min-width: 768px) {
+  .navbar-default .navbar-toggle {
+    display: none;
+  }
+}
+.navbar-default .navbar-header {
+  margin-left: 0;
+  margin-right: 0;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #212125;
+}
+
+.body-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 0;
+  margin-bottom: 0.3819660059rem;
+  align-items: flex-end;
+  margin-bottom: 1.618034rem;
+  align-items: flex-end;
+}
+.body-nav > * {
+  margin-bottom: 0.6180339845rem;
+}
+.body-nav .btn-toolbar {
+  margin-top: -1px;
+}
+
+.breadcrumbs {
+  list-style: none;
+  overflow: hidden;
+  padding: 0;
+  display: flex;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  font-weight: 300;
+  font-size: 12px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.breadcrumbs li > * {
+  text-decoration: none;
+  position: relative;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  color: black;
+  padding: 0.5em 0 0.5em 4em;
+}
+
+/*
+* Now create the various triangles
+* that will overlap; this is the
+* common stuff between the two
+* triangles
+*/
+.breadcrumbs li > *:before,
+.breadcrumbs li > *:after {
+  content: " ";
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 50px solid transparent;
+  border-bottom: 50px solid transparent;
+  position: absolute;
+  top: 50%;
+  margin-top: -50px;
+  left: 100%;
+  border-left-width: 30px;
+  border-left-style: solid;
+}
+
+.breadcrumbs li:not(:last-child) > *:before {
+  /*And make sure the zindex is 1*/
+  z-index: 1;
+  /*This should be the colour
+  you want the arrow*/
+  border-left-color: #E7DED1;
+  /*The margin left here dictates the width of the arrow*/
+  margin-left: 2px;
+}
+
+.breadcrumbs li > *:after {
+  /*Z index should be 2 to overlap*/
+  z-index: 2;
+  /*BORDER LEFT should be the
+  same as the background colour*/
+  border-left-color: white;
+}
+
+/*Now small, project specific
+paddings etc*/
+.breadcrumbs li:first-child > * {
+  padding: 0 0 0 1rem;
+}
+
+.breadcrumbs li > *,
+.breadcrumbs li > *:after,
+.breadcrumbs li > *:before {
+  transition: all 0.2s ease-in-out;
+}
+
+.breadcrumbs li:last-child {
+  background: #F4F4F4;
+}
+
+.breadcrumbs li:not(:last-child) > *:hover {
+  background: #E7DED1;
+}
+.breadcrumbs li:not(:last-child) > *:hover:after, .breadcrumbs li:not(:last-child) > *:hover:before {
+  border-left-color: #E7DED1;
+}
+
+.breadcrumbs .current {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-x: hidden;
+  margin: 0 1rem 0 0;
+  font-style: italic;
+  max-width: 25ch;
+}
+li > .breadcrumbs .current {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.breadcrumbs li:last-child > *:after,
+.breadcrumbs li:last-child > *:before {
+  content: unset;
+}
+
+/* Media query to reset the size of things */
+@media (max-width: 780px) {
+  .current {
+    max-width: 25ch;
+  }
+}
+.admin-toggle {
+  padding: 0.6180339845rem;
+  border: 1px dotted #373737;
+  background: #F4F4F4;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  top: 3.125rem;
+  right: 0;
+  font-size: 0.6180339845rem;
+}
+
+body.hideAdmin .admin {
+  display: none !important;
+}
+
+.table tbody > tr:first-child th, .table tbody > tr:first-child td {
+  border-top: none;
+}
+
+/**************************** Item page */
+.item_show .page-header {
+  display: none;
+}
+@media (min-width: 768px) {
+  .item_show main.container {
+    width: unset;
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+}
+@media (min-width: 992px) {
+  .item_show main.container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .item_show main.container {
+    width: unset;
+    max-width: 1200px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+.item_show .content {
+  display: grid;
+  margin-top: 1.618034rem;
+  grid-template-areas: "header images" "description images" "metadata images" ". images" ". images";
+  grid-template-columns: auto minmax(calc(var(--thumb-width) * 0.5), calc(var(--thumb-width) * 1.15));
+  grid-column-gap: 2.6180340252rem;
+}
+.item_show .content.imageless {
+  grid-template-areas: "header" "description" "metadata";
+  grid-template-columns: 100%;
+  max-width: 45rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.item_show .content > .header {
+  grid-area: header;
+}
+.item_show .content > .description {
+  grid-area: description;
+}
+.item_show .content > .images {
+  grid-area: images;
+}
+.item_show .content > .metadata {
+  grid-area: metadata;
+}
+@media (max-width: 991px) {
+  .item_show .content {
+    grid-template-areas: "header images" "description images" "metadata metadata";
+  }
+}
+@media (max-width: 767px) {
+  .item_show .content {
+    grid-template-areas: "header" "images" "description" "metadata";
+    grid-template-columns: 100%;
+  }
+}
+
+.item-header h1 {
+  margin-top: 0;
+}
+.item-header h1, .item-header h2, .item-header h3 {
+  margin-bottom: 0;
+}
+.item-header h2, .item-header h3 {
+  margin-top: 0.6180339845rem;
+  color: #393940;
+}
+.item-header a {
+  text-decoration: none !important;
+  border-bottom: none;
+  transition: none;
+  color: inherit;
+}
+.item-header a:hover {
+  color: inherit;
+  border-bottom: none;
+}
+
+.item-description {
+  margin-top: 1.618034rem;
+  padding-right: 2rem;
+}
+@media (max-width: 768px) {
+  .item-description {
+    padding-right: 0;
+  }
+}
+.item-description p:last-child br:last-child {
+  display: none;
+}
+
+p + br {
+  display: none;
+}
+
+/* Item details list */
+.item-details-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.item-details-list > * {
+  margin-right: 1.618034rem;
+  margin-bottom: 1rem;
+}
+@media (max-width: 768px) {
+  .item-details-list > * {
+    margin-top: 0;
+  }
+}
+.details > .item-details-list {
+  margin-top: 0;
+}
+
+/*
+ * Specific item details
+ *
+ */
+.item-details {
+  display: flex;
+  flex: 1 1 clamp(14.5rem, 40%, 100%);
+  flex-direction: column;
+  padding: 0.6180339845rem 0.6180339845rem;
+  /* Value specific listing */
+}
+.item-details__header {
+  text-transform: uppercase;
+  font-variant: small-caps;
+  font-size: 0.9rem;
+  color: #373737;
+  margin-bottom: 0.3819660059rem;
+  font-weight: bold;
+  letter-spacing: 0px;
+  font-family: "Source Sans 3";
+  margin-top: 0;
+}
+.accordion__content .item-details__header {
+  margin-bottom: 0.6180339845rem;
+}
+.item-details__content ul {
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+.item-details__content ul > li {
+  margin-top: 0.3819660059rem;
+  margin-bottom: 0.3819660059rem;
+  margin-right: 0.3819660059rem;
+  transition: border-color 0.2s ease-in-out, background 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+.item-details__content ul > li > a {
+  padding: 0.3819660059rem 0.3819660059rem;
+  display: inline-block;
+  transition: border-color 0.2s ease-in-out, background 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+.item-details__content ul > li > a:hover {
+  text-decoration: none;
+}
+.item-details__content ul li {
+  margin-bottom: 0.3819660059rem;
+  margin-right: 0.6180339845rem;
+  margin-top: 0;
+  color: inherit;
+  border: none;
+  border: 1px solid #DCD0C0;
+  border-radius: 2px;
+  background: #faf8f6;
+  transition: background 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+.item-details__content ul li:hover {
+  background: #eee8e0;
+}
+.item-details__content ul li > a {
+  color: #212125;
+  text-decoration: none !important;
+  border-bottom: none;
+  padding: 0.3819660059rem 0.6180339845rem;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+}
+.item-details__content ul li .badge {
+  display: none;
+}
+.item-details__note:not(:first-child) {
+  margin-top: 8px;
+  margin-right: 1rem;
+  font-size: 0.95rem;
+}
+.item-details__note p {
+  line-height: 1.3;
+}
+.item-details__note p:last-child {
+  margin-bottom: 0;
+}
+.item-details__subjects {
+  border: none;
+  flex-basis: 100%;
+}
+.item-details__dimensions p {
+  margin-bottom: 0;
+}
+.item-details__references p, .item-details__citation p {
+  text-indent: -1rem;
+  margin-left: 1rem;
+  line-height: 1.45;
+}
+.item-details__editHistory .item-details {
+  padding-bottom: 0.3819660059rem;
+  padding-top: 0.3819660059rem;
+  margin-bottom: 0.6180339845rem;
+  flex: clamp(10rem, 27%, 100%);
+}
+.item-details__editHistory .item-details__citation {
+  flex-basis: 100%;
+}
+.item-details.hasContent-false {
+  display: none;
+  flex-basis: 100%;
+}
+li[data-caption]:before {
+  content: attr(data-caption) ": ";
+}
+
+:root {
+  --accordion-easing: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  --accordion-duration: 0.3s;
+}
+
+details summary {
+  list-style: none;
+}
+details summary::-webkit-details-marker {
+  display: none;
+}
+details.accordion .accordion__content {
+  transition: opacity var(--accordion-duration) var(--accordion-easing);
+}
+details.accordion[aria-expanded=false] > .accordion__content {
+  opacity: 0;
+}
+details.accordion[aria-expanded=true] > .accordion__content {
+  opacity: 1;
+}
+
+.accordion__content {
+  margin: 0 0.6180339845rem;
+}
+
+summary {
+  padding: 1rem;
+  text-transform: uppercase;
+  font-variant: small-caps;
+  font-size: 1rem;
+  font-weight: 500;
+  background-color: rgba(244, 244, 244, 0.8);
+  transition: background-color 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  cursor: pointer;
+}
+summary .icon {
+  float: right;
+  clear: both;
+  display: inline-block;
+  transform: translate(0, 0);
+  transition: transform 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  margin-right: calc(0.6180339845rem + 4px);
+}
+summary .icon svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+.metadata {
+  margin-top: 1rem;
+}
+.metadata details {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  flex-basis: 100%;
+  flex-shrink: 0;
+}
+
+details[aria-expanded=false] summary:hover {
+  background-color: rgba(244, 244, 244, 0.9);
+}
+details[aria-expanded=false] summary:hover:not(:focus) .icon {
+  animation: gesture-left;
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  animation-iteration-count: 1;
+}
+details[aria-expanded=true] summary {
+  background-color: #F4F4F4;
+}
+details[aria-expanded=true] .icon {
+  transform: rotate(90deg);
+}
+details > div {
+  padding: 1rem 0.6180339845rem;
+}
+
+.item-inscription__body {
+  margin: 0 0.3819660059rem;
+}
+.item-inscription__body > div:nth-of-type(n +2) {
+  margin-top: 1.618034rem;
+}
+.item-inscription__body .item-inscription__header {
+  border-bottom: 1px solid #F4F4F4;
+  padding-bottom: 0.6180339845rem;
+  margin-bottom: 0.6180339845rem;
+}
+.item-inscription__body .item-inscription__header h4 {
+  font-family: "Source Sans 3";
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-variant: small-caps;
+  color: #696976;
+  margin: 0;
+}
+.item-inscription__body .item-inscription__header ul {
+  display: flex;
+  font-size: 0.95em;
+  margin-top: 0.3819660059rem;
+}
+.item-inscription__body .item-inscription__header ul > li {
+  padding-right: 0.6180339845rem;
+}
+.item-inscription__body .item-inscription__header ul > li + li {
+  padding: 0 0.6180339845rem;
+  border-left: 1px solid #F4F4F4;
+}
+
+.item-inscription__content.greek {
+  font-family: "Athena Ruby", "Source Sans 3", sans-serif;
+}
+
+.images {
+  margin: 0 auto;
+  width: 100%;
+}
+@media (max-width: 767px) {
+  .images {
+    margin: 1rem 0;
+  }
+}
+
+.sticky {
+  top: 3.7430339845rem;
+  position: sticky;
+  margin: 0 auto;
+  padding: 0.6180339845rem 0.6180339845rem;
+}
+@media (max-width: 767px) {
+  .sticky {
+    padding: 0 0.3819660059rem;
+  }
+}
+
+.img-content {
+  border: 1px solid #F4F4F4;
+  border-radius: 2px;
+}
+@media (max-width: 768px) {
+  .img-content {
+    position: static;
+    overflow-x: hidden;
+  }
+}
+
+ul.dots {
+  margin: 0.6180339845rem 0;
+}
+
+.glider-dot {
+  color: #F4F4F4;
+  background: #F4F4F4;
+}
+.glider-dot.active, .glider-dot:hover, .glider-dot:focus {
+  background: #DCD0C0;
+}
+
+.image-slider-container {
+  display: flex;
+}
+
+.slider-btn {
+  margin: 0;
+  background: none;
+  border: none;
+  display: inline-block;
+}
+.slider-btn svg {
+  width: 1.618034rem;
+  height: 1.618034rem;
+  fill: #C0B283;
+  stroke: #C0B283;
+}
+.slider-btn:hover svg {
+  fill: #C0B283;
+}
+.slider-btn-next {
+  order: 3;
+}
+.slider-btn.disabled {
+  pointer-events: none;
+}
+.slider-btn.disabled svg {
+  opacity: 0.1;
+}
+
+.image-slider {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  margin: 0 1rem;
+}
+.image-slider::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+.image-slider:not(.glider) {
+  width: 100%;
+}
+.image-slider .item {
+  width: 100%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.image-slider .item:first-child {
+  animation: fade-in 0.4s;
+}
+.image-slider .item img {
+  cursor: zoom-in;
+  background: inherit;
+}
+
+.img-container {
+  margin: 0 auto;
+  text-align: center;
+}
+.img-container a {
+  border: none;
+  transition: none;
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.img-info {
+  margin: 0 auto;
+  width: 100%;
+}
+.img-info details {
+  font-size: 0.9rem;
+}
+
+.img-desc {
+  font-size: 0.8rem;
+}
+
+.js .summary__img-description {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  border: 0;
+  white-space: nowrap;
+}
+
+.image-slider .accordion-content {
+  margin: 0;
+  padding: 0;
+}
+.image-slider .item-details {
+  margin-bottom: 0.2360679726rem;
+  padding-bottom: 0.2360679726rem;
+  padding-top: 0.2360679726rem;
+  margin-right: 0;
+  flex-basis: 100%;
+}
+
+.img-toolbar {
+  display: flex;
+  flex-direction: column;
+  margin: 0.6180339845rem 0;
+}
+.img-toolbar > div {
+  display: flex;
+  justify-content: space-around;
+}
+.img-toolbar__tools {
+  padding: 0.6180339845rem 1.618034rem;
+}
+.img-toolbar__tools a {
+  text-decoration: none !important;
+  border-bottom: none;
+  transition: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 1.125rem;
+  padding: 1rem;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  border: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+.img-toolbar__tools a:hover {
+  color: inherit;
+  border-bottom: none;
+}
+.img-toolbar__tools a:hover {
+  border-color: #F4F4F4;
+  border-bottom: 2px solid #F4F4F4;
+}
+.img-toolbar > .accordion {
+  border-top: 2px solid transparent;
+}
+.img-toolbar > .accordion[aria-expanded=true] {
+  border-color: #F4F4F4;
+}
+
+body.viewer-open main {
+  padding-right: 15px;
+}
+body.viewer-open .image-slider {
+  pointer-events: none;
+  overflow-x: hidden;
+}
+
+.item-details-remoteImg .remote-image-content {
+  padding: 0.3819660059rem;
+}
+.item-details-remoteImg .remote-image-content > a {
+  margin-bottom: 0.3819660059rem;
+  margin-right: 0.6180339845rem;
+  margin-top: 0;
+  color: inherit;
+  border: none;
+  border: 1px solid #DCD0C0;
+  border-radius: 2px;
+  background: #faf8f6;
+  transition: background 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+  align-items: center;
+  column-gap: 0.3819660059rem;
+}
+.item-details-remoteImg .remote-image-content > a:hover {
+  background: #eee8e0;
+}
+.item-details-remoteImg .remote-image-content > a div {
+  line-height: 1.2;
+  font-size: 1rem;
+  max-width: 12.5rem;
+}
+.item-details-remoteImg .remote-image-content > a div + div {
+  margin-top: 0.3819660059rem;
+}
+.item-details-remoteImg .remote-image-content > a:after {
+  opacity: 0.5;
+  padding-right: 0.6180339845rem;
+  transition: opacity 0.2s ease-in-out;
+}
+.item-details-remoteImg .remote-image-content > a:hover:after {
+  opacity: 1;
+}
+
+/* GALLERY STUFF */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(calc(var(--thumb-width) * 0.7), 1fr));
+  grid-column-gap: 1rem;
+  justify-content: space-between;
+}
+
+.gallery .item {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-bottom: 1rem;
+  max-width: var(--thumb-width);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+@media (max-width: 767px) {
+  .gallery .item {
+    max-width: unset;
+  }
+}
+
+.viewer-title {
+  padding: 0.3rem 0.4rem;
+  border-radius: 0.4rem;
+  color: #fff;
+  background: rgba(33, 33, 37, 0.9);
+  opacity: 0.2;
+  font-size: 0.85rem;
+}
+.viewer-title.btn-caption, .viewer-title:hover {
+  opacity: 1;
+}
+
+.animate .loading {
+  opacity: 0;
+  transform: translate3d(0, 1rem, 0);
+}
+.animate .loaded {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+  transition: all cubic-bezier(0.455, 0.03, 0.515, 0.955) 0.35s;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+img.placeholder {
+  margin: 5rem 0;
+  max-width: 5rem;
+  color: #fff;
+}
+
+.item-card {
+  height: 100%;
+  border: 1px solid transparent;
+  transition: border 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+.item-card:hover {
+  border-color: #C0B283;
+}
+
+.item-img-wrapper {
+  margin: auto 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.item-content-wrapper {
+  margin-top: auto;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.item-content {
+  margin-bottom: 1rem;
+}
+
+.item-content-header {
+  width: 100%;
+  text-align: center;
+  font-size: 1rem;
+  font-family: "Source Sans 3";
+  font-weight: 600;
+  color: #212125;
+  line-height: 1.15;
+  text-align: center;
+  height: 2.3rem;
+  overflow: hidden;
+  /* If doesn't support -webkit-box */
+  height: 2.3rem;
+  /* But if -webkit-box is available, then we can use the much nicer -webkit-line-clamp,
+   * which provides ellipses when truncated */
+}
+.item-content-header else {
+  max-height: 2.3rem;
+}
+@supports (display: -webkit-box) {
+  .item-content-header {
+    max-height: unset;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+}
+
+.subject-item {
+  margin-bottom: 1.618034rem;
+}
+
+.subject-item-header {
+  font-size: 2.0225425rem;
+}
+
+/* Badges */
+.badge {
+  font-size: 0.8rem;
+  background-color: #F4F4F4;
+  color: #757575;
+}
+
+/* Search widget */
+details.search-help {
+  border: 1px solid #efefef;
+}
+details.search-help[open] summary {
+  border-bottom: 1px solid #efefef;
+}
+details.search-help summary {
+  background: inherit;
+  padding: 0.6180339845rem;
+  font-size: 1rem;
+  text-transform: none;
+  font-variant: normal;
+}
+
+/* Pagination */
+.pagination {
+  --bs-pagination-padding-x: 1rem;
+  --bs-pagination-padding-y: 0.4rem;
+  --bs-pagination-color: #000;
+  --bs-pagination-focus-color: #000;
+  --bs-pagination-hover-color: #000;
+  --bs-pagination-disabled-color: #ccc;
+  --bs-pagination-active-color: #000;
+  --bs-pagination-bg: #fff;
+  --bs-pagination-focus-bg: #fff;
+  --bs-pagination-hover-bg: #fff;
+  --bs-pagination-active-bg: #e0e0e0;
+  --bs-pagination-disabled-bg: #f1efef;
+  --bs-pagination-border-width: 2px;
+  --bs-pagination-border-radius: 3rem;
+  --bs-pagination-border-color: #efefef;
+  --bs-pagination-active-border-color: #ccc;
+  --bs-pagination-hover-border-color: #ccc;
+  --bs-pagination-disabled-border-color: #fff;
+  --bs-pagination-focus-box-shadow: none;
+}
+.pagination li {
+  margin: 0 3px;
+}
+.pagination li .page-link {
+  transition: border-color 0.2s ease-in-out;
+  border-radius: 3rem !important;
+  text-align: center;
+}
+
+/* Footer */
+footer {
+  margin-top: 1.618034rem;
+  position: relative;
+  background: var(--footer-background);
+}
+footer .wave {
+  height: clamp(5vw, 10vw, 100px);
+  overflow-y: hidden;
+}
+footer .wave > svg {
+  position: relative;
+  top: -8vw;
+  background-color: var(--body-background);
+}
+footer .wave > svg path {
+  fill: var(--footer-background);
+}
+
+/**************************** Links */
+a {
+  text-decoration: none !important;
+  border-bottom-style: solid;
+  border-bottom-width: 0.2360679726rem;
+  border-bottom-color: rgba(192, 178, 131, 0.5);
+  transition: border-bottom-color 0.2s ease-in-out;
+  color: inherit;
+}
+a:hover {
+  color: inherit;
+  border-bottom-color: rgba(192, 178, 131, 0.8);
+}
+
+footer a, header a, nav a {
+  border: none;
+  transition: none;
+}
+
+a[href^="mailto:"]::after {
+  content: "\f32c";
+  display: inline-block;
+  font-family: bootstrap-icons !important;
+  font-style: normal;
+  font-weight: normal !important;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  vertical-align: -0.125em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-left: 0.5ex;
+}
+
+a[href^="http://"]::after,
+a[href^="https://"]::after {
+  content: "\f1c5";
+  display: inline-block;
+  font-family: bootstrap-icons !important;
+  font-style: normal;
+  font-weight: normal !important;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  vertical-align: -0.125em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-left: 0.5ex;
+}
+
+/* Custom app styles */
+label.required::after {
+  content: " *";
+  color: red;
+  font-weight: bold;
+}
+
+.delete-form {
+  display: inline-block;
+}
+
+/* Now include the homepage */
+.homepage {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  --body-background: #FDFBF8;
+  --footer-background: #e4e4e4;
+}
+.homepage main {
+  margin: 0;
+}
+.homepage .navbar {
+  margin-bottom: 0;
+}
+.homepage .container {
+  z-index: 99;
+}
+.homepage .home-main {
+  padding-top: 2.6180340252rem;
+  padding-bottom: 2.6180340252rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.homepage .home-main__container {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  position: relative;
+  padding-bottom: 2.6180340252rem;
+}
+.homepage .scroll-down-btn {
+  position: relative;
+  margin: auto;
+}
+.homepage .scroll-down-btn svg {
+  width: 3rem;
+  height: 3rem;
+  fill: #373737;
+  animation: bounce-downwards 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+}
+.homepage section {
+  scroll-snap-align: start;
+}
+.homepage .home-header {
+  margin-bottom: 4.2360680659rem;
+  z-index: 90;
+}
+.homepage .home-header h1 {
+  font-size: clamp(4.8714782757rem, 6vw, 6.8541021569rem);
+  line-height: 1;
+  margin-bottom: 2.6180340252rem;
+  letter-spacing: 0;
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+}
+.homepage .home-header h1 div:nth-child(2) {
+  margin-top: 1.618034rem;
+  margin-bottom: 1.618034rem;
+  font-weight: 300;
+}
+.homepage .home-header h1 div:first-of-type,
+.homepage .home-header h1 div:last-of-type {
+  text-transform: lowercase;
+  font-variant: small-caps;
+  font-weight: 300;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.9416408rem;
+}
+.homepage .home-header h1 div:first-of-type:after, .homepage .home-header h1 div:first-of-type:before,
+.homepage .home-header h1 div:last-of-type:after,
+.homepage .home-header h1 div:last-of-type:before {
+  content: "";
+  display: inline-block;
+  width: 50%;
+  flex: 1 1 auto;
+  height: 2px;
+  margin: 0 4px;
+  background: linear-gradient(90deg, #212125 0%, #212125 100%);
+}
+.homepage .home-header h1 div:first-of-type:before,
+.homepage .home-header h1 div:last-of-type:before {
+  transform: rotate(180deg);
+}
+.homepage .home-header div {
+  line-height: 1;
+}
+.homepage .home-desc {
+  font-size: clamp(1.4rem, 4vw, 1.6rem);
+  line-height: 1.5;
+  max-width: 50rem;
+  margin: 0 auto;
+  z-index: 999;
+  font-family: "Spectral";
+  letter-spacing: -1px;
+  font-weight: 350;
+  color: #373737;
+}
+.homepage .body-nav {
+  display: none;
+}
+.homepage .container > h2 {
+  font-size: 2.6180340252rem;
+  margin-bottom: 1.618034rem;
+  padding-bottom: 0.6180339845rem;
+  border-bottom: 1px solid #212125;
+}
+.homepage .home-search {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), var(--hero-image);
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding-top: 1.618034rem;
+  padding-bottom: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+.homepage .home-search > .container {
+  padding: 1rem minmax(2vw, 1rem);
+  color: #ffffff;
+  border-radius: 8px;
+}
+.homepage .home-search > .container h2 {
+  border-bottom-color: #ffffff;
+}
+.homepage .home-search + section {
+  margin-top: 1.618034rem;
+}
+.homepage .explore-list {
+  display: grid;
+  list-style-type: none;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  padding: 0;
+  margin: 0;
+  grid-column-gap: 1.618034rem;
+  grid-row-gap: 1rem;
+}
+.homepage .explore-list li {
+  margin-bottom: 0.3819660059rem;
+  margin-right: 0.6180339845rem;
+  margin-top: 0;
+  color: inherit;
+  border: none;
+  border: 1px solid #DCD0C0;
+  border-radius: 2px;
+  background: #faf8f6;
+  transition: background 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  font-size: 1.618034rem;
+  height: 8rem;
+}
+.homepage .explore-list li:hover {
+  background: #eee8e0;
+}
+.homepage .explore-list li a {
+  text-decoration: none !important;
+  border-bottom: none;
+  transition: none;
+  color: inherit;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: black;
+  line-height: 1.2;
+}
+.homepage .explore-list li a:hover {
+  color: inherit;
+  border-bottom: none;
+}
+.homepage .explore-list li a:hover {
+  color: black;
+}
+.homepage .glass, .homepage .item {
+  border-color: #bfa88b;
+  backdrop-filter: blur(3px);
+  background: rgba(251, 251, 251, 0.8);
+}
+.homepage .item .item-content-desc {
+  color: black;
+}
+
+/*# sourceMappingURL=dm.css.map*/

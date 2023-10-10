@@ -2,36 +2,26 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
 use App\Repository\PeriodRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractTerm;
 
-/**
- * @ORM\Entity(repositoryClass=PeriodRepository::class)
- */
+#[ORM\Entity(repositoryClass: PeriodRepository::class)]
 class Period extends AbstractTerm {
-    /**
-     * @var int
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $sortableYear;
+    #[ORM\Column(type: Types::INTEGER, nullable: false)]
+    private ?int $sortableYear;
 
     /**
      * Not ORM defined, because the entity relationship is too complex.
      *
-     * @var Collection|Item[]
+     * @var Collection<Item>
      */
-    private $items;
+    private Collection $items;
 
     public function __construct() {
         parent::__construct();
@@ -46,30 +36,26 @@ class Period extends AbstractTerm {
         return $this->sortableYear;
     }
 
-    /**
-     * @return self
-     */
     public function setSortableYear(int $sortableYear) : self {
         $this->sortableYear = $sortableYear;
 
         return $this;
     }
 
-    /**
-     * @param Collection|Item[] $items
-     *
-     * @return self
-     */
-    public function setItems($items) {
-        $this->items = $items;
+    public function setItems(Collection|array $items) : self {
+        if ($items instanceof Collection) {
+            $this->items = $items;
+        } else {
+            $this->items = new ArrayCollection($items);
+        }
 
         return $this;
     }
 
     /**
-     * @return Item[]|Collection
+     * @return Collection|Item[]
      */
-    public function getItems() {
+    public function getItems() : Collection {
         return $this->items;
     }
 }

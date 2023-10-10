@@ -2,104 +2,56 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
 use App\Repository\ImageRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractEntity;
 use Symfony\Component\HttpFoundation\File\File;
 
-/**
- * @ORM\Entity(repositoryClass=ImageRepository::class)
- * @ORM\Table(indexes={
- *     @ORM\Index(columns={"original_name", "description"}, flags={"fulltext"})
- * })
- */
+#[ORM\Index(columns: ['original_name', 'description'], flags: ['fulltext'])]
+#[ORM\Entity(repositoryClass: ImageRepository::class)]
 class Image extends AbstractEntity {
-    /**
-     * @var ?File
-     */
-    private $imageFile;
+    private ?File $imageFile = null;
 
-    /**
-     * @var ?File
-     */
-    private $thumbFile;
+    private ?File $thumbFile = null;
 
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $public;
+    #[ORM\Column(type: Types::BOOLEAN, nullable: false)]
+    private ?bool $public;
 
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=64, nullable=false)
-     */
-    private $originalName;
+    #[ORM\Column(type: Types::STRING, length: 64, nullable: false)]
+    private ?string $originalName;
 
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=128, nullable=false)
-     */
-    private $imagePath;
+    #[ORM\Column(type: Types::STRING, length: 128, nullable: false)]
+    private ?string $imagePath;
 
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=128, nullable=false)
-     */
-    private $thumbPath;
+    #[ORM\Column(type: Types::STRING, length: 128, nullable: false)]
+    private ?string $thumbPath;
 
-    /**
-     * @var int
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $imageSize;
+    #[ORM\Column(type: Types::INTEGER, nullable: false)]
+    private ?int $imageSize;
 
-    /**
-     * @var int
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $imageWidth;
+    #[ORM\Column(type: Types::INTEGER, nullable: false)]
+    private ?int $imageWidth;
 
-    /**
-     * @var int
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $imageHeight;
+    #[ORM\Column(type: Types::INTEGER, nullable: false)]
+    private ?int $imageHeight;
 
-    /**
-     * @var string
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
 
-    /**
-     * @var string
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $license;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $license = null;
 
-    /**
-     * @var Item
-     * @ORM\ManyToOne(targetEntity="App\Entity\Item", inversedBy="images")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $item;
+    #[ORM\ManyToOne(targetEntity: Item::class, inversedBy: 'images')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    private ?Item $item = null;
 
     public function __construct() {
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function __toString() : string {
         if ($this->imageFile) {
             return $this->imageFile->getFilename();
@@ -176,6 +128,13 @@ class Image extends AbstractEntity {
         $this->description = $description;
 
         return $this;
+    }
+
+    public function getAlt() : ?string {
+        if (!$this->description) {
+            return null;
+        }
+        return html_entity_decode(strip_tags($this->description));
     }
 
     public function getPublic() : ?bool {

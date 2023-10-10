@@ -2,21 +2,10 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Menu;
 
-use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Nines\UtilBundle\Menu\AbstractBuilder;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class to build some menus for navigation.
@@ -36,60 +25,110 @@ class Builder extends AbstractBuilder {
         $menu->addChild('home', [
             'label' => 'Home',
             'route' => 'homepage',
+            'attributes' => [
+                'class' => 'nav-item',
+            ],
+            'linkAttributes' => [
+                'class' => 'nav-link',
+            ],
         ]);
 
         $browse = $menu->addChild('browse', [
             'uri' => '#',
             'label' => 'Browse',
+            'attributes' => [
+                'class' => 'nav-item dropdown',
+            ],
+            'linkAttributes' => [
+                'class' => 'nav-link dropdown-toggle',
+                'role' => 'button',
+                'data-bs-toggle' => 'dropdown',
+                'id' => 'browse-dropdown',
+            ],
+            'childrenAttributes' => [
+                'class' => 'dropdown-menu text-small shadow',
+                'aria-labelledby' => 'browse-dropdown',
+            ],
         ]);
-        $browse->setAttribute('dropdown', true);
-        $browse->setLinkAttribute('class', 'dropdown-toggle');
-        $browse->setLinkAttribute('data-toggle', 'dropdown');
-        $browse->setChildrenAttribute('class', 'dropdown-menu');
         $browse->addChild('Item', [
             'route' => 'item_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
         $browse->addChild('Category', [
             'route' => 'category_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
         $browse->addChild('Culture', [
             'route' => 'civilization_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
         $browse->addChild('Inscription Style', [
             'route' => 'inscription_style_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
         $browse->addChild('Language', [
             'route' => 'language_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
         $browse->addChild('Location', [
             'route' => 'location_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
         $browse->addChild('Material', [
             'route' => 'material_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
         $browse->addChild('Period', [
             'route' => 'period_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
         $browse->addChild('Subject', [
             'route' => 'subject_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
         $browse->addChild('Technique', [
             'route' => 'technique_index',
+            'linkAttributes' => [
+                'class' => 'dropdown-item',
+            ],
         ]);
 
         if ($this->hasRole('ROLE_CONTENT_ADMIN')) {
-            $browse->addChild('divider2', [
-                'label' => '',
-            ]);
-            $browse['divider2']->setAttributes([
-                'role' => 'separator',
-                'class' => 'divider',
+            $browse->addChild('divider1', [
+                'label' => '<hr class="dropdown-divider">',
+                'extras' => [
+                    'safe_label' => true,
+                ],
             ]);
             $browse->addChild('Image', [
                 'route' => 'image_index',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item',
+                ],
             ]);
             $browse->addChild('Remote Image', [
                 'route' => 'remote_image_index',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item',
+                ],
             ]);
         }
 

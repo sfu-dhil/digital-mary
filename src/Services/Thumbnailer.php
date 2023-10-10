@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Services;
 
 use App\Entity\Image;
@@ -15,7 +9,6 @@ use Exception;
 use Imagick;
 use ImagickException;
 use ImagickPixel;
-use Psr\Log\LoggerInterface;
 
 /**
  * Description of Thumbnailer.
@@ -36,11 +29,10 @@ class Thumbnailer {
     }
 
     /**
-     * @return string
      * @throws ImagickException
      * @throws Exception
      */
-    public function thumbnail(Image $image) {
+    public function thumbnail(Image $image) : string {
         $file = $image->getImageFile();
         $thumbname = $file->getBasename('.' . $file->getExtension()) . '_tn.png';
 

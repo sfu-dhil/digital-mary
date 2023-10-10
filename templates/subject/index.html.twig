@@ -4,23 +4,16 @@
 
 {% block pageheader %}
     <h1>Subjects</h1>
-    {% include 'partial/count.html.twig'
-        with {'index': subjects, 'label': 'subjects'} %}
+    {% include 'partial/count.html.twig' with {'index': subjects, 'label': 'subjects'} %}
 {% endblock %}
 
-{% block admin %}
-    <div class='btn-toolbar'>
-        <div class='btn-group'>
-            <a href="{{ path('subject_new') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-plus"></span> New
-            </a>
-        </div>
-    </div>
+{% block action_buttons %}
+    <a href="{{ path('subject_new') }}" class="btn btn-light">
+        <span class="bi bi-plus-lg"></span> New
+    </a>
 {% endblock %}
 
 
 {% block body %}
-
     {% include 'partial/term-table.html.twig' with {'items': subjects} %}
-
 {% endblock %}

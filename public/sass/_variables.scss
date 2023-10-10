@@ -1,52 +1,52 @@
 $heading-font: 'Spectral';
-$body-font: "Source Sans Pro";
-$greek-font: "Athena Ruby", "Source Sans Pro", sans-serif;
+$body-font: "Source Sans 3";
+$greek-font: "Athena Ruby", "Source Sans 3", sans-serif;
 $ms-base: 1rem;
 $ms-ratio: $phi;
 $modscale-start: 3;
-$ndm-gold: #C0B283;
-$ndm-light-gold: #E7DED1;
-$ndm-light-grey-gold: #FDFBF8;
-$ndm-grey: #F4F4F4;
-$ndm-black: #212125;
-$ndm-beige: #DCD0C0;
-$ndm-dark-grey: #373737;
-$ndm-off-white: #fbfbfb;
+$dm-gold: #C0B283;
+$dm-light-gold: #E7DED1;
+$dm-light-grey-gold: #FDFBF8;
+$dm-grey: #F4F4F4;
+$dm-black: #212125;
+$dm-beige: #DCD0C0;
+$dm-dark-grey: #373737;
+$dm-off-white: #fbfbfb;
 $nav-height: rem(50px);
-$ndm-white: #ffffff;
-$ndm-img-height: 350;
-$ndm-img-width: 450;
-$ndm-nav-background-color: $ndm-light-grey-gold;
-$base-text-color: $ndm-black;
+$dm-white: #ffffff;
+$dm-img-height: 350;
+$dm-img-width: 450;
+$dm-nav-background-color: $dm-light-grey-gold;
+$base-text-color: $dm-black;
 
-$body-background: $ndm-white;
+$body-background: $dm-white;
 /*Hamburger stuff */
 $hamburger-types: (collapse);
 $hamburger-layer-height: $nav-height / 13;
 $hamburger-layer-spacing: $nav-height/ 8;
-$hamburger-layer-color: rgba-to-rgb(rgba($ndm-black, 0.6), $ndm-nav-background-color);
+$hamburger-layer-color: rgba-to-rgb(rgba($dm-black, 0.6), $dm-nav-background-color);
 
 /*Breadcrumb stuff */
-$breadcrumb-arrow-color: $ndm-light-gold;
-$breadcrumb-hover-color:$ndm-light-gold;
+$breadcrumb-arrow-color: $dm-light-gold;
+$breadcrumb-hover-color:$dm-light-gold;
 $breadcrumb-arrow-width: 2px;
-$breadcrumb-current-background: $ndm-grey;
+$breadcrumb-current-background: $dm-grey;
 
 
-@mixin ndm-link{
+@mixin dm-link{
   text-decoration:none!important;
   border-bottom-style: solid;
   border-bottom-width: ms(-3);
-  border-bottom-color: rgba($ndm-gold, 0.5);
+  border-bottom-color: rgba($dm-gold, 0.5);
   transition: border-bottom-color 0.2s ease-in-out;
   color:inherit;
   &:hover{
     color:inherit;
-    border-bottom-color:rgba($ndm-gold, 0.8)
+    border-bottom-color:rgba($dm-gold, 0.8)
   }
 }
 
-@mixin ndm-removeLink{
+@mixin dm-removeLink{
   text-decoration:none!important;
   border-bottom:none;
   transition:none;
@@ -57,7 +57,7 @@ $breadcrumb-current-background: $ndm-grey;
   }
 }
 
-@mixin ndm-linkButton($bg-color: $ndm-beige){
+@mixin dm-linkButton($bg-color: $dm-beige){
   margin-bottom:ms(-2);
   margin-right: ms(-1);
   margin-top:0;
@@ -76,12 +76,11 @@ $breadcrumb-current-background: $ndm-grey;
 
 @font-face {
   font-family: 'Athena Ruby';
-  src: url('../assets/athena_ruby/athenaruby_b018-webfont.eot');
-  src: url('../assets/athena_ruby/athenaruby_b018-webfont.eot?#iefix') format('embedded-opentype'),
-  url('../assets/athena_ruby/athenaruby_b018-webfont.woff2') format('woff2'),
-  url('../assets/athena_ruby/athenaruby_b018-webfont.woff') format('woff'),
-  url('../assets/athena_ruby/athenaruby_b018-webfont.ttf') format('truetype'),
-  url('../assets/athena_ruby/athenaruby_b018-webfont.svg#athena_rubyregular') format('svg');
+  src: url('../fonts/athenaruby_b018-webfont.eot');
+  src: url('../fonts/athenaruby_b018-webfont.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/athenaruby_b018-webfont.woff2') format('woff2'),
+  url('../fonts/athenaruby_b018-webfont.woff') format('woff'),
+  url('../fonts/athenaruby_b018-webfont.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   // I think this works: just use a subset of the font and get a particular unicode range.

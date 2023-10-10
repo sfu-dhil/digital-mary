@@ -2,180 +2,125 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
 use App\Repository\ItemRepository;
-use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractEntity;
 
-/**
- * @ORM\Table(indexes={
- *     @ORM\Index(columns={"name", "description", "inscription", "translated_inscription"}, flags={"fulltext"})
- * })
- * @ORM\Entity(repositoryClass=ItemRepository::class)
- */
+#[ORM\Index(columns: ['name', 'description', 'inscription', 'translated_inscription'], flags: ['fulltext'])]
+#[ORM\Entity(repositoryClass: ItemRepository::class)]
 class Item extends AbstractEntity {
-    /**
-     * @var string
-     * @ORM\Column(type="string", nullable=false)
-     */
-    private $name;
+    #[ORM\Column(type: Types::STRING, nullable: false)]
+    private ?string $name;
 
-    /**
-     * @var string
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
 
-    /**
-     * @var string
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $inscription;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $inscription = null;
 
-    /**
-     * @var string
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $translatedInscription;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $translatedInscription = null;
 
-    /**
-     * @var string
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $location;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $location = null;
 
-    /**
-     * @var string
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $dimensions;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $dimensions = null;
 
-    /**
-     * @var string
-     * @ORM\Column(name="bibliography", type="text", nullable=true)
-     */
-    private $references;
+    #[ORM\Column(name: 'bibliography', type: Types::TEXT, nullable: true)]
+    private ?string $references = null;
 
     /**
      * A mapping of dates -> initials.
-     *
-     * @var array
-     * @ORM\Column(type="array")
      */
-    private $revisions;
+    #[ORM\Column(type: Types::ARRAY)]
+    private array $revisions;
+
+    #[ORM\Column(type: Types::STRING, length: 60, nullable: true)]
+    private ?string $displayYear = null;
+
+    #[ORM\ManyToOne(targetEntity: Period::class)]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
+    private ?Period $periodStart = null;
+
+    #[ORM\ManyToOne(targetEntity: Period::class)]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
+    private ?Period $periodEnd = null;
 
     /**
-     * @var null|string
-     * @ORM\Column(type="string", length=60, nullable=true)
+     * @var Collection<Category>
      */
-    private $displayYear;
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'items')]
+    private Collection $category;
 
     /**
-     * @var Period
-     * @ORM\ManyToOne(targetEntity="App\Entity\Period")
+     * @var Collection<Civilization>
      */
-    private $periodStart;
+    #[ORM\ManyToMany(targetEntity: Civilization::class, inversedBy: 'items')]
+    private Collection $civilization;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $civilizationOther = null;
+
+    #[ORM\ManyToOne(targetEntity: InscriptionStyle::class, inversedBy: 'items')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
+    private ?InscriptionStyle $inscriptionStyle = null;
 
     /**
-     * @var Period
-     * @ORM\ManyToOne(targetEntity="App\Entity\Period")
+     * @var Collection<Language>
      */
-    private $periodEnd;
+    #[ORM\ManyToMany(targetEntity: Language::class, inversedBy: 'items')]
+    private Collection $inscriptionLanguage;
+
+    #[ORM\ManyToOne(targetEntity: Location::class, inversedBy: 'itemsFound')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
+    private ?Location $findspot = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $findspotOther = null;
+
+    #[ORM\ManyToOne(targetEntity: Location::class, inversedBy: 'itemsProvenanced')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
+    private ?Location $provenance = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $provenanceOther = null;
 
     /**
-     * @var Category[]|Collection
-     * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="items")
+     * @var Collection<Image>
      */
-    private $category;
+    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'item', cascade: ['REMOVE'])]
+    private Collection $images;
 
     /**
-     * @var Civilization[]|Collection
-     * @ORM\ManyToMany(targetEntity="App\Entity\Civilization", inversedBy="items")
+     * @var Collection<Technique>
      */
-    private $civilization;
+    #[ORM\ManyToMany(targetEntity: Technique::class, inversedBy: 'items')]
+    private Collection $techniques;
 
     /**
-     * @var string
-     * @ORM\Column(type="text", nullable=true)
+     * @var Collection<Material>
      */
-    private $civilizationOther;
+    #[ORM\ManyToMany(targetEntity: Material::class, inversedBy: 'items')]
+    private Collection $materials;
 
     /**
-     * @var InscriptionStyle
-     * @ORM\ManyToOne(targetEntity="App\Entity\InscriptionStyle", inversedBy="items")
+     * @var Collection<RemoteImage>
      */
-    private $inscriptionStyle;
+    #[ORM\OneToMany(targetEntity: RemoteImage::class, mappedBy: 'item', cascade: ['REMOVE'])]
+    private Collection $remoteImages;
 
     /**
-     * @var Language[]|Collection
-     * @ORM\ManyToMany(targetEntity="App\Entity\Language", inversedBy="items")
+     * @var Collection<Subject>
      */
-    private $inscriptionLanguage;
-
-    /**
-     * @var Location
-     * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="itemsFound")
-     */
-    private $findspot;
-
-    /**
-     * @var string
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $findspotOther;
-
-    /**
-     * @var Location
-     * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="itemsProvenanced")
-     */
-    private $provenance;
-
-    /**
-     * @var string
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $provenanceOther;
-
-    /**
-     * @var Collection|Image[]
-     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="item", cascade={"REMOVE"})
-     */
-    private $images;
-
-    /**
-     * @var Collection|Technique[]
-     * @ORM\ManyToMany(targetEntity="App\Entity\Technique", inversedBy="items")
-     */
-    private $techniques;
-
-    /**
-     * @var Collection|Material[]
-     * @ORM\ManyToMany(targetEntity="App\Entity\Material", inversedBy="items")
-     */
-    private $materials;
-
-    /**
-     * @var Collection|RemoteImage[]
-     * @ORM\OneToMany(targetEntity="App\Entity\RemoteImage", mappedBy="item", cascade={"REMOVE"})
-     */
-    private $remoteImages;
-
-    /**
-     * @var Collection|Subject[]
-     * @ORM\ManyToMany(targetEntity="App\Entity\Subject", inversedBy="items")
-     */
-    private $subjects;
+    #[ORM\ManyToMany(targetEntity: Subject::class, inversedBy: 'items')]
+    private Collection $subjects;
 
     public function __construct() {
         parent::__construct();
@@ -190,9 +135,6 @@ class Item extends AbstractEntity {
         $this->inscriptionLanguage = new ArrayCollection();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function __toString() : string {
         return $this->name;
     }
@@ -258,7 +200,7 @@ class Item extends AbstractEntity {
     }
 
     public function getRevisions() : ?array {
-        usort($this->revisions, function ($a, $b) {
+        usort($this->revisions, function ($a, $b) : int {
             $d = $b['date'] <=> $a['date'];
             if ($d) {
                 return $d;
@@ -277,13 +219,10 @@ class Item extends AbstractEntity {
     }
 
     /**
-     * @param string|DateTimeInterface $date
-     * @param string $initials
-     *
-     * @return void
+     * @param DateTimeInterface|string $date
      */
     public function addRevision($date, string $initials) : void {
-        if($date instanceof DateTimeInterface) {
+        if ($date instanceof DateTimeInterface) {
             $date = $date->format('Y-m-d');
         }
         foreach ($this->revisions as $revision) {

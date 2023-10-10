@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
 use App\Repository\CivilizationRepository;
@@ -18,15 +12,14 @@ use Nines\UtilBundle\Entity\AbstractTerm;
 
 /**
  * When and where the item was manufactured.
- *
- * @ORM\Entity(repositoryClass=CivilizationRepository::class)
  */
+#[ORM\Entity(repositoryClass: CivilizationRepository::class)]
 class Civilization extends AbstractTerm {
     /**
-     * @var Collection|Item[]
-     * @ORM\ManyToMany(targetEntity="App\Entity\Item", mappedBy="civilization")
+     * @var Collection<Item>
      */
-    private $items;
+    #[ORM\ManyToMany(targetEntity: Item::class, mappedBy: 'civilization')]
+    private Collection $items;
 
     public function __construct() {
         parent::__construct();

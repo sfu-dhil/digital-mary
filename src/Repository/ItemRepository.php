@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Repository;
 
 use App\Entity\Item;
@@ -84,7 +78,7 @@ class ItemRepository extends ServiceEntityRepository {
     }
 
     /**
-     * @return Item[]|Collection
+     * @return Collection|Item[]
      */
     public function findItemsByPeriod(Period $period) {
         $qb = $this->createQueryBuilder('item');

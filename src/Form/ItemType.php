@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form;
 
 use App\Entity\Category;
@@ -40,9 +34,6 @@ class ItemType extends AbstractType {
         $builder->add('name', TextType::class, [
             'label' => 'Name',
             'required' => true,
-            'attr' => [
-                'help_block' => '',
-            ],
         ]);
         $builder->add('category', Select2EntityType::class, [
             'label' => 'Category',
@@ -51,16 +42,15 @@ class ItemType extends AbstractType {
             'allow_clear' => true,
             'multiple' => true,
             'attr' => [
-                'help_block' => '',
-                'add_path' => 'category_new_popup',
+                'add_path' => 'category_new',
                 'add_label' => 'Add Category',
             ],
+            'placeholder' => 'Search for an existing category by name',
         ]);
         $builder->add('description', TextareaType::class, [
             'label' => 'Description',
             'required' => false,
             'attr' => [
-                'help_block' => '',
                 'class' => 'tinymce',
             ],
         ]);
@@ -68,7 +58,6 @@ class ItemType extends AbstractType {
             'label' => 'Inscription',
             'required' => false,
             'attr' => [
-                'help_block' => '',
                 'class' => 'tinymce',
             ],
         ]);
@@ -76,7 +65,6 @@ class ItemType extends AbstractType {
             'label' => 'Inscription Translation',
             'required' => false,
             'attr' => [
-                'help_block' => '',
                 'class' => 'tinymce',
             ],
         ]);
@@ -87,10 +75,10 @@ class ItemType extends AbstractType {
             'allow_clear' => true,
             'multiple' => true,
             'attr' => [
-                'help_block' => '',
-                'add_path' => 'language_new_popup',
+                'add_path' => 'language_new',
                 'add_label' => 'Add Language',
             ],
+            'placeholder' => 'Search for an existing language by name',
         ]);
         $builder->add('inscriptionStyle', Select2EntityType::class, [
             'label' => 'Inscription Type',
@@ -98,10 +86,10 @@ class ItemType extends AbstractType {
             'remote_route' => 'inscription_style_typeahead',
             'allow_clear' => true,
             'attr' => [
-                'help_block' => '',
-                'add_path' => 'inscription_style_new_popup',
+                'add_path' => 'inscription_style_new',
                 'add_label' => 'Add Inscr. Type',
             ],
+            'placeholder' => 'Search for an existing inscription type by name',
         ]);
         $builder->add('civilization', Select2EntityType::class, [
             'label' => 'Culture',
@@ -110,25 +98,23 @@ class ItemType extends AbstractType {
             'allow_clear' => true,
             'multiple' => true,
             'attr' => [
-                'help_block' => '',
-                'add_path' => 'civilization_new_popup',
+                'add_path' => 'civilization_new',
                 'add_label' => 'Add Civilization',
             ],
+            'placeholder' => 'Search for an existing civilization by name',
         ]);
         $builder->add('civilizationOther', TextareaType::class, [
             'label' => 'Culture (unknown)',
             'required' => false,
+            'help' => 'If the object\'s culture is unknown, explain why',
             'attr' => [
-                'help_block' => 'If the object\'s culture is unknown, explain why',
                 'class' => 'tinymce',
             ],
         ]);
         $builder->add('displayYear', TextareaType::class, [
             'label' => 'Display Date',
             'required' => false,
-            'attr' => [
-                'help_block' => 'A textual description of the item\'s date, shown to the users. Blank for unknown.',
-            ],
+            'help' => 'A textual description of the item\'s date, shown to the users. Blank for unknown.',
         ]);
         $builder->add('periodStart', EntityType::class, [
             'label' => 'Earliest creation',
@@ -153,16 +139,16 @@ class ItemType extends AbstractType {
             'remote_route' => 'location_typeahead',
             'allow_clear' => true,
             'attr' => [
-                'help_block' => '',
-                'add_path' => 'location_new_popup',
+                'add_path' => 'location_new',
                 'add_label' => 'Add Location',
             ],
+            'placeholder' => 'Search for an existing location by name',
         ]);
         $builder->add('provenanceOther', TextareaType::class, [
             'label' => 'Provenance (unknown)',
             'required' => false,
+            'help' => 'If the object\'s provenance is unknown, explain why',
             'attr' => [
-                'help_block' => 'If the object\'s provenance is unknown, explain why',
                 'class' => 'tinymce',
             ],
         ]);
@@ -172,16 +158,16 @@ class ItemType extends AbstractType {
             'remote_route' => 'location_typeahead',
             'allow_clear' => true,
             'attr' => [
-                'help_block' => '',
-                'add_path' => 'location_new_popup',
+                'add_path' => 'location_new',
                 'add_label' => 'Add Location',
             ],
+            'placeholder' => 'Search for an existing location by name',
         ]);
         $builder->add('findspotOther', TextareaType::class, [
             'label' => 'Findspot (unknown)',
             'required' => false,
+            'help' => 'If the object\'s findspot is unknown, explain why',
             'attr' => [
-                'help_block' => 'If the object\'s findspot is unknown, explain why',
                 'class' => 'tinymce',
             ],
         ]);
@@ -189,7 +175,6 @@ class ItemType extends AbstractType {
             'label' => 'Dimensions',
             'required' => false,
             'attr' => [
-                'help_block' => '',
                 'class' => 'tinymce',
             ],
         ]);
@@ -203,10 +188,10 @@ class ItemType extends AbstractType {
             'class' => Material::class,
             'allow_clear' => true,
             'attr' => [
-                'help_block' => '',
-                'add_path' => 'material_new_popup',
+                'add_path' => 'material_new',
                 'add_label' => 'Add Material',
             ],
+            'placeholder' => 'Search for an existing material by name',
         ]);
         $builder->add('techniques', Select2EntityType::class, [
             'label' => 'Techniques',
@@ -218,16 +203,15 @@ class ItemType extends AbstractType {
             'class' => Technique::class,
             'allow_clear' => true,
             'attr' => [
-                'help_block' => '',
-                'add_path' => 'technique_new_popup',
+                'add_path' => 'technique_new',
                 'add_label' => 'Add Technique',
             ],
+            'placeholder' => 'Search for an existing technique by name',
         ]);
         $builder->add('references', TextareaType::class, [
             'label' => 'Bibliographic References',
             'required' => false,
             'attr' => [
-                'help_block' => '',
                 'class' => 'tinymce',
             ],
         ]);
@@ -248,10 +232,10 @@ class ItemType extends AbstractType {
             'class' => Subject::class,
             'allow_clear' => true,
             'attr' => [
-                'help_block' => '',
-                'add_path' => 'subject_new_popup',
+                'add_path' => 'subject_new',
                 'add_label' => 'Add Subject',
             ],
+            'placeholder' => 'Search for an existing subject by name',
         ]);
     }
 

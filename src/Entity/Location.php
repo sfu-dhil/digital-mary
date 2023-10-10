@@ -2,69 +2,43 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
 use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractTerm;
 
-/**
- * @ORM\Entity(repositoryClass=LocationRepository::class)
- */
+#[ORM\Entity(repositoryClass: LocationRepository::class)]
 class Location extends AbstractTerm {
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $geonameid;
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    private ?int $geonameid = null;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 7, nullable: true)]
+    private ?float $latitude = null;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 7, nullable: true)]
+    private ?float $longitude = null;
+
+    #[ORM\Column(type: Types::STRING, length: 2, nullable: true)]
+    private ?string $country = null;
+
+    #[ORM\Column(type: Types::ARRAY, nullable: false)]
+    private array $alternateNames;
 
     /**
-     * @var float
-     *
-     * @ORM\Column(type="decimal", precision=10, scale=7, nullable=true)
+     * @var Collection<Item>
      */
-    private $latitude;
+    #[ORM\OneToMany(targetEntity: Item::class, mappedBy: 'findspot')]
+    private Collection $itemsFound;
 
     /**
-     * @var float
-     *
-     * @ORM\Column(type="decimal", precision=10, scale=7, nullable=true)
+     * @var Collection<Item>
      */
-    private $longitude;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=2, nullable=true)
-     */
-    private $country;
-
-    /**
-     * @var array
-     * @ORM\Column(type="array", nullable=false)
-     */
-    private $alternateNames;
-
-    /**
-     * @var Collection|Item[]
-     * @ORM\OneToMany(targetEntity="App\Entity\Item", mappedBy="findspot")
-     */
-    private $itemsFound;
-
-    /**
-     * @var Collection|Item[]
-     * @ORM\OneToMany(targetEntity="App\Entity\Item", mappedBy="provenance")
-     */
-    private $itemsProvenanced;
+    #[ORM\OneToMany(targetEntity: Item::class, mappedBy: 'provenance')]
+    private Collection $itemsProvenanced;
 
     public function __construct() {
         parent::__construct();

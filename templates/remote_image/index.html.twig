@@ -10,12 +10,10 @@
 {% endblock %}
 
 {% block body %}
-
-    <div class='btn-toolbar pull-right'>
-        <a href="{{ path('remote_image_search') }}" class="btn btn-default">
-            <span class="glyphicon glyphicon-search"></span> Search </a>
+    <div class="d-grid gap-2 d-md-block m-2 text-end">
+        <a href="{{ path('remote_image_search') }}" class="btn btn-light">
+            <span class="bi bi-search"></span> Search </a>
     </div>
-
     <table class="table table-bordered table-condensed table-hover table-striped">
         <thead>
             <tr>
@@ -31,7 +29,7 @@
                 <tr>
 
                     <td>
-                        <a href="{{ path('remote_image_show', { 'id': remote_image.id }) }}">
+                        <a href="{{ path('remote_image_show', {'id': remote_image.id}) }}">
                             {{ remote_image.id }}
                         </a>
                     </td>

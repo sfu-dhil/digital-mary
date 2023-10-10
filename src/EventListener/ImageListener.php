@@ -2,42 +2,20 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\EventListener;
 
 use App\Entity\Image;
 use App\Services\FileUploader;
 use App\Services\Thumbnailer;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Description of ClippingListener.
- *
- * @author Michael Joyce <ubermichael@gmail.com>
  */
 class ImageListener {
-    /**
-     * @var FileUploader
-     */
-    private $uploader;
-
-    /**
-     * @var Thumbnailer
-     */
-    private $thumbnailer;
-
-    public function __construct(FileUploader $uploader, Thumbnailer $thumbnailer) {
-        $this->uploader = $uploader;
-        $this->thumbnailer = $thumbnailer;
-    }
+    public function __construct(private FileUploader $uploader, private Thumbnailer $thumbnailer) {}
 
     private function uploadFile(Image $image) : void {
         $file = $image->getImageFile();

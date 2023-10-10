@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Controller;
 
 use App\Entity\RemoteImage;
@@ -20,17 +14,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/remote_image")
- */
+#[Route(path: '/remote_image')]
 class RemoteImageController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
-    /**
-     * @Route("/", name="remote_image_index", methods={"GET"})
-     *
-     * @Template
-     */
+    #[Route(path: '/', name: 'remote_image_index', methods: ['GET'])]
+    #[Template]
     public function index(Request $request, RemoteImageRepository $remoteImageRepository) : array {
         $query = $remoteImageRepository->indexQuery();
         $pageSize = $this->getParameter('page_size');
@@ -41,14 +30,9 @@ class RemoteImageController extends AbstractController implements PaginatorAware
         ];
     }
 
-    /**
-     * @Route("/search", name="remote_image_search", methods={"GET"})
-     *
-     * @Template
-     *
-     * @return array
-     */
-    public function search(Request $request, RemoteImageRepository $remoteImageRepository) {
+    #[Route(path: '/search', name: 'remote_image_search', methods: ['GET'])]
+    #[Template]
+    public function search(Request $request, RemoteImageRepository $remoteImageRepository) : array {
         $q = $request->query->get('q');
         if ($q) {
             $query = $remoteImageRepository->searchQuery($q);
@@ -63,12 +47,8 @@ class RemoteImageController extends AbstractController implements PaginatorAware
         ];
     }
 
-    /**
-     * @Route("/typeahead", name="remote_image_typeahead", methods={"GET"})
-     *
-     * @return JsonResponse
-     */
-    public function typeahead(Request $request, RemoteImageRepository $remoteImageRepository) {
+    #[Route(path: '/typeahead', name: 'remote_image_typeahead', methods: ['GET'])]
+    public function typeahead(Request $request, RemoteImageRepository $remoteImageRepository) : JsonResponse {
         $q = $request->query->get('q');
         if ( ! $q) {
             return new JsonResponse([]);
@@ -85,13 +65,9 @@ class RemoteImageController extends AbstractController implements PaginatorAware
         return new JsonResponse($data);
     }
 
-    /**
-     * @Route("/{id}", name="remote_image_show", methods={"GET"})
-     * @Template
-     *
-     * @return array
-     */
-    public function show(RemoteImage $remoteImage) {
+    #[Route(path: '/{id}', name: 'remote_image_show', methods: ['GET'])]
+    #[Template]
+    public function show(RemoteImage $remoteImage) : array {
         return [
             'remote_image' => $remoteImage,
         ];

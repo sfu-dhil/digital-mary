@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form;
 
 use App\Entity\Image;
@@ -25,14 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Image form.
  */
 class ImageType extends AbstractType {
-    /**
-     * @var FileUploader
-     */
-    private $fileUploader;
-
-    public function __construct(FileUploader $fileUploader) {
-        $this->fileUploader = $fileUploader;
-    }
+    public function __construct(private FileUploader $fileUploader) {}
 
     /**
      * Add form fields to $builder.
@@ -45,8 +32,8 @@ class ImageType extends AbstractType {
         $builder->add('imageFile', FileType::class, [
             'label' => 'Image',
             'required' => true,
+            'help' => "Select a file to upload which is less than {$this->fileUploader->getMaxUploadSize(false)} in size.",
             'attr' => [
-                'help_block' => "Select a file to upload which is less than {$this->fileUploader->getMaxUploadSize(false)} in size.",
                 'data-maxsize' => $this->fileUploader->getMaxUploadSize(),
             ],
         ]);
@@ -59,15 +46,11 @@ class ImageType extends AbstractType {
                 'No' => 0,
                 'Yes' => 1,
             ],
-            'attr' => [
-                'help_block' => '',
-            ],
         ]);
         $builder->add('description', TextareaType::class, [
             'label' => 'Description',
             'required' => false,
             'attr' => [
-                'help_block' => '',
                 'class' => 'tinymce',
             ],
         ]);
@@ -75,7 +58,6 @@ class ImageType extends AbstractType {
             'label' => 'License',
             'required' => false,
             'attr' => [
-                'help_block' => '',
                 'class' => 'tinymce',
             ],
         ]);

@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
 use App\Repository\InscriptionStyleRepository;
@@ -18,15 +12,14 @@ use Nines\UtilBundle\Entity\AbstractTerm;
 
 /**
  * The type of writing or inscription present on the item.
- *
- * @ORM\Entity(repositoryClass=InscriptionStyleRepository::class)
  */
+#[ORM\Entity(repositoryClass: InscriptionStyleRepository::class)]
 class InscriptionStyle extends AbstractTerm {
     /**
-     * @var Collection|Item[]
-     * @ORM\OneToMany(targetEntity="App\Entity\Item", mappedBy="inscriptionStyle")
+     * @var Collection<Item>
      */
-    private $items;
+    #[ORM\OneToMany(targetEntity: Item::class, mappedBy: 'inscriptionStyle')]
+    private Collection $items;
 
     public function __construct() {
         parent::__construct();

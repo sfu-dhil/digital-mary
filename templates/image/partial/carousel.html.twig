@@ -25,12 +25,12 @@
     {# Create the actual slider #}
     <div class="image-slider">
         {% for image in images %}
-            {% set itemId = "item-" ~ loop.index %}
-            <div id="{{ itemId }}" class="item{% if loop.first %} active{% endif %}">
+            {% set item_id = "item-" ~ loop.index %}
+            <div id="{{ item_id }}" class="item{% if loop.first %} active{% endif %}">
                 {# Top bit #}
                 <div class="img-container">
                     <a
-                            href="{{ path('image_view', {'id': image.id }) }}"
+                            href="{{ path('image_view', {'id': image.id}) }}"
                             data-date="{{ image.created|date }}"
                             data-img="{{ path('image_view', {'id': image.id}) }}">
                         {% include 'partial/image.html.twig' with {'loading': 'auto'} %}
@@ -49,26 +49,27 @@
                         {# Now make the image details, which is open by default, but should be closed if nojs exists,
                            since the summary block is hidden
                         #}
-                        <details id="{{ itemId }}-description" class="nojs-open">
-                            <summary id="{{ itemId }}-description-summary" class="summary__img-description">Image
+                        <details id="{{ item_id }}-description" class="nojs-open">
+                            <summary id="{{ item_id }}-description-summary" class="summary__img-description">Image
                                 Information
                             </summary>
                             <div class="item-details-list">
-
                                 {{ dl.make(image, 'description', 'description') }}
                                 {{ dl.make(image, 'license', 'license') }}
                             </div>
                         </details>
 
                         {% if is_granted('ROLE_CONTENT_ADMIN') %}
-                            <div class="btn-toolbar admin">
+                            <div class="row gap-2 admin">
                                 <a href="{{ path('item_edit_image', {'id': image.item.id, 'image_id': image.id}) }}"
-                                   class="btn btn-default">
-                                    <span class='glyphicon glyphicon-edit'></span> Edit image </a>
-                                <a href="{{ path('item_delete_image', {'id': image.item.id, 'image_id': image.id}) }}"
-                                   class="btn btn-danger"
-                                   data-confirm="Are you sure you want to delete this image?">
-                                    <span class='glyphicon glyphicon-remove'></span> Remove image </a>
+                                   class="btn btn-light col">
+                                    <span class='bi bi-pencil-square'></span> Edit image </a>
+                                <form class='delete-form col' method="post" action="{{ path('item_delete_image', {'id': image.item.id, 'image_id': image.id}) }}"
+                                        onsubmit="return confirm('Are you sure you want to delete this image?');">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token" value="{{ csrf_token("delete" ~ image.id) }}">
+                                    <button class="btn btn-danger w-100"><span class="bi bi-x-lg"></span> Remove image </button>
+                                </form>
                             </div>
                         {% endif %}
                     </div>

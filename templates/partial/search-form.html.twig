@@ -1,19 +1,14 @@
-<form method="get" action="{{ path(app.request.attributes.get('_route') ) }}" class="form-horizontal">
+<form method="get" action="{{ path(app.request.attributes.get('_route')) }}" class="form-horizontal">
     <fieldset>
-        <legend class="sr-only">Search</legend>
-        <div class="form-group">
-            <label class="sr-only" for="q">Search term</label>
-            <div class="container">
-                <div class="input-group">
-                    <input type="text" name="q" id="q" class="form-control" value="{{ q }}">
-                    <span class="input-group-btn">
-                            <button class="btn btn-primary" id="btn-search" type="submit">
-                                <span class="glyphicon glyphicon-search"></span>
-                                Search
-                            </button>
-                        </span>
-                </div>
-            </div>
+        <legend class="visually-hidden">Search</legend>
+        <div class="input-group">
+            <input type="text" name="q" id="q" class="form-control" placeholder="Search term" value="{{ q }}">
+            <span class="input-group-btn">
+                <button class="btn btn-primary" id="btn-search" type="submit">
+                    <span class="bi bi-search"></span>
+                    Search
+                </button>
+            </span>
         </div>
         {% embed 'partial/accordion.html.twig' %}
             {% block class %}search-help{% endblock %}

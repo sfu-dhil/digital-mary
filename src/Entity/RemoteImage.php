@@ -2,59 +2,35 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
 use App\Repository\RemoteImageRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Nines\UtilBundle\Entity\AbstractEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass=RemoteImageRepository::class)
- * @ORM\Table(indexes={
- *     @ORM\Index(columns={"url", "title", "description"}, flags={"fulltext"})
- * })
- */
+#[ORM\Index(columns: ['url', 'title', 'description'], flags: ['fulltext'])]
+#[ORM\Entity(repositoryClass: RemoteImageRepository::class)]
 class RemoteImage extends AbstractEntity {
-    /**
-     * @var string
-     * @ORM\Column(type="string", nullable=false)
-     * @Assert\Url
-     */
-    private $url;
+    #[ORM\Column(type: Types::STRING, nullable: false)]
+    #[Assert\Url]
+    private ?string $url;
 
-    /**
-     * @var string
-     * @ORM\Column(type="string", nullable=false)
-     */
-    private $title;
+    #[ORM\Column(type: Types::STRING, nullable: false)]
+    private ?string $title;
 
-    /**
-     * @var string
-     * @ORM\Column(type="text")
-     */
-    private $description;
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $description = null;
 
-    /**
-     * @var Item
-     * @ORM\ManyToOne(targetEntity="Item", inversedBy="remoteImages")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $item;
+    #[ORM\ManyToOne(targetEntity: Item::class, inversedBy: 'remoteImages')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    private ?Item $item = null;
 
     public function __construct() {
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function __toString() : string {
         return $this->title;
     }

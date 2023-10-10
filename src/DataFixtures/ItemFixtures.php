@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\DataFixtures;
 
 use App\Entity\Item;
@@ -22,9 +16,6 @@ class ItemFixtures extends Fixture implements DependentFixtureInterface, Fixture
         return ['dev', 'test'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function load(ObjectManager $em) : void {
         $revisions = [
             ['date' => new DateTimeImmutable('2020-03-07'), 'initials' => 'RC'],
@@ -58,9 +49,6 @@ class ItemFixtures extends Fixture implements DependentFixtureInterface, Fixture
         $em->flush();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDependencies() {
         return [
             CategoryFixtures::class,

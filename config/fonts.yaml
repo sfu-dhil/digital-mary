@@ -9,10 +9,10 @@ fonts:
     crimson-pro:
       styles: [ 'normal', 'italic' ]
       weights: ['400', '600', '700']
-    source-sans-pro:
+    source-sans-3:
       styles: [ 'normal', 'italic' ]
       weights: [ '100', '200', '300', '400', '500', '700', '800', '900' ]
-    source-serif-pro:
+    source-serif-4:
       styles: [ 'normal', 'italic' ]
       weights: [ '200', '300', '400', '500', '700', '800' ]
     spectral:

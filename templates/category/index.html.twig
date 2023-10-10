@@ -4,22 +4,17 @@
 
 {% block pageheader %}
     <h1>All Categories</h1>
-    {% include 'partial/count.html.twig'
-        with {'index': categories, 'label': 'categories'} %}
+    {% include 'partial/count.html.twig' with {'index': categories, 'label': 'categories'} %}
 {% endblock %}
 
 
-{% block admin %}
-    <div class='btn-toolbar'>
-        <div class='btn-group'>
-            <a href="{{ path('category_new') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-plus"></span> New
-            </a>
-            <a href="{{ path('category_search') }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span> Search
-            </a>
-        </div>
-    </div>
+{% block action_buttons %}
+    <a href="{{ path('category_new') }}" class="btn btn-light">
+        <span class="bi bi-plus-lg"></span> New
+    </a>
+    <a href="{{ path('category_search') }}" class="btn btn-light">
+        <span class="bi bi-search"></span> Search
+    </a>
 {% endblock %}
 
 

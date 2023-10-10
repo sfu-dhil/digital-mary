@@ -1,9 +1,7 @@
-{% set display = 3 %}
-
 {% for subject in subjects %}
     <div class="subject-item">
         <h2 class="subject-item-header"><a
-                    href="{{ path('subject_show', { 'id': subject.id }) }}">{{ subject.label }}</a></h2>
+                    href="{{ path('subject_show', {'id': subject.id}) }}">{{ subject.label }}</a></h2>
         <div class="subject-desc">
             {% if subject.description %}
                 {{ subject.description|raw }}

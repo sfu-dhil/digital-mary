@@ -4,38 +4,38 @@
         {% set note = attribute(context, key ~ 'Other') %}
     {% endif %}
     {% set class = "item-details" %}
-    {% set itemClass = class ~ '__' ~ name|u.snake %}
-    {% set hasNote = note is defined and not(note is null or note is empty) %}
+    {% set item_class = class ~ '__' ~ name|u.snake %}
+    {% set has_note = note is defined and not(note is null or note is empty) %}
     {% set content %}
         {% if value is not null %}
             {% if path is not null %}
                 {% if key == 'url' %}
                     <a href="{{ value }}">{{ path }}</a>
-                {% else  %}
+                {% else %}
                     {{ _self.makeLinks(value, path, itemsKey) }}
                 {% endif %}
             {% else %}
                 {{ value|raw }}
             {% endif %}
         {% endif %}
-        {% if hasNote %}
-            <div class="{{ class }}__note {{ itemClass }}">
+        {% if has_note %}
+            <div class="{{ class }}__note {{ item_class }}">
                 {{ note|raw }}
             </div>
         {% endif %}
     {% endset %}
     {% set content = content|trim()|spaceless %}
-    {% set hasContent = content is not empty %}
+    {% set has_content = content is not empty %}
     {{ _self.render(_context) }}
 {% endmacro %}
 
 {% macro render(this) %}
-    {% set divClass = [this.class, this.itemClass, 'hasContent-' ~ _self.bool2Str(this.hasContent), 'hasNote-'~ _self.bool2Str(this.hasNote) ]|join(' ') %}
+    {% set div_class = [this.class, this.item_class, 'hasContent-' ~ _self.bool2Str(this.has_content), 'hasNote-' ~ _self.bool2Str(this.has_note)]|join(' ') %}
 
-    <div class="{{ divClass }}">
-        <h2 class="{{ this.class }}__header {{ this.itemClass }}">{{ this.name }}</h2>
-        <div class="{{ this.class }}__content {{ this.itemClass }}">
-            {% if this.hasContent %}
+    <div class="{{ div_class }}">
+        <h2 class="{{ this.class }}__header {{ this.item_class }}">{{ this.name }}</h2>
+        <div class="{{ this.class }}__content {{ this.item_class }}">
+            {% if this.has_content %}
                 {{ this.content|raw }}
             {% else %}
                 {{ '—' }}
@@ -84,8 +84,8 @@
 
 {% macro firstParaString(text) %}
     {% set paragraphs = text|split('</p>') %}
-    {% set firstParagraph = paragraphs|first ~ '</p>' %}
-    {% set string = firstParagraph|striptags|trim %}
+    {% set first_paragraph = paragraphs|first ~ '</p>' %}
+    {% set string = first_paragraph|striptags|trim %}
 
     {# Then remove spaces, and remove trailing period #}
     {{- string|trim('.', side='right') -}}

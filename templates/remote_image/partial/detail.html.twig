@@ -3,39 +3,32 @@
     <tbody>
         <tr>
             <th>Url</th>
-            <td>
-                                                            {{ remote_image.url }}
-                                  </td>
-          </tr>
-          <tr>
+            <td>{{ remote_image.url }}</td>
+        </tr>
+        <tr>
             <th>Title</th>
-            <td>
-                                                            {{ remote_image.title }}
-                                  </td>
-          </tr>
-          <tr>
+            <td>{{ remote_image.title }}</td>
+        </tr>
+        <tr>
             <th>Description</th>
+            <td>{{ remote_image.description|raw }}</td>
+        </tr>
+        <tr>
+            <th>Item</th>
             <td>
-                                                            {{ remote_image.description|raw }}
-                                  </td>
-          </tr>
-          
-                                                                  <tr>
-                <th>Item</th>
-                <td>
                 {% if remote_image.item %}
-                  <a href='{{ path("item_show", {"id": remote_image.item.id}) }}'>{{ remote_image.item }}</a>
-                  {% endif %}
-                </td>
-              </tr>
-          <tr>
-        <th>Created</th>
-        <td>{{ remote_image.created|date }}</td>
-    </tr>
-    <tr>
-        <th>Updated</th>
-        <td>{{ remote_image.updated|date }}</td>
-    </tr>
+                    <a href='{{ path("item_show", {"id": remote_image.item.id}) }}'>{{ remote_image.item }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Created</th>
+            <td>{{ remote_image.created|date }}</td>
+        </tr>
+        <tr>
+            <th>Updated</th>
+            <td>{{ remote_image.updated|date }}</td>
+        </tr>
     </tbody>
 </table>
 

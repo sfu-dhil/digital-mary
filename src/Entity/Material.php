@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
 use App\Repository\MaterialRepository;
@@ -19,15 +13,14 @@ use Nines\UtilBundle\Entity\AbstractTerm;
 /**
  * One of the components in the construction of an item, eg. glass, silver,
  * oil paint.
- *
- * @ORM\Entity(repositoryClass=MaterialRepository::class)
  */
+#[ORM\Entity(repositoryClass: MaterialRepository::class)]
 class Material extends AbstractTerm {
     /**
-     * @var Collection|Item[]
-     * @ORM\ManyToMany(targetEntity="App\Entity\Item", mappedBy="materials")
+     * @var Collection<Item>
      */
-    private $items;
+    #[ORM\ManyToMany(targetEntity: Item::class, mappedBy: 'materials')]
+    private Collection $items;
 
     public function __construct() {
         parent::__construct();

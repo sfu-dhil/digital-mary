@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\EventListener;
 
 use App\Entity\Period;
@@ -25,9 +19,7 @@ class PeriodListener {
         $entity->setItems($this->itemRepository->findItemsByPeriod($entity));
     }
 
-    /**
-     * @required
-     */
+    #[\Symfony\Contracts\Service\Attribute\Required]
     public function setItemRepository(ItemRepository $repository) : void {
         $this->itemRepository = $repository;
     }

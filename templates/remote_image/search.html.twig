@@ -2,43 +2,43 @@
 
 {% block title %}Remote Image Search{% endblock %}
 
- {% block pageheader %} 
+ {% block pageheader %}
     <h1>Remote Image Search</h1>
     {% if remote_images|length %}
     <p class="count">
         Displaying {{ remote_images|length }} remote_images of {{ remote_images.getTotalItemCount }} total.
     </p>
 	{% endif %}
- {% endblock %} 
+ {% endblock %}
 
 {% block body %}
 
     <form method="get" action="{{ path('remote_image_search') }}" class="form-horizontal">
         <fieldset>
             <legend>Search</legend>
-            <div class='form-group'>
-                <label class='col-sm-2 control-label' for='q'>Search term</label>
-                <div class='col-sm-10'>
-                    <div class='input-group'>
-                        <input type='text' name='q' id='q' class='form-control' value='{{ q }}'>
-                        <span class="input-group-btn">
-                            <button class="btn btn-primary" id='btn-search' type="submit">
-                                <span class='glyphicon glyphicon-search'></span>
-                                Search
-                            </button>
-                        </span>
-                    </div>
-                </div>
+            <div class='input-group'>
+                <input type='text' name='q' id='q' class='form-control' placeholder="Search term" value='{{ q }}'>
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" id='btn-search' type="submit">
+                        <span class='bi bi-search'></span>
+                        Search
+                    </button>
+                </span>
             </div>
-            <p>	Full text searching options, if available:</p>
-            <ul>
-                <li><code>shakespeare</code> - shakespeare should be present, but might not be</li>
-                <li><code>shakes*</code> - words starting with shakes should be present</li>
-                <li><code>+agnes</code> - agnes must be present</li>
-                <li><code>-fisher</code> - fisher must not be present</li>
-                <li>Combinations are OK: <code>+agnes -fisher</code> finds Anges who isn't a Fisher</li>
-                <li>Phrases are OK: <code>"nee agnes"</code> finds rows that contain the literal phrase.
-            </ul>
+            {% embed 'partial/accordion.html.twig' %}
+                {% block class %}search-help{% endblock %}
+                {% block summary %}Search Options{% endblock %}
+                {% block content %}
+                    <ul>
+                        <li><code>shakespeare</code> - shakespeare should be present, but might not be</li>
+                        <li><code>shakes*</code> - words starting with shakes should be present</li>
+                        <li><code>+agnes</code> - agnes must be present</li>
+                        <li><code>-fisher</code> - fisher must not be present</li>
+                        <li>Combinations are OK: <code>+agnes -fisher</code> finds Agnes and not Fisher</li>
+                        <li>Phrases are OK: <code>"nee agnes"</code> finds rows that contain the literal phrase.
+                    </ul>
+                {% endblock %}
+            {% endembed %}
         </fieldset>
     </form>
 

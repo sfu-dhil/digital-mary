@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Entity;
 
 use App\Repository\TechniqueRepository;
@@ -18,15 +12,14 @@ use Nines\UtilBundle\Entity\AbstractTerm;
 
 /**
  * A technique used in the construction of an item eg. metalwork, painting, etc.
- *
- * @ORM\Entity(repositoryClass=TechniqueRepository::class)
  */
+#[ORM\Entity(repositoryClass: TechniqueRepository::class)]
 class Technique extends AbstractTerm {
     /**
-     * @var Collection|Item[]
-     * @ORM\ManyToMany(targetEntity="App\Entity\Item", mappedBy="techniques")
+     * @var Collection<Item>
      */
-    private $items;
+    #[ORM\ManyToMany(targetEntity: Item::class, mappedBy: 'techniques')]
+    private Collection $items;
 
     public function __construct() {
         parent::__construct();

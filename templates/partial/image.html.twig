@@ -5,7 +5,7 @@
 {% if image is defined and image is not null %}
     {% set class = 'image' %}
     {% set src = path('image_thumbnail', {'id': image.id}) %}
-    {% set alt = image.description is not null ? image.description|striptags : image.originalName %}
+    {% set alt = image.alt is not null ? image.alt : image.originalName %}
     {# Get the aspect ratio to determine the image dimension #}
     {% set ratio = image.imageWidth / (image.imageHeight ?? 1) %}
     {# If the full-sized is smaller than our minimums, keep the image values the same #}
@@ -21,7 +21,7 @@
 
 {# Now make the image #}
 <img class="{{ class|default('placeholder') }}"
-     src="{{ src|default(asset('images/no-img.svg')) }}"
+     src="{{ src|default(asset_prefix|default('') ~ asset('images/no-img.svg')) }}"
      alt="{{ alt|default('No image available') }}"
      {% if width is defined %}width="{{ width }}px"{% endif %}
         {% if height is defined %}height="{{ height }}px"{% endif %}

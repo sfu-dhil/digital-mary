@@ -3,10 +3,10 @@
    solution until we use KNP breadcrumb menu #}
 {# Requires: title #}
 
-{% set isHomepage = app.request.attributes.get('_route') is same as('homepage') %}
-{% set tokens = app.request.pathInfo|split('/')|filter(t => t not in ['','blog','admin'] ) %}
+{% set is_homepage = app.request.attributes.get('_route') is same as('homepage') %}
+{% set tokens = app.request.pathInfo|split('/')|filter(t => t not in ['', 'blog', 'admin', 'edit_image', 'edit_remote_image']) %}
 
-{% if not isHomepage %}
+{% if not is_homepage %}
     <ul class="breadcrumbs">
         <li>
             <a href="{{ path('homepage') }}">Home</a>
@@ -16,7 +16,7 @@
                 {% if loop.last %}
                     <span class="current">{{ title }}</span>
                 {% else %}
-                    {% set href = app.request.basePath ~ '/' ~ tokens|slice(0,loop.index)|join('/') %}
+                    {% set href = app.request.basePath ~ '/' ~ tokens|slice(0, loop.index)|join('/') %}
                     <a href="{{ href }}">{{ token|humanize|u.title }}</a>
                {% endif %}
             </li>

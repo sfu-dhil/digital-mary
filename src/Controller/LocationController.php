@@ -2,17 +2,12 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Controller;
 
 use App\Entity\Location;
 use App\Form\LocationType;
 use App\Repository\LocationRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Nines\UtilBundle\Controller\PaginatorTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -23,17 +18,12 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/location")
- */
+#[Route(path: '/location')]
 class LocationController extends AbstractController implements PaginatorAwareInterface {
     use PaginatorTrait;
 
-    /**
-     * @Route("/", name="location_index", methods={"GET"})
-     *
-     * @Template
-     */
+    #[Route(path: '/', name: 'location_index', methods: ['GET'])]
+    #[Template]
     public function index(Request $request, LocationRepository $locationRepository) : array {
         $query = $locationRepository->indexQuery();
         $pageSize = $this->getParameter('page_size');
@@ -44,14 +34,9 @@ class LocationController extends AbstractController implements PaginatorAwareInt
         ];
     }
 
-    /**
-     * @Route("/search", name="location_search", methods={"GET"})
-     *
-     * @Template
-     *
-     * @return array
-     */
-    public function search(Request $request, LocationRepository $locationRepository) {
+    #[Route(path: '/search', name: 'location_search', methods: ['GET'])]
+    #[Template]
+    public function search(Request $request, LocationRepository $locationRepository) : array {
         $q = $request->query->get('q');
         if ($q) {
             $query = $locationRepository->searchQuery($q);
@@ -66,12 +51,8 @@ class LocationController extends AbstractController implements PaginatorAwareInt
         ];
     }
 
-    /**
-     * @Route("/typeahead", name="location_typeahead", methods={"GET"})
-     *
-     * @return JsonResponse
-     */
-    public function typeahead(Request $request, LocationRepository $locationRepository) {
+    #[Route(path: '/typeahead', name: 'location_typeahead', methods: ['GET'])]
+    public function typeahead(Request $request, LocationRepository $locationRepository) : JsonResponse {
         $q = $request->query->get('q');
         if ( ! $q) {
             return new JsonResponse([]);
@@ -88,20 +69,15 @@ class LocationController extends AbstractController implements PaginatorAwareInt
         return new JsonResponse($data);
     }
 
-    /**
-     * @Route("/new", name="location_new", methods={"GET", "POST"})
-     * @Template
-     * @IsGranted("ROLE_CONTENT_ADMIN")
-     *
-     * @return array|RedirectResponse
-     */
-    public function new(Request $request) {
+    #[Route(path: '/new', name: 'location_new', methods: ['GET', 'POST'])]
+    #[Template]
+    #[IsGranted('ROLE_CONTENT_ADMIN')]
+    public function new(EntityManagerInterface $entityManager, Request $request) : array|RedirectResponse {
         $location = new Location();
         $form = $this->createForm(LocationType::class, $location);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($location);
             $entityManager->flush();
             $this->addFlash('success', 'The new location has been saved.');
@@ -115,43 +91,23 @@ class LocationController extends AbstractController implements PaginatorAwareInt
         ];
     }
 
-    /**
-     * @Route("/new_popup", name="location_new_popup", methods={"GET", "POST"})
-     * @Template
-     * @IsGranted("ROLE_CONTENT_ADMIN")
-     *
-     * @return array|RedirectResponse
-     */
-    public function new_popup(Request $request) {
-        return $this->new($request);
-    }
-
-    /**
-     * @Route("/{id}", name="location_show", methods={"GET"})
-     * @Template
-     *
-     * @return array
-     */
-    public function show(Location $location) {
+    #[Route(path: '/{id}', name: 'location_show', methods: ['GET'])]
+    #[Template]
+    public function show(Location $location) : array {
         return [
             'location' => $location,
         ];
     }
 
-    /**
-     * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}/edit", name="location_edit", methods={"GET", "POST"})
-     *
-     * @Template
-     *
-     * @return array|RedirectResponse
-     */
-    public function edit(Request $request, Location $location) {
+    #[IsGranted('ROLE_CONTENT_ADMIN')]
+    #[Route(path: '/{id}/edit', name: 'location_edit', methods: ['GET', 'POST'])]
+    #[Template]
+    public function edit(EntityManagerInterface $entityManager, Request $request, Location $location) : array|RedirectResponse {
         $form = $this->createForm(LocationType::class, $location);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
             $this->addFlash('success', 'The updated location has been saved.');
 
             return $this->redirectToRoute('location_show', ['id' => $location->getId()]);
@@ -163,15 +119,10 @@ class LocationController extends AbstractController implements PaginatorAwareInt
         ];
     }
 
-    /**
-     * @IsGranted("ROLE_CONTENT_ADMIN")
-     * @Route("/{id}", name="location_delete", methods={"DELETE"})
-     *
-     * @return RedirectResponse
-     */
-    public function delete(Request $request, Location $location) {
+    #[IsGranted('ROLE_CONTENT_ADMIN')]
+    #[Route(path: '/{id}', name: 'location_delete', methods: ['DELETE'])]
+    public function delete(EntityManagerInterface $entityManager, Request $request, Location $location) : RedirectResponse {
         if ($this->isCsrfTokenValid('delete' . $location->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($location);
             $entityManager->flush();
             $this->addFlash('success', 'The location has been deleted.');

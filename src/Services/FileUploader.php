@@ -2,15 +2,8 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Services;
 
-use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -21,19 +14,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class FileUploader {
     public const FORBIDDEN = '/[^a-z0-9_. -]/i';
 
-    /**
-     * @var string
-     */
-    private $root;
+    private ?string $uploadDir = null;
 
-    /**
-     * @var string
-     */
-    private $uploadDir;
-
-    public function __construct(string $root) {
-        $this->root = $root;
-    }
+    public function __construct(private string $root) {}
 
     public function setUploadDir(string $dir) : void {
         if ('/' !== $dir[0]) {
@@ -51,7 +34,7 @@ class FileUploader {
             $file->guessExtension(),
         ]);
         if ( ! file_exists($this->uploadDir)) {
-            mkdir($this->uploadDir, 0777, true);
+            mkdir($this->uploadDir, 0o777, true);
         }
         $file->move($this->uploadDir, $filename);
 
@@ -96,10 +79,8 @@ class FileUploader {
 
     /**
      * @param string $size
-     *
-     * @return float
      */
-    public function parseSize($size) {
+    public function parseSize($size) : float {
         $unit = preg_replace('/[^bkmgtpezy]/i', '', $size); // Remove the non-unit characters from the size.
         $bytes = (float) preg_replace('/[^\d\.]/', '', $size); // Remove the non-numeric characters from the size.
         if ($unit) {

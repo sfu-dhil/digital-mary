@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * (c) 2021 Michael Joyce <mjoyce@sfu.ca>
- * This source file is subject to the GPL v2, bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\Form;
 
 use App\Entity\Location;
@@ -35,7 +29,6 @@ class LocationType extends TermType {
             'scale' => 8,
             'required' => false,
             'attr' => [
-                'help_block' => '',
                 'step' => 'any',
             ],
         ]);
@@ -46,16 +39,12 @@ class LocationType extends TermType {
             'scale' => 8,
             'required' => false,
             'attr' => [
-                'help_block' => '',
                 'step' => 'any',
             ],
         ]);
         $builder->add('country', TextType::class, [
             'label' => 'Country',
             'required' => false,
-            'attr' => [
-                'help_block' => '',
-            ],
         ]);
         $builder->add('alternateNames', CollectionType::class, [
             'label' => 'Alternate Names',
@@ -70,7 +59,6 @@ class LocationType extends TermType {
             'by_reference' => false,
             'attr' => [
                 'class' => 'collection collection-simple',
-                'help_block' => '',
             ],
         ]);
     }

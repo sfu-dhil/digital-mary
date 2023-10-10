@@ -1,41 +1,30 @@
 {% extends 'base.html.twig' %}
-{% import 'item/partial/detail.html.twig' as  dl %}
-{% import 'partial/icons.html.twig' as icons %}
+{% import 'item/partial/detail.html.twig' as dl %}
 
-{% set hasImages = item.images|length + item.remoteImages|length > 0 %}
+{% set has_images = item.images|length + item.remoteImages|length > 0 %}
 
 {% block title %}{{ item.name }}{% endblock %}
 
-{% block admin %}
-    <div class='btn-toolbar'>
-        <div class="btn-group">
-            <a href="{{ path('item_add_image', {'id': item.id}) }}" class="btn btn-default">
-                <span class='glyphicon glyphicon-plus'></span> Add Image </a>
-        </div>
-        {% if item.images|length == 0 %}
-            <div class="btn-group">
-                <a href="{{ path('item_add_remote_image', {'id': item.id}) }}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-plus"></span> Add Remote Image
-                </a>
-            </div>
-        {% endif %}
-        <div class='btn-group'>
-            <a href="{{ path('item_edit', {'id': item.id }) }}" class="btn btn-default">
-                <span class="glyphicon glyphicon-edit"></span> Edit </a>
-        </div>
-        <div class='btn-group'>
-            <form class='delete-form' method="post" action="{{ path('item_delete', {'id': item.id }) }}"
-                  onsubmit="return confirm('Are you sure you want to delete this item?');">
-                <input type="hidden" name="_method" value="DELETE">
-                <input type="hidden" name="_token" value="{{ csrf_token("delete" ~ item.id) }}">
-                <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button>
-            </form>
-        </div>
-    </div>
+{% block action_buttons %}
+    <a href="{{ path('item_add_image', {'id': item.id}) }}" class="btn btn-light">
+        <span class='bi bi-plus-lg'></span> Add Image </a>
+    {% if item.images|length == 0 %}
+        <a href="{{ path('item_add_remote_image', {'id': item.id}) }}" class="btn btn-light">
+            <span class="bi bi-plus-lg"></span> Add Remote Image
+        </a>
+    {% endif %}
+    <a href="{{ path('item_edit', {'id': item.id}) }}" class="btn btn-light">
+        <span class="bi bi-pencil-square"></span> Edit </a>
+    <form class='delete-form' method="post" action="{{ path('item_delete', {'id': item.id}) }}"
+            onsubmit="return confirm('Are you sure you want to delete this item?');">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_token" value="{{ csrf_token("delete" ~ item.id) }}">
+        <button class="btn btn-danger"><span class="bi bi-trash"></span> Delete</button>
+    </form>
 {% endblock %}
 
 {% block bodyclass %}
-    {% if not(hasImages) %} imageless{% endif %}
+    {% if not(has_images) %} imageless{% endif %}
 {% endblock %}
 
 {% block body %}
@@ -71,9 +60,9 @@
         </div>
     </section>
 
-    {% if hasImages %}
+    {% if has_images %}
         <section class="images">
-            <h2 class="sr-only">Images</h2>
+            <h2 class="visually-hidden">Images</h2>
             <div class="sticky">
                 <div class="img-content">
                     {% if item.images|length > 0 %}
@@ -90,33 +79,31 @@
                                             {% if 'britishmuseum.org' in text %}
                                                 {% set text = 'British Museum' %}
                                             {% endif %}
-                                        <div class="remote-image-content">
-                                            <a href="{{ image.url }}">
-                                                <div>
-                                                    <div>{{ image.title }}</div>
-                                                    <div>{{ text }}</div>
-                                                </div>
-                                            </a>
-                                            {% if is_granted('ROLE_CONTENT_ADMIN') %}
-                                            <div class="img-toolbar">
-                                                <div class="btn-toolbar admin">
-                                                    <a href="{{ path('item_edit_remote_image', {'id': item.id, 'remote_image_id': image.id }) }}" class="btn btn-default">
-                                                        <span class="glyphicon glyphicon-edit"></span> Edit remote image</a>
-                                                    <form class='delete-form' method="post" action="{{ path('item_delete_remote_image', {'id': item.id, 'remote_image_id': image.id }) }}"
-                                                          onsubmit="return confirm('Are you sure you want to delete this item?');">
-                                                        <input type="hidden" name="_method" value="DELETE">
-                                                        <input type="hidden" name="_token" value="{{ csrf_token("delete" ~ image.id) }}">
-                                                        <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete remote image</button>
-                                                    </form>
-                                                </div>
+                                            <div class="remote-image-content">
+                                                <a href="{{ image.url }}">
+                                                    <div>
+                                                        <div>{{ image.title }}</div>
+                                                        <div>{{ text }}</div>
+                                                    </div>
+                                                </a>
+                                                {% if is_granted('ROLE_CONTENT_ADMIN') %}
+                                                    <div class="img-toolbar">
+                                                        <div class="row admin">
+                                                            <a href="{{ path('item_edit_remote_image', {'id': item.id, 'remote_image_id': image.id}) }}" class="btn btn-light col">
+                                                                <span class="bi bi-pencil-square"></span> Edit remote image</a>
+                                                            <form class='delete-form col' method="post" action="{{ path('item_delete_remote_image', {'id': item.id, 'remote_image_id': image.id}) }}"
+                                                                onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                                                <input type="hidden" name="_method" value="DELETE">
+                                                                <input type="hidden" name="_token" value="{{ csrf_token("delete" ~ image.id) }}">
+                                                                <button class="btn btn-danger w-100"><span class="bi bi-trash"></span> Delete remote image</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
                                             </div>
-                                            {% endif %}
-
-                                        </div>
                                         {% endfor %}
                                     </div>
                                 </div>
-
                             {% endblock %}
                         {% endembed %}
                     {% endif %}
@@ -124,7 +111,7 @@
             </div>
         </section>
         {# Div for image viewer #}
-        <div id="ndm-viewer-container">
+        <div id="dm-viewer-container">
         </div>
     {% endif %}
 
@@ -141,11 +128,11 @@
                 {{ dl.make(item, 'dimensions', 'Dimensions') }}
                 {{ dl.make(item, 'location', 'Location') }}
                 {{ dl.make(item, 'civilization', 'Culture', 'civilization_show') }}
-                {% set displayPeriod = [item.periodStart] %}
+                {% set display_period = [item.periodStart] %}
                 {% if not(item.periodEnd is same as(item.periodStart)) %}
-                    {% set displayPeriod = displayPeriod|merge([item.periodEnd]) %}
+                    {% set display_period = display_period|merge([item.periodEnd]) %}
                 {% endif %}
-                {{ dl.make({'display': displayPeriod|join('-')|lower}, 'display', "Period") }}
+                {{ dl.make({'display': display_period|join('-')|lower}, 'display', "Period") }}
                 {{ dl.make(item, 'subjects', "Subjects", "subject_show") }}
             {% endset %}
 

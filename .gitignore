@@ -5,42 +5,40 @@
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
-/public/fonts/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
 
-###> symfony/phpunit-bridge ###
-.phpunit
-.phpunit.result.cache
-/phpunit.xml
-###< symfony/phpunit-bridge ###
-
-# PHP Storm
-/.idea
-
-# Composer installed
-/templates/jquery.collection.html.twig
-/public/js/jquery.collection.js
-
-# Yarn installed
-/public/yarn
-
-# Uploads and other data
-/data
-deploy.yaml
-src/.preload.php
-
 ###> phpunit/phpunit ###
-/phpunit.xml
-.phpunit.result.cache
+.phpunit.cache/
+coverage/
 ###< phpunit/phpunit ###
-*.sql
 
 ###> friendsofphp/php-cs-fixer ###
-/.php-cs-fixer.php
 /.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
 
+# Editors
+/.idea
+.vscode
+
+# Bundles
+/public/js/jquery.collection.js
+/templates/jquery.collection.html.twig
+
+# Yarn packages.
+node_modules
+
+# Docker
+.data
+
+# MISC
+/*.sql
+/data
+/src/.preload.php
+
+# Code coverage and QA reports
+public/dev
+
+# Mac DS_Store
 .DS_Store
-Makefile.local
