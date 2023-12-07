@@ -695,7 +695,9 @@ main {
   --footer-background: #F4F4F4;
 }
 
-html, body, .dropdown-menu {
+html,
+body,
+.dropdown-menu {
   font-family: "Source Sans 3";
 }
 
@@ -722,15 +724,22 @@ main {
   font-weight: 400;
   text-transform: uppercase;
   /* Have to add the min-width hiding again */
+  /* Reset the fixed-top to be sticky rather than fixed,
+     so to avoid the problem with fixed position things overlapping
+   */
   /* Switch the text colour */
 }
 .navbar-default .navbar-right {
   text-transform: none;
 }
+.navbar-default .navbar-nav > li {
+  padding: 0 0.5rem;
+}
 .navbar-default .navbar-nav > li > a {
   border-bottom: 4px solid transparent;
   transition: border-bottom-color cubic-bezier(0.55, 0.055, 0.675, 0.19) 0.3s;
   color: #212125;
+  padding: 0.8rem 2rem;
 }
 .navbar-default .navbar-nav > li > a:hover {
   border-bottom-color: #C0B283;
@@ -759,6 +768,9 @@ main {
   .navbar-default .navbar-toggle {
     display: none;
   }
+}
+.navbar-default.navbar-fixed-top {
+  position: sticky !important;
 }
 .navbar-default .navbar-header {
   margin-left: 0;
@@ -894,6 +906,10 @@ li > .breadcrumbs .current {
     max-width: 25ch;
   }
 }
+.breadcrumbs a {
+  border-bottom: none;
+}
+
 .admin-toggle {
   padding: 0.6180339845rem;
   border: 1px dotted #373737;
@@ -911,7 +927,8 @@ body.hideAdmin .admin {
   display: none !important;
 }
 
-.table tbody > tr:first-child th, .table tbody > tr:first-child td {
+.table tbody > tr:first-child th,
+.table tbody > tr:first-child td {
   border-top: none;
 }
 
@@ -981,10 +998,13 @@ body.hideAdmin .admin {
 .item-header h1 {
   margin-top: 0;
 }
-.item-header h1, .item-header h2, .item-header h3 {
+.item-header h1,
+.item-header h2,
+.item-header h3 {
   margin-bottom: 0;
 }
-.item-header h2, .item-header h3 {
+.item-header h2,
+.item-header h3 {
   margin-top: 0.6180339845rem;
   color: #393940;
 }
@@ -1227,7 +1247,7 @@ details > div {
 .item-inscription__body {
   margin: 0 0.3819660059rem;
 }
-.item-inscription__body > div:nth-of-type(n +2) {
+.item-inscription__body > div:nth-of-type(n + 2) {
   margin-top: 1.618034rem;
 }
 .item-inscription__body .item-inscription__header {
@@ -1707,7 +1727,9 @@ a:hover {
   border-bottom-color: rgba(192, 178, 131, 0.8);
 }
 
-footer a, header a, nav a {
+footer a,
+header a,
+nav a {
   border: none;
   transition: none;
 }

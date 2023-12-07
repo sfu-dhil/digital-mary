@@ -15,6 +15,8 @@ First you must setup the database for the first time
 
     docker compose up -d db
     # wait 30 after the command has fully completed
+    # copy the `dm.sql` into the container
+    docker cp dm.sql dm_db:/dm.sql
     docker exec -it dm_db bash -c "mysql -u dm -ppassword dm < /dm.sql"
 
 Next you must start the whole application
