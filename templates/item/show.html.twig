@@ -128,11 +128,11 @@
                 {{ dl.make(item, 'dimensions', 'Dimensions') }}
                 {{ dl.make(item, 'location', 'Location') }}
                 {{ dl.make(item, 'civilization', 'Culture', 'civilization_show') }}
-                {% set display_period = [item.periodStart] %}
+                {% set display_period = [item.periodStart|default('Unknown')] %}
                 {% if not(item.periodEnd is same as(item.periodStart)) %}
-                    {% set display_period = display_period|merge([item.periodEnd]) %}
+                    {% set display_period = display_period|merge([item.periodEnd|default('Unknown')]) %}
                 {% endif %}
-                {{ dl.make({'display': display_period|join('-')|lower}, 'display', "Period") }}
+                {{ dl.make({'display': display_period|join(' - ')|lower}, 'display', "Period") }}
                 {{ dl.make(item, 'subjects', "Subjects", "subject_show") }}
             {% endset %}
 

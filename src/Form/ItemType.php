@@ -123,6 +123,8 @@ class ItemType extends AbstractType {
             'choice_attr' => fn (Period $period, $key, $value) => ['data-year' => $period->getSortableYear()],
             'expanded' => false,
             'multiple' => false,
+            'required' => false,
+            'placeholder' => 'Unknown',
         ]);
         $builder->add('periodEnd', EntityType::class, [
             'label' => 'Latest creation',
@@ -131,6 +133,8 @@ class ItemType extends AbstractType {
             'choice_attr' => fn (Period $period, $key, $value) => ['data-year' => $period->getSortableYear()],
             'expanded' => false,
             'multiple' => false,
+            'required' => false,
+            'placeholder' => 'Unknown',
         ]);
 
         $builder->add('provenance', Select2EntityType::class, [
