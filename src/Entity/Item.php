@@ -122,12 +122,19 @@ class Item extends AbstractEntity {
     #[ORM\ManyToMany(targetEntity: Subject::class, inversedBy: 'items')]
     private Collection $subjects;
 
+    /**
+     * @var Collection<Contribution>
+     */
+    #[ORM\OneToMany(targetEntity: Contribution::class, mappedBy: 'item', cascade: ['REMOVE'])]
+    private $contributions;
+
     public function __construct() {
         parent::__construct();
         $this->images = new ArrayCollection();
         $this->techniques = new ArrayCollection();
         $this->materials = new ArrayCollection();
         $this->subjects = new ArrayCollection();
+        $this->contributions = new ArrayCollection();
         $this->remoteImages = new ArrayCollection();
         $this->revisions = [];
         $this->category = new ArrayCollection();
@@ -482,6 +489,34 @@ class Item extends AbstractEntity {
     public function removeInscriptionLanguage(Language $inscriptionLanguage) : self {
         if ($this->inscriptionLanguage->contains($inscriptionLanguage)) {
             $this->inscriptionLanguage->removeElement($inscriptionLanguage);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Contribution[]
+     */
+    public function getContributions() : Collection {
+        return $this->contributions;
+    }
+
+    public function addContribution(Contribution $contribution) : self {
+        if ( ! $this->contributions->contains($contribution)) {
+            $this->contributions[] = $contribution;
+            $contribution->setItem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContribution(Contribution $contribution) : self {
+        if ($this->contributions->contains($contribution)) {
+            $this->contributions->removeElement($contribution);
+            // set the owning side to null (unless already changed)
+            if ($contribution->getItem() === $this) {
+                $contribution->setItem(null);
+            }
         }
 
         return $this;

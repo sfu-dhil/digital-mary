@@ -12,7 +12,7 @@
     <form class='delete-form' method="post" action="{{ path('location_delete', {'id': location.id}) }}"
             onsubmit="return confirm('Are you sure you want to delete this item?');">
         <input type="hidden" name="_method" value="DELETE">
-        <input type="hidden" name="_token" value="{{ csrf_token("delete" ~ location.id) }}">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ location.id) }}">
         <button class="btn btn-danger"><span class="bi bi-trash"></span> Delete</button>
     </form>
 {% endblock %}
@@ -71,7 +71,7 @@
             <td>{{ location.updated|date }}</td>
         </tr>
         </tbody>
-    </table
+    </table>
 
     {% if items is defined %}
         {% include 'item/partial/list.html.twig' %}

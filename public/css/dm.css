@@ -1157,7 +1157,7 @@ p + br {
   margin-bottom: 0.6180339845rem;
   flex: clamp(10rem, 27%, 100%);
 }
-.item-details__editHistory .item-details__citation {
+.item-details__editHistory .item-details__citation, .item-details__editHistory .item-details__contributions {
   flex-basis: 100%;
 }
 .item-details.hasContent-false {
@@ -1963,6 +1963,17 @@ label.required::after {
 }
 .homepage .item .item-content-desc {
   color: black;
+}
+
+/* form collections */
+div.collection span[class*=-collection-actions] {
+  width: inherit !important;
+}
+
+div.collection-media > div:not(:last-child),
+div.collection-complex > div:not(:last-child) {
+  padding-top: 15px;
+  border: 1px solid rgba(128, 128, 128, 0.31);
 }
 
 /*# sourceMappingURL=dm.css.map*/

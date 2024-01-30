@@ -131,9 +131,10 @@ class Image extends AbstractEntity {
     }
 
     public function getAlt() : ?string {
-        if (!$this->description) {
+        if ( ! $this->description) {
             return null;
         }
+
         return html_entity_decode(strip_tags($this->description));
     }
 

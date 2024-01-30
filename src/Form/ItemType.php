@@ -17,6 +17,7 @@ use App\Entity\Technique;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -240,6 +241,21 @@ class ItemType extends AbstractType {
                 'add_label' => 'Add Subject',
             ],
             'placeholder' => 'Search for an existing subject by name',
+        ]);
+        $builder->add('contributions', CollectionType::class, [
+            'label' => 'Contributors',
+            'required' => true,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'delete_empty' => true,
+            'entry_type' => ContributionType::class,
+            'entry_options' => [
+                'label' => false,
+            ],
+            'by_reference' => false,
+            'attr' => [
+                'class' => 'collection collection-complex',
+            ],
         ]);
     }
 

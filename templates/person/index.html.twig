@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}People{% endblock %}
+
+{% block pageheader %}
+    <h1>People</h1>
+    <p class="count">
+        Displaying {{ people|length }} people of {{ people.getTotalItemCount }} total.
+    </p>
+{% endblock %}
+
+{% block action_buttons %}
+    <a href="{{ path('person_new') }}" class="btn btn-light">
+        <span class="bi bi-plus-lg"></span> New
+    </a>
+    <a href="{{ path('person_search') }}" class="btn btn-light">
+        <span class="bi bi-search"></span> Search
+    </a>
+{% endblock %}
+
+{% block body %}
+
+    <table class="table table-condensed">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Full Name</th>
+            <th>Citation Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for person in people %}
+            <tr>
+                <td>
+                    <a href="{{ path('person_show', {'id': person.id}) }}">
+                        {{ person.id }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('person_show', {'id': person.id}) }}">
+                        {{ person.fullname }}
+                    </a>
+                </td>
+                <td>{{ person.citationName }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(people) }}
+    </div>
+
+{% endblock %}

@@ -188,3 +188,12 @@ Automatically fix some standards errors
     docker exec -it dm_app make dump.params
     docker exec -it dm_app make dump.router
     docker exec -it dm_app make dump.twig
+
+## Migrate revision contributions to Person/ContributorRole/Contribution
+
+Will take all `revision` style contributions (list of initials from revisions) and generate new `Author` Contributions records for each (generating new Person records as needed).
+Also add a `Data Manager` record for each item.
+
+    docker exec -it dm_app ./bin/console app:migrate:item_contributions
+
+>Note: Should only really be run one time after the `Version20240127003119` migration

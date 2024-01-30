@@ -89,6 +89,12 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($item->getContributions() as $contribution) {
+                $contribution->setItem($item);
+                if ( ! $entityManager->contains($contribution)) {
+                    $entityManager->persist($contribution);
+                }
+            }
             $item->addRevision(new DateTimeImmutable(), $user->getFullname());
             $entityManager->persist($item);
             $entityManager->flush();
@@ -119,6 +125,12 @@ class ItemController extends AbstractController implements PaginatorAwareInterfa
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($item->getContributions() as $contribution) {
+                $contribution->setItem($item);
+                if ( ! $entityManager->contains($contribution)) {
+                    $entityManager->persist($contribution);
+                }
+            }
             $item->addRevision(new DateTimeImmutable(), $user->getFullname());
             $entityManager->flush();
             $this->addFlash('success', 'The updated item has been saved.');

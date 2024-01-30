@@ -42,7 +42,7 @@ class Period extends AbstractTerm {
         return $this;
     }
 
-    public function setItems(Collection|array $items) : self {
+    public function setItems(array|Collection $items) : self {
         if ($items instanceof Collection) {
             $this->items = $items;
         } else {

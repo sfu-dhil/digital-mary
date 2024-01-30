@@ -226,22 +226,22 @@
                             <h2 class="item-details__header">Cite this Page</h2>
                             <div class="item-details__content">
                                 <p>
-                                    {% include 'partial/citation.html.twig' with {'title': item.name, 'updated': item.updated} %}
+                                    {% include 'partial/citation.html.twig' with {'title': item.name, 'updated': item.updated, 'contributions': item.contributions} %}
                                 </p>
                             </div>
                         </div>
 
                         {% if item.revisions|length > 0 %}
-                            <div class="item-details item-details__revisions">
+                            <div class="item-details item-details__contributions">
                                 <h2 class="item-details__header">Contributors</h2>
                                 <div class="item-details__content">
-                                    {% set contribs = [] %}
-                                    {% for revision in item.revisions %}
-                                        {% if revision.initials not in contribs %}
-                                            {% set contribs = contribs|merge([revision.initials]) %}
-                                        {% endif %}
+                                    {% for contribution in item.contributions|sort((a,b) => a.person.citationName <=> b.person.citationName) %}
+                                        {{ contribution.person.fullname }} -
+                                        {% for role in contribution.roles %}
+                                            {# <span class="badge text-bg-primary">{{ role.label|default('N/A') }}</span> #}
+                                            {{ role.label|default('N/A') }}{{ not loop.last ? ', ' : '' }}
+                                        {% endfor %}<br />
                                     {% endfor %}
-                                    <p>{{ contribs|join(', ') }}</p>
                                 </div>
                             </div>
                         {% endif %}

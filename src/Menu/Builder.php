@@ -118,6 +118,12 @@ class Builder extends AbstractBuilder {
                     'safe_label' => true,
                 ],
             ]);
+            $browse->addChild('People', [
+                'route' => 'person_index',
+                'linkAttributes' => [
+                    'class' => 'dropdown-item',
+                ],
+            ]);
             $browse->addChild('Image', [
                 'route' => 'image_index',
                 'linkAttributes' => [

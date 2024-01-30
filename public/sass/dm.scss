@@ -374,7 +374,7 @@ p + br {
   }
 
   &__references,
-  &__citation {
+  &__citation, {
     p {
       text-indent: -1rem;
       margin-left: 1rem;
@@ -389,7 +389,8 @@ p + br {
       margin-bottom: ms(-1);
       // These can be 3 to a bit, if they need to be
       flex: clamp(10rem, 27%, 100%);
-      &__citation {
+      &__citation,
+      &__contributions {
         flex-basis: 100%;
       }
     }
@@ -1015,4 +1016,16 @@ label.required::after {
 .homepage {
   $body-background: $dm-nav-background-color;
   @include homepage();
+}
+
+/* form collections */
+
+div.collection span[class*="-collection-actions"] {
+  width: inherit !important;
+}
+
+div.collection-media > div:not(:last-child),
+div.collection-complex > div:not(:last-child) {
+  padding-top: 15px;
+  border: 1px solid rgba(128, 128, 128, 0.31);
 }

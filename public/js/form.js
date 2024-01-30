@@ -62,7 +62,7 @@
             return
         }
         $('.collection-complex').collection({
-            init_with_n_elements: 1,
+            init_with_n_elements: 0,
             allow_up: false,
             allow_down: false,
             max: 400,
@@ -71,6 +71,9 @@
             remove: '<a href="#" class="btn btn-primary btn-sm"><i class="bi bi-dash-circle"></i></a>',
             after_add: function(collection, element){
                 $(element).find('.select2entity').select2entity();
+                $(element).find('.select2-simple').select2({
+                    width: '100%',
+                });
                 if (tinymce && $(element).find('.tinymce').length > 0 ) {
                     $(element).find('.tinymce').each(function (index, textarea) {
                         tinymce.execCommand("mceAddEditor", false, textarea.id);
@@ -194,6 +197,9 @@
         }
         imageModals();
         menuTabs();
+        $('.select2-simple').select2({
+            width: '100%',
+        });
     });
 
 })(jQuery, window);
