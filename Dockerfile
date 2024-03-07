@@ -1,4 +1,4 @@
-FROM node:20.4 AS dm-webpack
+FROM node:21.6-slim AS dm-webpack
 WORKDIR /app
 
 RUN apt-get update \
