@@ -1,0 +1,5 @@
+nines_feedback:
+    default_status: submitted
+    public_status: no_public
+    subject: New challenge received
+    recipients: '%env(json:FEEDBACK_RECIPIENTS)%'

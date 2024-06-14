@@ -18,7 +18,9 @@ return [
     Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
     Nines\BlogBundle\NinesBlogBundle::class => ['all' => true],
     Nines\EditorBundle\NinesEditorBundle::class => ['all' => true],
+    Nines\FeedbackBundle\NinesFeedbackBundle::class => ['all' => true],
     Nines\UserBundle\NinesUserBundle::class => ['all' => true],
     Nines\UtilBundle\NinesUtilBundle::class => ['all' => true],
     DAMA\DoctrineTestBundle\DAMADoctrineTestBundle::class => ['test' => true],
+    EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle::class => ['all' => true],
 ];

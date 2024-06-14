@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Challenge {% endblock %}
+
+{% block body %}
+    <h1>New Challenge</h1>
+
+    {% embed '@NinesFeedback/comment/partial/form.html.twig' %}
+    {% endembed %}
+{% endblock %}

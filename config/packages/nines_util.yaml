@@ -1,4 +1,34 @@
 nines_util:
     trim_length: 50
     sender: 'donotreply@%router.request_context.host%'
-    routing: ~
+    routing:
+        item:
+            class: App\Entity\Item
+            route: item_show
+        category:
+            class: App\Entity\Category
+            route: category_show
+        civilization:
+            class: App\Entity\Civilization
+            route: civilization_show
+        inscription_style:
+            class: App\Entity\InscriptionStyle
+            route: inscription_style_show
+        language:
+            class: App\Entity\Language
+            route: language_show
+        location:
+            class: App\Entity\Location
+            route: location_show
+        material:
+            class: App\Entity\Material
+            route: material_show
+        period:
+            class: App\Entity\Period
+            route: period_show
+        subject:
+            class: App\Entity\Subject
+            route: subject_show
+        technique:
+            class: App\Entity\Technique
+            route: technique_show

@@ -1,0 +1,24 @@
+{% set comments = comment_service.findComments(entity) %}
+{% if comments|length %}
+    <li class="list-group-item py-3">
+        <h4>Challenges</h4>
+        {% for comment in comments %}
+            <div class="card card-light mb-3">
+                <div class="card-body">
+                    {{ comment.content }}
+                </div>
+                <div class="card-footer">
+                    Submitted by
+                    {% if comment.followUp %}
+                        {{ comment.fullname }} <a href="mailto:{{ comment.email }}">{{ comment.email }}</a>
+                    {% else %}
+                        {{ comment.fullname }} - please do not contact.
+                    {% endif %}
+                    <span class="ms-auto mb-3">
+                        <a href="{{ path('nines_feedback_comment_show', {id: comment.id}) }}">{{ comment.created|date }}</a>
+                    </span>
+                </div>
+            </div>
+        {% endfor %}
+    </li>
+{% endif %}

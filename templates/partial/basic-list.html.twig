@@ -30,9 +30,10 @@
 </table>
 
 
-
 {% if items is defined %}
     {% include 'item/partial/list.html.twig' %}
 {% elseif this.items is defined %}
     {% include 'item/partial/list.html.twig' with {'items': this.items} %}
 {% endif %}
+
+{% include '@NinesFeedback/comment/comment-interface.html.twig' with { 'entity': this } %}

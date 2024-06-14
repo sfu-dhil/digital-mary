@@ -257,6 +257,7 @@
                     </div>
                 {% endblock %}
             {% endembed %}
+            {% include '@NinesFeedback/comment/comment-interface.html.twig' with { 'entity': item } %}
         </div>
     </section>
 {% endblock %}

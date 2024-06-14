@@ -6,6 +6,10 @@ nines_editor:
   resource: '@NinesEditorBundle/config/routes.yaml'
   prefix: '%router.request_context.base_url%/editor'
 
+nines_feedback:
+    resource: '@NinesFeedbackBundle/config/routes.yaml'
+    prefix: '%router.request_context.base_url%'
+
 nines_user:
   resource: '@NinesUserBundle/config/routes.yaml'
   prefix: '%router.request_context.base_url%'

@@ -138,6 +138,19 @@ class Builder extends AbstractBuilder {
             ]);
         }
 
+        if ($this->hasRole('ROLE_FEEDBACK_ADMIN')) {
+            $menu->addChild('Comments', [
+                'label' => 'Challenges',
+                'route' => 'nines_feedback_comment_index',
+                'attributes' => [
+                    'class' => 'nav-item',
+                ],
+                'linkAttributes' => [
+                    'class' => 'nav-link',
+                ],
+            ]);
+        }
+
         return $menu;
     }
 }

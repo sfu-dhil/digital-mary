@@ -16,10 +16,10 @@ class Location extends AbstractTerm {
     #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $geonameid = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 7, nullable: true)]
+    #[ORM\Column(type: Types::FLOAT, precision: 10, scale: 7, nullable: true)]
     private ?float $latitude = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 7, nullable: true)]
+    #[ORM\Column(type: Types::FLOAT, precision: 10, scale: 7, nullable: true)]
     private ?float $longitude = null;
 
     #[ORM\Column(type: Types::STRING, length: 2, nullable: true)]

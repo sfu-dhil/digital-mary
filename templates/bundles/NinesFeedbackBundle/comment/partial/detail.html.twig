@@ -1,0 +1,38 @@
+<table class="table table-striped table-sm" title="Comment details">
+    <tbody>
+        <tr>
+            <th>Full name</th>
+            <td>
+                {{ comment.fullname }}
+            </td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>
+                {{ comment.email }}
+            </td>
+        </tr>
+        <tr>
+            <th>Content</th>
+            <td>
+                {{ comment.content }}
+            </td>
+        </tr>
+        <tr>
+            <th>Entity</th>
+            <td>
+                {% include '@NinesUtil/linked_entity/link.html.twig' with {
+                    entity: comment
+                } %}
+            </td>
+        </tr>
+        <tr>
+            <th>Created</th>
+            <td>{{ comment.created|date }}</td>
+        </tr>
+        <tr>
+            <th>Updated</th>
+            <td>{{ comment.updated|date }}</td>
+        </tr>
+    </tbody>
+</table>

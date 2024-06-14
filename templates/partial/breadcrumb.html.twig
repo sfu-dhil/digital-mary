@@ -17,7 +17,13 @@
                     <span class="current">{{ title }}</span>
                 {% else %}
                     {% set href = app.request.basePath ~ '/' ~ tokens|slice(0, loop.index)|join('/') %}
-                    <a href="{{ href }}">{{ token|humanize|u.title }}</a>
+                    <a href="{{ href }}">
+                        {% if token == 'comment' %}
+                            {{ 'Challenges'|humanize|u.title }}
+                        {% else %}
+                            {{ token|humanize|u.title }}
+                        {% endif %}
+                    </a>
                {% endif %}
             </li>
         {% endfor %}

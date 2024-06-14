@@ -1,0 +1,9 @@
+{% embed 'partial/accordion.html.twig' %}
+    {% block summary %}Challenge record content for <i>{{  entity|u.trim(60) }}</i>{% endblock %}
+    {% block content %}
+        {% include '@NinesFeedback/comment/comment-form.html.twig' with { 'entity': entity } %}
+        {% if is_granted('ROLE_FEEDBACK_ADMIN') %}
+            {% include '@NinesFeedback/comment/comments-admin.html.twig' %}
+        {% endif %}
+    {% endblock %}
+{% endembed %}

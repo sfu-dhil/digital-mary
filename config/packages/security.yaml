@@ -37,6 +37,7 @@ security:
         ROLE_ADMIN:
             - ROLE_BLOG_ADMIN
             - ROLE_CONTENT_ADMIN
+            - ROLE_FEEDBACK_ADMIN
             - ROLE_USER_ADMIN
             - ROLE_USER
         ROLE_CONTENT_ADMIN : [ ROLE_CONTENT_EDITOR, ROLE_USER ]
@@ -53,6 +54,8 @@ security:
         - { path: ^%router.request_context.base_url%/request$, roles: PUBLIC_ACCESS }
         - { path: ^%router.request_context.base_url%/reset, roles: PUBLIC_ACCESS }
         - { path: ^%router.request_context.base_url%/login$, roles: PUBLIC_ACCESS }
+        - { path: ^%router.request_context.base_url%/feedback/comment_note, roles: ROLE_USER }
+        - { path: ^%router.request_context.base_url%/feedback/comment_status, roles: ROLE_USER }
 
         # Temporary to keep the rest of the site private.
         - { path: ^/, roles: ROLE_USER }
