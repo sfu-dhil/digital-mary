@@ -23,7 +23,7 @@ services:
 
   app:
     container_name: dm_app
-    # image: dhil/dm
+    # image: ghcr.io/sfu-dhil/digital-mary
     build:
       context: .
       target: dm

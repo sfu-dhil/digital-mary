@@ -22,7 +22,7 @@ RUN yarn --production \
     && yarn cache clean
 
 
-FROM dhilsfu/symfony-base:php-8.2-apache AS dm
+FROM ghcr.io/sfu-dhil/symfony-base:php-8.2-apache AS dm
 ENV GIT_REPO=https://github.com/sfu-dhil/dm
 
 # basic deps installer (no script/plugings)
