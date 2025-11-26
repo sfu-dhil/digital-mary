@@ -115,7 +115,7 @@
                 <p class="mb-0 pb-3">
                     <b>New Digital Mary</b>
                     <br/>
-                    <a href="{{ path('privacy') }}">Privacy</a> |
+                    <a href="https://docs.dhil.lib.sfu.ca/privacy.html" target="_blank">Privacy</a> |
                     {% if git_repo and (git_tag or git_commit) %}
                         <a href="{{ git_repo ~ '/tree/' ~ (git_tag ? git_tag : git_commit) }}" target="_blank">GitHub{{ git_tag ? ' ' ~ git_tag : '' }}</a>
                     {% endif %}

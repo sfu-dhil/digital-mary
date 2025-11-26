@@ -24,13 +24,4 @@ class DefaultController extends AbstractController implements PaginatorAwareInte
             'items' => $itemRepository->getFeaturedItems(),
         ];
     }
-
-    /**
-     * Show the privacy page.
-     */
-    #[Route(path: '/privacy', name: 'privacy', methods: ['GET'])]
-    #[Template]
-    public function privacy() : array {
-        return [];
-    }
 }
