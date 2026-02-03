@@ -1,0 +1,11 @@
+LOAD DATABASE
+    FROM mysql://dm:password@127.0.0.1:13306/dm
+    INTO postgresql://digital_mary:password@127.0.0.1:15432/digital_mary
+
+-- WITH include no drop, no truncate, create no tables, create no indexes, reset sequences, no foreign keys, drop indexes
+WITH data only
+
+ALTER SCHEMA 'dm' RENAME TO 'public'
+
+INCLUDING ONLY TABLE NAMES MATCHING ~/digital_mary.*/, 'auth_user'
+;

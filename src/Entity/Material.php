@@ -8,7 +8,6 @@ use App\Repository\MaterialRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Nines\UtilBundle\Entity\AbstractTerm;
 
 /**
  * One of the components in the construction of an item, eg. glass, silver,

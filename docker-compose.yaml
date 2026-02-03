@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   db:
     container_name: dm_db
@@ -28,7 +27,7 @@ services:
       context: .
       target: dm
     ports:
-      - "8080:80"
+      - "8081:80"
     volumes:
       # code for development
       - .:/var/www/html
@@ -52,19 +51,19 @@ services:
       db:
         condition: service_healthy
 
-  webpack_watcher:
-    container_name: dm_webpack_watcher
-    build:
-      context: .
-      target: dm-webpack
-    command: yarn watch
-    volumes:
-      - ./public:/app
-      # use the container's node_modules folder (don't override)
-      - /app/node_modules
+  # webpack_watcher:
+  #   container_name: dm_webpack_watcher
+  #   build:
+  #     context: .
+  #     target: dm-webpack
+  #   command: yarn watch
+  #   volumes:
+  #     - ./public:/app
+  #     # use the container's node_modules folder (don't override)
+  #     - /app/node_modules
 
-  mail:
-    container_name: dm_mail
-    image: jcalonso/mailhog:v1.0.1
-    ports:
-      - "8025:8025"
+  # mail:
+  #   container_name: dm_mail
+  #   image: jcalonso/mailhog:v1.0.1
+  #   ports:
+  #     - "8025:8025"
